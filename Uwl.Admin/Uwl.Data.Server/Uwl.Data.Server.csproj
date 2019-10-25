@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
+    <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
+    <ProjectReference Include="..\Uwl.Domain\Uwl.Domain.csproj" />
+    <ProjectReference Include="..\Uwl.Extends\Uwl.Extends.csproj" />
+  </ItemGroup>
+
+</Project>
