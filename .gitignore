@@ -1,0 +1,17 @@
+/Uwl.Admin/Uwl.Attribute/obj
+/Uwl.Admin/Uwl.Attribute/bin
+/Uwl.Admin/Uwl.Common/obj
+/Uwl.Admin/Uwl.Common/bin
+/Uwl.Admin/Uwl.Data.EntityFramework/*
+/Uwl.Admin/Uwl.Data.Model/obj
+/Uwl.Admin/Uwl.Data.Model/bin
+/Uwl.Admin/Uwl.Data.Server/bin
+/Uwl.Admin/Uwl.Data.Server/obj
+/Uwl.Admin/Uwl.Domain/obj
+/Uwl.Admin/Uwl.Domain/bin
+/Uwl.Admin/Uwl.Extends/obj
+/Uwl.Admin/Uwl.Extends/bin
+/Uwl.Admin/Uwl.QuartzNet.JobCenter/obj
+/Uwl.Admin/Uwl.QuartzNet.JobCenter/bin
+/Uwl.Admin/UwlAPI.Tools/obj
+/Uwl.Admin/UwlAPI.Tools/bin
