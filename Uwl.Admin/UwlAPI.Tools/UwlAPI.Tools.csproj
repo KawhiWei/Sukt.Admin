@@ -17,7 +17,6 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\" />
-    <Folder Include="Dbback\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +29,6 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Uwl.Cache\Uwl.Cache.csproj" />
     <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
     <ProjectReference Include="..\Uwl.Data.EntityFramework\Uwl.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Uwl.Data.Server\Uwl.Data.Server.csproj" />

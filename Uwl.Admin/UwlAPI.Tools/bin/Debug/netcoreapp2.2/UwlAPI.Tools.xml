@@ -204,7 +204,7 @@
             登录或者获取Token接口不加//[Authorize(Policy = "Admin")]权限，加了类似，你把钥匙上了锁
             </summary>
         </member>
-        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,Uwl.Cache.Redis.IRedisCacheManager,Uwl.Common.RabbitMQ.IRabbitMQ,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Uwl.QuartzNet.JobCenter.Center.ISchedulerCenter)">
+        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,Uwl.Common.Cache.RedisCache.IRedisCacheManager,Uwl.Common.RabbitMQ.IRabbitMQ,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Uwl.QuartzNet.JobCenter.Center.ISchedulerCenter)">
             <summary>
             构造函数
             </summary>
@@ -493,6 +493,30 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:UwlAPI.Tools.Controllers.ScheduleController">
+            <summary>
+            任务计划管理API接口
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.#ctor(Uwl.Data.Server.ScheduleServices.IScheduleServer)">
+            <summary>
+            注入构造函数
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.AddSchedule(Uwl.Data.Model.BaseModel.SysSchedule)">
+            <summary>
+            添加计划任务
+            </summary>
+            <param name="sysRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.UpdateSchedule(Uwl.Data.Model.BaseModel.SysSchedule)">
+            <summary>
+            修改计划任务
+            </summary>
+            <param name="sysRole"></param>
+            <returns></returns>
+        </member>
         <member name="T:UwlAPI.Tools.Controllers.UserController">
             <summary>
             用户管理API接口
@@ -703,45 +727,6 @@
             <param name="app"></param>
             <param name="env"></param>
             <param name="loggerFactory"></param>
-        </member>
-        <member name="T:SignalRDemo.SignalrHubs.SignalRChatHub">
-            <summary>
-            实时消息推送
-            </summary>
-        </member>
-        <member name="M:SignalRDemo.SignalrHubs.SignalRChatHub.OnConnectedAsync">
-            <summary>
-            创建组对象
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:SignalRDemo.SignalrHubs.SignalRChatHub.OnDisconnectedAsync(System.Exception)">
-            <summary>
-            释放组对象
-            </summary>
-            <param name="exception"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SignalRDemo.SignalrHubs.SignalRChatHub.SendMessage(System.String,System.String)">
-            <summary>
-            发送消息
-            </summary>
-            <param name="user"></param>
-            <param name="message"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SignalRDemo.SignalrHubs.SignalRChatHub.GetLatestCount(System.String)">
-            <summary>
-            服务端主动向客户端发送数据
-            </summary>
-            <param name="random"></param>
-            <returns></returns>
-        </member>
-        <member name="M:SignalRDemo.SignalrHubs.SignalRChatHub.InvokeHubMethod">
-            <summary>
-            获取用户连接ID
-            </summary>
-            <returns></returns>
         </member>
     </members>
 </doc>

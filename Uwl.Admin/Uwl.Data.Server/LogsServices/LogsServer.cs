@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Uwl.Common;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Server.LambdaTree;
 using Uwl.Domain.LogsInterface;
@@ -22,11 +24,26 @@ namespace Uwl.Data.Server.LogsServices
         {
             _logRepositoty = logRepositoty;
         }
-        public void Insert(Logs logs)
+        public void Insert(string Title, string Contents, string Ip, EnumTypes types = EnumTypes.其他分类,string TypeName="",string Others="", string oldXML = "", string newXML = "")
         {
+            Logs logs = new Logs();
+            logs.Id = Guid.NewGuid();
+            logs.CreatedDate = DateTime.Now;
+            logs.CreatedId = Guid.NewGuid();
+            logs.CreatedName = "admin";
+            logs.UpdateId = Guid.NewGuid();
+            logs.UpdateDate = DateTime.Now;
+            logs.UpdateName = "admin";
+            logs.Title = Title;
+            logs.TypeName = TypeName;
+            logs.IPAddress = Ip;
+            logs.Contents = Contents;
+            logs.Others = Others;
+            logs.OldXml = string.IsNullOrEmpty(oldXML) ? null : oldXML;
+            logs.NewXml = string.IsNullOrEmpty(newXML) ? null : newXML;
             _logRepositoty.Insert(logs);
         }
-        public IEnumerable<Logs> GetLogsByPage(LogsQueryModel logsQuery,out int Total)
+        public List<Logs> GetLogsByPage(LogsQueryModel logsQuery,out int Total)
         {
             var query= ExpressionBuilder.True<Logs>();
             if(!logsQuery.Title.IsNullOrEmpty())
@@ -34,7 +51,7 @@ namespace Uwl.Data.Server.LogsServices
                 query = query.And(x => x.Title.Contains(logsQuery.Title));
             }
             Total = _logRepositoty.Count(query);
-            return _logRepositoty.PageBy(logsQuery.PageIndex, logsQuery.PageSize, query);
+            return _logRepositoty.PageBy(logsQuery.PageIndex, logsQuery.PageSize, query).ToList();
         }
     }
 }

@@ -15,7 +15,6 @@ using Uwl.Common;
 using Uwl.Common.Utility;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Server.UserServices;
-using Uwl.Cache.Redis;
 using Uwl.Data.Model.Result;
 using UwlAPI.Tools.AuthHelper.Policys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,6 +25,7 @@ using SignalRDemo.SignalrHubs;
 using Uwl.Extends.EncryPtion;
 using Uwl.Common.RabbitMQ;
 using Uwl.QuartzNet.JobCenter.Center;
+using Uwl.Common.Cache.RedisCache;
 
 namespace UwlAPI.Tools.Controllers
 {
@@ -56,7 +56,7 @@ namespace UwlAPI.Tools.Controllers
         /// <param name="hostingEnvironment"></param>
         /// <param name="schedulerCenter"></param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser,
-            IUserServer userServer,IRedisCacheManager redisCacheManager, IRabbitMQ rabbitMQ,
+            IUserServer userServer, IRedisCacheManager redisCacheManager, IRabbitMQ rabbitMQ,
             PermissionRequirement permissionRequirement, IHostingEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter)
         {
             this._jwtSettings = _jwtSettingsAccesser.Value;
@@ -78,7 +78,7 @@ namespace UwlAPI.Tools.Controllers
         [AllowAnonymous]//对获取token得方法加允许匿名标注//不受授权控制，任何人都可访问
         public async Task<string> Token([FromBody] LoginViewModel loginViewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 SysUser user = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
                 //判断用户名密码是否正确，如果不正确返回Token  !(loginViewModel.User=="avery"&& loginViewModel.Password=="123")
@@ -151,7 +151,7 @@ namespace UwlAPI.Tools.Controllers
                     TokenModelJWT tokenModel = new TokenModelJWT()
                     {
                         Uid = user.Id,
-                        Role="Admin",
+                        Role = "Admin",
                     };
                     try
                     {
@@ -180,55 +180,89 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<dynamic>> TokenAssig([FromBody] LoginViewModel loginViewModel)
         {
             var data = new MessageModel<dynamic>();
-            if (ModelState.IsValid)
+            try
             {
-                loginViewModel.Password = loginViewModel.Password.ToMD5();
-                SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
-                await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                if (ModelState.IsValid)
                 {
-                    Name = "test1",
-                    JobGroup = "test1group",
-                    AssemblyName = "Uwl.QuartzNet.JobCenter",
-                    ClassName = "Simple",
-                    IntervalSecond = 5,
-                });
-                //_rabbitMQ.SendData("hello", Info);
-                if (Info == null)
-                {
-                    data.msg = "账号或者密码错误";
-                    return data;
-                }
-                else
-                {
-                    try
+                    loginViewModel.Password = loginViewModel.Password.ToMD5();
+                    SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
+                    #region    QuartzNet定时任务
+                    //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                    //{
+                    //    Name = "test1",
+                    //    JobGroup = "test1group",
+                    //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                    //    ClassName = "Simple",
+                    //    RunTimes = 0,
+                    //    IntervalSecond =4,
+                    //});
+                    //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                    //{
+                    //    Name = "testSimpleTwo",
+                    //    JobGroup = "test1group",
+                    //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                    //    ClassName = "Simple",
+                    //    RunTimes = 0,
+                    //    IntervalSecond = 9,
+                    //});
+                    //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                    //{
+                    //    Name = "testSimpleThree",
+                    //    JobGroup = "test1group",
+                    //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                    //    ClassName = "Simple",
+                    //    RunTimes = 0,
+                    //    IntervalSecond = 5,
+                    //});
+                    //_rabbitMQ.SendData("hello", Info);
+                    #endregion
+                    if (Info == null)
                     {
-                        //_schedulerCenter.AddScheduleJobAsync<SysSchedule>(new SysSchedule());
-                        var RoleName= await _userserver.GetUserRoleByUserId(Info.Id);
-                        var claims = new List<Claim>
+                        data.msg = "账号或者密码错误";
+                        return data;
+                    }
+                    else
+                    {
+                        try
                         {
+                            //_schedulerCenter.AddScheduleJobAsync<SysSchedule>(new SysSchedule());
+                            var RoleName = await _userserver.GetUserRoleByUserId(Info.Id);
+                            var claims = new List<Claim>
+                            {
                             new Claim(ClaimTypes.Name,Info.Name),//设置用户名称
                             new Claim(JwtRegisteredClaimNames.Jti,Info.Id.ToString()),//设置用户ID
                             new Claim(ClaimTypes.Expiration,DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()),//设置过期时间
-                        };
-                        claims.AddRange(RoleName.Split(',').Select(x => new Claim(ClaimTypes.Role, x)));//将用户角色填充到claims中
-                        //用户标识
-                        var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
-                        identity.AddClaims(claims);
-                        var token= JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
-                        data.response = token;
-                        data.msg = "Token获取成功";
-                        data.success = true;
-                        return data;
-                    }
-                    catch (Exception ex)
-                    {
-                        data.msg = "获取角色信息失败"+ex.Message;
-                        return data;
+                            new Claim("Id",Info.Id.ToString()),
+                            new Claim("userName",Info.Name)
+                            };
+                            claims.AddRange(RoleName.Split(',').Select(x => new Claim(ClaimTypes.Role, x)));//将用户角色填充到claims中
+                            var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);//用户标识
+                            identity.AddClaims(claims);
+                            var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                            data.response = token;
+                            data.msg = "Token获取成功";
+                            data.success = true;
+                            return data;
+                        }
+                        catch (Exception ex)
+                        {
+                            data.msg = "获取角色信息失败" + ex.Message;
+                            return data;
+                        }
                     }
                 }
+                else
+                {
+                    data.msg = "获取角色信息失败";
+                    return data;
+                }
             }
-            data.msg = "账号或者密码错误";
-            return data;
+            catch (Exception ex)
+            {
+
+                data.msg = "获取角色信息失败" + ex.Message;
+                return data;
+            }
         }
         #endregion
     }

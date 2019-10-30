@@ -18,7 +18,7 @@ namespace UwlAPI.Tools.Controllers
     /// </summary>
     [Route("api/GetTree")]
     [ApiController]
-    public class MenuTreeController : Controller
+    public class MenuTreeController : BaseController
     {
         private IMenuServer _menuServer;
         /// <summary>

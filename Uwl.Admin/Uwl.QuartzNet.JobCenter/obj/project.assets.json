@@ -7270,11 +7270,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj",
+      "projectUniqueName": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj",
       "projectName": "Uwl.QuartzNet.JobCenter",
-      "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj",
+      "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj",
       "packagesPath": "C:\\Users\\Meng\\.nuget\\packages\\",
-      "outputPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\obj\\",
+      "outputPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7293,11 +7293,11 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj"
             },
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Extends\\Uwl.Extends.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Extends\\Uwl.Extends.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Extends\\Uwl.Extends.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Extends\\Uwl.Extends.csproj"
             }
           }
         }

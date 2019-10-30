@@ -5129,20 +5129,6 @@
           "bin/placeholder/Uwl.Attribute.dll": {}
         }
       },
-      "Uwl.Cache/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.2",
-        "dependencies": {
-          "StackExchange.Redis": "2.0.601",
-          "Uwl.Common": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Uwl.Cache.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Uwl.Cache.dll": {}
-        }
-      },
       "Uwl.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -5150,6 +5136,7 @@
           "AutoMapper": "9.0.0",
           "EPPlus": "4.5.3.2",
           "RabbitMQ.Client": "5.1.2",
+          "StackExchange.Redis": "2.0.601",
           "Uwl.Attribute": "1.0.0",
           "Uwl.Data.Model": "1.0.0",
           "Uwl.Extends": "1.0.0"
@@ -14209,11 +14196,6 @@
       "path": "../Uwl.Attribute/Uwl.Attribute.csproj",
       "msbuildProject": "../Uwl.Attribute/Uwl.Attribute.csproj"
     },
-    "Uwl.Cache/1.0.0": {
-      "type": "project",
-      "path": "../Uwl.Cache/Uwl.Cache.csproj",
-      "msbuildProject": "../Uwl.Cache/Uwl.Cache.csproj"
-    },
     "Uwl.Common/1.0.0": {
       "type": "project",
       "path": "../Uwl.Common/Uwl.Common.csproj",
@@ -14260,7 +14242,6 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.2.3",
       "Swashbuckle.AspNetCore >= 4.0.1",
       "System.IdentityModel.Tokens.Jwt >= 5.3.0",
-      "Uwl.Cache >= 1.0.0",
       "Uwl.Common >= 1.0.0",
       "Uwl.Data.EntityFramework >= 1.0.0",
       "Uwl.Data.Server >= 1.0.0",
@@ -14274,11 +14255,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\UwlAPI.Tools.csproj",
+      "projectUniqueName": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\UwlAPI.Tools.csproj",
       "projectName": "UwlAPI.Tools",
-      "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\UwlAPI.Tools.csproj",
+      "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\UwlAPI.Tools.csproj",
       "packagesPath": "C:\\Users\\Meng\\.nuget\\packages\\",
-      "outputPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\obj\\",
+      "outputPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\UwlAPI.Tools\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14297,20 +14278,17 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Cache\\Uwl.Cache.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Cache\\Uwl.Cache.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Common\\Uwl.Common.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Common\\Uwl.Common.csproj"
             },
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Common\\Uwl.Common.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Common\\Uwl.Common.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.EntityFramework\\Uwl.Data.EntityFramework.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.EntityFramework\\Uwl.Data.EntityFramework.csproj"
             },
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.EntityFramework\\Uwl.Data.EntityFramework.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.EntityFramework\\Uwl.Data.EntityFramework.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Server\\Uwl.Data.Server.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Server\\Uwl.Data.Server.csproj"
             },
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Server\\Uwl.Data.Server.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Server\\Uwl.Data.Server.csproj"
-            },
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.QuartzNet.JobCenter\\Uwl.QuartzNet.JobCenter.csproj"
             }
           }
         }

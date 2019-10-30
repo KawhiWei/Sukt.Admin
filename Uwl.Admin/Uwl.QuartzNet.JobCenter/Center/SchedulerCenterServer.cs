@@ -18,8 +18,11 @@ namespace Uwl.QuartzNet.JobCenter.Center
     public class SchedulerCenterServer: ISchedulerCenter
     {
         private Task<IScheduler> _scheduler;
-        
-        public Task<IScheduler> GetSchedulerAsync()
+        public SchedulerCenterServer()
+        {
+            _scheduler = GetSchedulerAsync();
+        }
+        private Task<IScheduler> GetSchedulerAsync()
         {
             if (_scheduler != null)
                 return this._scheduler;
@@ -161,9 +164,9 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     }
                     // 告诉Quartz使用我们的触发器来安排作业
                     await _scheduler.Result.ScheduleJob(job, trigger);
-                    await Task.Delay(TimeSpan.FromSeconds(120));
-                    await Console.Out.WriteLineAsync("关闭了调度器！");
-                    await _scheduler.Result.Shutdown();
+                    //await Task.Delay(TimeSpan.FromSeconds(120));
+                    //await Console.Out.WriteLineAsync("关闭了调度器！");
+                    //await _scheduler.Result.Shutdown();
                     result.IsSuccess = true;
                     result.Message = $"暂停任务:【{sysSchedule.Name}】成功";
                     return result;
@@ -175,9 +178,9 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     return result;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -250,15 +253,30 @@ namespace Uwl.QuartzNet.JobCenter.Center
         /// <returns></returns>
         private ITrigger CreateSimpleTrigger(SysSchedule sysSchedule)
         {
-            // 触发作业立即运行，然后每10秒重复一次，无限循环
-            ITrigger trigger = TriggerBuilder.Create()
+            if(sysSchedule.RunTimes>0)
+            {
+                ITrigger trigger = TriggerBuilder.Create()
                 .WithIdentity(sysSchedule.Name, sysSchedule.JobGroup)
                 .StartAt(sysSchedule.BeginTime.Value)
                 .EndAt(sysSchedule.EndTime.Value)
                 .WithSimpleSchedule(x =>
                 x.WithIntervalInSeconds(sysSchedule.IntervalSecond)
-                .RepeatForever()).Build();
-            return trigger;
+                .WithRepeatCount(sysSchedule.RunTimes)).ForJob(sysSchedule.Name,sysSchedule.JobGroup).Build();
+                return trigger;
+            }
+            else
+            {
+                ITrigger trigger = TriggerBuilder.Create()
+                .WithIdentity(sysSchedule.Name, sysSchedule.JobGroup)
+                .StartAt(sysSchedule.BeginTime.Value)
+                .EndAt(sysSchedule.EndTime.Value)
+                .WithSimpleSchedule(x =>
+                x.WithIntervalInSeconds(sysSchedule.IntervalSecond)
+                .RepeatForever()).ForJob(sysSchedule.Name, sysSchedule.JobGroup).Build();
+                return trigger;
+            }
+            // 触发作业立即运行，然后每10秒重复一次，无限循环
+            
         }
         /// <summary>
         /// 创建类型Cron的触发器

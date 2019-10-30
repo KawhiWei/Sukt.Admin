@@ -3032,11 +3032,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\Uwl.Domain.csproj",
+      "projectUniqueName": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\Uwl.Domain.csproj",
       "projectName": "Uwl.Domain",
-      "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\Uwl.Domain.csproj",
+      "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\Uwl.Domain.csproj",
       "packagesPath": "C:\\Users\\Meng\\.nuget\\packages\\",
-      "outputPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\obj\\",
+      "outputPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3055,8 +3055,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj": {
-              "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj"
+            "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj": {
+              "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Data.Model\\Uwl.Data.Model.csproj"
             }
           }
         }

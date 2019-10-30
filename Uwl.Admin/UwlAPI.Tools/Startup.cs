@@ -27,7 +27,6 @@ using Uwl.Domain.MenuInterface;
 using Uwl.Domain.UserInterface;
 using Uwl.Domain.RoleInterface;
 using Uwl.Data.Server.RoleServices;
-using Uwl.Cache.Redis;
 using Uwl.Data.EntityFramework.ButtonServices;
 using Uwl.Domain.ButtonInterface;
 using Uwl.Data.Server.ButtonServices;
@@ -50,6 +49,11 @@ using Uwl.Domain.OrganizeInterface;
 using Uwl.Data.Server.OrganizeServices;
 using Uwl.Common.RabbitMQ;
 using Uwl.QuartzNet.JobCenter.Center;
+using Uwl.Data.Server.ScheduleServices;
+using Uwl.Domain.ScheduleInterface;
+using Uwl.Data.EntityFramework.ScheduleServices;
+using Uwl.Common.Cache.RedisCache;
+using Uwl.Common.SignalRMessage;
 
 namespace UwlAPI.Tools
 {
@@ -94,7 +98,7 @@ namespace UwlAPI.Tools
                 mvc.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
                 //mvc.Conventions.Insert(0, new AddRoutePrefixFilter(new RouteAttribute(RoutePrefix.Name)));
             });
-            services.AddSignalR();
+            
             #region Swagger
             services.AddSwaggerGen(x =>
             {
@@ -226,19 +230,36 @@ namespace UwlAPI.Tools
             }).AddJwtBearer(t =>
             {
                 t.TokenValidationParameters = TokenValidationParameters;
-                //过期时间判断
-                //t.Events = new JwtBearerEvents
-                //{
-                //    // 如果过期，则把<是否过期>添加到，返回头信息中
-                //    OnAuthenticationFailed = context =>
-                //    {
-                //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                //        {
-                //            context.Response.Headers.Add("Token-Expired", "true");
-                //        }
-                //        return Task.CompletedTask;
-                //    }
-                //};
+
+                //给SignalR 赋值给集线器的链接管道添加Token验证
+                t.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(path) && path.StartsWithSegments("/api/chatHub"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+
+
+                };
+                    //过期时间判断
+                    //t.Events = new JwtBearerEvents
+                    //{
+                    //    // 如果过期，则把<是否过期>添加到，返回头信息中
+                    //    OnAuthenticationFailed = context =>
+                    //    {
+                    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                    //        {
+                    //            context.Response.Headers.Add("Token-Expired", "true");
+                    //        }
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
             });
 
             //注入权限处理核心控制器,将自定义的授权处理器 匹配给官方授权处理器接口，这样当系统处理授权的时候，就会直接访问我们自定义的授权处理器了。
@@ -247,6 +268,9 @@ namespace UwlAPI.Tools
             services.AddSingleton(permissionRequirement);
 
             #endregion
+
+
+            services.AddSignalR();
 
             #region 添加automapper实体映射,如果存在相同字段则自动映射
             services.AddAutoMapper();
@@ -331,6 +355,13 @@ namespace UwlAPI.Tools
             //注入组织机构服务层
             services.AddScoped<IOrganizeServer, OrganizeServer>();
 
+            //注入计划任务领域仓储实现
+            services.AddScoped<IScheduleRepositoty, DomainScheduleServer>();
+            //注入计划任务服务层
+            services.AddScoped<IScheduleServer, ScheduleServer>();
+
+
+
             //注入Redis缓存
             services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
             //注入RabbitMQ服务
@@ -390,11 +421,14 @@ namespace UwlAPI.Tools
             app.UseCookiePolicy();// 使用cookie
             //app.UseHttpsRedirection();// 跳转https
             app.UseStatusCodePages();
-            app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<SignalRChatHub>("/api/chatHub");
+                routes.MapHub<SignalRChat>("/api/chatHub");
+                
             });
+
+            app.UseMvc();
+            
         }
     }
 }

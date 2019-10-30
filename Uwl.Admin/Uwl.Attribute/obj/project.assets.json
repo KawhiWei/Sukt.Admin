@@ -692,11 +692,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\Uwl.Attribute.csproj",
+      "projectUniqueName": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\Uwl.Attribute.csproj",
       "projectName": "Uwl.Attribute",
-      "projectPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\Uwl.Attribute.csproj",
+      "projectPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\Uwl.Attribute.csproj",
       "packagesPath": "C:\\Users\\Meng\\.nuget\\packages\\",
-      "outputPath": "F:\\Project\\GitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\obj\\",
+      "outputPath": "F:\\Project\\gitHubOpenSourceEdition\\Uwl.Admin.Core\\Uwl.Admin\\Uwl.Attribute\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

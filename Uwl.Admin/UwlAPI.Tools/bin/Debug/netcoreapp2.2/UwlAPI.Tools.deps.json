@@ -32,7 +32,6 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
           "Swashbuckle.AspNetCore": "4.0.1",
           "System.IdentityModel.Tokens.Jwt": "5.3.0",
-          "Uwl.Cache": "1.0.0",
           "Uwl.Common": "1.0.0",
           "Uwl.Data.EntityFramework": "1.0.0",
           "Uwl.Data.Server": "1.0.0",
@@ -1338,23 +1337,12 @@
           "Uwl.Attribute.dll": {}
         }
       },
-      "Uwl.Cache/1.0.0": {
-        "dependencies": {
-          "StackExchange.Redis": "2.0.601",
-          "Uwl.Common": "1.0.0"
-        },
-        "runtime": {
-          "Uwl.Cache.dll": {}
-        },
-        "compile": {
-          "Uwl.Cache.dll": {}
-        }
-      },
       "Uwl.Common/1.0.0": {
         "dependencies": {
           "AutoMapper": "9.0.0",
           "EPPlus": "4.5.3.2",
           "RabbitMQ.Client": "5.1.2",
+          "StackExchange.Redis": "2.0.601",
           "Uwl.Attribute": "1.0.0",
           "Uwl.Data.Model": "1.0.0",
           "Uwl.Extends": "1.0.0"
@@ -4807,11 +4795,6 @@
       "hashPath": "z.entityframework.plus.efcore.2.0.8.nupkg.sha512"
     },
     "Uwl.Attribute/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Uwl.Cache/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

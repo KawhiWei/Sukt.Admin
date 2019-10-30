@@ -7,25 +7,41 @@ namespace Uwl.Data.Model.BaseModel
     //日志实体类
     public class Logs: Entity
     {
-        ////主键ID
-        //public Guid Id { get; set; }
-        //修改标题
+        /// <summary>
+        /// 修改标题
+        /// </summary>
         public string Title { get; set; }
-        //修改的类型
+        /// <summary>
+        /// 修改的类型
+        /// </summary>
         public string TypeName { get; set; }
-        //客户机IP
+        /// <summary>
+        /// 客户机IP
+        /// </summary>
         public string IPAddress { get; set; }
-        //修改连接
+        /// <summary>
+        /// 修改连接
+        /// </summary>
         public string Url { get; set; }
-        //修改内容
+        /// <summary>
+        /// 修改内容
+        /// </summary>
         public string Contents { get; set; }
-        //浏览器版本
+        /// <summary>
+        /// 浏览器版本
+        /// </summary>
         public string Others { get; set; }
-        //修改之前数据
+        /// <summary>
+        /// 修改前数据
+        /// </summary>
         public string OldXml { get; set; }
-        //修改之后数据
+        /// <summary>
+        /// 修改后数据
+        /// </summary>
         public string NewXml { get; set; }
-        //测试字段
+        /// <summary>
+        /// 测试字段
+        /// </summary>
         public string Test { get; set; }
     }
 }
