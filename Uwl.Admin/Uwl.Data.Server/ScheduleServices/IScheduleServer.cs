@@ -52,5 +52,11 @@ namespace Uwl.Data.Server.ScheduleServices
         /// <param name="Id"></param>
         /// <returns></returns>
         Task<JobResuleModel> StopJob(Guid Id);
+        /// <summary>
+        /// 恢复一个暂停的任务
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        Task<JobResuleModel> ReCoveryJob(Guid Id);
     }
 }

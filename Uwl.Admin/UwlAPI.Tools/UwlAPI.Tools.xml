@@ -538,6 +538,13 @@
             <param name="jobId"></param>
             <returns></returns>
         </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.ReCovery(System.Guid)">
+            <summary>
+            停止一个计划任务
+            </summary>
+            <param name="jobId"></param>
+            <returns></returns>
+        </member>
         <member name="T:UwlAPI.Tools.Controllers.UserController">
             <summary>
             用户管理API接口

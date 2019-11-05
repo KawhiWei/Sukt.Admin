@@ -8,9 +8,4 @@
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>E:\Work\Uwl</_PublishTargetUrl>
   </PropertyGroup>
-  <ItemGroup>
-    <DestinationConnectionStrings Include="SqlserverDefault">
-      <Value>Data Source=139.199.219.154%3bInitial Catalog=CoreCodeFirst%3bUser ID=Igexsa%3bPassword=wzw961021..</Value>
-    </DestinationConnectionStrings>
-  </ItemGroup>
 </Project>

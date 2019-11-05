@@ -130,5 +130,28 @@ namespace UwlAPI.Tools.Controllers
                 return data;
             }
         }
+        /// <summary>
+        /// 停止一个计划任务
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        [Route("ReCovery")]
+        [HttpGet]
+        public async Task<MessageModel<string>> ReCovery(Guid jobId)
+        {
+            var data = new MessageModel<string>();
+            try
+            {
+                var Resultmodel = await _scheduleServer.ReCoveryJob(jobId);
+                data.success = Resultmodel.IsSuccess;
+                data.msg = Resultmodel.Message;
+                return data;
+            }
+            catch (Exception ex)
+            {
+                data.msg = ex.Message;
+                return data;
+            }
+        }
     }
 }

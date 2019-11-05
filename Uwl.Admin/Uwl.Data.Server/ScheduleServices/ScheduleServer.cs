@@ -86,5 +86,14 @@ namespace Uwl.Data.Server.ScheduleServices
             await UpdateScheduleAsync(model);
             return ResuleModel;
         }
+        public async Task<JobResuleModel> ReCoveryJob(Guid Id)
+        {
+            var model = await _scheduleRepositoty.FirstOrDefaultAsync(x => x.Id == Id);
+            var ResuleModel = await _schedulerCenter.ResumeJob(model);
+            if (ResuleModel.IsSuccess)
+                model.IsStart = true;
+            await UpdateScheduleAsync(model);
+            return ResuleModel;
+        }
     }
 }
