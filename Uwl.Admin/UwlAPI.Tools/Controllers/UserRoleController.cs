@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Uwl.Data.Model.Result;
+using Uwl.Data.Model.RoleAssigVO;
 using Uwl.Data.Server.UserServices;
 
 namespace UwlAPI.Tools.Controllers
@@ -48,6 +49,30 @@ namespace UwlAPI.Tools.Controllers
             catch (Exception ex)
             {
                 data.msg = "数据获取失败"+ex.Message;
+                return data;
+            }
+        }
+        /// <summary>
+        /// 用户角色权限保存
+        /// </summary>
+        /// <param name="updateUserRole">传进来的实体模型</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("SaveUserRole")]
+        public async Task<MessageModel<string>> UserRoleAssig(UpdateUserRoleVo updateUserRole)
+        {
+            var data = new MessageModel<string>();
+            try
+            {
+                data.success=await _userRoleServer.SaveRoleByUser(updateUserRole);
+                data.msg = "角色权限保存成功";
+                return data;
+            }
+            catch (Exception ex)
+            {
+
+                data.msg = "用户分配角色失败"+ex.Message;
+                data.success = false;
                 return data;
             }
         }

@@ -55,5 +55,10 @@ namespace Uwl.Extends.Utility
 
             return ((type != null) && type.IsGenericType) && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
         }
+
+        public static IQueryable<T> PageBy<T>(this IQueryable<T> source,  int maxcount, int skipcount)
+        {
+            return source.Skip(skipcount).Take(maxcount);
+        }
     }
 }

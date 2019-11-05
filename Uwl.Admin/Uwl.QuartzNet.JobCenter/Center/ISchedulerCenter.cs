@@ -27,6 +27,12 @@ namespace Uwl.QuartzNet.JobCenter.Center
         /// <param name="sysSchedule"></param>
         /// <returns></returns>
         Task<JobResuleModel> AddScheduleJobAsync(SysSchedule sysSchedule);
+        /// <summary>
+        /// 停止一个任务
+        /// </summary>
+        /// <param name="sysSchedule"></param>
+        /// <returns></returns>
+        Task<JobResuleModel> StopScheduleJobAsync(SysSchedule sysSchedule);
 
     }
 }

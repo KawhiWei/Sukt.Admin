@@ -24,9 +24,6 @@
     <Reference Include="Microsoft.Extensions.Configuration">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.configuration\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="MRSOFT">
-      <HintPath>..\..\Data文档\第三方dll\MRSOFT.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

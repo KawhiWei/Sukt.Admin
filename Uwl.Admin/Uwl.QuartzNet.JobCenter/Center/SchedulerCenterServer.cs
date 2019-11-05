@@ -113,9 +113,13 @@ namespace Uwl.QuartzNet.JobCenter.Center
             {
                 if (sysSchedule != null)
                 {
-                    JobKey jobKey = new JobKey(sysSchedule.Name, sysSchedule.JobGroup);
-                    //if(_scheduler.Result.CheckExists(jobKey))
-
+                    JobKey jobKey = new JobKey(sysSchedule.Id.ToString(), sysSchedule.JobGroup);
+                    if (await _scheduler.Result.CheckExists(jobKey))
+                    {
+                        result.IsSuccess = false;
+                        result.Message = $"该任务计划已经在执行:【{sysSchedule.Name}】,请勿重复启动！";
+                        return result;
+                    }
                     #region 设置开始时间和结束时间
 
                     if (sysSchedule.BeginTime == null)
@@ -144,7 +148,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     }
 
                     //传入反射出来的执行程序集
-                    IJobDetail job = new JobDetailImpl(sysSchedule.Name, sysSchedule.JobGroup, jobType);
+                    IJobDetail job = new JobDetailImpl(sysSchedule.Id.ToString(), sysSchedule.JobGroup, jobType);
                     //Job执行时的参数还有待解决？？？？？？？？？？？？？？？？？？？？？
                     ITrigger trigger;
 
@@ -154,7 +158,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     //    .Build();
                     #endregion
 
-                    if (!sysSchedule.Cron.IsNullOrEmpty()&& CronExpression.IsValidExpression(sysSchedule.Cron))
+                    if (!sysSchedule.Cron.IsNullOrEmpty()&& CronExpression.IsValidExpression(sysSchedule.Cron) && sysSchedule.TriggerType>0)
                     {
                         trigger = CreateCronTrigger(sysSchedule);
                     }
@@ -168,7 +172,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     //await Console.Out.WriteLineAsync("关闭了调度器！");
                     //await _scheduler.Result.Shutdown();
                     result.IsSuccess = true;
-                    result.Message = $"暂停任务:【{sysSchedule.Name}】成功";
+                    result.Message = $"启动任务:【{sysSchedule.Name}】成功";
                     return result;
                 }
                 else
@@ -193,7 +197,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
             var result = new JobResuleModel();
             try
             {
-                JobKey jobKey = new JobKey(sysSchedule.Name, sysSchedule.JobGroup);
+                JobKey jobKey = new JobKey(sysSchedule.Id.ToString(), sysSchedule.JobGroup);
                 if (!await _scheduler.Result.CheckExists(jobKey))
                 {
                     result.IsSuccess = false;
@@ -224,7 +228,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
             var result = new JobResuleModel();
             try
             {
-                JobKey jobKey = new JobKey(sysSchedule.Name, sysSchedule.JobGroup);
+                JobKey jobKey = new JobKey(sysSchedule.Id.ToString(), sysSchedule.JobGroup);
                 if (!await _scheduler.Result.CheckExists(jobKey))
                 {
                     result.IsSuccess = false;
@@ -256,23 +260,23 @@ namespace Uwl.QuartzNet.JobCenter.Center
             if(sysSchedule.RunTimes>0)
             {
                 ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity(sysSchedule.Name, sysSchedule.JobGroup)
+                .WithIdentity(sysSchedule.Id.ToString(), sysSchedule.JobGroup)
                 .StartAt(sysSchedule.BeginTime.Value)
                 .EndAt(sysSchedule.EndTime.Value)
                 .WithSimpleSchedule(x =>
                 x.WithIntervalInSeconds(sysSchedule.IntervalSecond)
-                .WithRepeatCount(sysSchedule.RunTimes)).ForJob(sysSchedule.Name,sysSchedule.JobGroup).Build();
+                .WithRepeatCount(sysSchedule.RunTimes)).ForJob(sysSchedule.Id.ToString(), sysSchedule.JobGroup).Build();
                 return trigger;
             }
             else
             {
                 ITrigger trigger = TriggerBuilder.Create()
-                .WithIdentity(sysSchedule.Name, sysSchedule.JobGroup)
+                .WithIdentity(sysSchedule.Id.ToString(), sysSchedule.JobGroup)
                 .StartAt(sysSchedule.BeginTime.Value)
                 .EndAt(sysSchedule.EndTime.Value)
                 .WithSimpleSchedule(x =>
                 x.WithIntervalInSeconds(sysSchedule.IntervalSecond)
-                .RepeatForever()).ForJob(sysSchedule.Name, sysSchedule.JobGroup).Build();
+                .RepeatForever()).ForJob(sysSchedule.Id.ToString(), sysSchedule.JobGroup).Build();
                 return trigger;
             }
             // 触发作业立即运行，然后每10秒重复一次，无限循环
@@ -287,11 +291,11 @@ namespace Uwl.QuartzNet.JobCenter.Center
         {
             // 作业触发器
             return TriggerBuilder.Create()
-                   .WithIdentity(sysSchedule.Name, sysSchedule.JobGroup)
+                   .WithIdentity(sysSchedule.Id.ToString(), sysSchedule.JobGroup)
                    .StartAt(sysSchedule.BeginTime.Value)//开始时间
                    .EndAt(sysSchedule.EndTime.Value)//结束数据
                    .WithCronSchedule(sysSchedule.Cron)//指定cron表达式
-                   .ForJob(sysSchedule.Name, sysSchedule.JobGroup)//作业名称
+                   .ForJob(sysSchedule.Id.ToString(), sysSchedule.JobGroup)//作业名称
                    .Build();
         }
         #endregion

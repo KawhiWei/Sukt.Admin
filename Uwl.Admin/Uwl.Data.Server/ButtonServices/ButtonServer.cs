@@ -94,8 +94,8 @@ namespace Uwl.Data.Server.ButtonServices
             {
                  menuquery= menuquery.And(m => m.Name.Contains(buttonQuery.MenuName.Trim()));
             }
-            int Total = _buttonRepositoty.Count(query);
-            var list = (from a in _buttonRepositoty.PageBy(buttonQuery.PageIndex, buttonQuery.PageSize, query)
+            
+            var list = (from a in _buttonRepositoty.GetAll(query)
                         join  b in _menuRepositoty.GetAll(menuquery) on a.MenuId equals b.Id
                         select new ButtonViewMoel
                         {
@@ -109,9 +109,9 @@ namespace Uwl.Data.Server.ButtonServices
                             CreatedDate=a.CreatedDate,
                             MenuId=b.Id,
                             MenuName = b.Name,
-                            
-                        }).ToList();
-            return (list, Total);
+                        });
+            int Total = list.Count();//查询符合添加的总数执行一次
+            return (list.PageBy(buttonQuery.PageSize, buttonQuery.PageSize * (buttonQuery.PageIndex-1)).ToList(), Total);//再查询符合条件的数据在查一次
         }
         /// <summary>
         /// 获取所有的按钮列表

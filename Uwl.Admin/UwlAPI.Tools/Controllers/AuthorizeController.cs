@@ -44,7 +44,6 @@ namespace UwlAPI.Tools.Controllers
         private readonly IRabbitMQ _rabbitMQ;
         private readonly PermissionRequirement _requirement;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly ISchedulerCenter _schedulerCenter;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -65,7 +64,7 @@ namespace UwlAPI.Tools.Controllers
             this._requirement = permissionRequirement;
             this._hostingEnvironment = hostingEnvironment;
             this._rabbitMQ = rabbitMQ;
-            this._schedulerCenter = schedulerCenter;
+            
         }
         #region 获取Token No.1
         /// <summary>

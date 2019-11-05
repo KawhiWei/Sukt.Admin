@@ -9,6 +9,7 @@
     <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
     <ProjectReference Include="..\Uwl.Domain\Uwl.Domain.csproj" />
     <ProjectReference Include="..\Uwl.Extends\Uwl.Extends.csproj" />
+    <ProjectReference Include="..\Uwl.QuartzNet.JobCenter\Uwl.QuartzNet.JobCenter.csproj" />
   </ItemGroup>
 
 </Project>

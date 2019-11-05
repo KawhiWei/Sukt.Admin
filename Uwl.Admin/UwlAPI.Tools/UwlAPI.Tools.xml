@@ -503,6 +503,13 @@
             注入构造函数
             </summary>
         </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.GetSchedulePage(Uwl.Data.Model.Assist.ScheduleQuery)">
+            <summary>
+            分页获取按钮
+            </summary>
+            <param name="scheduleQuery">查询方法</param>
+            <returns></returns>
+        </member>
         <member name="M:UwlAPI.Tools.Controllers.ScheduleController.AddSchedule(Uwl.Data.Model.BaseModel.SysSchedule)">
             <summary>
             添加计划任务
@@ -515,6 +522,20 @@
             修改计划任务
             </summary>
             <param name="sysRole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.StartJob(System.Guid)">
+            <summary>
+            启动计划任务
+            </summary>
+            <param name="JobId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.ScheduleController.StopJob(System.Guid)">
+            <summary>
+            停止一个计划任务
+            </summary>
+            <param name="jobId"></param>
             <returns></returns>
         </member>
         <member name="T:UwlAPI.Tools.Controllers.UserController">
@@ -598,6 +619,13 @@
             根据用户Id获取已分配的角色
             </summary>
             <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.UserRoleController.UserRoleAssig(Uwl.Data.Model.RoleAssigVO.UpdateUserRoleVo)">
+            <summary>
+            用户角色权限保存
+            </summary>
+            <param name="updateUserRole">传进来的实体模型</param>
             <returns></returns>
         </member>
         <member name="T:UwlAPI.Tools.CustomApiVersion">

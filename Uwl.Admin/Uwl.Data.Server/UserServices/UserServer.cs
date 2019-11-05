@@ -129,23 +129,9 @@ namespace Uwl.Data.Server.UserServices
         /// <returns></returns>
         public async Task<bool> AddUser(SysUser sysUser)
         {
-            sysUser.Id = Guid.NewGuid();
-            var str=sysUser.RoleIds;
-            var RoleIds = JsonConvert.DeserializeObject<List<Guid>>(sysUser.RoleIds);
-            var Rolelist = new List<SysUserRole>();
-            Rolelist.AddRange(RoleIds.Select(x => new SysUserRole
-            {
-                RoleId = x,
-                CreatedId=sysUser.CreatedId,
-                CreatedName=sysUser.CreatedName,
-                UserIdOrDepId=sysUser.Id,
-            }));
             try
             {
-                _unitofWork.BeginTransaction();
                 await _userRepositoty.InsertAsync(sysUser);
-                await _userRoleRepository.InsertAsync(Rolelist);
-                _unitofWork.Commit();
                 return true;
             }
             catch (Exception)
@@ -170,25 +156,13 @@ namespace Uwl.Data.Server.UserServices
         /// <returns></returns>
         public async Task<bool> UpdateUser(SysUser sysUser)
         {
-            var RoleIds = new List<Guid>();
-            var deletelist = await _userRoleRepository.GetAllListAsync(x=>x.UserIdOrDepId==sysUser.Id);
-            if(!sysUser.RoleIds.IsNullOrEmpty())
-                RoleIds.AddRange(JsonConvert.DeserializeObject<List<Guid>>(sysUser.RoleIds));
-            var Rolelist = new List<SysUserRole>();
-            Rolelist.AddRange(RoleIds.Select(x => new SysUserRole
-            {
-                RoleId = x,
-                CreatedId = sysUser.UpdateId,
-                CreatedName = sysUser.UpdateName,
-                UserIdOrDepId = sysUser.Id,
-            }));
+            sysUser.UpdateDate = DateTime.Now;
             try
             {
-                _unitofWork.BeginTransaction();
-                await _userRepositoty.UpdateAsync(sysUser);
-                await _userRoleRepository.Delete(deletelist);
-                await _userRoleRepository.InsertAsync(Rolelist);
-                _unitofWork.Commit();
+                await _userRepositoty.UpdateNotQueryAsync(sysUser,x=>x.Name, x => x.Sex, x => x.Email, 
+                    x => x.Mobile, x => x.QQ, x => x.WeChat, x => x.EmpliyeeType, x => x.JobName, x => x.AccountState
+                    , x => x.OrganizeId, x => x.DepartmentId, x => x.DepartmentId
+                    );
                 return true;
             }
             catch (Exception)

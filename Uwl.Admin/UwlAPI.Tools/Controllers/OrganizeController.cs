@@ -125,12 +125,12 @@ namespace UwlAPI.Tools.Controllers
                 data.success = await this._organizeServer.UpdateOrganize(sysOrganize);
                 if (data.success)
                 {
-                    data.msg = "组织机构添加成功";
+                    data.msg = "组织机构修改成功";
                     return data;
                 }
                 else
                 {
-                    data.msg = "组织机构添加失败";
+                    data.msg = "组织机构修改失败";
                     return data;
                 }
             }
