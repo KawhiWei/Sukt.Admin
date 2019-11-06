@@ -184,6 +184,8 @@ namespace UwlAPI.Tools.Controllers
                 if (ModelState.IsValid)
                 {
                     loginViewModel.Password = loginViewModel.Password.ToMD5();
+                    var Ip = HttpContext.GetClientIP();
+                    await Console.Out.WriteLineAsync(string.Format("客户端请求IP:{0}", Ip));
                     SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
                     #region    QuartzNet定时任务
                     //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
