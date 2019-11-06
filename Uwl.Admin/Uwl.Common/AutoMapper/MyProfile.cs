@@ -7,6 +7,7 @@ using UwlAPI.Tools.Controllers;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.MenuViewModel;
 using Uwl.Data.Model.OrganizeVO;
+using Uwl.Data.Model.VO.Personal;
 
 namespace Uwl.Common.AutoMapper
 {
@@ -19,13 +20,25 @@ namespace Uwl.Common.AutoMapper
         {
             //菜单映射前端路由实体
             CreateMap<SysMenu, RouterBar>();
-            //角色权限实体映射
-            //指定属性映射，非相同属性自动映射
+            //角色权限实体映射       指定属性映射，非相同属性自动映射
             CreateMap<SysMenu, RoleAssigMenuViewModel>().ForMember(x=>x.title,opt=>opt.MapFrom(m=>m.Name));
             //角色权限按钮实体映射
             CreateMap<SysButton, RoleAssigButtonViewModel>().ForMember(x => x.lable, opt => opt.MapFrom(m => m.Name));
             //组织机构树形实体映射
             CreateMap<SysOrganize, OrganizeViewModel>().ForMember(x => x.title, opt => opt.MapFrom(m => m.Name));
+
+
+
+
+            #region 用户个人资料修改
+            //个人资料修改VO到DO的映射
+            CreateMap<ChangeDataVO, SysUser>();
+            //CreateMap<ChangeDataVO, SysUser>().AfterMap((source, destination) =>
+            //{
+
+            //});
+            #endregion
+
         }
     }
    

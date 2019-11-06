@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Uwl.Common.AutoMapper;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Enum;
+using Uwl.Data.Model.VO.Personal;
 using Uwl.Data.Server.LambdaTree;
 using Uwl.Domain.IRepositories;
 using Uwl.Domain.RoleInterface;
 using Uwl.Domain.UserInterface;
+using Uwl.Extends.EncryPtion;
 using Uwl.Extends.Utility;
 
 namespace Uwl.Data.Server.UserServices
@@ -215,6 +218,59 @@ namespace Uwl.Data.Server.UserServices
                 throw ex;
             }
            
+        }
+        /// <summary>
+        /// 用户个人修改密码
+        /// </summary>
+        /// <param name="changePwd"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangePwd(ChangePwdVO changePwd)
+        {
+            changePwd.oldPassWord = changePwd.oldPassWord.ToMD5();
+            changePwd.newPassWord = changePwd.newPassWord.ToMD5();
+            changePwd.passwdCheck = changePwd.passwdCheck.ToMD5();
+            if (changePwd.UserId == Guid.Empty)
+                throw new Exception("用户Id不存在,请重新登录!");
+            if (changePwd.newPassWord != changePwd.passwdCheck)
+                throw new Exception("两次输入的密码不一致请重新输入!");
+            var model= await _userRepositoty.GetModelAsync(changePwd.UserId.Value);
+
+            
+            if (model==null)
+                throw new Exception("用户信息不存在，不可修改密码!");
+            if (changePwd.oldPassWord!= model.Password)
+                throw new Exception("输入的旧密码对请重新输入!");
+            model.Password = changePwd.newPassWord;
+            try
+            {
+                return await _userRepositoty.UpdateAsync(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+        /// <summary>
+        /// 用户个人资料修改
+        /// </summary>
+        /// <param name="sysUser"></param>
+        /// <returns></returns>
+        public async Task<bool> ChangeData(ChangeDataVO changeData)
+        {
+            try
+            {
+                var model = await _userRepositoty.GetModelAsync(changeData.UserId);
+                if (model == null)
+                    throw new Exception("用户信息不存在，不可修改密码!");
+                model = MyMappers.ObjectMapper.Map<ChangeDataVO,SysUser>(changeData, model);                
+                return await _userRepositoty.UpdateAsync(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

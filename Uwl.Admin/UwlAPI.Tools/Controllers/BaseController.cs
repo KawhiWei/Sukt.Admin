@@ -19,7 +19,12 @@ namespace UwlAPI.Tools.Controllers
         /// <summary>
         /// 角色Id
         /// </summary>
-        public List<Guid> RoleIds { get; private set; }=new List<Guid>();
+        public static List<Guid> RoleIds { get; private set; }=new List<Guid>();
+
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        public static Guid? UserId { get; private set; } = null;
 
         /// <summary>
         /// action执行前事件
@@ -35,6 +40,10 @@ namespace UwlAPI.Tools.Controllers
                     if (!RoleIds.Any())
                     {
                         RoleIds = httpContext.User.Claims.Where(item => item.Type == ClaimTypes.Role).FirstOrDefault().Value.Split(',').Select(x => x.ToGuid()).ToList();
+                    }
+                    if(UserId==null)
+                    {
+                        UserId = httpContext.User.Claims.FirstOrDefault(item => item.Type == "Id").Value.ToGuid();
                     }
                 }
             }

@@ -247,6 +247,11 @@
             角色Id
             </summary>
         </member>
+        <member name="P:UwlAPI.Tools.Controllers.BaseController.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
         <member name="M:UwlAPI.Tools.Controllers.BaseController.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
             <summary>
             action执行前事件
@@ -422,6 +427,30 @@
             修改组织机构
             </summary>
             <param name="sysOrganize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UwlAPI.Tools.Controllers.PersonalCenterController">
+            <summary>
+            个人资料修改控制器
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.PersonalCenterController.#ctor(Uwl.Data.Server.UserServices.IUserServer)">
+            <summary>
+            构造函数注入
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.PersonalCenterController.ChangePassword(Uwl.Data.Model.VO.Personal.ChangePwdVO)">
+            <summary>
+            修改密码接口
+            </summary>
+            <param name="changePwd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.PersonalCenterController.ChangeData(Uwl.Data.Model.VO.Personal.ChangeDataVO)">
+            <summary>
+            修改密码接口
+            </summary>
+            <param name="changeData"></param>
             <returns></returns>
         </member>
         <member name="T:UwlAPI.Tools.Controllers.RoleAssigController">

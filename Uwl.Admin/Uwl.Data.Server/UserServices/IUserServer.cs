@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
+using Uwl.Data.Model.VO.Personal;
 
 namespace Uwl.Data.Server.UserServices
 {
@@ -64,5 +65,17 @@ namespace Uwl.Data.Server.UserServices
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<string> GetUserRoleByUserId(Guid userId);
+        /// <summary>
+        /// 用户个人修改密码
+        /// </summary>
+        /// <param name="sysUser"></param>
+        /// <returns></returns>
+        Task<bool> ChangePwd(ChangePwdVO changePwd);
+        /// <summary>
+        /// 用户个人资料修改
+        /// </summary>
+        /// <param name="sysUser"></param>
+        /// <returns></returns>
+        Task<bool> ChangeData(ChangeDataVO changeData);
     }
 }
