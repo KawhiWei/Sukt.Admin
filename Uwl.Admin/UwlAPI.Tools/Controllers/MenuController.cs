@@ -44,8 +44,7 @@ namespace UwlAPI.Tools.Controllers
         [HttpGet]
         public MessageModel<PageModel<MenuViewMoel>> GetMenuByPage([FromQuery]MenuQuery menuQuery)
         {
-            var list =  _menuServer.GetQueryMenuByPage(menuQuery, out int Total);
-            var lists = _menuServer.GetQueryMenuByPage(menuQuery, out int Totals);
+            var list =  _menuServer.GetQueryMenuByPage(menuQuery);
             //var query = (from a in list join b in lists on a.
             //             )
             return  new MessageModel<PageModel<MenuViewMoel>>()
@@ -54,8 +53,8 @@ namespace UwlAPI.Tools.Controllers
                 msg = "数据获取成功",
                 response = new PageModel<MenuViewMoel>()
                 {
-                    TotalCount = Total,
-                    data = list,
+                    TotalCount = list.Item2,
+                    data = list.Item1,
                 }
             };
         }
