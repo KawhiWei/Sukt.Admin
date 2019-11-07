@@ -16,3 +16,5 @@
 /Uwl.Admin/UwlAPI.Tools/obj
 /Uwl.Admin/UwlAPI.Tools/bin
 /Uwl.Admin/.vs
+/Uwl.Admin/Uwl.ScheduledTask.Job/obj
+/Uwl.Admin/Uwl.ScheduledTask.Job/bin

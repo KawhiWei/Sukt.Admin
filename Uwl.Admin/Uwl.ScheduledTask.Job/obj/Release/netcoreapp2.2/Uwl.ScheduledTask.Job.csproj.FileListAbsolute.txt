@@ -1,9 +1,0 @@
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\bin\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.deps.json
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\bin\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.dll
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\bin\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.pdb
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.csprojAssemblyReference.cache
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.csproj.CoreCompileInputs.cache
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.AssemblyInfoInputs.cache
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.AssemblyInfo.cs
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.dll
-F:\Project\gitHubOpenSourceEdition\Uwl.Admin.Core\Uwl.Admin\Uwl.ScheduledTask.Job\obj\Release\netcoreapp2.2\Uwl.ScheduledTask.Job.pdb
