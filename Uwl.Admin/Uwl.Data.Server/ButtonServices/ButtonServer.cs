@@ -111,7 +111,7 @@ namespace Uwl.Data.Server.ButtonServices
                             MenuName = b.Name,
                         });
             int Total = list.Count();//查询符合添加的总数执行一次
-            return (list.PageBy(buttonQuery.PageSize, buttonQuery.PageSize * (buttonQuery.PageIndex-1)).ToList(), Total);//再查询符合条件的数据在查一次
+            return (list.PageBy(buttonQuery.PageSize, buttonQuery.PageIndex-1).ToList(), Total);//再查询符合条件的数据在查一次
         }
         /// <summary>
         /// 获取所有的按钮列表

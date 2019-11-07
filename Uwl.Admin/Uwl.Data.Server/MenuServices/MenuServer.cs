@@ -152,7 +152,7 @@ namespace Uwl.Data.Server.MenuServices
         /// </summary>
         /// <param name="GuIds"></param>
         /// <returns></returns>
-        public List<MenuViewMoel> GetQueryMenuByPage(MenuQuery menuQuery, out int Total)
+        public (List<MenuViewMoel>,int) GetQueryMenuByPage(MenuQuery menuQuery)
         {
             var query = ExpressionBuilder.True<SysMenu>();
             query = query.And(menu => menu.IsDrop == false);
@@ -168,9 +168,7 @@ namespace Uwl.Data.Server.MenuServices
             {
                 query = query.And(m => m.APIAddress.Contains(menuQuery.APIAddress.Trim()));
             }
-            Total = _menuRepositoty.Count(query);
-
-            var list = (from a in _menuRepositoty.PageBy(menuQuery.PageIndex, menuQuery.PageSize, query)
+            var list = (from a in _menuRepositoty.GetAll(query)
                         join b in _menuRepositoty.GetAll(x => x.IsDrop == false) on a.ParentId equals b.Id into le from aa in le.DefaultIfEmpty() 
                         select new MenuViewMoel
                         {
@@ -185,8 +183,8 @@ namespace Uwl.Data.Server.MenuServices
                             Icon = a.Icon,
                             CreatedDate=a.CreatedDate,
                             ParentIdArr=a.ParentIdArr,
-                        }).ToList();
-            return list; //_menuRepositoty.PageBy<SysMenu>(menuQuery.PageIndex, menuQuery.PageSize, query).ToList();
+                        });
+            return (list.PageBy(menuQuery.PageSize, menuQuery.PageIndex - 1).ToList(),list.Count()); //_menuRepositoty.PageBy<SysMenu>(menuQuery.PageIndex, menuQuery.PageSize, query).ToList();
         }
 
         #region 帮助方法

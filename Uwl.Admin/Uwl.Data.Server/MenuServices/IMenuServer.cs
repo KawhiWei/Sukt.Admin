@@ -52,7 +52,7 @@ namespace Uwl.Data.Server.MenuServices
         /// </summary>
         /// <param name="GuIds"></param>
         /// <returns></returns>
-        List<MenuViewMoel> GetQueryMenuByPage(MenuQuery menuQuery, out int Total);
+        (List<MenuViewMoel>, int) GetQueryMenuByPage(MenuQuery menuQuery);
         /// <summary>
         /// 修改菜单
         /// </summary>
