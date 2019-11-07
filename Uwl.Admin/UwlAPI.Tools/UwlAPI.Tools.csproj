@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Uwl.Data.EntityFramework\Uwl.Data.EntityFramework.csproj" />
     <ProjectReference Include="..\Uwl.Data.Server\Uwl.Data.Server.csproj" />
     <ProjectReference Include="..\Uwl.QuartzNet.JobCenter\Uwl.QuartzNet.JobCenter.csproj" />
+    <ProjectReference Include="..\Uwl.ScheduledTask.Job\Uwl.ScheduledTask.Job.csproj" />
   </ItemGroup>
 
   <ItemGroup>
