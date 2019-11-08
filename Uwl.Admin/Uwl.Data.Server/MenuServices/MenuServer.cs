@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Uwl.Common.AutoMapper;
+using Uwl.Common.Cache.RedisCache;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.MenuViewModel;
@@ -28,6 +29,7 @@ namespace Uwl.Data.Server.MenuServices
         private readonly IButtonRepositoty _buttonRepositoty;
         private readonly IUserRoleRepository _userRoleRepository;//用户角色仓储层接口定义
         private readonly IRoleRightAssigRepository _roleRightAssigRepository;//定义角色权限领域层对象
+        private readonly IRedisCacheManager _redisCacheManager;
         /// <summary>
         /// 通过构造函数注入领域仓储层的接口
         /// </summary>
@@ -36,13 +38,14 @@ namespace Uwl.Data.Server.MenuServices
             IMenuRepositoty menuRepositoty, 
             IButtonRepositoty buttonRepositoty,
             IUserRoleRepository userRoleRepository,
-            IRoleRightAssigRepository roleRightAssigRepository
+            IRoleRightAssigRepository roleRightAssigRepository, IRedisCacheManager redisCacheManager
             )
         {
             this._menuRepositoty = menuRepositoty;
             this._buttonRepositoty = buttonRepositoty;
             this._userRoleRepository = userRoleRepository;
             this._roleRightAssigRepository = roleRightAssigRepository;
+            this._redisCacheManager = redisCacheManager;
         }
         /// <summary>
         /// 根据ID获取一个菜单的对象
@@ -71,7 +74,20 @@ namespace Uwl.Data.Server.MenuServices
             var RoleIds=Rolelist.Select(x => x.RoleId).ToList();//获取到角色列表中的角色ID
             var MenuList = await _roleRightAssigRepository.GetAllListAsync(x => RoleIds.Contains(x.RoleId));//根据角色Id获取菜单列表
             var MenuIds = MenuList.Select(x => x.MenuId).ToList();//获取角色权限中的菜单ID
-            var baselist=await _menuRepositoty.GetAllListAsync(x => MenuIds.Contains(x.Id));//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
+            List<SysMenu> baselist = new List<SysMenu>();
+            if (_redisCacheManager.Get("Menu"))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
+            {
+                baselist = _redisCacheManager.GetList<SysMenu>("Menu");
+            }
+            else
+            {
+                RestMenuCache();
+                baselist = _redisCacheManager.GetList<SysMenu>("Menu");
+            }
+            if(!baselist.Any())
+            {
+                baselist = await _menuRepositoty.GetAllListAsync(x => MenuIds.Contains(x.Id));//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
+            }
             var btnlist = await _buttonRepositoty.GetAllListAsync(x => x.IsShow == true && x.IsDrop == false);
             RouterBar routerbar = new RouterBar()
             {
@@ -114,7 +130,9 @@ namespace Uwl.Data.Server.MenuServices
         /// <param name="sysMenu"></param>
         public async Task<bool> AddMenu(SysMenu sysMenu)
         {
-            return await _menuRepositoty.InsertAsync(sysMenu);
+            var result = await _menuRepositoty.InsertAsync(sysMenu);
+            RestMenuCache();//菜单进行修改重置缓存
+            return result;
         }
         /// <summary>
         /// 修改菜单
@@ -124,9 +142,11 @@ namespace Uwl.Data.Server.MenuServices
         {
             sysMenu.UpdateDate = DateTime.Now;
             //var model = await _menuRepositoty.GetModelAsync(sysMenu.Id);
-            return await _menuRepositoty.UpdateNotQueryAsync(sysMenu, x => x.Name, x => x.APIAddress,
+            var result=await _menuRepositoty.UpdateNotQueryAsync(sysMenu, x => x.Name, x => x.APIAddress,
                 x => x.UrlAddress, x => x.ParentId, x => x.Sort, x => x.Memo,
                 x => x.Icon, x => x.UpdateDate, x => x.UpdateId, x => x.ParentIdArr) > 0;
+            RestMenuCache();//菜单进行修改重置缓存
+            return result;
             //return await _menuRepositoty.UpdateAsync(model);
         }
         /// <summary>
@@ -145,7 +165,9 @@ namespace Uwl.Data.Server.MenuServices
         /// <returns></returns>
         public async Task<bool> DeleteMenu(List<SysMenu> sysMenus)
         {
-            return await _menuRepositoty.UpdateAsync(sysMenus);
+            var result= await _menuRepositoty.UpdateAsync(sysMenus);
+            RestMenuCache();//菜单进行修改重置缓存
+            return result;
         }
         /// <summary>
         /// 查询条件分页查询出来菜单列表
@@ -185,6 +207,16 @@ namespace Uwl.Data.Server.MenuServices
                             ParentIdArr=a.ParentIdArr,
                         });
             return (list.PageBy(menuQuery.PageSize, menuQuery.PageIndex - 1).ToList(),list.Count()); //_menuRepositoty.PageBy<SysMenu>(menuQuery.PageIndex, menuQuery.PageSize, query).ToList();
+        }
+
+        /// <summary>
+        /// 菜单表任何操作将缓存重置
+        /// </summary>
+        public async void RestMenuCache()
+        {
+            _redisCacheManager.Remove("Menu");
+            var menus= await GetMenuList();
+            _redisCacheManager.Set("Menu", menus);
         }
 
         #region 帮助方法

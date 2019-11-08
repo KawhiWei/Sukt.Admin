@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Uwl.Common.Helper;
+using Uwl.Extends.Utility;
 
 namespace Uwl.Common.Cache.RedisCache
 {
@@ -79,6 +80,21 @@ namespace Uwl.Common.Cache.RedisCache
                 return default(TEntity);
             }
         }
+        public List<TEntity> GetList<TEntity>(string key)
+        {
+            if (key.IsNullOrEmpty())
+                throw new Exception("要获取缓存的Key不可为空");
+            var value = redisConnection.GetDatabase().StringGet(key);
+            if(value.HasValue)
+            {
+                var list=SerializeHelper.Deserialize<List<TEntity>>(value);
+                return list;
+            }
+            else
+            {
+                return new List<TEntity>();
+            }
+        }
 
         public bool Get(string key)
         {
@@ -95,11 +111,19 @@ namespace Uwl.Common.Cache.RedisCache
             redisConnection.GetDatabase().KeyDelete(key);
         }
 
-        public void Set(string key, object value, TimeSpan cacheTime)
+        public void Set(string key, object value, TimeSpan? cacheTime=null)
         {
             if (value != null)
             {
-                redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value));
+                if(cacheTime!=null)
+                {
+                    redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), cacheTime);
+                }
+                else
+                {
+                    redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value));
+                }
+                
             }
         }
     }

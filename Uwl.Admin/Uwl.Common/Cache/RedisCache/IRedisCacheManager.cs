@@ -27,7 +27,7 @@ namespace Uwl.Common.Cache.RedisCache
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="cacheTime"></param>
-        void Set(string key, object value, TimeSpan cacheTime);
+        void Set(string key, object value, TimeSpan? cacheTime = null);
 
         /// <summary>
         /// 判断一个key是否存在Redis
@@ -46,5 +46,12 @@ namespace Uwl.Common.Cache.RedisCache
         /// 清除所有的Redis缓存
         /// </summary>
         void Clear();
+        /// <summary>
+        /// 获取List
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        List<TEntity> GetList<TEntity>(string key);
     }
 }
