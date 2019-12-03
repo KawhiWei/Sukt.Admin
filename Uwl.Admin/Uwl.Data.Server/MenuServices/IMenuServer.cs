@@ -58,5 +58,9 @@ namespace Uwl.Data.Server.MenuServices
         /// </summary>
         /// <param name="sysMenu"></param>
         Task<bool> UpdateMenu(SysMenu sysMenu);
+        /// <summary>
+        /// 重置缓存
+        /// </summary>
+        Task RestMenuCache();
     }
 }

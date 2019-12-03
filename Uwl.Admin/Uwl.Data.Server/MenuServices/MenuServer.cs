@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,21 +72,31 @@ namespace Uwl.Data.Server.MenuServices
         /// <returns></returns>
         public async Task<RouterBar> RouterBar(Guid userId)
         {
+            //记录Job时间
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
             var Rolelist = await _userRoleRepository.GetAllListAsync(x => x.UserIdOrDepId == userId);//根据用户ID获取角色列表
             var RoleIds=Rolelist.Select(x => x.RoleId).ToList();//获取到角色列表中的角色ID
             var MenuList = await _roleRightAssigRepository.GetAllListAsync(x => RoleIds.Contains(x.RoleId));//根据角色Id获取菜单列表
             var MenuIds = MenuList.Select(x => x.MenuId).ToList();//获取角色权限中的菜单ID
+
+            //stopwatch.Stop();
+
+            //string msg = "我是测试定时任务发起的消息队列本次任务执行时间：" + stopwatch.Elapsed.TotalMilliseconds.ToString();
+            //_redisCacheManager.PublishAsyncRedis("testmes", msg);
+            //_redisCacheManager.PublishAsyncRedis("testmes", msg);
+
             List<SysMenu> baselist = new List<SysMenu>();
             if (_redisCacheManager.Get("Menu"))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
             {
-                baselist = _redisCacheManager.GetList<SysMenu>("Menu");
+                baselist = _redisCacheManager.GetList<SysMenu>("Menu").Where(x=>MenuIds.Contains(x.Id)).ToList();
             }
             else
             {
-                RestMenuCache();
-                baselist = _redisCacheManager.GetList<SysMenu>("Menu");
+                await RestMenuCache();
+                baselist = _redisCacheManager.GetList<SysMenu>("Menu").Where(x => MenuIds.Contains(x.Id)).ToList();
             }
-            if(!baselist.Any())
+            if (!baselist.Any())
             {
                 baselist = await _menuRepositoty.GetAllListAsync(x => MenuIds.Contains(x.Id));//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
             }
@@ -131,7 +143,7 @@ namespace Uwl.Data.Server.MenuServices
         public async Task<bool> AddMenu(SysMenu sysMenu)
         {
             var result = await _menuRepositoty.InsertAsync(sysMenu);
-            RestMenuCache();//菜单进行修改重置缓存
+            //await RestMenuCache();//菜单进行修改重置缓存
             return result;
         }
         /// <summary>
@@ -145,7 +157,11 @@ namespace Uwl.Data.Server.MenuServices
             var result=await _menuRepositoty.UpdateNotQueryAsync(sysMenu, x => x.Name, x => x.APIAddress,
                 x => x.UrlAddress, x => x.ParentId, x => x.Sort, x => x.Memo,
                 x => x.Icon, x => x.UpdateDate, x => x.UpdateId, x => x.ParentIdArr) > 0;
-            RestMenuCache();//菜单进行修改重置缓存
+            var menus = await _menuRepositoty.GetAllListAsync(x => x.IsDrop == false);
+            //_redisCacheManager.Remove("Menu");
+            //_redisCacheManager.Set("Menu", menus);
+
+            //await RestMenuCache();//菜单进行修改重置缓存
             return result;
             //return await _menuRepositoty.UpdateAsync(model);
         }
@@ -166,7 +182,7 @@ namespace Uwl.Data.Server.MenuServices
         public async Task<bool> DeleteMenu(List<SysMenu> sysMenus)
         {
             var result= await _menuRepositoty.UpdateAsync(sysMenus);
-            RestMenuCache();//菜单进行修改重置缓存
+            //await RestMenuCache();//菜单进行修改重置缓存
             return result;
         }
         /// <summary>
@@ -212,11 +228,20 @@ namespace Uwl.Data.Server.MenuServices
         /// <summary>
         /// 菜单表任何操作将缓存重置
         /// </summary>
-        public async void RestMenuCache()
+        public async Task RestMenuCache()
         {
-            _redisCacheManager.Remove("Menu");
-            var menus= await GetMenuList();
-            _redisCacheManager.Set("Menu", menus);
+            try
+            {
+                _redisCacheManager.Remove("Menu");
+                var list=await this._menuRepositoty.GetAll(x=>x.IsDrop==false).AsNoTracking().ToListAsync();
+                _redisCacheManager.Set("Menu", list);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         #region 帮助方法

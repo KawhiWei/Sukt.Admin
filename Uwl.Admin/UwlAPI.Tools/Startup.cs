@@ -54,6 +54,8 @@ using Uwl.Domain.ScheduleInterface;
 using Uwl.Data.EntityFramework.ScheduleServices;
 using Uwl.Common.Cache.RedisCache;
 using Uwl.Common.SignalRMessage;
+using Uwl.Common.Subscription;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace UwlAPI.Tools
 {
@@ -62,6 +64,11 @@ namespace UwlAPI.Tools
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// SignalR跨域处理
+        /// </summary>
+        public const string CorsName = "SignalRCors";
+
         /// <summary>
         /// 定义一个启用数据库连接IConfiguration的属性
         /// </summary>
@@ -84,6 +91,26 @@ namespace UwlAPI.Tools
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+
+            #region Cors跨域需要添加以下代码
+            services.AddCors(c =>
+            {
+                //控制器中[EnableCors("AllRequests")]名字需对应
+                c.AddPolicy(CorsName,
+                    policy => policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()//允许任何方式
+                    .AllowAnyHeader());//允许任何头//允许cookie
+            });
+
+            //services.AddCors(op => 
+            //{ op.AddPolicy("cors", 
+            //    set => { set.SetIsOriginAllowed(origin => true)
+            //        .AllowAnyHeader().AllowAnyMethod().AllowCredentials(); }); });
+
+            #endregion
+            services.AddSignalR();
+
             #region 配置启动程序
             //获取appsettings.json文件Default节点下面的连接字符串
             var sqlconn = Configuration.GetConnectionString("SqlserverDefault");
@@ -97,7 +124,7 @@ namespace UwlAPI.Tools
                 //全局路由权限公约，给路由添加Authorize特性
                 mvc.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
                 //mvc.Conventions.Insert(0, new AddRoutePrefixFilter(new RouteAttribute(RoutePrefix.Name)));
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
             #region Swagger
             services.AddSwaggerGen(x =>
@@ -145,8 +172,8 @@ namespace UwlAPI.Tools
                 ValidIssuer = audienceConfig["Issuer"],
                 //颁发给谁
                 ValidAudience = audienceConfig["Audience"],
-                //这里的key要进行加密，需要引用Microsoft.IdentityModel.Tokens
-                IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+                //这里的key密钥要进行加密，需要引用Microsoft.IdentityModel.Tokens
+                IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),//加密密钥
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,////是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
@@ -216,7 +243,7 @@ namespace UwlAPI.Tools
                     signingCredentials,//签名凭据
                     expiration:TimeSpan.FromSeconds(15*60)//过期时间
                 );
-            //No.1 基于角色的授权
+            //No.1 基于自定义角色的策略授权
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(GlobalRouteAuthorizeVars.Name, policy => policy.Requirements.Add(permissionRequirement));
@@ -238,14 +265,12 @@ namespace UwlAPI.Tools
                     {
                         var accessToken = context.Request.Query["access_token"];
                         var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(path) && path.StartsWithSegments("/api/chatHub"))
+                        if (!string.IsNullOrEmpty(path) && path.StartsWithSegments("/api2/chatHub"))
                         {
                             context.Token = accessToken;
                         }
                         return Task.CompletedTask;
                     }
-
-
                 };
                     //过期时间判断
                     //t.Events = new JwtBearerEvents
@@ -270,7 +295,7 @@ namespace UwlAPI.Tools
             #endregion
 
 
-            services.AddSignalR();
+            
 
             #region 添加automapper实体映射,如果存在相同字段则自动映射
             services.AddAutoMapper();
@@ -284,20 +309,7 @@ namespace UwlAPI.Tools
             MyMappers.ObjectMapper = _mapperConfiguration.CreateMapper();
             #endregion
 
-            #region Cors跨域需要添加以下代码
-            //services.AddCors(c =>
-            //{
-            //    //控制器中[EnableCors("AllRequests")]名字需对应
-            //    c.AddPolicy("AllRequests", policy =>
-            //    {
-            //        policy
-            //        .AllowAnyOrigin()//允许任何源
-            //        .AllowAnyMethod()//允许任何方式
-            //        .AllowAnyHeader()//允许任何头
-            //        .AllowCredentials();//允许cookie
-            //    });
-            //});
-            #endregion
+            
 
             #region 接口控制反转依赖注入      -netcore自带方法
 
@@ -327,9 +339,9 @@ namespace UwlAPI.Tools
             services.AddScoped<IMenuServer, MenuServer>();
 
             //注入角色管理领域仓储层实现
-            services.AddTransient<IRoleRepositoty, DomainRoleServer>();
+            services.AddScoped<IRoleRepositoty, DomainRoleServer>();
             //注入角色管理服务层实现
-            services.AddTransient<IRoleServer, RoleServer>();
+            services.AddScoped<IRoleServer, RoleServer>();
             //注入按钮管理领域仓储层实现
             services.AddScoped<IButtonRepositoty, DomainButtonServer>();
             //注入按钮管理服务层实现
@@ -361,12 +373,18 @@ namespace UwlAPI.Tools
             services.AddScoped<IScheduleServer, ScheduleServer>();
 
 
+            #region 缓存和任务调度中心使用 单例模式注入生命周期
 
             //注入Redis缓存
             services.AddSingleton<IRedisCacheManager, RedisCacheManager>();
             //注入RabbitMQ服务
             services.AddSingleton<IRabbitMQ, RabbitServer>();
+            //注入QuartzNet管理中心
             services.AddSingleton<ISchedulerCenter, SchedulerCenterServer>();
+            //注入Redis消息订阅管理器
+            services.AddSingleton<IRedisSubscription, RedisSubscriptionServer>();
+
+            #endregion
             #endregion
 
 
@@ -382,7 +400,12 @@ namespace UwlAPI.Tools
         {
 
             //在此处加入允许跨域
-            //app.UseCors("AllRequests"); //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
+            app.UseCors(CorsName).UseSignalR(routes =>
+            {
+                routes.MapHub<SignalRChat>("/api2/chatHub");
+
+            }); ; //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
+            app.UseWebSockets();
             #region Environment
             //判断是否是环境变量
             if (env.IsDevelopment())
@@ -421,12 +444,6 @@ namespace UwlAPI.Tools
             app.UseCookiePolicy();// 使用cookie
             //app.UseHttpsRedirection();// 跳转https
             app.UseStatusCodePages();
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<SignalRChat>("/api/chatHub");
-                
-            });
-
             app.UseMvc();
             
         }
