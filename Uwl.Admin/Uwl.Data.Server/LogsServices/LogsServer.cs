@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Uwl.Common;
+using Uwl.Common.LambdaTree;
 using Uwl.Data.Model.BaseModel;
-using Uwl.Data.Server.LambdaTree;
 using Uwl.Domain.LogsInterface;
 using Uwl.Extends.Utility;
 

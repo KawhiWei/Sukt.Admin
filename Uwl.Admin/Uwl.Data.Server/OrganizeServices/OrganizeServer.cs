@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Uwl.Common.AutoMapper;
+using Uwl.Common.LambdaTree;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Enum;
 using Uwl.Data.Model.OrganizeVO;
-using Uwl.Data.Server.LambdaTree;
 using Uwl.Domain.OrganizeInterface;
 
 namespace Uwl.Data.Server.OrganizeServices

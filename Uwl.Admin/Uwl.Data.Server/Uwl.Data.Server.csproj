@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="LambdaTree\**" />
+    <EmbeddedResource Remove="LambdaTree\**" />
+    <None Remove="LambdaTree\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
     <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
     <ProjectReference Include="..\Uwl.Domain\Uwl.Domain.csproj" />

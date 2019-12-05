@@ -762,6 +762,11 @@
             启动程序
             </summary>
         </member>
+        <member name="F:UwlAPI.Tools.Startup.CorsName">
+            <summary>
+            SignalR跨域处理
+            </summary>
+        </member>
         <member name="P:UwlAPI.Tools.Startup.Configuration">
             <summary>
             定义一个启用数据库连接IConfiguration的属性

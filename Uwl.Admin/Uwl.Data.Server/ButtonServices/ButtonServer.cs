@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Uwl.Common.LambdaTree;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.VO.ButtonVO;
-using Uwl.Data.Server.LambdaTree;
 using Uwl.Domain.ButtonInterface;
 using Uwl.Domain.MenuInterface;
 using Uwl.Domain.RoleInterface;
@@ -94,7 +94,6 @@ namespace Uwl.Data.Server.ButtonServices
             {
                  menuquery= menuquery.And(m => m.Name.Contains(buttonQuery.MenuName.Trim()));
             }
-            
             var list = (from a in _buttonRepositoty.GetAll(query)
                         join  b in _menuRepositoty.GetAll(menuquery) on a.MenuId equals b.Id
                         select new ButtonViewMoel
