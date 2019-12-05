@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Uwl.Common.AutoMapper;
 using Uwl.Common.Cache.RedisCache;
 using Uwl.Common.LambdaTree;
+using Uwl.Common.Sort.SortEnum;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.MenuViewModel;
@@ -18,6 +19,7 @@ using Uwl.Domain.ButtonInterface;
 using Uwl.Domain.MenuInterface;
 using Uwl.Domain.RoleInterface;
 using Uwl.Domain.UserInterface;
+using Uwl.Extends.Sort;
 using Uwl.Extends.Utility;
 
 namespace Uwl.Data.Server.MenuServices
@@ -222,7 +224,18 @@ namespace Uwl.Data.Server.MenuServices
                             CreatedDate=a.CreatedDate,
                             ParentIdArr=a.ParentIdArr,
                         });
-            return (list.PageBy(menuQuery.PageSize, menuQuery.PageIndex - 1).ToList(),list.Count()); //_menuRepositoty.PageBy<SysMenu>(menuQuery.PageIndex, menuQuery.PageSize, query).ToList();
+            //添加排序
+            OrderCondition<MenuViewMoel>[] orderConditions = new OrderCondition<MenuViewMoel>[]
+            {
+                new OrderCondition<MenuViewMoel>(x=>x.CreatedDate,SortDirectionEnum.Descending),
+                new OrderCondition<MenuViewMoel>(x=>x.UrlAddress,SortDirectionEnum.Ascending)
+            };
+            Parameters parameters = new Parameters();
+            parameters.PageIndex = menuQuery.PageIndex;
+            parameters.PageSize = menuQuery.PageSize;
+
+            parameters.OrderConditions = orderConditions;
+            return (list.PageBy(parameters).ToList(),list.Count()); //_menuRepositoty.PageBy<SysMenu>(menuQuery.PageIndex, menuQuery.PageSize, query).ToList();
         }
 
         /// <summary>

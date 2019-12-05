@@ -5,12 +5,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Uwl.Common.LambdaTree;
+using Uwl.Common.Sort.SortEnum;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.VO.ButtonVO;
 using Uwl.Domain.ButtonInterface;
 using Uwl.Domain.MenuInterface;
 using Uwl.Domain.RoleInterface;
+using Uwl.Extends.Sort;
 using Uwl.Extends.Utility;
 
 namespace Uwl.Data.Server.ButtonServices
@@ -110,7 +112,17 @@ namespace Uwl.Data.Server.ButtonServices
                             MenuName = b.Name,
                         });
             int Total = list.Count();//查询符合添加的总数执行一次
-            return (list.PageBy(buttonQuery.PageSize, buttonQuery.PageIndex-1).ToList(), Total);//再查询符合条件的数据在查一次
+            //添加排序
+            OrderCondition<ButtonViewMoel>[] orderConditions = new OrderCondition<ButtonViewMoel>[]
+            {
+                new OrderCondition<ButtonViewMoel>(x=>x.CreatedDate,SortDirectionEnum.Descending)
+            };
+            Parameters parameters = new Parameters();
+            parameters.PageIndex = buttonQuery.PageIndex;
+            parameters.PageSize = buttonQuery.PageSize;
+
+            parameters.OrderConditions = orderConditions;
+            return (list.PageBy(parameters).ToList(), Total);//再查询符合条件的数据在查一次
         }
         /// <summary>
         /// 获取所有的按钮列表
