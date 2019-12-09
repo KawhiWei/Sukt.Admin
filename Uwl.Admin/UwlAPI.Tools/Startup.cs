@@ -56,6 +56,12 @@ using Uwl.Common.Cache.RedisCache;
 using Uwl.Common.SignalRMessage;
 using Uwl.Common.Subscription;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Quartz.Spi;
+using Uwl.QuartzNet.JobCenter.JobFactory;
+using Uwl.ScheduledTask.Job;
+using Quartz;
+using Quartz.Impl;
+using System.Reflection;
 
 namespace UwlAPI.Tools
 {
@@ -93,15 +99,15 @@ namespace UwlAPI.Tools
         {
 
             #region Cors跨域需要添加以下代码
-            services.AddCors(c =>
-            {
-                //控制器中[EnableCors("AllRequests")]名字需对应
-                c.AddPolicy(CorsName,
-                    policy => policy
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()//允许任何方式
-                    .AllowAnyHeader());//允许任何头//允许cookie
-            });
+            //services.AddCors(c =>
+            //{
+            //    //控制器中[EnableCors("AllRequests")]名字需对应
+            //    c.AddPolicy(CorsName,
+            //        policy => policy
+            //        .AllowAnyOrigin()
+            //        .AllowAnyMethod()//允许任何方式
+            //        .AllowAnyHeader());//允许任何头//允许cookie
+            //});
 
             //services.AddCors(op => 
             //{ op.AddPolicy("cors", 
@@ -241,7 +247,7 @@ namespace UwlAPI.Tools
                     jwtSettings.Issuer,//发行人
                     jwtSettings.Audience,//听众
                     signingCredentials,//签名凭据
-                    expiration:TimeSpan.FromSeconds(15*60)//过期时间
+                    expiration:TimeSpan.FromSeconds(60*60)//过期时间
                 );
             //No.1 基于自定义角色的策略授权
             services.AddAuthorization(options =>
@@ -371,6 +377,8 @@ namespace UwlAPI.Tools
             services.AddScoped<IScheduleRepositoty, DomainScheduleServer>();
             //注入计划任务服务层
             services.AddScoped<IScheduleServer, ScheduleServer>();
+            services.AddScoped<IScheduleServer, ScheduleServer>();
+            #endregion
 
 
             #region 缓存和任务调度中心使用 单例模式注入生命周期
@@ -381,12 +389,49 @@ namespace UwlAPI.Tools
             services.AddSingleton<IRabbitMQ, RabbitServer>();
             //注入QuartzNet管理中心
             services.AddSingleton<ISchedulerCenter, SchedulerCenterServer>();
+            services.AddSingleton<IJobFactory, IOCJobFactory>();
+            services.AddTransient<TestJobOne>();//Job使用瞬时依赖注入
+            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            //services.AddSingleton(provider =>
+            //{
+            //    var sf = new StdSchedulerFactory();
+            //    var scheduler = sf.GetScheduler().Result;
+            ////    通过实现IJobFactory实现依赖注入
+            //    scheduler.JobFactory = provider.GetService<IJobFactory>();
+
+            //    return scheduler;
+            //});
             //注入Redis消息订阅管理器
             services.AddSingleton<IRedisSubscription, RedisSubscriptionServer>();
+            //var servicesProvider = services.BuildServiceProvider();
+            //servicesProvider.CreateScope();
 
             #endregion
-            #endregion
+            #region 注释代码
 
+
+            //Assembly assembly = Assembly.Load(new AssemblyName("Uwl.ScheduledTask.Job"));
+            //Type jobType = assembly.GetType("Uwl.ScheduledTask.Job" + "." + "TestJobOne");
+            //IJobDetail job = new JobDetailImpl("1111","tets", jobType);
+            //var serviceProvider = services.BuildServiceProvider();
+            //var sched = serviceProvider.GetService<IScheduler>();
+            //sched.Start();
+            //IJobDetail job1 = JobBuilder.Create<TestJobOne>()
+            //        .WithIdentity("作业名称", "作业分组")
+            //        .Build();
+            //// 触发作业
+            //ITrigger trigger = TriggerBuilder.Create()
+
+
+
+            //    .WithIdentity("触发器名称", "触发器分组")
+            //    .WithCronSchedule("/5 * * ? * *") // 每隔五秒执行一次  这个表达式我们将在下一篇介绍
+            //    .StartAt(DateTime.UtcNow)
+            //    .WithPriority(1)
+            //    .Build();
+            //// 将作业和触发器添加到调度器
+            //sched.ScheduleJob(job1, trigger);
+            #endregion
 
         }
         /// <summary>
@@ -400,11 +445,11 @@ namespace UwlAPI.Tools
         {
 
             //在此处加入允许跨域
-            app.UseCors(CorsName).UseSignalR(routes =>
-            {
-                routes.MapHub<SignalRChat>("/api2/chatHub");
+            //app.UseCors(CorsName).UseSignalR(routes =>
+            //{
+            //    routes.MapHub<SignalRChat>("/api2/chatHub");
 
-            }); ; //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
+            //}); ; //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
             app.UseWebSockets();
             #region Environment
             //判断是否是环境变量
@@ -438,6 +483,11 @@ namespace UwlAPI.Tools
             {
                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "I_Sfront.Core API");
                 c.RoutePrefix = "";
+            });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<SignalRChat>("/api2/chatHub");
+
             });
             #endregion
             app.UseStaticFiles();// 使用静态文件

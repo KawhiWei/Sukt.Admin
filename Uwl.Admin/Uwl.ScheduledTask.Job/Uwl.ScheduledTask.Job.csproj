@@ -8,4 +8,9 @@
     <PackageReference Include="Quartz" Version="3.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
+    <ProjectReference Include="..\Uwl.Data.Server\Uwl.Data.Server.csproj" />
+  </ItemGroup>
+
 </Project>

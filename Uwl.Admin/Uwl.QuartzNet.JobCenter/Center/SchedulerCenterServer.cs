@@ -1,5 +1,6 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using Quartz.Spi;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -18,8 +19,10 @@ namespace Uwl.QuartzNet.JobCenter.Center
     public class SchedulerCenterServer: ISchedulerCenter
     {
         private Task<IScheduler> _scheduler;
-        public SchedulerCenterServer()
+        private readonly IJobFactory _iocjobFactory;
+        public SchedulerCenterServer(IJobFactory jobFactory)
         {
+            _iocjobFactory = jobFactory;
             _scheduler = GetSchedulerAsync();
         }
         private Task<IScheduler> GetSchedulerAsync()
@@ -34,7 +37,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
                     { "quartz.serializer.type", "binary" },
                 };
                 StdSchedulerFactory factory = new StdSchedulerFactory(collection);
-                return _scheduler= factory.GetScheduler();
+                return _scheduler =  factory.GetScheduler();
             }
         }
 
@@ -47,6 +50,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
             var result = new JobResuleModel();
             try
             {
+                this._scheduler.Result.JobFactory = this._iocjobFactory;
                 if (!this._scheduler.Result.IsStarted)
                 {
                     //等待任务运行完成
