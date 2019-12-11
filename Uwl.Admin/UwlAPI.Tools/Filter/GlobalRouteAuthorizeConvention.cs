@@ -16,6 +16,10 @@ namespace UwlAPI.Tools.Filter
     /// </summary>
     public class GlobalRouteAuthorizeConvention : IApplicationModelConvention
     {
+        /// <summary>
+        /// 自动添加Authorize属性
+        /// </summary>
+        /// <param name="application"></param>
         public void Apply(ApplicationModel application)
         {
             //循环控制器

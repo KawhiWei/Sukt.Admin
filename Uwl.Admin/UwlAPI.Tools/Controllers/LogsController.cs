@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Server.LogsServices;
@@ -13,19 +14,22 @@ using Uwl.Data.Server.LogsServices;
 
 namespace UwlAPI.Tools.Controllers
 {
+    
     /// <summary>
     /// 日志管理
     /// </summary>
     [Route("api/GetLogs")]
-    [AllowAnonymous]//允许匿名访问
-    public class LogsController : Controller
+    //[EnableCors("AllRequests")]
+    //[AllowAnonymous]//允许匿名访问
+    public class LogsController : BaseController<LogsController>
     {
         private ILogsServer _logsServer=null;
         /// <summary>
         /// 注入
         /// </summary>
         /// <param name="logsServer"></param>
-        public LogsController(ILogsServer logsServer)
+        /// <param name="logger">日志记录</param>
+        public LogsController(ILogsServer logsServer,ILogger<LogsController> logger):base(logger)
         {
             _logsServer = logsServer;
         }

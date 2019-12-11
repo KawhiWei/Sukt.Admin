@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.OrganizeVO;
@@ -17,14 +19,16 @@ namespace UwlAPI.Tools.Controllers
     /// </summary>
     [Route("api/Organize")]
     [ApiController]
-    public class OrganizeController : ControllerBase
+    //[EnableCors("AllRequests")]
+    public class OrganizeController : BaseController<OrganizeController>
     {
         private readonly IOrganizeServer _organizeServer;
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="organizeServer"></param>
-        public OrganizeController(IOrganizeServer organizeServer)
+        /// <param name="logger">日志记录</param>
+        public OrganizeController(IOrganizeServer organizeServer, ILogger<OrganizeController> logger) : base(logger)
         {
             this._organizeServer = organizeServer;
         }
@@ -37,21 +41,13 @@ namespace UwlAPI.Tools.Controllers
         [HttpGet]
         public MessageModel<PageModel<SysOrganize>> GetOrganizePage([FromQuery]BaseQuery baseQuery)
         {
-            var data =new  MessageModel<PageModel<SysOrganize>>();
-            try
-            {
-                var list=this._organizeServer.GetOrganizePage(baseQuery);
-                data.success = true;
-                data.msg = "数据获取成功";
-                data.response.data = list.Item1;
-                data.response.TotalCount = list.Item2;
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
-                return data;
-            }
+            var data = new MessageModel<PageModel<SysOrganize>>();
+            var list = this._organizeServer.GetOrganizePage(baseQuery);
+            data.success = true;
+            data.msg = "数据获取成功";
+            data.response.data = list.Item1;
+            data.response.TotalCount = list.Item2;
+            return data;
         }
 
         /// <summary>
@@ -64,21 +60,11 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<OrganizeViewModel>> GetMenusTreeList()
         {
             var data = new MessageModel<OrganizeViewModel>();
-            try
-            {
-                var tree = await _organizeServer.GetAll();
-                data.success = true;
-                data.response = tree;
-                data.msg = "获取成功";
-                return data;
-            }
-            catch (Exception)
-            {
-                data.response = new OrganizeViewModel();
-                data.msg = "获取失败";
-                return data;
-            }
-           
+            var tree = await _organizeServer.GetAll();
+            data.success = true;
+            data.response = tree;
+            data.msg = "获取成功";
+            return data;
         }
         /// <summary>
         /// 添加组织机构
@@ -90,23 +76,15 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> AddOrganize([FromBody]SysOrganize sysOrganize)
         {
             var data = new MessageModel<string>();
-            try
+            data.success = await this._organizeServer.AddOrganize(sysOrganize);
+            if (data.success)
             {
-                data.success = await this._organizeServer.AddOrganize(sysOrganize);
-                if(data.success)
-                {
-                    data.msg = "组织机构添加成功";
-                    return data;
-                }
-                else
-                {
-                    data.msg = "组织机构添加失败";
-                    return data;
-                }
+                data.msg = "组织机构添加成功";
+                return data;
             }
-            catch (Exception ex)
+            else
             {
-                data.msg = ex.Message;
+                data.msg = "组织机构添加失败";
                 return data;
             }
         }
@@ -120,23 +98,15 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> UpdateOrganize([FromBody]SysOrganize sysOrganize)
         {
             var data = new MessageModel<string>();
-            try
+            data.success = await this._organizeServer.UpdateOrganize(sysOrganize);
+            if (data.success)
             {
-                data.success = await this._organizeServer.UpdateOrganize(sysOrganize);
-                if (data.success)
-                {
-                    data.msg = "组织机构修改成功";
-                    return data;
-                }
-                else
-                {
-                    data.msg = "组织机构修改失败";
-                    return data;
-                }
+                data.msg = "组织机构修改成功";
+                return data;
             }
-            catch (Exception ex)
+            else
             {
-                data.msg = ex.Message;
+                data.msg = "组织机构修改失败";
                 return data;
             }
         }

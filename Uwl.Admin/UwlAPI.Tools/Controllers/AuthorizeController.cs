@@ -26,6 +26,9 @@ using Uwl.Extends.EncryPtion;
 using Uwl.Common.RabbitMQ;
 using Uwl.QuartzNet.JobCenter.Center;
 using Uwl.Common.Cache.RedisCache;
+using Microsoft.AspNetCore.Cors;
+using Uwl.Extends.Utility;
+using Microsoft.Extensions.Logging;
 
 namespace UwlAPI.Tools.Controllers
 {
@@ -35,8 +38,9 @@ namespace UwlAPI.Tools.Controllers
     //次特性是必须带jwtToken才可以请求，如果在获取Token的控制器上加了此特性需要在获取Token的方法上添加[AllowAnonymous]//对获取token得方法加允许匿名标注
     [AllowAnonymous]//对获取token得方法加允许匿名标注//不受授权控制，任何人都可访问
     //[Produces("application/json")]
+    //[EnableCors("AllRequests")]
     [Route("api/Login")]
-    public class AuthorizeController : Controller
+    public class AuthorizeController : BaseController<AuthorizeController>
     {
         private JwtSettings _jwtSettings;
         private IUserServer _userserver;
@@ -54,9 +58,11 @@ namespace UwlAPI.Tools.Controllers
         /// <param name="permissionRequirement"></param>
         /// <param name="hostingEnvironment"></param>
         /// <param name="schedulerCenter"></param>
+        ///  <param name="logger"></param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser,
             IUserServer userServer, IRedisCacheManager redisCacheManager, IRabbitMQ rabbitMQ,
-            PermissionRequirement permissionRequirement, IHostingEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter)
+            PermissionRequirement permissionRequirement, IHostingEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter, ILogger<AuthorizeController> logger
+            ) :base(logger)
         {
             this._jwtSettings = _jwtSettingsAccesser.Value;
             this._userserver = userServer;
@@ -64,7 +70,6 @@ namespace UwlAPI.Tools.Controllers
             this._requirement = permissionRequirement;
             this._hostingEnvironment = hostingEnvironment;
             this._rabbitMQ = rabbitMQ;
-            
         }
         #region 获取Token No.1
         /// <summary>
@@ -179,59 +184,81 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<dynamic>> TokenAssig([FromBody] LoginViewModel loginViewModel)
         {
             var data = new MessageModel<dynamic>();
-            try
+            var cheke = loginViewModel.CheckModel();
+            if (cheke.Item1)
             {
-                if (ModelState.IsValid)
+                loginViewModel.Password = loginViewModel.Password.ToMD5();
+                var Ip = HttpContext.GetClientIP();
+                //await Console.Out.WriteAsync($"IP为【{Ip}】的客户机访问");
+                SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
+                #region    QuartzNet定时任务
+                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                //{
+                //    Name = "test1",
+                //    JobGroup = "test1group",
+                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                //    ClassName = "Simple",
+                //    RunTimes = 0,
+                //    IntervalSecond =4,
+                //});
+                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                //{
+                //    Name = "testSimpleTwo",
+                //    JobGroup = "test1group",
+                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                //    ClassName = "Simple",
+                //    RunTimes = 0,
+                //    IntervalSecond = 9,
+                //});
+                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
+                //{
+                //    Name = "testSimpleThree",
+                //    JobGroup = "test1group",
+                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
+                //    ClassName = "Simple",
+                //    RunTimes = 0,
+                //    IntervalSecond = 5,
+                //});
+                //_rabbitMQ.SendData("hello", Info);
+                #endregion
+                if (Info == null)
                 {
-                    loginViewModel.Password = loginViewModel.Password.ToMD5();
-                    var Ip = HttpContext.GetClientIP();
-                    await Console.Out.WriteLineAsync(string.Format("客户端请求IP:{0}", Ip));
-                    SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
-                    if (Info == null)
-                    {
-                        data.msg = "账号或者密码错误";
-                        return data;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            //_schedulerCenter.AddScheduleJobAsync<SysSchedule>(new SysSchedule());
-                            var RoleName = await _userserver.GetUserRoleByUserId(Info.Id);
-                            var claims = new List<Claim>
-                            {
-                            new Claim(ClaimTypes.Name,Info.Name),//设置用户名称
-                            new Claim(JwtRegisteredClaimNames.Jti,Info.Id.ToString()),//设置用户ID
-                            new Claim(ClaimTypes.Expiration,DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()),//设置过期时间
-                            new Claim("Id",Info.Id.ToString()),
-                            new Claim("userName",Info.Name)
-                            };
-                            claims.AddRange(RoleName.Split(',').Select(x => new Claim(ClaimTypes.Role, x)));//将用户角色填充到claims中
-                            var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);//用户标识
-                            identity.AddClaims(claims);
-                            var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
-                            data.response = token;
-                            data.msg = "Token获取成功";
-                            data.success = true;
-                            return data;
-                        }
-                        catch (Exception ex)
-                        {
-                            data.msg = "获取角色信息失败" + ex.Message;
-                            return data;
-                        }
-                    }
+                    data.msg = "账号或者密码错误";
+                    return data;
                 }
                 else
                 {
-                    data.msg = "获取角色信息失败";
-                    return data;
+                    try
+                    {
+                        //_schedulerCenter.AddScheduleJobAsync<SysSchedule>(new SysSchedule());
+                        var RoleName = await _userserver.GetUserRoleByUserId(Info.Id);
+                        var claims = new List<Claim>
+                        {
+                        new Claim(ClaimTypes.Name,Info.Name),//设置用户名称
+                        new Claim(JwtRegisteredClaimNames.Jti,Info.Id.ToString()),//设置用户ID
+                        new Claim(ClaimTypes.Expiration,DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()),//设置过期时间
+                        new Claim("Id",Info.Id.ToString()),
+                        new Claim("userName",Info.Name)
+                        };
+                        claims.AddRange(RoleName.Split(',').Select(x => new Claim(ClaimTypes.Role, x)));//将用户角色填充到claims中
+                        var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);//用户标识
+                        identity.AddClaims(claims);
+                        var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                        data.response = token;
+                        data.msg = "Token获取成功";
+                        data.success = true;
+                        return data;
+                    }
+                    catch (Exception ex)
+                    {
+                        data.msg = "获取角色信息失败" + ex.Message;
+                        return data;
+                    }
                 }
             }
-            catch (Exception ex)
+            else
             {
-
-                data.msg = "获取角色信息失败" + ex.Message;
+                data.msg = cheke.Item2;
                 return data;
             }
         }

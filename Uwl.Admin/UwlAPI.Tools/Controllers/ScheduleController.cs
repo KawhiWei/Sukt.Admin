@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
@@ -18,13 +20,16 @@ namespace UwlAPI.Tools.Controllers
     /// </summary>
     [Route("api/Schedule")]
     [ApiController]
-    public class ScheduleController : ControllerBase
+    //[EnableCors("AllRequests")]
+    public class ScheduleController : BaseController<ScheduleController>
     {
         private readonly IScheduleServer _scheduleServer;//计划任务管理服务层
         /// <summary>
         /// 注入构造函数
         /// </summary>
-        public ScheduleController(IScheduleServer scheduleServer)
+        /// <param name="scheduleServer">服务层注入</param>
+        /// <param name="logger">日志记录</param>
+        public ScheduleController(IScheduleServer scheduleServer, ILogger<ScheduleController> logger) : base(logger)
         {
             _scheduleServer = scheduleServer;
         }
@@ -38,7 +43,7 @@ namespace UwlAPI.Tools.Controllers
         [HttpGet]
         public MessageModel<PageModel<SysSchedule>> GetSchedulePage([FromQuery]ScheduleQuery scheduleQuery)
         {
-            var list= _scheduleServer.GetScheduleJobByPage(scheduleQuery);
+            var list = _scheduleServer.GetScheduleJobByPage(scheduleQuery);
             return new MessageModel<PageModel<SysSchedule>>()
             {
                 success = true,
@@ -49,23 +54,32 @@ namespace UwlAPI.Tools.Controllers
                     data = list.Item1,
                 }
             };
+
+
         }
         /// <summary>
         /// 添加计划任务
         /// </summary>
-        /// <param name="sysRole"></param>
+        /// <param name="sysSchedule"></param>
         /// <returns></returns>
         [Route("AddSchedule")]
         [HttpPost]
-        public async Task<MessageModel<string>> AddSchedule([FromBody] SysSchedule sysRole)
+        public async Task<MessageModel<string>> AddSchedule([FromBody] SysSchedule sysSchedule)
         {
             var data = new MessageModel<string>();
-            data.success = await _scheduleServer.AddScheduleAsync(sysRole);
+
+            data.success = await _scheduleServer.AddScheduleAsync(sysSchedule);
             if (data.success)
             {
                 data.msg = "任务添加成功";
             }
+            else
+            {
+                data.msg = "任务添加失败";
+            }
             return data;
+
+
         }
         /// <summary>
         /// 修改计划任务
@@ -77,11 +91,17 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> UpdateSchedule([FromBody] SysSchedule sysRole)
         {
             var data = new MessageModel<string>();
+
             data.success = await _scheduleServer.UpdateScheduleAsync(sysRole);
             if (data.success)
             {
-                data.msg = "角色修改成功";
+                data.msg = "任务修改成功";
             }
+            else
+            {
+                data.msg = "任务修改失败";
+            }
+
             return data;
         }
         /// <summary>
@@ -91,21 +111,15 @@ namespace UwlAPI.Tools.Controllers
         /// <returns></returns>
         [Route("StartJob")]
         [HttpGet]
-        public async Task<MessageModel<string>> StartJob( Guid JobId)
+        public async Task<MessageModel<string>> StartJob(Guid JobId)
         {
             var data = new MessageModel<string>();
-            try
-            {
-                var Resultmodel = await _scheduleServer.StartJob(JobId);
-                data.success = Resultmodel.IsSuccess;
-                data.msg = Resultmodel.Message;
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
-                return data;
-            }
+
+            var Resultmodel = await _scheduleServer.StartJob(JobId);
+            data.success = Resultmodel.IsSuccess;
+            data.msg = Resultmodel.Message;
+            return data;
+
         }
         /// <summary>
         /// 停止一个计划任务
@@ -116,19 +130,13 @@ namespace UwlAPI.Tools.Controllers
         [HttpGet]
         public async Task<MessageModel<string>> StopJob(Guid jobId)
         {
-            var data= new MessageModel<string>();
-            try
-            {
-                var Resultmodel = await _scheduleServer.StopJob(jobId);
-                data.success = Resultmodel.IsSuccess;
-                data.msg = Resultmodel.Message;
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
-                return data;
-            }
+            var data = new MessageModel<string>();
+
+            var Resultmodel = await _scheduleServer.StopJob(jobId);
+            data.success = Resultmodel.IsSuccess;
+            data.msg = Resultmodel.Message;
+            return data;
+
         }
         /// <summary>
         /// 停止一个计划任务
@@ -140,18 +148,11 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> ReCovery(Guid jobId)
         {
             var data = new MessageModel<string>();
-            try
-            {
-                var Resultmodel = await _scheduleServer.ReCoveryJob(jobId);
-                data.success = Resultmodel.IsSuccess;
-                data.msg = Resultmodel.Message;
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
-                return data;
-            }
+            var Resultmodel = await _scheduleServer.ReCoveryJob(jobId);
+            data.success = Resultmodel.IsSuccess;
+            data.msg = Resultmodel.Message;
+            return data;
+
         }
     }
 }

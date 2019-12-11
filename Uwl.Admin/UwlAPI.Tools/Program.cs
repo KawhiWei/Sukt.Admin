@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace UwlAPI.Tools
 {
@@ -21,6 +23,15 @@ namespace UwlAPI.Tools
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval : RollingInterval.Day)
+                .CreateLogger();
+            //Log.CloseAndFlush();
             CreateWebHostBuilder(args).Build().Run();
         }
         /// <summary>
@@ -29,7 +40,8 @@ namespace UwlAPI.Tools
         /// <param name="args"></param>
         /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args) 
+                .UseStartup<Startup>()
+                .UseSerilog();
     }
 }

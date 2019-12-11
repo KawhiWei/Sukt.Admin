@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Uwl.Common.Download;
 using Uwl.Common.Helper;
 using Uwl.Extends.EncryPtion;
+using Microsoft.Extensions.Logging;
 
 namespace UwlAPI.Tools.Controllers
 {
@@ -30,8 +31,9 @@ namespace UwlAPI.Tools.Controllers
     //[EnableCors("AllRequests")]
     [Route("api/User")]
     [ApiController]
+    //[EnableCors("AllRequests")]
     //[AllowAnonymous]//允许匿名访问
-    public class UserController : Controller
+    public class UserController : BaseController<UserController>
     {
         /// <summary>
         /// 创建一个服务层的对象来进行服务层的方法调用
@@ -41,7 +43,8 @@ namespace UwlAPI.Tools.Controllers
         /// 注入服务层
         /// </summary>
         /// <param name="userServer"></param>
-        public UserController(IUserServer userServer)
+        /// <param name="logger"></param>
+        public UserController(IUserServer userServer, ILogger<UserController> logger) : base(logger)
         {
             _userserver = userServer;
         }
@@ -56,15 +59,15 @@ namespace UwlAPI.Tools.Controllers
         {
             var ss = HttpContext.User.Claims;
             var data = new MessageModel<SysUser>();
-            if(!token.IsNullOrEmpty())
+            if (!token.IsNullOrEmpty())
             {
                 //解析Token字符串，获取到用户ID
-                var  tokenModel = JwtHelper.SerializeJwt(token);
-                if(tokenModel!=null && tokenModel.Uid!=Guid.Empty)
+                var tokenModel = JwtHelper.SerializeJwt(token);
+                if (tokenModel != null && tokenModel.Uid != Guid.Empty)
                 {
                     //根据用户ID获取用户信息
                     var userInfo = await _userserver.GetSysUser(tokenModel.Uid);
-                    if(userInfo!=null)
+                    if (userInfo != null)
                     {
                         data.response = userInfo;
                         data.success = true;
@@ -73,7 +76,7 @@ namespace UwlAPI.Tools.Controllers
                 }
             }
             return data;
-            
+
         }
         /// <summary>
         /// 分页获取用户信息
@@ -107,18 +110,11 @@ namespace UwlAPI.Tools.Controllers
         {
             var Pwd = Appsettings.app(new string[] { "DefaultPwd", "password" });
             var data = new MessageModel<string>();
-            try
+            sysUser.Password = Pwd.ToMD5();
+            data.success = await _userserver.AddUser(sysUser);
+            if (data.success)
             {
-                sysUser.Password = Pwd.ToMD5();
-                data.success = await _userserver.AddUser(sysUser);
-                if (data.success)
-                {
-                    data.msg = $"用户添加成功:默认密码：【{Pwd}】";
-                }
-            }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
+                data.msg = $"用户添加成功:默认密码：【{Pwd}】";
             }
             return data;
         }
@@ -150,22 +146,12 @@ namespace UwlAPI.Tools.Controllers
         {
             var list = JsonConvert.DeserializeObject<List<Guid>>(Ids);
             var data = new MessageModel<string>();
-            try
+            data.success = await _userserver.DeleteUser(list);
+            if (data.success)
             {
-                data.success = await _userserver.DeleteUser(list);
-                if (data.success)
-                {
-                    data.msg = "删除成功";
-                }
-                return data;
+                data.msg = "删除成功";
             }
-            catch (Exception ex)
-            {
-
-                data.success = false;
-                data.msg = "删除失败!"+ex.Message;
-                return data;
-            }
+            return data;
         }
         /// <summary>
         /// 上传Excel文件
@@ -183,21 +169,13 @@ namespace UwlAPI.Tools.Controllers
             {
                 data.msg = "未找到上传文件";
             }
-            try
+            var list = ExcelHelper<SysUser>.UpLoad(files, 0);
+            foreach (var item in list)
             {
-                var list = ExcelHelper<SysUser>.UpLoad(files, 0);
-                foreach (var item in list)
-                {
 
-                }
-                data.msg = "用户信息导入成功";
-                data.success = true;
             }
-            catch (Exception ex)
-            {
-                data.msg = ex.Message;
-                return data;
-            }
+            data.msg = "用户信息导入成功";
+            data.success = true;
             return data;
         }
         /// <summary>

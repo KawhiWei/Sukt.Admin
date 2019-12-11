@@ -14,12 +14,12 @@ namespace UwlAPI.Tools.Models.LoginViewModel
         /// <summary>
         /// 
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "登录账号不可为空")]
         public string User { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "密码不可为空")]
         public string Password { get; set; }
     }
 }

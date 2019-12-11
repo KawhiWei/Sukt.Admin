@@ -189,7 +189,6 @@ namespace Uwl.Common.Download
             return excelParameters;
         }
         #endregion
-
         #region Excel导入
         /// <summary>
         /// 导入Excel文件

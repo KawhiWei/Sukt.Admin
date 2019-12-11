@@ -62,6 +62,8 @@ using Uwl.ScheduledTask.Job;
 using Quartz;
 using Quartz.Impl;
 using System.Reflection;
+using UwlAPI.Tools.Extensions;
+using Uwl.Common.LogsMethod;
 
 namespace UwlAPI.Tools
 {
@@ -381,6 +383,10 @@ namespace UwlAPI.Tools
             #endregion
 
 
+            //#region 注入日志
+            ////注入记录日志
+            //services.AddScoped<ILogHelper, LogServer>();
+            //#endregion
             #region 缓存和任务调度中心使用 单例模式注入生命周期
 
             //注入Redis缓存
@@ -450,7 +456,7 @@ namespace UwlAPI.Tools
             //    routes.MapHub<SignalRChat>("/api2/chatHub");
 
             //}); ; //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
-            app.UseWebSockets();
+            //app.UseWebSockets();
             #region Environment
             //判断是否是环境变量
             if (env.IsDevelopment())
@@ -494,6 +500,7 @@ namespace UwlAPI.Tools
             app.UseCookiePolicy();// 使用cookie
             //app.UseHttpsRedirection();// 跳转https
             app.UseStatusCodePages();
+            app.UseLog();
             app.UseMvc();
             
         }

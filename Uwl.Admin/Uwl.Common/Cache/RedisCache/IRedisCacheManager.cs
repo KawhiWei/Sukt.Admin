@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Uwl.Common.Cache.RedisCache
 {
@@ -26,8 +27,8 @@ namespace Uwl.Common.Cache.RedisCache
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <param name="cacheTime"></param>
-        void Set(string key, object value, TimeSpan? cacheTime = null);
+        /// <param name="cacheTime">保存格式毫秒</param>
+        void Set(string key, object value, int? cacheTime = null);
 
         /// <summary>
         /// 判断一个key是否存在Redis
@@ -53,5 +54,20 @@ namespace Uwl.Common.Cache.RedisCache
         /// <param name="key"></param>
         /// <returns></returns>
         List<TEntity> GetList<TEntity>(string key);
+        /// <summary>
+        /// 发布消息到Redis的某个队列频道
+        /// </summary>
+        /// <param name="ChannelName"></param>
+        /// <param name="ojb"></param>
+        void PublishAsyncRedis(string ChannelName, string obj);
+        /// <summary>
+        /// 获取订阅队列的消息
+        /// </summary>
+        /// <param name="ChannelName">订阅队列名称</param>
+        Task<string> SubscribeRedis(string ChannelName);
+        /// <summary>
+        /// 释放Redis链接
+        /// </summary>
+        void DisposeCSRedis();
     }
 }

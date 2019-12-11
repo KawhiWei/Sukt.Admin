@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Uwl.Data.Model.MenuViewModel;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Model.RoleAssigVO;
@@ -18,14 +19,16 @@ namespace UwlAPI.Tools.Controllers
     /// </summary>
     [Route("api/RoleAssig")]
     [ApiController]
-    public class RoleAssigController : ControllerBase
+    //[EnableCors("AllRequests")]
+    public class RoleAssigController : BaseController<RoleAssigController>
     {
         private IRoleAssigServer _roleAssigServer;
         /// <summary>
         /// 角色权限接口
         /// </summary>
         /// <param name="roleAssigServer"></param>
-        public RoleAssigController(IRoleAssigServer roleAssigServer)
+        /// <param name="logger">日志记录</param>
+        public RoleAssigController(IRoleAssigServer roleAssigServer, ILogger<RoleAssigController> logger) : base(logger)
         {
             _roleAssigServer = roleAssigServer;
         }
@@ -41,22 +44,15 @@ namespace UwlAPI.Tools.Controllers
         /// <returns></returns>
         [Route("GetRoleAssigTree")]
         [HttpGet]
-        public async  Task<MessageModel<RoleAssigMenuViewModel>> GetRoleAssig([FromQuery] Guid roleId)
+        public async Task<MessageModel<RoleAssigMenuViewModel>> GetRoleAssig([FromQuery] Guid roleId)
         {
             var data = new MessageModel<RoleAssigMenuViewModel>();
-            try
-            {
-                var RoleAssigMenuView = await _roleAssigServer.GetRoleAssigMenuViewModels(roleId);
-                data.success = true;
-                data.response = RoleAssigMenuView;
-                data.msg = "角色权限获取成功";
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = "获取数据失败" + ex.Message;
-                return data;
-            }
+            var RoleAssigMenuView = await _roleAssigServer.GetRoleAssigMenuViewModels(roleId);
+            data.success = true;
+            data.response = RoleAssigMenuView;
+            data.msg = "角色权限获取成功";
+            return data;
+
         }
         /// <summary>
         /// 保存角色权限
@@ -67,21 +63,15 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> Save([FromBody] SaveRoleAssigViewModel saveRoleAssigView)
         {
             var data = new MessageModel<string>();
-            try
+
+            data.success = await _roleAssigServer.SaveRoleAssig(saveRoleAssigView);
+            if (data.success)
             {
-                data.success = await _roleAssigServer.SaveRoleAssig(saveRoleAssigView);
-                if (data.success)
-                {
-                    data.msg = "权限修改成功";
-                    return data;
-                }
+                data.msg = "权限修改成功";
                 return data;
             }
-            catch (Exception ex)
-            {
-                data.msg += ex.Message;
-                return data;
-            }
+            return data;
+
         }
     }
 }

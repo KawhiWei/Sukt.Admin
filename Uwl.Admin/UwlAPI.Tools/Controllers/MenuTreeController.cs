@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.MenuViewModel;
 using Uwl.Data.Model.Result;
@@ -16,16 +17,18 @@ namespace UwlAPI.Tools.Controllers
     /// <summary>
     /// 获取树形菜单
     /// </summary>
+    //[EnableCors("AllRequests")]
     [Route("api/GetTree")]
     [ApiController]
-    public class MenuTreeController : BaseController
+    public class MenuTreeController : BaseController<MenuTreeController>
     {
         private IMenuServer _menuServer;
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="menuServer"></param>
-        public MenuTreeController(IMenuServer menuServer)
+        ///  <param name="logger"></param>
+        public MenuTreeController(IMenuServer menuServer, ILogger<MenuTreeController> logger) : base(logger)
         {
             _menuServer = menuServer;
         }
@@ -38,8 +41,8 @@ namespace UwlAPI.Tools.Controllers
         //[AllowAnonymous]
         public async Task<MessageModel<RouterBar>> GetMenusTreeList(Guid userid)
         {
-            var ss = await _menuServer.RouterBar(userid);
             var data = new MessageModel<RouterBar>();
+            var ss = await _menuServer.RouterBar(userid);
             data.success = true;
             data.response = ss;
             data.msg = "获取成功";

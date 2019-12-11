@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
@@ -19,14 +20,16 @@ namespace UwlAPI.Tools.Controllers
     /// </summary>
     [Route("api/Roles")]
     [ApiController]
-    public class RoleController : Controller
+    //[EnableCors("AllRequests")]
+    public class RoleController : BaseController<RoleController>
     {
         private IRoleServer _roleServer;
         /// <summary>
         /// 角色管理接口
         /// </summary>
         /// <param name="roleServer"></param>
-        public RoleController(IRoleServer roleServer)
+        /// <param name="logger">日志记录</param>
+        public RoleController(IRoleServer roleServer, ILogger<RoleController> logger) : base(logger)
         {
             _roleServer = roleServer;
         }
@@ -96,22 +99,14 @@ namespace UwlAPI.Tools.Controllers
         {
             var list = JsonConvert.DeserializeObject<List<Guid>>(Ids);
             var data = new MessageModel<string>();
-            try
-            {
-                data.success = await _roleServer.DeleteRole(list);
-                if (data.success)
-                {
-                    data.msg = "删除成功";
-                }
-                return data;
-            }
-            catch (Exception ex)
-            {
 
-                data.success = false;
-                data.msg = "删除失败!" + ex.Message;
-                return data;
+            data.success = await _roleServer.DeleteRole(list);
+            if (data.success)
+            {
+                data.msg = "删除成功";
             }
+            return data;
+
         }
         /// <summary>
         /// 获取所有的角色列表
@@ -119,7 +114,7 @@ namespace UwlAPI.Tools.Controllers
         /// <returns></returns>
         [Route("GetAllRole")]
         [HttpGet]
-        public async  Task<MessageModel<PageModel<SysRole>>> GetAllRole()
+        public async Task<MessageModel<PageModel<SysRole>>> GetAllRole()
         {
             var list = await _roleServer.GetAllListByWhere();
             return new MessageModel<PageModel<SysRole>>()

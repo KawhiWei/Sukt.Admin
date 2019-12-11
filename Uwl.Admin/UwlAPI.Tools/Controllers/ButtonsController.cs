@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
@@ -16,19 +17,22 @@ using Uwl.Extends.Utility;
 
 namespace UwlAPI.Tools.Controllers
 {
+    
     /// <summary>
     /// 按钮API接口
     /// </summary>
     [Route("api/Button")]
+    //[EnableCors("AllRequests")]
     [ApiController]
-    public class ButtonsController : BaseController
+    public class ButtonsController : BaseController<ButtonsController>
     {
         private readonly IButtonServer _buttonServer;
         /// <summary>
         /// 注入服务层
         /// </summary>
         /// <param name="buttonServer">按钮服务层</param>
-        public ButtonsController(IButtonServer buttonServer)
+        /// <param name="logger">日志记录</param>
+        public ButtonsController(IButtonServer buttonServer, ILogger<ButtonsController> logger) :base(logger)
         {
             _buttonServer = buttonServer;
         }
@@ -104,22 +108,12 @@ namespace UwlAPI.Tools.Controllers
         {
             var list = JsonConvert.DeserializeObject<List<Guid>>(Ids);
             var data = new MessageModel<string>();
-            try
+            data.success = await _buttonServer.DeleteButton(list);
+            if (data.success)
             {
-                data.success = await _buttonServer.DeleteButton(list);
-                if (data.success)
-                {
-                    data.msg = "删除成功";
-                }
-                return data;
+                data.msg = "删除成功";
             }
-            catch (Exception ex)
-            {
-
-                data.success = false;
-                data.msg = "删除失败!" + ex.Message;
-                return data;
-            }
+            return data;
         }
     }
 }

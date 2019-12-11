@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Uwl.Common.AutoMapper;
 using Uwl.Common.Utility;
@@ -26,14 +27,15 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Menus")]
     //[EnableCors("AllRequests")]
     [ApiController]
-    public class MenuController : Controller
+    public class MenuController : BaseController<MenuController>
     {
         private IMenuServer _menuServer;
         /// <summary>
         /// 注入服务层
         /// </summary>
         /// <param name="menuServer">菜单管理服务层</param>
-        public MenuController(IMenuServer menuServer)
+        ///  <param name="logger">日志记录</param>
+        public MenuController(IMenuServer menuServer, ILogger<MenuController> logger) : base(logger)
         {
             _menuServer = menuServer;
         }
@@ -100,23 +102,13 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<string>> Put([FromBody] SysMenu sysMenu)
         {
             var data = new MessageModel<string>();
-            try
+            data.success = await _menuServer.UpdateMenu(sysMenu);
+            if (data.success)
             {
-                data.success = await _menuServer.UpdateMenu(sysMenu);
-                if (data.success)
-                {
-                    await _menuServer.RestMenuCache();//修改成功之后重置缓存数据
-                    data.msg = "修改成功";
-                }
-                return data;
+                await _menuServer.RestMenuCache();//修改成功之后重置缓存数据
+                data.msg = "修改成功";
             }
-            catch (Exception ex)
-            {
-                data.success = false;
-                data.msg = "修改失败" + ex.Message;
-                return data;
-            }
-
+            return data;
         }
 
         /// <summary>
@@ -130,28 +122,18 @@ namespace UwlAPI.Tools.Controllers
             //var Idss = "";
             var IdList = JsonConvert.DeserializeObject<List<Guid>>(Ids);
             var data = new MessageModel<string>();
-            try
+            var syslist = _menuServer.GetAllListByWhere(IdList);
+            syslist.ForEach(x =>
             {
-                var syslist = _menuServer.GetAllListByWhere(IdList);
-                syslist.ForEach(x =>
-                {
-                    x.IsDrop = true;
-                });
-                data.success = await _menuServer.DeleteMenu(syslist);
-                if (data.success)
-                {
-                    await _menuServer.RestMenuCache();//成功之后重置缓存数据
-                    data.msg = "删除成功";
-                }
-                return data;
-            }
-            catch (Exception ex)
+                x.IsDrop = true;
+            });
+            data.success = await _menuServer.DeleteMenu(syslist);
+            if (data.success)
             {
-                data.success = false;
-                data.msg = ex.Message;
-                return data;
+                await _menuServer.RestMenuCache();//成功之后重置缓存数据
+                data.msg = "删除成功";
             }
-
+            return data;
         }
         /// <summary>
         /// 获取所有的菜单列表
@@ -162,20 +144,10 @@ namespace UwlAPI.Tools.Controllers
         public async Task<MessageModel<List<SysMenu>>> GetAllMenuList()
         {
             var data = new MessageModel<List<SysMenu>>();
-            try
-            {
-                data.success = true;
-                data.msg = "数据获取成功";
-                data.response = await _menuServer.GetMenuList();
-                return data;
-            }
-            catch (Exception ex)
-            {
-                data.msg = "数据获取失败" + ex.Message;
-                data.response = new List<SysMenu>();
-                return data;
-            }
-
+            data.success = true;
+            data.msg = "数据获取成功";
+            data.response = await _menuServer.GetMenuList();
+            return data;
         }
 
         ///// <summary>
