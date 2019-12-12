@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Uwl.Common.Helper;
 using Uwl.Extends.Utility;
 
 namespace Uwl.Common.RabbitMQ
@@ -17,14 +18,15 @@ namespace Uwl.Common.RabbitMQ
             {
                 connectionFactory = new ConnectionFactory()
                 {
-                    UserName = "wzw",
-                    Password = "wzw",
-                    HostName = "localhost"
+                    UserName = Appsettings.app(new string[] { "RabbitMQConfig", "UserName" }),
+                    Password = Appsettings.app(new string[] { "RabbitMQConfig", "Password" }),
+                    HostName = Appsettings.app(new string[] { "RabbitMQConfig", "HostName" }),
+                    AutomaticRecoveryEnabled= Convert.ToBoolean(Appsettings.app(new string[] { "RabbitMQConfig", "AutomaticRecoveryEnabled" })),
+                    TopologyRecoveryEnabled= Convert.ToBoolean(Appsettings.app(new string[] { "RabbitMQConfig", "TopologyRecoveryEnabled" })),
                 };
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

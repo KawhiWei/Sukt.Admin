@@ -33,10 +33,10 @@ namespace Uwl.Common.AutoMapper
             #region 用户个人资料修改
             //个人资料修改VO到DO的映射
             CreateMap<ChangeDataVO, SysUser>();
-            //CreateMap<ChangeDataVO, SysUser>().AfterMap((source, destination) =>
-            //{
-
-            //});
+            CreateMap<ChangeDataVO, SysUser>().AfterMap((source, destination) =>
+            {
+                destination.Id = source.UserId;
+            });
             #endregion
 
         }
