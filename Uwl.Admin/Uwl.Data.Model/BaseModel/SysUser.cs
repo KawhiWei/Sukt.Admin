@@ -77,10 +77,5 @@ namespace Uwl.Data.Model.BaseModel
         /// 部门Id{用户所属部门}
         /// </summary>
         public Guid DepartmentId { get; set; }
-        /// <summary>
-        /// 过滤字段
-        /// </summary>
-        [NotMapped]
-        public string RoleIds { get; set; }
     }
 }

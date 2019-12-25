@@ -256,22 +256,6 @@ namespace Uwl.Data.Server.MenuServices
             }
             
         }
-        /// <summary>
-        /// 同步获取菜单列表
-        /// </summary>
-        public List<SysMenu> GetAllMenu()
-        {
-            try
-            {
-                return this._menuRepositoty.GetAll().ToList();
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
 
         #region 帮助方法
         /// <summary>

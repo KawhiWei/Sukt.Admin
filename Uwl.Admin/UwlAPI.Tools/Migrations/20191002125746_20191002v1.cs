@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UwlAPI.Tools.Migrations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class _20191002v1 : Migration
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<Guid>(
@@ -31,7 +38,10 @@ namespace UwlAPI.Tools.Migrations
                 nullable: false,
                 defaultValue: 0);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(

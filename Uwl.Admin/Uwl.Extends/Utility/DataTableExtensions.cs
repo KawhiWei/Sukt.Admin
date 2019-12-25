@@ -49,8 +49,9 @@ namespace Uwl.Extends.Utility
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                //ex.Message;
                 return new T();
             }
             return t;

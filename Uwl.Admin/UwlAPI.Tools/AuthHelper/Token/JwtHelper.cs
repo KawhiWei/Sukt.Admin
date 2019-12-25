@@ -57,7 +57,7 @@ namespace UwlAPI.Tools.AuthHelper.Token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey));
             //将未加密的Token进行加密
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);//生成令牌
-            ///创建JwtSecurityToken，
+            //创建JwtSecurityToken，
             var jwt = new JwtSecurityToken
                 (
                 issuer:jwtSettings.Issuer,

@@ -1,22 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="RepositoriesBase\**" />
     <EmbeddedResource Remove="RepositoriesBase\**" />
     <None Remove="RepositoriesBase\**" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
   </ItemGroup>
-
 </Project>

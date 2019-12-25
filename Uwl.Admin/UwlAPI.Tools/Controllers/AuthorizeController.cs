@@ -18,7 +18,6 @@ using Uwl.Data.Server.UserServices;
 using Uwl.Data.Model.Result;
 using UwlAPI.Tools.AuthHelper.Policys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Uwl.Common.Download;
 using SignalRDemo.SignalrHubs;
@@ -29,6 +28,7 @@ using Uwl.Common.Cache.RedisCache;
 using Microsoft.AspNetCore.Cors;
 using Uwl.Extends.Utility;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting;
 
 namespace UwlAPI.Tools.Controllers
 {
@@ -47,7 +47,7 @@ namespace UwlAPI.Tools.Controllers
         private IRedisCacheManager _redisCacheManager;
         private readonly IRabbitMQ _rabbitMQ;
         private readonly PermissionRequirement _requirement;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -61,7 +61,7 @@ namespace UwlAPI.Tools.Controllers
         ///  <param name="logger"></param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser,
             IUserServer userServer, IRedisCacheManager redisCacheManager, IRabbitMQ rabbitMQ,
-            PermissionRequirement permissionRequirement, IHostingEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter, ILogger<AuthorizeController> logger
+            PermissionRequirement permissionRequirement, IWebHostEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter, ILogger<AuthorizeController> logger
             ) :base(logger)
         {
             this._jwtSettings = _jwtSettingsAccesser.Value;
@@ -122,7 +122,7 @@ namespace UwlAPI.Tools.Controllers
                     catch (Exception ex)
                     {
 
-                        throw;
+                        throw ex;
                     }
                 }
             }

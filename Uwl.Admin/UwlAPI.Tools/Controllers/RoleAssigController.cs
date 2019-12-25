@@ -32,6 +32,10 @@ namespace UwlAPI.Tools.Controllers
         {
             _roleAssigServer = roleAssigServer;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
         {

@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Microsoft.Extensions.Logging;
+using Serilog;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;

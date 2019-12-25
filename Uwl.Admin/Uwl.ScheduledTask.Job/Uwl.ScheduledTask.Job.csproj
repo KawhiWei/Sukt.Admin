@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,5 +13,4 @@
     <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
     <ProjectReference Include="..\Uwl.Data.Server\Uwl.Data.Server.csproj" />
   </ItemGroup>
-
 </Project>

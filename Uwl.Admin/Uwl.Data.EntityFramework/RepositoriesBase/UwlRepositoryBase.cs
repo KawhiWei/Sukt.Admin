@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 using Uwl.Data.Model;
 using Uwl.Domain.IRepositories;
-using Z.EntityFramework.Plus;
+//using Z.EntityFramework.Plus;
 
 namespace Uwl.Data.EntityFramework.RepositoriesBase
 {

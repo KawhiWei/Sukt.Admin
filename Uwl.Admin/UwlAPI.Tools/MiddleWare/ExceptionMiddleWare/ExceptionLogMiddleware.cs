@@ -73,7 +73,7 @@ namespace UwlAPI.Tools.MiddleWare.ExceptionMiddleWare
         private static async Task WriteExceptionAsync(HttpContext context, Exception exception)
         {
             //记录日志
-            var stg =exception.GetBaseException().ToString();
+            //var stg =exception.GetBaseException().ToString();
             //返回友好的提示
             var response = context.Response;
             //状态码

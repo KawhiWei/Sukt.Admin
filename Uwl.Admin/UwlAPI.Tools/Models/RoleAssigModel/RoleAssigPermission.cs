@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace UwlAPI.Tools.Models.RoleAssigModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RoleAssigPermission
     {
         /// <summary>

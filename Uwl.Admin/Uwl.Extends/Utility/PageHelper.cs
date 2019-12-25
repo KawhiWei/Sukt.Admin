@@ -1,17 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Text;
-using System.Linq.Dynamic.Core;
-using System.Linq;
-using System.Reflection;
-namespace Uwl.Extends.Utility
+﻿namespace Uwl.Extends.Utility
 {
-    
+
     public class PageHelper
     {
     //    //注：使用SqlConnection 需要先添加Nuget包System.Data.Common和System.Data.SqlClient两个程序集

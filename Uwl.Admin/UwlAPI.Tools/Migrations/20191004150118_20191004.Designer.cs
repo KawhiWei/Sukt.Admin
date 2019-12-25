@@ -9,10 +9,17 @@ using Uwl.Data.EntityFramework.Uwl_DbContext;
 
 namespace UwlAPI.Tools.Migrations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [DbContext(typeof(UwlDbContext))]
     [Migration("20191004150118_20191004")]
     partial class _20191004
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

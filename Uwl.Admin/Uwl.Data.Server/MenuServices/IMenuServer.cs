@@ -62,9 +62,5 @@ namespace Uwl.Data.Server.MenuServices
         /// 重置缓存
         /// </summary>
         Task RestMenuCache();
-        /// <summary>
-        /// 同步获取菜单列表
-        /// </summary>
-        List<SysMenu> GetAllMenu();
     }
 }

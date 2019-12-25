@@ -169,11 +169,11 @@ namespace UwlAPI.Tools.Controllers
             {
                 data.msg = "未找到上传文件";
             }
-            var list = ExcelHelper<SysUser>.UpLoad(files, 0);
-            foreach (var item in list)
-            {
+            //var list = ExcelHelper<SysUser>.UpLoad(files, 0);
+            //foreach (var item in list)
+            //{
 
-            }
+            //}
             data.msg = "用户信息导入成功";
             data.success = true;
             return data;
@@ -189,8 +189,8 @@ namespace UwlAPI.Tools.Controllers
         public IActionResult ExcelDown([FromQuery]UserQuery userQuery)
         {
             var List = _userserver.GetUserListByPage(userQuery, out int total);
-            byte[] fileContent = ExcelHelper<SysUser>.ToExcel(List);
-            return File(fileContent, "application/vnd.ms-excel", $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx");//charset='utf-8'
+            //byte[] fileContent = ExcelHelper<SysUser>.ToExcel(List);
+            return File("", "application/vnd.ms-excel", $"{DateTime.Now.ToString("yyyyMMddhhmmss")}.xlsx");//charset='utf-8'
         }
     }
 }

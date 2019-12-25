@@ -4,6 +4,11 @@
         <name>UwlAPI.Tools</name>
     </assembly>
     <members>
+        <member name="T:UwlAPI.Tools.AuthHelper.JWT.JwtSettings">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:UwlAPI.Tools.AuthHelper.JWT.JwtSettings.Issuer">
             <summary>
             token是谁颁发的
@@ -204,7 +209,7 @@
             登录或者获取Token接口不加//[Authorize(Policy = "Admin")]权限，加了类似，你把钥匙上了锁
             </summary>
         </member>
-        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,Uwl.Common.Cache.RedisCache.IRedisCacheManager,Uwl.Common.RabbitMQ.IRabbitMQ,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Uwl.QuartzNet.JobCenter.Center.ISchedulerCenter,Microsoft.Extensions.Logging.ILogger{UwlAPI.Tools.Controllers.AuthorizeController})">
+        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,Uwl.Common.Cache.RedisCache.IRedisCacheManager,Uwl.Common.RabbitMQ.IRabbitMQ,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Uwl.QuartzNet.JobCenter.Center.ISchedulerCenter,Microsoft.Extensions.Logging.ILogger{UwlAPI.Tools.Controllers.AuthorizeController})">
             <summary>
             构造函数
             </summary>
@@ -483,6 +488,12 @@
             </summary>
             <param name="roleAssigServer"></param>
             <param name="logger">日志记录</param>
+        </member>
+        <member name="M:UwlAPI.Tools.Controllers.RoleAssigController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:UwlAPI.Tools.Controllers.RoleAssigController.GetRoleAssig(System.Guid)">
             <summary>
@@ -812,6 +823,136 @@
             <param name="o"></param>
             <returns></returns>
         </member>
+        <member name="T:UwlAPI.Tools.Migrations._20191002v1">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191002v1.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191002v1.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191002v1.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:UwlAPI.Tools.Migrations._20191004">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191004.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191004.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191004.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:UwlAPI.Tools.Migrations._20191005v1">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191005v1.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191005v1.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191005v1.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:UwlAPI.Tools.Migrations._20191022">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:UwlAPI.Tools.Migrations._20191022_01">
+            <summary>
+            
+            </summary>
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022_01.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022_01.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="migrationBuilder"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.Migrations._20191022_01.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
         <member name="T:UwlAPI.Tools.Models.LoginViewModel.LoginViewModel">
             <summary>
             
@@ -823,6 +964,11 @@
             </summary>
         </member>
         <member name="P:UwlAPI.Tools.Models.LoginViewModel.LoginViewModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UwlAPI.Tools.Models.RoleAssigModel.RoleAssigPermission">
             <summary>
             
             </summary>
@@ -853,7 +999,7 @@
             </summary>
             <param name="args"></param>
         </member>
-        <member name="M:UwlAPI.Tools.Program.CreateWebHostBuilder(System.String[])">
+        <member name="M:UwlAPI.Tools.Program.CreateHostBuilder(System.String[])">
             <summary>
             
             </summary>
@@ -892,7 +1038,7 @@
             </summary>
             <param name="services"></param>
         </member>
-        <member name="M:UwlAPI.Tools.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+        <member name="M:UwlAPI.Tools.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
             <summary>
             应用程序管道
             </summary>

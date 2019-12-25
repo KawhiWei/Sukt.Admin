@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="LambdaTree\**" />
     <EmbeddedResource Remove="LambdaTree\**" />
     <None Remove="LambdaTree\**" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Uwl.Common\Uwl.Common.csproj" />
     <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
@@ -17,5 +16,4 @@
     <ProjectReference Include="..\Uwl.Extends\Uwl.Extends.csproj" />
     <ProjectReference Include="..\Uwl.QuartzNet.JobCenter\Uwl.QuartzNet.JobCenter.csproj" />
   </ItemGroup>
-
 </Project>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UwlAPI.Tools.AuthHelper.JWT
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class JwtSettings
     {
         /// <summary>

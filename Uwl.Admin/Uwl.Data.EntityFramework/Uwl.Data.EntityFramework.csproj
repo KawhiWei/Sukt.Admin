@@ -1,15 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="2.6.13" />
-    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="2.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +14,6 @@
     <ProjectReference Include="..\Uwl.Data.Model\Uwl.Data.Model.csproj" />
     <ProjectReference Include="..\Uwl.Domain\Uwl.Domain.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Microsoft.EntityFrameworkCore">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.1.1\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
@@ -32,5 +28,4 @@
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.5.1\ref\netcoreapp2.1\System.Data.SqlClient.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UwlAPI.Tools.Migrations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class _20191022_01 : Migration
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -37,7 +44,10 @@ namespace UwlAPI.Tools.Migrations
                     table.PrimaryKey("PK_UwlSchedule", x => x.Id);
                 });
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

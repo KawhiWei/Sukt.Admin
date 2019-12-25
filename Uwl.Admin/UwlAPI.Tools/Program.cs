@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
@@ -23,7 +24,6 @@ namespace UwlAPI.Tools
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -32,16 +32,30 @@ namespace UwlAPI.Tools
                 .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval : RollingInterval.Day)
                 .CreateLogger();
             //Log.CloseAndFlush();
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args) 
-                .UseStartup<Startup>()
-                .UseSerilog();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+             .ConfigureWebHostDefaults(webBuilder =>
+             {
+                 webBuilder
+                   .UseStartup<Startup>()
+                   .UseSerilog()//注入Serilog日志中间件
+                   //.UseUrls("http://localhost:8756")
+                   //这里是配置log的
+                   .ConfigureLogging((hostingContext, builder) =>
+                   {
+                       builder.ClearProviders();
+                       builder.SetMinimumLevel(LogLevel.Information);
+                       builder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                       builder.AddConsole();
+                       builder.AddDebug();
+                   });
+             });
     }
 }

@@ -1,29 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="4.5.3.2" />
-    <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.1" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.9" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Uwl.Attribute\Uwl.Attribute.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Microsoft.Extensions.Configuration">
       <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.configuration\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

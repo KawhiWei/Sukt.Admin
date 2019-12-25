@@ -2,8 +2,15 @@
 
 namespace UwlAPI.Tools.Migrations
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class _20191004 : Migration
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
@@ -18,7 +25,10 @@ namespace UwlAPI.Tools.Migrations
                 table: "UwlMenus",
                 nullable: true);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
