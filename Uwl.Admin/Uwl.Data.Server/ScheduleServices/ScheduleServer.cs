@@ -29,7 +29,14 @@ namespace Uwl.Data.Server.ScheduleServices
             var list = _scheduleRepositoty.PageBy(scheduleQuery.PageIndex, scheduleQuery.PageSize, query).ToList();
             return (list,Total);
         }
-
+        /// <summary>
+        /// 获取所有未删除的Job
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<SysSchedule>> GetAllScheduleNotIsDrop()
+        {
+            return await _scheduleRepositoty.GetAllListAsync(x => x.IsDrop == false);
+        }
 
         public bool AddSchedule(SysSchedule sysSchedule)
         {

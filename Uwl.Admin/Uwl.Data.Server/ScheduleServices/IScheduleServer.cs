@@ -58,5 +58,10 @@ namespace Uwl.Data.Server.ScheduleServices
         /// <param name="Id"></param>
         /// <returns></returns>
         Task<JobResuleModel> ReCoveryJob(Guid Id);
+        /// <summary>
+        /// 获取所有未删除的Job
+        /// </summary>
+        /// <returns></returns>
+        Task<List<SysSchedule>> GetAllScheduleNotIsDrop();
     }
 }

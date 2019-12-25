@@ -32,7 +32,9 @@ namespace UwlAPI.Tools
                 .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval : RollingInterval.Day)
                 .CreateLogger();
             //Log.CloseAndFlush();
+            //new AutoStartJob().AutoJob();
             CreateHostBuilder(args).Build().Run();
+            
         }
         /// <summary>
         /// 

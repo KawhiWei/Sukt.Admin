@@ -248,7 +248,6 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
-
         /// <summary>
         /// 根据lambda表达式条件获取单个实体
         /// </summary>

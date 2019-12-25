@@ -56,6 +56,7 @@ using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
+using UwlAPI.Tools.StartJob;
 
 namespace UwlAPI.Tools
 {
@@ -68,7 +69,6 @@ namespace UwlAPI.Tools
         /// SignalR跨域处理
         /// </summary>
         public const string CorsName = "SignalRCors";
-
         /// <summary>
         /// 定义一个启用数据库连接IConfiguration的属性
         /// </summary>
@@ -371,9 +371,10 @@ namespace UwlAPI.Tools
             services.AddScoped<IScheduleRepositoty, DomainScheduleServer>();
             //注入计划任务服务层
             services.AddScoped<IScheduleServer, ScheduleServer>();
-            services.AddScoped<IScheduleServer, ScheduleServer>();
+            //services.AddScoped<IScheduleServer, ScheduleServer>();
             #endregion
 
+            //_serviceProvider.AutoJob();
 
             //#region 注入日志
             ////注入记录日志
@@ -498,7 +499,10 @@ namespace UwlAPI.Tools
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRChat>("/api2/chatHub");
             });
-
+            //手动调用IoC获取实例的方式
+            var scheduler = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<IScheduleServer>();
+            //将获取到的实例传给自动启动Job类
+            new AutoStartJob(scheduler).AutoJob();
         }
     }
 }

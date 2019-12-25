@@ -1006,6 +1006,21 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:UwlAPI.Tools.StartJob.AutoStartJob">
+            <summary>
+            添加程序启动时自动运行所有Job是已开始执行的Job
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartJob.AutoStartJob.#ctor(Uwl.Data.Server.ScheduleServices.IScheduleServer)">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartJob.AutoStartJob.AutoJob">
+            <summary>
+            获取到
+            </summary>
+        </member>
         <member name="T:UwlAPI.Tools.Startup">
             <summary>
             启动程序
