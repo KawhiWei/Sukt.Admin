@@ -61,7 +61,7 @@ namespace Uwl.Extends.Utility
             return ((type != null) && type.IsGenericType) && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
         }
         /// <summary>
-        /// 
+        /// 分页扩展排序
         /// </summary>
         /// <typeparam name="TEntity">动态实体类型</typeparam>
         /// <param name="source">要查询的数据集</param>
@@ -101,6 +101,15 @@ namespace Uwl.Extends.Utility
             }
            
         }
+
+        //public static IQueryable<TResult> ExtensionGroupBy<TEntity,Tkey, TResult>(this IQueryable<TEntity> source, Expression<Func<TEntity, Tkey>> keySelector, Expression<Func<TEntity, TResult>> selector)
+        //{
+
+        //    return source.GroupBy(keySelector).Select(selector);
+
+        //    //return source;
+        //}
+
 
         /// <summary>
         /// 模型验证
