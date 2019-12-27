@@ -29,11 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uwl.QuartzNet.JobCenter", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uwl.ScheduledTask.Job", "Uwl.ScheduledTask.Job\Uwl.ScheduledTask.Job.csproj", "{EBC7E2D6-50DB-456F-BABF-E19479CD0B34}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C1E217FA-4320-4B60-A445-5F397E6F4B6A}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageRecipient", "MessageRecipient", "{D023FB60-59F1-4486-A10F-CD79B8DC05B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTest", "MQTest\MQTest.csproj", "{707C5DA1-8007-4CD8-B89C-DA3C4A834068}"
