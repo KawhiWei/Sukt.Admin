@@ -62,7 +62,7 @@ namespace Uwl.Common.Subscription
             redisConnection.Dispose();
         }
 
-        public async void PublishAsyncRedis(string ChannelName, string obj)
+        public async Task PublishAsyncRedis(string ChannelName, string obj)
         {
             ISubscriber subcriber = redisConnection.GetSubscriber();
             await subcriber.PublishAsync(ChannelName, obj);

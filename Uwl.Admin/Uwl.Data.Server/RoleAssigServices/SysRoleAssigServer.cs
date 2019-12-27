@@ -13,6 +13,9 @@ using Uwl.Extends.Utility;
 using Uwl.Data.Model.RoleAssigVO;
 using Newtonsoft.Json;
 using Uwl.Domain.IRepositories;
+using Uwl.Common.Cache.RedisCache;
+using Microsoft.EntityFrameworkCore;
+using Uwl.Common.Helper;
 
 namespace Uwl.Data.Server.RoleAssigServices
 {
@@ -26,16 +29,19 @@ namespace Uwl.Data.Server.RoleAssigServices
         private IRoleRightAssigRepository _roleRightAssigRepository;//定义角色权限领域层对象
         private IRoleRepositoty _roleRepositoty;
         public  IUnitofWork _unitofWork;
+        private readonly IRedisCacheManager _redisCacheManager;
         public SysRoleAssigServer(IMenuRepositoty menuRepositoty, 
             IButtonRepositoty buttonRepositoty, 
             IRoleRightAssigRepository roleRightAssigRepository, IRoleRepositoty roleRepositoty, 
-            IUnitofWork unitofWork
+            IUnitofWork unitofWork, IRedisCacheManager redisCacheManager
             )
         {
             this._menuRepositoty = menuRepositoty;
             this._buttonRepositoty = buttonRepositoty;
             this._roleRightAssigRepository = roleRightAssigRepository;
             this._roleRepositoty = roleRepositoty;
+            this._roleRightAssigRepository = roleRightAssigRepository;
+            this._redisCacheManager = redisCacheManager;
             this._unitofWork = unitofWork;
         }
         public async Task<RoleAssigMenuViewModel> GetRoleAssigMenuViewModels(Guid RoleId)
@@ -206,7 +212,20 @@ namespace Uwl.Data.Server.RoleAssigServices
             var Rolelist=await _roleRepositoty.GetAllListAsync(x => roleArr.Contains(x.Id));//根据Httpcontext存储的角色名称获取角色ID
             var RoleAssig =await  _roleRightAssigRepository.GetAllListAsync(x => Rolelist.Select(s=>s.Id).Contains(x.RoleId));//根据角色ID获取到所有的权限
             var Btnlist = await _buttonRepositoty.GetAllListAsync(x=>x.IsDrop==false);//获取所有的按钮
-            var Menulist= await _menuRepositoty.GetAllListAsync(x => x.IsDrop == false);
+            List<SysMenu> Menulist = new List<SysMenu>();
+            if (await _redisCacheManager.Get(Appsettings.app(new string[] { "CacheOptions", "Menukey" })))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
+            {
+                Menulist = await _redisCacheManager.GetList<SysMenu>(Appsettings.app(new string[] { "CacheOptions", "Menukey" }));//.Where(x=>MenuIds.Contains(x.Id)).ToList();
+            }
+            else
+            {
+                Menulist = await this._menuRepositoty.GetAll(x => x.IsDrop == false).AsNoTracking().ToListAsync();
+                await _redisCacheManager.Set(Appsettings.app(new string[] { "CacheOptions", "Menukey" }), Menulist);
+            }
+            if (!Menulist.Any())
+            {
+                Menulist = await _menuRepositoty.GetAllListAsync(x => x.IsDrop == false);//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
+            }
             foreach (var item in RoleAssig)
             {
                 var RoleModel = Rolelist.Where(x => x.Id == item.RoleId).FirstOrDefault();//获取角色实体

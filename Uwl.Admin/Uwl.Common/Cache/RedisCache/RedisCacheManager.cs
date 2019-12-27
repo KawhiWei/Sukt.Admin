@@ -30,21 +30,21 @@ namespace Uwl.Common.Cache.RedisCache
         /// </summary>
         /// <returns></returns>
         
-        public void Clear()
+        public async Task Clear()
         {
             foreach (var item in this.redisConnection.GetEndPoints())
             {
                 var server = this.redisConnection.GetServer(item);
                 foreach (var keys in server.Keys())
                 {
-                    redisConnection.GetDatabase().KeyDelete(keys);
+                    await redisConnection.GetDatabase().KeyDeleteAsync(keys);
                 }
             }
         }
 
-        public TEntity Get<TEntity>(string key)
+        public async Task<TEntity> Get<TEntity>(string key)
         {
-            var value = redisConnection.GetDatabase().StringGet(key);
+            var value = await redisConnection.GetDatabase().StringGetAsync(key);
             if (value.HasValue)
             {
                 //需要用的反序列化，将Redis存储的Byte[]，进行反序列化
@@ -55,11 +55,11 @@ namespace Uwl.Common.Cache.RedisCache
                 return default(TEntity);
             }
         }
-        public List<TEntity> GetList<TEntity>(string key)
+        public async Task<List<TEntity>> GetList<TEntity>(string key)
         {
             if (key.IsNullOrEmpty())
                 throw new Exception("要获取缓存的Key不可为空");
-            var value = redisConnection.GetDatabase().StringGet(key);
+            var value = await redisConnection.GetDatabase().StringGetAsync(key);
             if(value.HasValue)
             {
                 var list=SerializeHelper.Deserialize<List<TEntity>>(value);
@@ -71,33 +71,33 @@ namespace Uwl.Common.Cache.RedisCache
             }
         }
 
-        public bool Get(string key)
+        public async Task<bool> Get(string key)
         {
-            return redisConnection.GetDatabase().KeyExists(key);
+            return await redisConnection.GetDatabase().KeyExistsAsync(key);
         }
 
-        public string GetValue(string key)
+        public async Task<string> GetValue(string key)
         {
-            return redisConnection.GetDatabase().StringGet(key);
+            return await redisConnection.GetDatabase().StringGetAsync(key);
         }
 
-        public void Remove(string key)
+        public async Task Remove(string key)
         {
-            if(Get(key))
-                redisConnection.GetDatabase().KeyDelete(key);
+            if(await Get(key))
+                await redisConnection.GetDatabase().KeyDeleteAsync(key);
         }
 
-        public void Set(string key, object value, int? cacheTime=null)
+        public async Task Set(string key, object value, int? cacheTime=null)
         {
             if (value != null)
             {
                 if(cacheTime!=null)
                 {
-                    redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value), TimeSpan.FromSeconds(cacheTime.Value));
+                    await redisConnection.GetDatabase().StringSetAsync(key, SerializeHelper.Serialize(value), TimeSpan.FromSeconds(cacheTime.Value));
                 }
                 else
                 {
-                    redisConnection.GetDatabase().StringSet(key, SerializeHelper.Serialize(value));
+                    await redisConnection.GetDatabase().StringSetAsync(key, SerializeHelper.Serialize(value));
                 }
                 
             }
@@ -107,7 +107,7 @@ namespace Uwl.Common.Cache.RedisCache
             redisConnection.Dispose();
         }
 
-        public async void PublishAsyncRedis(string ChannelName, string obj)
+        public async Task PublishAsyncRedis(string ChannelName, string obj)
         {
             ISubscriber subcriber = redisConnection.GetSubscriber();
             await subcriber.PublishAsync(ChannelName, obj);

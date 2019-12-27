@@ -401,7 +401,7 @@ namespace UwlAPI.Tools
             //    return scheduler;
             //});
             //注入Redis消息订阅管理器
-            services.AddSingleton<IRedisSubscription, RedisSubscriptionServer>();
+            services.AddScoped<IRedisSubscription, RedisSubscriptionServer>();
             //var servicesProvider = services.BuildServiceProvider();
             //servicesProvider.CreateScope();
 

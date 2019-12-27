@@ -60,7 +60,7 @@ namespace Uwl.Common.SignalRMessage
             if (Context.User.Claims.Any())
             {
                 var Id = Context.User.Claims.FirstOrDefault(x => x.Type == "Id").Value.ToGuid();//链接释放将用户关联的ConnectionID从缓存中移除
-                _redisCacheManager.Remove(Id.ToString());
+                await _redisCacheManager.Remove(Id.ToString());
             }
             await base.OnDisconnectedAsync(exception);
         }
@@ -74,7 +74,7 @@ namespace Uwl.Common.SignalRMessage
         /// <returns></returns>
         public async Task SendMessage(string SenderId, string SenderName, string ReceiverId, string Message)
         {
-            var SignalRModel = _redisCacheManager.Get<SignalRModel>(ReceiverId.ToString());
+            var SignalRModel = await _redisCacheManager.Get<SignalRModel>(ReceiverId.ToString());
             if (SignalRModel != null)
             {
                 await Clients.Client(SignalRModel.SignalRConnectionId).SendAsync("ReceiveMessage", SenderName, Message);

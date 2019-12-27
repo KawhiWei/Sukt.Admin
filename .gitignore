@@ -21,3 +21,6 @@
 /Uwl.Admin/UwlAPI.Tools/appsettings.json
 /Uwl.Admin/UwlAPI.Tools/logs
 /Uwl.Admin/UwlAPI.Tools/Properties/PublishProfiles
+/Uwl.Admin/MQTest/appsettings.json
+/Uwl.Admin/MQTest/obj
+/Uwl.Admin/MQTest/bin

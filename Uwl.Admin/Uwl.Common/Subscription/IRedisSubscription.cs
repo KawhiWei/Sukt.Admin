@@ -15,7 +15,7 @@ namespace Uwl.Common.Subscription
         /// </summary>
         /// <param name="ChannelName"></param>
         /// <param name="ojb"></param>
-        void PublishAsyncRedis(string ChannelName,string obj);
+        Task PublishAsyncRedis(string ChannelName,string obj);
         /// <summary>
         /// 获取订阅队列的消息
         /// </summary>

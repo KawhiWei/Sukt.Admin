@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Uwl.Common.AutoMapper;
 using Uwl.Common.Cache.RedisCache;
+using Uwl.Common.Helper;
 using Uwl.Common.LambdaTree;
 using Uwl.Common.Sort.SortEnum;
 using Uwl.Data.Model.Assist;
@@ -81,22 +82,17 @@ namespace Uwl.Data.Server.MenuServices
             var RoleIds=Rolelist.Select(x => x.RoleId).ToList();//获取到角色列表中的角色ID
             var MenuList = await _roleRightAssigRepository.GetAllListAsync(x => RoleIds.Contains(x.RoleId));//根据角色Id获取菜单列表
             var MenuIds = MenuList.Select(x => x.MenuId).ToList();//获取角色权限中的菜单ID
-
-            //stopwatch.Stop();
-
-            //string msg = "我是测试定时任务发起的消息队列本次任务执行时间：" + stopwatch.Elapsed.TotalMilliseconds.ToString();
-            //_redisCacheManager.PublishAsyncRedis("testmes", msg);
-            //_redisCacheManager.PublishAsyncRedis("testmes", msg);
-
             List<SysMenu> baselist = new List<SysMenu>();
-            if (_redisCacheManager.Get("Menu"))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
+            if ( await _redisCacheManager.Get(Appsettings.app(new string[] { "CacheOptions", "Menukey" })))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
             {
-                baselist = _redisCacheManager.GetList<SysMenu>("Menu").Where(x=>MenuIds.Contains(x.Id)).ToList();
+                baselist = await _redisCacheManager.GetList<SysMenu>(Appsettings.app(new string[] { "CacheOptions", "Menukey" }));//.Where(x=>MenuIds.Contains(x.Id)).ToList();
+                baselist= baselist.Where(x => MenuIds.Contains(x.Id)).ToList();
             }
             else
             {
                 await RestMenuCache();
-                baselist = _redisCacheManager.GetList<SysMenu>("Menu").Where(x => MenuIds.Contains(x.Id)).ToList();
+                baselist = await _redisCacheManager.GetList<SysMenu>(Appsettings.app(new string[] { "CacheOptions", "Menukey" }));
+                baselist = baselist.Where(x => MenuIds.Contains(x.Id)).ToList();
             }
             if (!baselist.Any())
             {
@@ -245,9 +241,9 @@ namespace Uwl.Data.Server.MenuServices
         {
             try
             {
-                _redisCacheManager.Remove("Menu");
+                await _redisCacheManager.Remove("Menu");
                 var list=await this._menuRepositoty.GetAll(x=>x.IsDrop==false).AsNoTracking().ToListAsync();
-                _redisCacheManager.Set("Menu", list);
+                await _redisCacheManager.Set("Menu", list);
             }
             catch (Exception ex)
             {
