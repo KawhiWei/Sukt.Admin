@@ -1,5 +1,5 @@
 ＃Uwl.Admin.Core
-本项目是基于.Net Core2.2开发的一个开源后台管理框架
+本项目是基于.Net Core3.x开发的一个开源后台管理框架
 
 特别感谢老张\ DX \ 大黄瓜 \残云等给帮助
 
@@ -27,14 +27,14 @@ Uwl.Admin.Core 框架是基于.Net Core2.2开发的一个开源后台管理框�
  UwlAPI.Tools                API接口开放
  
 使用技术：
-  .Net Core 2.x API（因为想单纯建造前替换分离，因此就选择的API）
+  .Net Core 3.x API（因为想单纯建造前替换分离，因此就选择的API）
   Swagger前瞻性文档说明，基于RESTful风格编写接口
   仓库+服务仓储模式编程
   异步和等待初步编程
   核心微软官方自带DI依赖注入框架
   JWT权限验证
 数据库技术
-  Entity Framework Core2.x
+  Entity Framework Core3.x
   AutoMapper自动对象映射
 分布式缓存技术
   Redis轻量级分布式缓存(暂未完成)
