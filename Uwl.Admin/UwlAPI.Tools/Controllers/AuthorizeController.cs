@@ -45,7 +45,6 @@ namespace UwlAPI.Tools.Controllers
         private JwtSettings _jwtSettings;
         private IUserServer _userserver;
         private IRedisCacheManager _redisCacheManager;
-        private readonly IRabbitMQ _rabbitMQ;
         private readonly PermissionRequirement _requirement;
         private readonly IWebHostEnvironment _hostingEnvironment;
         /// <summary>
@@ -54,14 +53,12 @@ namespace UwlAPI.Tools.Controllers
         /// <param name="_jwtSettingsAccesser"></param>
         /// <param name="userServer"></param>
         /// <param name="redisCacheManager"></param>
-        /// <param name="rabbitMQ">消息队列</param>
         /// <param name="permissionRequirement"></param>
         /// <param name="hostingEnvironment"></param>
-        /// <param name="schedulerCenter"></param>
         ///  <param name="logger"></param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser,
-            IUserServer userServer, IRedisCacheManager redisCacheManager, IRabbitMQ rabbitMQ,
-            PermissionRequirement permissionRequirement, IWebHostEnvironment hostingEnvironment, ISchedulerCenter schedulerCenter, ILogger<AuthorizeController> logger
+            IUserServer userServer, IRedisCacheManager redisCacheManager,
+            PermissionRequirement permissionRequirement, IWebHostEnvironment hostingEnvironment,ILogger<AuthorizeController> logger
             ) :base(logger)
         {
             this._jwtSettings = _jwtSettingsAccesser.Value;
@@ -69,7 +66,6 @@ namespace UwlAPI.Tools.Controllers
             this._redisCacheManager = redisCacheManager;
             this._requirement = permissionRequirement;
             this._hostingEnvironment = hostingEnvironment;
-            this._rabbitMQ = rabbitMQ;
         }
         #region 获取Token No.1
         /// <summary>
@@ -191,36 +187,6 @@ namespace UwlAPI.Tools.Controllers
                 var Ip = HttpContext.GetClientIP();
                 //await Console.Out.WriteAsync($"IP为【{Ip}】的客户机访问");
                 SysUser Info = await _userserver.CheckUser(loginViewModel.User, loginViewModel.Password);
-                #region    QuartzNet定时任务
-                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
-                //{
-                //    Name = "test1",
-                //    JobGroup = "test1group",
-                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
-                //    ClassName = "Simple",
-                //    RunTimes = 0,
-                //    IntervalSecond =4,
-                //});
-                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
-                //{
-                //    Name = "testSimpleTwo",
-                //    JobGroup = "test1group",
-                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
-                //    ClassName = "Simple",
-                //    RunTimes = 0,
-                //    IntervalSecond = 9,
-                //});
-                //await _schedulerCenter.AddScheduleJobAsync(new SysSchedule
-                //{
-                //    Name = "testSimpleThree",
-                //    JobGroup = "test1group",
-                //    AssemblyName = "Uwl.QuartzNet.JobCenter",
-                //    ClassName = "Simple",
-                //    RunTimes = 0,
-                //    IntervalSecond = 5,
-                //});
-                //_rabbitMQ.SendData("hello", Info);
-                #endregion
                 if (Info == null)
                 {
                     data.msg = "账号或者密码错误";
@@ -230,7 +196,6 @@ namespace UwlAPI.Tools.Controllers
                 {
                     try
                     {
-                        //_schedulerCenter.AddScheduleJobAsync<SysSchedule>(new SysSchedule());
                         var RoleName = await _userserver.GetUserRoleByUserId(Info.Id);
                         var claims = new List<Claim>
                         {

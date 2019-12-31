@@ -13,13 +13,15 @@ namespace Uwl.ScheduledTask.Job
     {
         private readonly IRedisCacheManager _redisCacheManager;
         private readonly IMenuServer _menuServer;
-        private readonly IRabbitMQ _rabbitMQ;
+        //private readonly IRabbitMQ _rabbitMQ;
         private readonly IRedisSubscription _redisSubscription;
-        public TestJobOne(IRedisCacheManager redisCacheManager,IMenuServer menuServer, IRabbitMQ rabbitMQ, IRedisSubscription redisSubscription)
+        public TestJobOne(IRedisCacheManager redisCacheManager,IMenuServer menuServer,
+            //IRabbitMQ rabbitMQ, 
+            IRedisSubscription redisSubscription)
         {
             this._redisCacheManager = redisCacheManager;
             this._menuServer = menuServer;
-            this._rabbitMQ = rabbitMQ;
+            //this._rabbitMQ = rabbitMQ;
             this._redisSubscription = redisSubscription;
         }
         public async Task Execute(IJobExecutionContext context)
@@ -31,7 +33,7 @@ namespace Uwl.ScheduledTask.Job
             try
             {
                 var list = await _menuServer.GetMenuList();
-                this._rabbitMQ.SendData("Job1", "菜单表里总数量" + list.Count.ToString());
+                //this._rabbitMQ.SendData("Job1", "菜单表里总数量" + list.Count.ToString());
                 await this._redisSubscription.PublishAsyncRedis("redis","我是redis的消息队列");
                 await Console.Out.WriteLineAsync("菜单表里总数量" + list.Count.ToString());
             }

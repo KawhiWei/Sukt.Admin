@@ -499,10 +499,10 @@ namespace UwlAPI.Tools
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRChat>("/api2/chatHub");
             });
-            //手动调用IoC获取实例的方式
-            var scheduler = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<IScheduleServer>();
-            //将获取到的实例传给自动启动Job类
-            new AutoStartJob(scheduler).AutoJob();
+            ////手动调用IoC获取实例的方式
+            //var scheduler = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<IScheduleServer>();
+            ////将获取到的实例传给自动启动Job类
+            //new AutoStartJob(scheduler).AutoJob();
         }
     }
 }
