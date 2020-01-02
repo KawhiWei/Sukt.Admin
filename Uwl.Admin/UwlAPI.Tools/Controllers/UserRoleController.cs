@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Model.RoleAssigVO;
 using Uwl.Data.Server.UserServices;
@@ -19,6 +20,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/UserRoles")]
     [ApiController]
     //[EnableCors("AllRequests")]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class UserRoleController : BaseController<UserRoleController>
     {
         private readonly IUserRoleServer _userRoleServer;

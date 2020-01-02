@@ -1,31 +1,15 @@
-﻿using UwlAPI.Tools.AuthHelper.JWT;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Text;
 using Uwl.Common.AutoMapper;
 using Uwl.Data.EntityFramework.Uwl_DbContext;
-using Microsoft.AspNetCore.Authorization;
-using UwlAPI.Tools.AuthHelper.Policys;
 using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using UwlAPI.Tools.Filter;
-using Uwl.Common.GlobalRoute;
-using Uwl.Common.RabbitMQ;
-using Uwl.QuartzNet.JobCenter.Center;
-using Uwl.Common.Cache.RedisCache;
 using Uwl.Common.SignalRMessage;
-using Uwl.Common.Subscription;
-using Quartz.Spi;
-using Uwl.QuartzNet.JobCenter.JobFactory;
-using Uwl.ScheduledTask.Job;
 using UwlAPI.Tools.Extensions;
 using AutoMapper;
 using Microsoft.Extensions.Hosting;
@@ -99,36 +83,9 @@ namespace UwlAPI.Tools
                 mvc.Conventions.Insert(0, new GlobalRouteAuthorizeConvention());
                 //mvc.Conventions.Insert(0, new AddRoutePrefixFilter(new RouteAttribute(RoutePrefix.Name)));
             });
-            
-            #region Swagger
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v0.1.0",
-                    Title = "UwlAPI.Tools",
-                    Description = "框架说明文档",
-                    //TermsOfService = "None",
-                    Contact = new OpenApiContact() { Name = "UwlAPI.Tools", Email = "UwlAPI.Tools@xxx.com", Url = new Uri( "https://www.jianshu.com/u/94102b59cc2a") }
-                });
-                var basepath = AppDomain.CurrentDomain.BaseDirectory;
-                var xmls = System.IO.Directory.GetFiles(basepath, "*.xml");
-                foreach (var xml in xmls)
-                {
-                    x.IncludeXmlComments(xml);
-                }
-                var IssuerName = (Configuration.GetSection("JwtSettings"))["Issuer"];// 发行人
-                var security = new Dictionary<string, IEnumerable<string>> { { IssuerName, new string[] { } }, };
-                //x.AddSecurityRequirement(security);
-                //x.AddSecurityDefinition(IssuerName, new ApiKeyScheme
-                //{
-                //    Description = "JWT授权(数据将在请求头中进行传输) 直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
-                //    Name = "Authorization",//jwt默认的参数名称
-                //    In = "header",//jwt默认存放Authorization信息的位置(请求头中)
-                //    Type = "apiKey"
-                //});
 
-            });
+            #region Swagger
+            services.SwaggerConfigureExtension();
             #endregion
 
 
@@ -250,24 +207,22 @@ namespace UwlAPI.Tools
             #region Authen
             //注意此授权方法已经放弃，请使用下边的官方验证方法。但是如果你还想传User的全局变量，还是可以继续使用中间件
             //app.UseMiddleware<JwtTokenAuth>();//启动中间件认证
-            app.UseAuthentication();//添加官方认证
             #endregion
-
 
             #region Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "I_Sfront.Core API");
-                c.RoutePrefix = string.Empty;
-            });
+            app.SwaggerAppConfigure();
             #endregion
+
+
             app.UseStaticFiles();// 使用静态文件
-            app.UseCookiePolicy();// 使用cookie
+            //app.UseCookiePolicy();// 使用cookie
             //app.UseHttpsRedirection();// 跳转https
             app.UseStatusCodePages();
             app.UseLog();
             app.UseRouting();//路由中间件
+            app.UseAuthentication();//添加官方认证.
+            // 然后是授权中间件
+            app.UseAuthorization();
             // 短路中间件，配置Controller路由
             app.UseEndpoints(endpoints =>
             {
@@ -276,10 +231,7 @@ namespace UwlAPI.Tools
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRChat>("/api2/chatHub");
             });
-            ////手动调用IoC获取实例的方式
-            //var scheduler = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<IScheduleServer>();
-            ////将获取到的实例传给自动启动Job类
-            //new AutoStartJob(scheduler).AutoJob();
+            app.AutoJob();
         }
     }
 }

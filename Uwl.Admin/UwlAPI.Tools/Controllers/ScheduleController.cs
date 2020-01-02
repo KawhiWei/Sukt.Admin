@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
@@ -21,6 +23,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Schedule")]
     [ApiController]
     //[EnableCors("AllRequests")]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class ScheduleController : BaseController<ScheduleController>
     {
         private readonly IScheduleServer _scheduleServer;//计划任务管理服务层

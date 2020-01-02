@@ -40,7 +40,7 @@ namespace Uwl.Common.SignalRMessage
                     UserId = Id,
                     SignalRConnectionId = Context.ConnectionId
                 };
-                _redisCacheManager.Set(Id.ToString(), model);//将用户关联的ConnectionID放到缓存中
+                await _redisCacheManager.Set(Id.ToString(), model);//将用户关联的ConnectionID放到缓存中
                 await Console.Out.WriteLineAsync($"SignalR链接Id放入缓存成功;用户{name}");
             }
             else

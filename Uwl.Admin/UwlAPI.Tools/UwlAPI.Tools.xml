@@ -1099,5 +1099,27 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:UwlAPI.Tools.StartupExtension.SwaggerExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.SwaggerExtension.SwaggerConfigureExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.SwaggerExtension.SwaggerAppConfigure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            app
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.SwaggerExtension.AutoJob(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            启动时自动将已启动的job添加到应用程序
+            </summary>
+            <param name="app"></param>
+        </member>
     </members>
 </doc>

@@ -18,6 +18,7 @@ using Uwl.Common.Download;
 using Uwl.Common.Helper;
 using Uwl.Extends.EncryPtion;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 
 namespace UwlAPI.Tools.Controllers
 {
@@ -33,6 +34,7 @@ namespace UwlAPI.Tools.Controllers
     [ApiController]
     //[EnableCors("AllRequests")]
     //[AllowAnonymous]//允许匿名访问
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class UserController : BaseController<UserController>
     {
         /// <summary>

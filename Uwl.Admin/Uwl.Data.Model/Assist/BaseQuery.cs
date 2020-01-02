@@ -9,8 +9,8 @@ namespace Uwl.Data.Model.Assist
         /// <summary>
         /// 页码
         /// </summary>
-        public int PageIndex { get; set; }
+        public int PageIndex { get; set; } = 1;
         //每页条数
-        public int PageSize { get; set; }
+        public int PageSize { get; set; } = 15;
     }
 }

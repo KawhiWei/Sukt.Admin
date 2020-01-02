@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Uwl.Common.AutoMapper;
+using Uwl.Common.GlobalRoute;
 using Uwl.Common.Utility;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
@@ -27,6 +28,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Menus")]
     //[EnableCors("AllRequests")]
     [ApiController]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class MenuController : BaseController<MenuController>
     {
         private IMenuServer _menuServer;

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Model.VO.Personal;
 using Uwl.Data.Server.UserServices;
@@ -18,6 +20,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Personal")]
     [ApiController]
     //[EnableCors("AllRequests")]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class PersonalCenterController : BaseController<PersonalCenterController>
     {
         private IUserServer _userserver;

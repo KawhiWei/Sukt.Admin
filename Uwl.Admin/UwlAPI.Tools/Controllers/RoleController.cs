@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
@@ -21,6 +22,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Roles")]
     [ApiController]
     //[EnableCors("AllRequests")]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class RoleController : BaseController<RoleController>
     {
         private IRoleServer _roleServer;

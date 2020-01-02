@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.MenuViewModel;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Model.RoleAssigVO;
@@ -20,6 +21,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/RoleAssig")]
     [ApiController]
     //[EnableCors("AllRequests")]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class RoleAssigController : BaseController<RoleAssigController>
     {
         private IRoleAssigServer _roleAssigServer;

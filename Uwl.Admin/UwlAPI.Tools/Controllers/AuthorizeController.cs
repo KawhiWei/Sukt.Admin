@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Cors;
 using Uwl.Extends.Utility;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting;
+using Uwl.Common.GlobalRoute;
 
 namespace UwlAPI.Tools.Controllers
 {

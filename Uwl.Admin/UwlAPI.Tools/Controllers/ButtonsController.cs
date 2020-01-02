@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.Assist;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
@@ -24,6 +25,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/Button")]
     //[EnableCors("AllRequests")]
     [ApiController]
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class ButtonsController : BaseController<ButtonsController>
     {
         private readonly IButtonServer _buttonServer;

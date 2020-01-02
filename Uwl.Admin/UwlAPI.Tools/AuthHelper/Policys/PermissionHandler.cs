@@ -66,7 +66,7 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                 //{
                 //    var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，您无权访问该接口!" });
                 //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                //    filterContext.Result = new JsonResult(payload);
+                //    filterContext.Result = new Jso nResult(payload);
                 //    context.Succeed(requirement);
                 //    return;
                 //}

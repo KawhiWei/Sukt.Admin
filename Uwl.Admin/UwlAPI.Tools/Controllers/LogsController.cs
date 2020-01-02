@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Uwl.Common.GlobalRoute;
 using Uwl.Data.Model.BaseModel;
 using Uwl.Data.Model.Result;
 using Uwl.Data.Server.LogsServices;
@@ -21,6 +22,7 @@ namespace UwlAPI.Tools.Controllers
     [Route("api/GetLogs")]
     //[EnableCors("AllRequests")]
     //[AllowAnonymous]//允许匿名访问
+    [Authorize(GlobalRouteAuthorizeVars.Name)]
     public class LogsController : BaseController<LogsController>
     {
         private ILogsServer _logsServer=null;
