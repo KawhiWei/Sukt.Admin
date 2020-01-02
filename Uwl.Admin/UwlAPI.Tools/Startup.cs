@@ -215,9 +215,10 @@ namespace UwlAPI.Tools
 
 
             app.UseStaticFiles();// 使用静态文件
-            //app.UseCookiePolicy();// 使用cookie
+            app.UseCookiePolicy();// 使用cookie
             //app.UseHttpsRedirection();// 跳转https
             app.UseStatusCodePages();
+            
             app.UseLog();
             app.UseRouting();//路由中间件
             app.UseAuthentication();//添加官方认证.

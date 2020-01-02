@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Uwl.Data.Model.Result;
 using Uwl.Data.Server.RoleAssigServices;
 using Uwl.Extends.Utility;
 
@@ -125,7 +126,11 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                             });
                             if(currentRoles.Count<=0|| !isMatchRole)
                             {
-                                var payload = JsonConvert.SerializeObject(new { Code = "403", Message = "很抱歉，您无权访问该接口!请先分配权限" });
+                                var model = new MessageModel<string>()
+                                {
+                                    msg = "很抱歉，您无权访问该接口!请先分配权限",
+                                };
+                                var payload = JsonConvert.SerializeObject(model);
                                 httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
                                 filterContext.Result = new JsonResult(payload);
                                 context.Succeed(requirement);
