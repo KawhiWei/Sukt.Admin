@@ -1059,5 +1059,45 @@
             <param name="env"></param>
             <param name="loggerFactory"></param>
         </member>
+        <member name="T:UwlAPI.Tools.StartupExtension.AuthorizationExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.AuthorizationExtension.AuthExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:UwlAPI.Tools.StartupExtension.IOCExtension">
+            <summary>
+            IOC注入扩展
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.IOCExtension.ServerExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            服务层注入
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.IOCExtension.RepositotyExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            仓储层注入
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.IOCExtension.CommonExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            公共扩展注入
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.IOCExtension.JobExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Job扩展注入
+            </summary>
+            <param name="services"></param>
+        </member>
     </members>
 </doc>
