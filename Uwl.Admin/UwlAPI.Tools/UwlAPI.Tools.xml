@@ -1077,6 +1077,17 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:UwlAPI.Tools.StartupExtension.HttpContextExtension">
+            <summary>
+            启动服务
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.HttpContextExtension.AddHttpContextExtension(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="T:UwlAPI.Tools.StartupExtension.IOCExtension">
             <summary>
             IOC注入扩展

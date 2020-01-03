@@ -138,6 +138,7 @@ namespace UwlAPI.Tools
             #endregion
 
             #region No.3    复杂策略授权 + 官方JWT认证
+            services.AddHttpContextExtension();
             services.AuthExtension();
             #endregion
             #region 添加automapper实体映射,如果存在相同字段则自动映射

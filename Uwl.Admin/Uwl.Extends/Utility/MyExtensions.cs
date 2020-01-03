@@ -228,5 +228,15 @@ namespace Uwl.Extends.Utility
             }
             return new Tuple<bool, string>(false, "Cron表达式无法解析");
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="thisValue"></param>
+        /// <returns></returns>
+        public static string ObjToString(this object thisValue)
+        {
+            if (thisValue != null) return thisValue.ToString().Trim();
+            return "";
+        }
     }
 }
