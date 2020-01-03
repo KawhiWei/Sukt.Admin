@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Quartz;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -213,6 +214,19 @@ namespace Uwl.Extends.Utility
         {
 
             return value == null ? true : false;
+        }
+        /// <summary>
+        /// Quartz【Cron】表达式验证
+        /// </summary>
+        /// <param name="cron"></param>
+        /// <returns></returns>
+        public static Tuple<bool, string> CronCheck(this string cron)
+        {
+            if(CronExpression.IsValidExpression(cron))
+            {
+                return new Tuple<bool, string>(true, "验证通过");
+            }
+            return new Tuple<bool, string>(false, "Cron表达式无法解析");
         }
     }
 }

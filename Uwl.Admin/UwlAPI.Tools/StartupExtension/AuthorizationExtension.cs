@@ -69,7 +69,7 @@ namespace UwlAPI.Tools.StartupExtension
                     jwtSettings.Issuer,//发行人
                     jwtSettings.Audience,//听众
                     signingCredentials,//签名凭据
-                    expiration: TimeSpan.FromSeconds(60 * 60)//过期时间
+                    expiration: TimeSpan.FromSeconds(60 *1)//过期时间
                 );
             //No.1 基于自定义角色的策略授权
             services.AddAuthorization(options =>

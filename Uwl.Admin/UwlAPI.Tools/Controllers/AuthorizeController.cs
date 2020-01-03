@@ -229,5 +229,46 @@ namespace UwlAPI.Tools.Controllers
             }
         }
         #endregion
+        #region 请求刷新Token（以旧换新）
+        /// <summary>
+        /// 刷新Token
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Refrensh")]
+        public async Task<MessageModel<dynamic>> RefrenshToken(string token="")
+        {
+            var data = new MessageModel<dynamic>();
+            if (token.IsNullOrEmpty())
+            {
+                data.msg = "令牌无效，重新登录";
+                return data;
+            }
+            var jwt= JwtHelper.SerializeJwt(token);
+            var Info = await _userserver.GetSysUser(jwt.Uid);
+            if(jwt.Uid!=Guid.Empty&& Info != null)
+            {
+                var RoleName = await _userserver.GetUserRoleByUserId(Info.Id);
+                var claims = new List<Claim>
+                        {
+                        new Claim(ClaimTypes.Name,Info.Name),//设置用户名称
+                        new Claim(JwtRegisteredClaimNames.Jti,Info.Id.ToString()),//设置用户ID
+                        new Claim(ClaimTypes.Expiration,DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()),//设置过期时间
+                        new Claim("Id",Info.Id.ToString()),
+                        new Claim("userName",Info.Name)
+                        };
+                claims.AddRange(RoleName.Split(',').Select(x => new Claim(ClaimTypes.Role, x)));//将用户角色填充到claims中
+                var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);//用户标识
+                identity.AddClaims(claims);
+                var tokenkey = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                data.response = tokenkey;
+                data.msg = "refrenshToken success! loading data...";
+                data.success = true;
+                return data;
+            }
+            return data;
+        }
+        #endregion
     }
 }

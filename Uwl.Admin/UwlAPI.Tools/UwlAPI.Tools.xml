@@ -241,6 +241,13 @@
             <param name="loginViewModel"></param>
             <returns></returns>
         </member>
+        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.RefrenshToken(System.String)">
+            <summary>
+            刷新Token
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
         <member name="T:UwlAPI.Tools.Controllers.BaseController`1">
             <summary>
             基类控制器

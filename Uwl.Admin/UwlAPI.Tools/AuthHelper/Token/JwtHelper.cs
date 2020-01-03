@@ -86,7 +86,7 @@ namespace UwlAPI.Tools.AuthHelper.Token
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                throw e;
             }
             var tm = new TokenModelJWT
             {

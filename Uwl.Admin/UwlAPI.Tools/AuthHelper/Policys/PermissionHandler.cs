@@ -79,6 +79,10 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                 requirement.Permissions = permissions;
                 //requirement.Permissions.AddRange(rolelist.Select(x => new PermissionItem { Url = x.ActionName, Role = x.RoleName }));
                 var quesrUrl = httpContext.Request.Path.Value.ToLower();//获取请求的Url的Action
+                var model = new MessageModel<string>()
+                {
+                    msg = "很抱歉，登录超时!请重新登录!",
+                };
                 //判断请求是否停止
                 var handlers = httpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
                 foreach (var scheme in await this._Schemes.GetRequestHandlerSchemesAsync())
@@ -86,9 +90,8 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                     if(await handlers.GetHandlerAsync(httpContext, scheme.Name) is IAuthenticationRequestHandler handler && await handler.HandleRequestAsync())
                     {
                         //自定义异常返回数据
-                        var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，登录超时!请重新登录" });
                         httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        filterContext.Result = new JsonResult(payload);
+                        filterContext.Result = new JsonResult(model);
                         context.Succeed(requirement);
                         return;
                     }
@@ -126,13 +129,9 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                             });
                             if(currentRoles.Count<=0|| !isMatchRole)
                             {
-                                var model = new MessageModel<string>()
-                                {
-                                    msg = "很抱歉，您无权访问该接口!请先分配权限",
-                                };
-                                var payload = JsonConvert.SerializeObject(model);
+                                model.msg = "很抱歉，您无权访问权限不足!请先分配权限";
                                 httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
-                                filterContext.Result = new JsonResult(payload);
+                                filterContext.Result = new JsonResult(model);
                                 context.Succeed(requirement);
                                 return;
                             }
@@ -147,14 +146,8 @@ namespace UwlAPI.Tools.AuthHelper.Policys
 
                         else
                         {
-                            //context.Fail();
-                            //return;
-
-
-                            //自定义返回数据
-                            var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，登录超时!请重新登录" });
                             httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                            filterContext.Result = new JsonResult(payload);
+                            filterContext.Result = new JsonResult(model);
                             context.Succeed(requirement);
                             return;
                         }
@@ -163,18 +156,16 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                     else
                     {
                         //自定义返回数据
-                        var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，登录超时!请重新登录" });
                         httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        filterContext.Result = new JsonResult(payload);
+                        filterContext.Result = new JsonResult(model);
                         context.Succeed(requirement);
                         return;
                     }
                 }
                 if(quesrUrl.Equals(requirement.LoginPath.ToLower(),StringComparison.Ordinal)&& (!httpContext.Request.Method.Equals("POST")|| !httpContext.Request.HasFormContentType))
                 {
-                    var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，登录超时!请重新登录" });
                     httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    filterContext.Result = new JsonResult(payload);
+                    filterContext.Result = new JsonResult(model);
                 }
             }
             context.Succeed(requirement);
