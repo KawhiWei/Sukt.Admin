@@ -53,7 +53,7 @@
             
             </summary>
         </member>
-        <member name="M:UwlAPI.Tools.AuthHelper.Policys.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Uwl.Data.Server.RoleAssigServices.IRoleAssigServer)">
+        <member name="M:UwlAPI.Tools.AuthHelper.Policys.PermissionHandler.#ctor(Microsoft.AspNetCore.Authentication.IAuthenticationSchemeProvider,Uwl.Data.Server.RoleAssigServices.IRoleAssigServer,Microsoft.AspNetCore.Http.IHttpContextAccessor)">
             <summary>
             
             </summary>
@@ -66,6 +66,13 @@
             </summary>
             <param name="context"></param>
             <param name="requirement"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UwlAPI.Tools.AuthHelper.Policys.PermissionHandler.OverdueTimeToDateTime(System.String)">
+            <summary>
+            转换时间
+            </summary>
+            <param name="time"></param>
             <returns></returns>
         </member>
         <member name="T:UwlAPI.Tools.AuthHelper.Policys.PermissionItem">

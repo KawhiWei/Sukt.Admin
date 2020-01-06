@@ -30,6 +30,7 @@ namespace UwlAPI.Tools.AuthHelper.Policys
         /// 
         /// </summary>
         public IRoleAssigServer _roleAssigServer { get; set; }
+        private readonly IHttpContextAccessor _accessor;
         ///// <summary>
         ///// services 层注入
         ///// </summary>
@@ -39,10 +40,11 @@ namespace UwlAPI.Tools.AuthHelper.Policys
         /// </summary>
         /// <param name="authenticationScheme"></param>
         /// <param name="roleAssigServer"></param>
-        public PermissionHandler(IAuthenticationSchemeProvider authenticationScheme, IRoleAssigServer roleAssigServer)
+        public PermissionHandler(IAuthenticationSchemeProvider authenticationScheme, IRoleAssigServer roleAssigServer, IHttpContextAccessor accessor)
         {
             this._Schemes = authenticationScheme;
             this._roleAssigServer = roleAssigServer;
+            this._accessor = accessor;
         }
         /// <summary>
         /// 重写异步处理程序
@@ -54,35 +56,28 @@ namespace UwlAPI.Tools.AuthHelper.Policys
         {
             
             //从AuthorizationHandlerContext转成HttpContext，以便取出表求信息
-            var filterContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext);
+            //var filterContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext);
             //取出HttpContext上下文信息
-            var httpContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)?.HttpContext;
+            var httpContext = _accessor.HttpContext;
+            //if(!requirement.Permissions.Any())
+            //{
+            //    _roleAssigServer.
+            //}
+
+
             if (httpContext!=null)
             {
+                var quesrUrl = httpContext.Request.Path.Value.ToLower();//获取请求的Url的Action
                 //获取当前用户的角色信息
                 var currentUserRoles = (from item in httpContext.User.Claims
                                         where item.Type == requirement.ClaimType
                                         select item.Value).ToArray();
-                //if (!currentUserRoles.Any())
-                //{
-                //    var payload = JsonConvert.SerializeObject(new { Code = "401", Message = "很抱歉，您无权访问该接口!" });
-                //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                //    filterContext.Result = new Jso nResult(payload);
-                //    context.Succeed(requirement);
-                //    return;
-                //}
                 var guidarr = currentUserRoles.Select(x => x.ToGuid()).ToArray();
                 var rolelist = await _roleAssigServer.GetRoleAction(guidarr);
 
                 List<PermissionItem> permissions = new List<PermissionItem>();
                 permissions.AddRange(rolelist.Select(x => new PermissionItem { Url = x.ActionName, Role = x.RoleName }));
-                requirement.Permissions = permissions;
-                //requirement.Permissions.AddRange(rolelist.Select(x => new PermissionItem { Url = x.ActionName, Role = x.RoleName }));
-                var quesrUrl = httpContext.Request.Path.Value.ToLower();//获取请求的Url的Action
-                var model = new MessageModel<string>()
-                {
-                    msg = "很抱歉，登录超时!请重新登录!",
-                };
+                requirement.Permissions = permissions;                
                 //判断请求是否停止
                 var handlers = httpContext.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
                 foreach (var scheme in await this._Schemes.GetRequestHandlerSchemesAsync())
@@ -90,9 +85,10 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                     if(await handlers.GetHandlerAsync(httpContext, scheme.Name) is IAuthenticationRequestHandler handler && await handler.HandleRequestAsync())
                     {
                         //自定义异常返回数据
-                        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        filterContext.Result = new JsonResult(model);
-                        context.Succeed(requirement);
+                        //httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        //filterContext.Result = new JsonResult(model);
+                        //context.Succeed(requirement);
+                        context.Fail();
                         return;
                     }
                 }
@@ -109,66 +105,72 @@ namespace UwlAPI.Tools.AuthHelper.Policys
                         {
                             var currentRoles = (from item in httpContext.User.Claims
                                                     where item.Type == requirement.ClaimType
-                                                    select item.Value).ToList();
+                                                select item.Value.ToLower()).ToList();
                             var isMatchRole = false;
-                            var permisssionRoles = requirement.Permissions.Where(x => currentRoles.Contains(x.Role.ToString())).ToList();//根据当前用户角色获取所有的角色信息
-                            permisssionRoles.ForEach(x =>
+                            var permisssionRoles = requirement.Permissions.Where(x => currentRoles.Contains(x.Role.ToString().ToLower())).ToList();//根据当前用户角色获取所有的角色信息
+                            foreach (var x in permisssionRoles)
                             {
                                 try
                                 {
                                     if(Regex.Match(quesrUrl,x.Url.ToLower()).Value==quesrUrl)
                                     {
                                         isMatchRole = true;//如果等于true 证明有权限
+                                        break;
                                     }
                                 }
                                 catch (Exception)
                                 {
-
-                                    throw;
                                 }
-                            });
+                            }
                             if(currentRoles.Count<=0|| !isMatchRole)
                             {
-                                model.msg = "很抱歉，您无权访问权限不足!请先分配权限";
-                                httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
-                                filterContext.Result = new JsonResult(model);
-                                context.Succeed(requirement);
+                                context.Fail();
                                 return;
                             }
-
                         }
-                        //判断过期时间（这里仅仅是最坏验证原则，你可以不要这个if else的判断，因为我们使用的官方验证，Token过期后上边的result?.Principal 就为 null 了，进不到这里了，因此这里其实可以不用验证过期时间，只是做最后严谨判断）
-                        if ((httpContext.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration)?.Value) != null && 
-                            DateTime.Parse(httpContext.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration)?.Value) >= DateTime.Now)
+                        //判断过期时间（这里仅仅是最坏验证原则，你可以不要这个if else的判断，
+                        //因为我们使用的官方验证，Token过期后上边的result?.Principal 就为 null 了，
+                        //进不到这里了，因此这里其实可以不用验证过期时间，只是做最后严谨判断）
+                        if ((httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null 
+                            && OverdueTimeToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now)
                         {
                             context.Succeed(requirement);
                         }
-
                         else
                         {
-                            httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                            filterContext.Result = new JsonResult(model);
-                            context.Succeed(requirement);
+                            context.Fail();
                             return;
                         }
                         return;
                     }
                     else
                     {
-                        //自定义返回数据
-                        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        filterContext.Result = new JsonResult(model);
-                        context.Succeed(requirement);
+                        context.Fail();
                         return;
                     }
                 }
                 if(quesrUrl.Equals(requirement.LoginPath.ToLower(),StringComparison.Ordinal)&& (!httpContext.Request.Method.Equals("POST")|| !httpContext.Request.HasFormContentType))
                 {
-                    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    filterContext.Result = new JsonResult(model);
+                    context.Fail();
+                    return;
                 }
             }
             context.Succeed(requirement);
+        }
+        /// <summary>
+        /// 转换时间
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        private DateTime OverdueTimeToDateTime(string time)
+        {
+
+            time = time.Substring(0, 10);
+            double timestamp = Convert.ToInt64(time);
+            System.DateTime dateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            dateTime = dateTime.AddSeconds(timestamp).ToLocalTime();
+            return dateTime;
+
         }
     }
 }

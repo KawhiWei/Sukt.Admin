@@ -56,7 +56,7 @@ namespace UwlAPI.Tools.Controllers
                     }
                     if(UserId==null)
                     {
-                        UserId = httpContext.User.Claims.FirstOrDefault(item => item.Type == "Id").Value.ToGuid();
+                        UserId = Guid.NewGuid(); //httpContext.User.Claims.FirstOrDefault(item => item.Type == "Id").Value.ToGuid();
                     }
                 }
             }

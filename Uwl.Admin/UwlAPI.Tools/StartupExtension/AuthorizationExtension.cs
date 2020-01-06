@@ -13,6 +13,7 @@ using Uwl.Common.GlobalRoute;
 using Uwl.Common.Helper;
 using UwlAPI.Tools.AuthHelper.JWT;
 using UwlAPI.Tools.AuthHelper.Policys;
+using Microsoft.AspNetCore.Builder;
 
 namespace UwlAPI.Tools.StartupExtension
 {
@@ -40,9 +41,11 @@ namespace UwlAPI.Tools.StartupExtension
             var symmetricKeyAsBase64 = jwtSettings.SecretKey;
             var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
             var signingKey = new SymmetricSecurityKey(keyByteArray);
-            
-            //Configuration.Bind("JwtSettings", jwtSettings);
-            //获取主要jwt token参数设置   // 令牌验证参数
+            #endregion
+
+
+            #region // 令牌验证参数
+            //获取主要jwt token参数设置   
             var TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -55,12 +58,11 @@ namespace UwlAPI.Tools.StartupExtension
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,////是否验证Token有效期，使用当前时间与Token的Claims中的NotBefore和Expires对比
-                ClockSkew = TimeSpan.Zero,////允许的服务器时间偏移量
+                ClockSkew = TimeSpan.FromSeconds(30),////允许的服务器时间偏移量
                 RequireExpirationTime = true,
             };
             var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var permission = new List<PermissionItem>(); //需要从数据库动态绑定，这里先留个空，后边处理器里动态赋值
-            //
             var permissionRequirement = new PermissionRequirement
                 (
                     "/api/denied",//拒绝跳转的Action
@@ -71,56 +73,66 @@ namespace UwlAPI.Tools.StartupExtension
                     signingCredentials,//签名凭据
                     expiration: TimeSpan.FromSeconds(60 *60)//过期时间
                 );
+
+            #endregion
             //No.1 基于自定义角色的策略授权
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(GlobalRouteAuthorizeVars.Name, policy => policy.Requirements.Add(permissionRequirement));
             });
-            //No.2 配置认证服务
-            services.AddAuthentication(options =>
-            {
-                //认证middleware配置
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(t =>
-            {
-                t.TokenValidationParameters = TokenValidationParameters;
-
-                //给SignalR 赋值给集线器的链接管道添加Token验证
-                t.Events = new JwtBearerEvents
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer(options =>
                 {
-                    OnMessageReceived = context =>
-                    {
-                        var accessToken = context.Request.Query["access_token"];
-                        var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(path) && path.StartsWithSegments("/api2/chatHub"))
-                        {
-                            context.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                //过期时间判断
-                //t.Events = new JwtBearerEvents
-                //{
-                //    // 如果过期，则把<是否过期>添加到，返回头信息中
-                //    OnAuthenticationFailed = context =>
-                //    {
-                //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                //        {
-                //            context.Response.Headers.Add("Token-Expired", "true");
-                //        }
-                //        return Task.CompletedTask;
-                //    }
-                //};
-            });
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "uwlcore.api";
+                });
+
+            //No.2 配置认证服务
+            //services.AddAuthentication(options =>
+            //{
+            //    //认证middleware配置
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(t =>
+            //{
+            //    t.TokenValidationParameters = TokenValidationParameters;
+
+            //    //给SignalR 赋值给集线器的链接管道添加Token验证
+            //    t.Events = new JwtBearerEvents
+            //    {
+            //        OnMessageReceived = context =>
+            //        {
+            //            var accessToken = context.Request.Query["access_token"];
+            //            var path = context.HttpContext.Request.Path;
+            //            if (!string.IsNullOrEmpty(path) && path.StartsWithSegments("/api2/chatHub"))
+            //            {
+            //                context.Token = accessToken;
+            //            }
+            //            return Task.CompletedTask;
+            //        }
+            //    };
+            //    //过期时间判断
+            //    //t.Events = new JwtBearerEvents
+            //    //{
+            //    //    // 如果过期，则把<是否过期>添加到，返回头信息中
+            //    //    OnAuthenticationFailed = context =>
+            //    //    {
+            //    //        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            //    //        {
+            //    //            context.Response.Headers.Add("Token-Expired", "true");
+            //    //        }
+            //    //        return Task.CompletedTask;
+            //    //    }
+            //    //};
+            //});
 
             //注入权限处理核心控制器,将自定义的授权处理器 匹配给官方授权处理器接口，这样当系统处理授权的时候，就会直接访问我们自定义的授权处理器了。
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();//注意此处的注入类型取决于你获取角色Action信息的注入类型如果你服务层用AddScoped此处也必须是AddScoped
             //将授权必要类注入生命周期内
             services.AddSingleton(permissionRequirement);
 
-            #endregion
+            
         }
     }
 }
