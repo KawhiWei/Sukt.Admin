@@ -26,12 +26,13 @@ namespace Uwl.ScheduledTask.Job
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            await ExecuteJob(context, Run);
+            await ExecuteJob(context,async()=> await Run(context) );
         }
-        public async Task  Run()
+        public async Task  Run(IJobExecutionContext context)
         {
             try
             {
+                var param = context.MergedJobDataMap;
                 var list = await _menuServer.GetMenuList();
                 //this._rabbitMQ.SendData("Job1", "菜单表里总数量" + list.Count.ToString());
                 await this._redisSubscription.PublishAsyncRedis("redis","我是redis的消息队列");
