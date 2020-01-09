@@ -153,6 +153,7 @@ namespace Uwl.QuartzNet.JobCenter.Center
 
                     //传入反射出来的执行程序集
                     IJobDetail job = new JobDetailImpl(sysSchedule.Id.ToString(), sysSchedule.JobGroup, jobType);
+                    job.JobDataMap.Add("JobParam", "123456");
                     //Job执行时的参数还有待解决？？？？？？？？？？？？？？？？？？？？？
                     ITrigger trigger;
 

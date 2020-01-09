@@ -9,6 +9,10 @@ namespace Uwl.Data.EntityFramework.Uwl_DbContext
     /// </summary>
     public class UwlDbContext:DbContext
     {
+        //public UwlDbContext()
+        //{
+        //}
+
         public UwlDbContext(DbContextOptions<UwlDbContext> options):base(options)
         {
             //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbBase, Migration.Migrations.Configuration>());

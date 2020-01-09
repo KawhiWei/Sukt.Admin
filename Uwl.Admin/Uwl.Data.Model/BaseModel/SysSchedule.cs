@@ -57,5 +57,9 @@ namespace Uwl.Data.Model.BaseModel
         /// 是否启动
         /// </summary>
         public bool IsStart { get; set; } = false;
+        /// <summary>
+        /// 执行传参
+        /// </summary>
+        public string JobParams { get; set; }
     }
 }
