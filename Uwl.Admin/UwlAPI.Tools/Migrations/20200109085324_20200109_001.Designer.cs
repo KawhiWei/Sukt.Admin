@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uwl.Data.EntityFramework.Uwl_DbContext;
 
 namespace UwlAPI.Tools.Migrations
 {
     [DbContext(typeof(UwlDbContext))]
-    partial class UwlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109085324_20200109_001")]
+    partial class _20200109_001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
