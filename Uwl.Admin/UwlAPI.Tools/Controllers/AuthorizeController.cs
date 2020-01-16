@@ -45,7 +45,6 @@ namespace UwlAPI.Tools.Controllers
     {
         private JwtSettings _jwtSettings;
         private IUserServer _userserver;
-        private IRedisCacheManager _redisCacheManager;
         private readonly PermissionRequirement _requirement;
         private readonly IWebHostEnvironment _hostingEnvironment;
         /// <summary>
@@ -53,18 +52,16 @@ namespace UwlAPI.Tools.Controllers
         /// </summary>
         /// <param name="_jwtSettingsAccesser"></param>
         /// <param name="userServer"></param>
-        /// <param name="redisCacheManager"></param>
         /// <param name="permissionRequirement"></param>
         /// <param name="hostingEnvironment"></param>
         ///  <param name="logger"></param>
         public AuthorizeController(IOptions<JwtSettings> _jwtSettingsAccesser,
-            IUserServer userServer, IRedisCacheManager redisCacheManager,
+            IUserServer userServer,
             PermissionRequirement permissionRequirement, IWebHostEnvironment hostingEnvironment,ILogger<AuthorizeController> logger
             ) :base(logger)
         {
             this._jwtSettings = _jwtSettingsAccesser.Value;
             this._userserver = userServer;
-            this._redisCacheManager = redisCacheManager;
             this._requirement = permissionRequirement;
             this._hostingEnvironment = hostingEnvironment;
         }

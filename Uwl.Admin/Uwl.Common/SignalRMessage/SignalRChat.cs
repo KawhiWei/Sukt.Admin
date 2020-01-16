@@ -14,39 +14,39 @@ namespace Uwl.Common.SignalRMessage
     //[EnableCors("SignalRCors")]
     public class SignalRChat: Hub
     {
-        private readonly IRedisCacheManager _redisCacheManager;
-        /// <summary>
-        /// 构造函数注入缓存依赖
-        /// </summary>
-        public SignalRChat(IRedisCacheManager redisCacheManager)
-        {
-            Console.Out.WriteLine("SignalR构造初始化");
-            _redisCacheManager=redisCacheManager;
-        }
+        //private readonly IRedisCacheManager _redisCacheManager;
+        ///// <summary>
+        ///// 构造函数注入缓存依赖
+        ///// </summary>
+        //public SignalRChat(IRedisCacheManager redisCacheManager)
+        //{
+        //    Console.Out.WriteLine("SignalR构造初始化");
+        //    _redisCacheManager=redisCacheManager;
+        //}
         /// <summary>
         /// 创建组对象
         /// </summary>
         /// <returns></returns>
         public async override Task OnConnectedAsync()
         {
-            await Console.Out.WriteLineAsync("SignalR链接初始");
-            if (Context.User.Claims.Any())
-            {
-                await Console.Out.WriteLineAsync("SignalR链接成功");
-                var Id = Context.User.Claims.FirstOrDefault(x => x.Type == "Id").Value.ToGuid();
-                var name = Context.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
-                var model = new SignalRModel
-                {
-                    UserId = Id,
-                    SignalRConnectionId = Context.ConnectionId
-                };
-                await _redisCacheManager.Set(Id.ToString(), model);//将用户关联的ConnectionID放到缓存中
-                await Console.Out.WriteLineAsync($"SignalR链接Id放入缓存成功;用户{name}");
-            }
-            else
-            {
-                await Console.Out.WriteLineAsync("Context.User.Claims未获取到用户信息！");
-            }
+            //await Console.Out.WriteLineAsync("SignalR链接初始");
+            //if (Context.User.Claims.Any())
+            //{
+            //    await Console.Out.WriteLineAsync("SignalR链接成功");
+            //    var Id = Context.User.Claims.FirstOrDefault(x => x.Type == "Id").Value.ToGuid();
+            //    var name = Context.User.Claims.FirstOrDefault(x => x.Type == "userName").Value;
+            //    var model = new SignalRModel
+            //    {
+            //        UserId = Id,
+            //        SignalRConnectionId = Context.ConnectionId
+            //    };
+            //    await _redisCacheManager.Set(Id.ToString(), model);//将用户关联的ConnectionID放到缓存中
+            //    await Console.Out.WriteLineAsync($"SignalR链接Id放入缓存成功;用户{name}");
+            //}
+            //else
+            //{
+            //    await Console.Out.WriteLineAsync("Context.User.Claims未获取到用户信息！");
+            //}
             await base.OnConnectedAsync();
         }
         /// <summary>
@@ -60,7 +60,7 @@ namespace Uwl.Common.SignalRMessage
             if (Context.User.Claims.Any())
             {
                 var Id = Context.User.Claims.FirstOrDefault(x => x.Type == "Id").Value.ToGuid();//链接释放将用户关联的ConnectionID从缓存中移除
-                await _redisCacheManager.Remove(Id.ToString());
+                //await _redisCacheManager.Remove(Id.ToString());
             }
             await base.OnDisconnectedAsync(exception);
         }
@@ -74,15 +74,15 @@ namespace Uwl.Common.SignalRMessage
         /// <returns></returns>
         public async Task SendMessage(string SenderId, string SenderName, string ReceiverId, string Message)
         {
-            var SignalRModel = await _redisCacheManager.Get<SignalRModel>(ReceiverId.ToString());
-            if (SignalRModel != null)
-            {
-                await Clients.Client(SignalRModel.SignalRConnectionId).SendAsync("ReceiveMessage", SenderName, Message);
-            }
-            else
-            {
+            //var SignalRModel = await _redisCacheManager.Get<SignalRModel>(ReceiverId.ToString());
+            //if (SignalRModel != null)
+            //{
+            //    await Clients.Client(SignalRModel.SignalRConnectionId).SendAsync("ReceiveMessage", SenderName, Message);
+            //}
+            //else
+            //{
                 await Clients.All.SendAsync("ReceiveMessage", SenderName, Message);
-            }
+            //}
         }
         /// <summary>
         /// 服务端主动向客户端发送数据

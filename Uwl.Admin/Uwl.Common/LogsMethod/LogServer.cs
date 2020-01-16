@@ -25,7 +25,7 @@ namespace Uwl.Common.LogsMethod
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                 .WriteTo.File(Path.Combine($"logs/Information/{filename}/", ".txt"), rollingInterval: RollingInterval.Day)
                 .CreateLogger();
-            Log.Information(message, info);
+            Log.Information(message+ info, info);
             Log.CloseAndFlush();
         }
         /// <summary>

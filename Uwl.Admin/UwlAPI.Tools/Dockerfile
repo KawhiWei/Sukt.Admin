@@ -1,9 +1,10 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM swr.cn-south-1.myhuaweicloud.com/mcr/aspnet:3.1-alpine AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 80
 
+#swr.cn-south-1.myhuaweicloud.com/mcr/aspnet:3.1-alpine AS base
 #FROM swr.cn-south-1.myhuaweicloud.com/mcr/aspnet:3.1-alpine AS build
 #WORKDIR /src
 #COPY ["UwlAPI.Tools/UwlAPI.Tools.csproj", "UwlAPI.Tools/"]

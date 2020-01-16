@@ -209,13 +209,12 @@
             登录或者获取Token接口不加//[Authorize(Policy = "Admin")]权限，加了类似，你把钥匙上了锁
             </summary>
         </member>
-        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,Uwl.Common.Cache.RedisCache.IRedisCacheManager,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILogger{UwlAPI.Tools.Controllers.AuthorizeController})">
+        <member name="M:UwlAPI.Tools.Controllers.AuthorizeController.#ctor(Microsoft.Extensions.Options.IOptions{UwlAPI.Tools.AuthHelper.JWT.JwtSettings},Uwl.Data.Server.UserServices.IUserServer,UwlAPI.Tools.AuthHelper.Policys.PermissionRequirement,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILogger{UwlAPI.Tools.Controllers.AuthorizeController})">
             <summary>
             构造函数
             </summary>
             <param name="_jwtSettingsAccesser"></param>
             <param name="userServer"></param>
-            <param name="redisCacheManager"></param>
             <param name="permissionRequirement"></param>
             <param name="hostingEnvironment"></param>
              <param name="logger"></param>

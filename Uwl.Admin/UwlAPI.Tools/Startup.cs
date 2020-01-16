@@ -15,6 +15,7 @@ using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using UwlAPI.Tools.StartupExtension;
+using Uwl.Common.LogsMethod;
 
 namespace UwlAPI.Tools
 {
@@ -72,6 +73,7 @@ namespace UwlAPI.Tools
             #region 配置启动程序
             //获取appsettings.json文件Default节点下面的连接字符串
             var sqlconn = Configuration.GetConnectionString("SqlserverDefault");
+            LogServer.WriteLog("20190107", "数据库链接字符串", sqlconn);
             //第一个参数传入连接字符串 ，     第二个参数指明执行迁移的程序集
             //options.UseSqlServer(sqlconn,b=>b.MigrationsAssembly("CorePractice")   如果事WebApi 项目的话需要加services.AddEntityFrameworkSqlServer().AddDbContext
             services.AddEntityFrameworkSqlServer().AddDbContext<UwlDbContext>(options => 
@@ -233,7 +235,7 @@ namespace UwlAPI.Tools
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRChat>("/api2/chatHub");
             });
-            app.AutoJob();
+            //app.AutoJob();
         }
     }
 }
