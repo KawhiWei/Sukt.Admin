@@ -24,3 +24,5 @@
 /Uwl.Admin/MQTest/appsettings.json
 /Uwl.Admin/MQTest/obj
 /Uwl.Admin/MQTest/bin
+/Uwl.Admin/EFCoreAutoMigrationsTodb/bin
+/Uwl.Admin/EFCoreAutoMigrationsTodb/obj

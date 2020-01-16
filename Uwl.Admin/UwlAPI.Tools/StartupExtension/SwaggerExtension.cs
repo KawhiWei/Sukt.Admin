@@ -67,6 +67,7 @@ namespace UwlAPI.Tools.StartupExtension
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
+                c.DocumentTitle = "Uwl.Core.API";
                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "I_Sfront.Core API");
                 c.RoutePrefix = string.Empty;
             });

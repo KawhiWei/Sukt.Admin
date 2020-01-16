@@ -28,7 +28,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         public UwlRepositoryBase(IUnitofWork unitofWork)
         {
             _unitofWork = unitofWork;
-            _uwldbContext=_unitofWork.GetDbContext();
+            _uwldbContext = _unitofWork.GetDbContext();
             _dbSet = _uwldbContext.Set<TEntity>();
         }
 
@@ -77,16 +77,17 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 _dbSet.Add(entity);
                 if (autoSave)
-                    Save();
-                return true;
+                    excuter = Save();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
-            
+
         }
         /// <summary>
         /// 添加实体
@@ -97,16 +98,16 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 _dbSet.AddRange(entity);
                 if (autoSave)
-                    this.Save();
-                return true;
+                    excuter = this.Save();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
-
         }
         /// <summary>
         /// 更新实体
@@ -121,15 +122,14 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
                 _dbSet.Update(entity); ;
                 //_dbSet.Update<TEntity>(entity);
                 if (autoSave)
-                    excuter=Save();
-                return excuter>0;
+                    excuter = Save();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
-                throw;
+                throw ex;
             }
-           
+
         }
         public int UpdateNotQuery(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
@@ -166,18 +166,19 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 _dbSet.UpdateRange(entity);
                 if (autoSave)
-                    Save();
-                return true;
+                    excuter = Save();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
-            
+
         }
-        
+
         /// <summary>
         /// 删除实体
         /// </summary>
@@ -189,7 +190,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
             if (autoSave)
                 Save();
         }
-        
+
         /// <summary>
         /// 根据主键删除实体
         /// </summary>
@@ -206,7 +207,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// </summary>
         public int Save()
         {
-           return _uwldbContext.SaveChanges();
+            return _uwldbContext.SaveChanges();
         }
         #endregion
 
@@ -220,7 +221,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// <param name="predicate"></param>
         /// <param name="total"></param>
         /// <returns></returns>
-        public IQueryable<TEntity> PageBy(int pageIndex,int pageSize, Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> PageBy(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> predicate)
         {
             return _dbSet.Where(predicate).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         }
@@ -235,7 +236,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// 异步等待执行结果获取所有实体集合
         /// </summary>
         /// <returns></returns>
-        public async Task<System.Collections.Generic.List<TEntity>> GetAllListAsync()
+        public async Task<List<TEntity>> GetAllListAsync()
         {
             return await _dbSet.ToListAsync();
         }
@@ -244,7 +245,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public async Task<System.Collections.Generic.List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
@@ -253,7 +254,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// </summary>
         /// <param name="predicate">lambda表达式条件</param>
         /// <returns></returns>
-        public async  Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.FirstOrDefaultAsync(predicate);
         }
@@ -266,16 +267,17 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 await _dbSet.AddAsync(entity);
                 if (autoSave)
-                    await SaveAsync();
-                return true;
+                    excuter = await SaveAsync();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return true;
+                throw ex;
             }
-            
+
         }
         /// <summary>
         /// 异步更新单个实体
@@ -288,20 +290,20 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
             try
             {
                 int excuter = 0;
-                _dbSet.Update(entity).State=EntityState.Modified;
+                _dbSet.Update(entity).State = EntityState.Modified;
                 if (autoSave)
-                    excuter =await SaveAsync();
-                return excuter>0;
+                    excuter = await SaveAsync();
+                return excuter > 0;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
 
-        public  async Task<int> UpdateNotQueryAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
+        public async Task<int> UpdateNotQueryAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
         {
             //_dbSet.Where().BulkUpdateAsync<TEntity>(entity);
 
@@ -327,7 +329,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
 
                 }
             }
-            return  await  _uwldbContext.SaveChangesAsync();
+            return await _uwldbContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -340,7 +342,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         public async Task<bool> UpdateAsync(TEntity entity, bool autoSave = true, params string[] FilterSpecifiedColumnNotUpdated)
         {
 
-           await  Task.CompletedTask;
+            await Task.CompletedTask;
             return false;
             //if (FilterSpecifiedColumnNotUpdated != null && FilterSpecifiedColumnNotUpdated.Length > 0)
             //{
@@ -381,14 +383,15 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
-                 _dbSet.UpdateRange(entity);
-                if(autoSave)
-                    await SaveAsync();
-                return true;
+                int excuter = 0;
+                _dbSet.UpdateRange(entity);
+                if (autoSave)
+                    excuter = await SaveAsync();
+                return excuter > 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
 
         }
@@ -402,17 +405,16 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 _dbSet.Remove(entity);
                 if (autoSave)
-                    await SaveAsync();
-                return true;
+                    excuter = await SaveAsync();
+                return excuter > 0;
             }
             catch (Exception ex)
             {
-                return false;
                 throw ex;
             }
-            
         }
         /// <summary>
         /// 根据主键异步获取实体
@@ -422,15 +424,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// <returns></returns>
         public async Task<TEntity> GetModelAsync(TPrimaryKey Id)
         {
-            try
-            {
-                return await _dbSet.FirstOrDefaultAsync(CreateEqualityExpressionForId(Id));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
+            return await _dbSet.FirstOrDefaultAsync(CreateEqualityExpressionForId(Id));
         }
         /// <summary>
         /// 根据主键异步删除实体
@@ -442,14 +436,14 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         {
             try
             {
+                int excuter = 0;
                 _dbSet.Remove(await GetModelAsync(Id));
                 if (autoSave)
-                    await SaveAsync();
-                return true;
+                    excuter = await SaveAsync();
+                return excuter > 0;
             }
             catch (Exception ex)
             {
-                return false;
                 throw ex;
             }
 
@@ -461,19 +455,16 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
         /// <returns></returns>
         public async Task InsertAsync(List<TEntity> entity, bool autoSave = true)
         {
+
             await _dbSet.AddRangeAsync(entity);
             if (autoSave)
-            {
-
                 await SaveAsync();
-            }
         }
         public async Task Delete(List<TEntity> entity, bool autoSave = true)
         {
             _dbSet.RemoveRange(entity);
-            if(autoSave)
+            if (autoSave)
             {
-
                 await SaveAsync();
             }
         }
@@ -483,7 +474,7 @@ namespace Uwl.Data.EntityFramework.RepositoriesBase
             return await _uwldbContext.SaveChangesAsync();
         }
         #endregion
-  
+
         /// <summary>
         /// 根据主键构建判断表达式
         /// </summary>
