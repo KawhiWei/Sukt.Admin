@@ -16,6 +16,8 @@ using Uwl.Domain.IRepositories;
 using Uwl.Common.Cache.RedisCache;
 using Microsoft.EntityFrameworkCore;
 using Uwl.Common.Helper;
+using Uwl.Common.LogsMethod;
+using Uwl.Common.SendEmail;
 
 namespace Uwl.Data.Server.RoleAssigServices
 {
@@ -208,42 +210,54 @@ namespace Uwl.Data.Server.RoleAssigServices
         /// <returns></returns>
         public async Task<List<RoleActionModel>> GetRoleAction(Guid [] roleArr)
         {
-            var RoleModuleList = new List<RoleActionModel>();
-            var Rolelist=await _roleRepositoty.GetAllListAsync(x => roleArr.Contains(x.Id));//根据Httpcontext存储的角色名称获取角色ID
-            var RoleAssig =await  _roleRightAssigRepository.GetAllListAsync(x => Rolelist.Select(s=>s.Id).Contains(x.RoleId));//根据角色ID获取到所有的权限
-            var Btnlist = await _buttonRepositoty.GetAllListAsync(x=>x.IsDrop==false);//获取所有的按钮
-            List<SysMenu> Menulist = new List<SysMenu>();
-            if (await _redisCacheManager.Get(Appsettings.app(new string[] { "CacheOptions", "Menukey" })))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
+            try
             {
-                Menulist = await _redisCacheManager.GetList<SysMenu>(Appsettings.app(new string[] { "CacheOptions", "Menukey" }));//.Where(x=>MenuIds.Contains(x.Id)).ToList();
-            }
-            else
-            {
-                Menulist = await this._menuRepositoty.GetAll(x => x.IsDrop == false).AsNoTracking().ToListAsync();
-                await _redisCacheManager.Set(Appsettings.app(new string[] { "CacheOptions", "Menukey" }), Menulist);
-            }
-            if (!Menulist.Any())
-            {
-                Menulist = await _menuRepositoty.GetAllListAsync(x => x.IsDrop == false);//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
-            }
-            foreach (var item in RoleAssig)
-            {
-                var RoleModel = Rolelist.Where(x => x.Id == item.RoleId).FirstOrDefault();//获取角色实体
-                var MenuModel=Menulist.Where(x => x.Id == item.MenuId).FirstOrDefault();//获取菜单实体
-                RoleModuleList.Add(new RoleActionModel {RoleName=RoleModel.Id,ActionName=MenuModel.APIAddress });
-                if (!item.ButtonIds.IsNullOrEmpty()) //判断是否存在按钮
+                var RoleModuleList = new List<RoleActionModel>();
+                var Rolelist=await _roleRepositoty.GetAllListAsync(x => roleArr.Contains(x.Id));//根据Httpcontext存储的角色名称获取角色ID
+                var RoleAssig =await  _roleRightAssigRepository.GetAllListAsync(x => Rolelist.Select(s=>s.Id).Contains(x.RoleId));//根据角色ID获取到所有的权限
+                var Btnlist = await _buttonRepositoty.GetAllListAsync(x=>x.IsDrop==false);//获取所有的按钮
+                List<SysMenu> Menulist = new List<SysMenu>();
+                if (await _redisCacheManager.Get(Appsettings.app(new string[] { "CacheOptions", "Menukey" })))//判断菜单缓存是否存在，如果存在则取缓存不存在则取数据库
                 {
-                    List<Guid> guids = new List<Guid>();
-                    var btnArr = item.ButtonIds.Split(',').Select(x=>x.ToGuid()).ToList();
-                    var RoleBtn=  Btnlist.Where(x => btnArr.Contains(x.Id)).ToList();
-                    RoleModuleList.AddRange(RoleBtn.Select(x => new RoleActionModel
-                    {
-                        RoleName = RoleModel.Id,//在这里代表的是
-                        ActionName=x.APIAddress,
-                    }));
+                    Menulist = await _redisCacheManager.GetList<SysMenu>(Appsettings.app(new string[] { "CacheOptions", "Menukey" }));//.Where(x=>MenuIds.Contains(x.Id)).ToList();
                 }
+                else
+                {
+                    Menulist = await this._menuRepositoty.GetAll(x => x.IsDrop == false).AsNoTracking().ToListAsync();
+                    await _redisCacheManager.Set(Appsettings.app(new string[] { "CacheOptions", "Menukey" }), Menulist);
+                }
+                if (!Menulist.Any())
+                {
+                    Menulist = await _menuRepositoty.GetAllListAsync(x => x.IsDrop == false);//根据菜单ID获取菜单列表 x=>MenuIds.Contains(x.Id)
+                }
+                foreach (var item in RoleAssig)
+                {
+                    var RoleModel = Rolelist.Where(x => x.Id == item.RoleId).FirstOrDefault();//获取角色实体
+                    var MenuModel=Menulist.Where(x => x.Id == item.MenuId).FirstOrDefault();//获取菜单实体
+                    RoleModuleList.Add(new RoleActionModel {RoleName=RoleModel.Id,ActionName=MenuModel.APIAddress });
+                    if (!item.ButtonIds.IsNullOrEmpty()) //判断是否存在按钮
+                    {
+                        List<Guid> guids = new List<Guid>();
+                        var btnArr = item.ButtonIds.Split(',').Select(x=>x.ToGuid()).ToList();
+                        var RoleBtn=  Btnlist.Where(x => btnArr.Contains(x.Id)).ToList();
+                        RoleModuleList.AddRange(RoleBtn.Select(x => new RoleActionModel
+                        {
+                            RoleName = RoleModel.Id,//在这里代表的是
+                            ActionName=x.APIAddress,
+                        }));
+                    }
+                }
+                return RoleModuleList;
             }
-            return RoleModuleList;
+            catch (Exception ex)
+            {
+                var FromMailAddres = Appsettings.app(new string[] { "FromMailConfig", "FromMailAddres" });
+                var FromMailPwd = Appsettings.app(new string[] { "FromMailConfig", "FromMailPwd" });
+                var ToMail = Appsettings.app(new string[] { "FromMailConfig", "ToMail" });
+                await SendEmail.SendMailAvailableAsync(FromMailAddres, FromMailPwd, ToMail, $"{ DateTime.Now.ToString("yyyy-MM-dd")}Redis超出限制错误", "Redis链接错误");
+                LogServer.WriteErrorLog($"{ DateTime.Now.ToString("yyyy-MM-dd hh:mm:dd")}Redis超出限制错误", $"Redis链接错误", ex);
+                throw ex;
+            }
         }
         /// <summary>
         /// Linq多表链接查询

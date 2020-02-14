@@ -30,6 +30,8 @@ using Uwl.Extends.Utility;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Uwl.Common.GlobalRoute;
+using Uwl.Common.SendEmail;
+using Uwl.Common.Helper;
 
 namespace UwlAPI.Tools.Controllers
 {
