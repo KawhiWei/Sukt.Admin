@@ -24,3 +24,4 @@
 /Uwl.Admin/MQTest/appsettings.json
 /Uwl.Admin/MQTest/obj
 /Uwl.Admin/MQTest/bin
+/Uwl.Admin/EFCoreAutoMigrationsTodb/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1
