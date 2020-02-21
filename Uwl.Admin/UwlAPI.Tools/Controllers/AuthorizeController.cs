@@ -179,6 +179,10 @@ namespace UwlAPI.Tools.Controllers
         [Route("TokenThree")]
         public async Task<MessageModel<dynamic>> TokenAssig([FromBody] LoginViewModel loginViewModel)
         {
+            var FromMailAddres = Appsettings.app(new string[] { "FromMailConfig", "FromMailAddres" });
+            var FromMailPwd = Appsettings.app(new string[] { "FromMailConfig", "FromMailPwd" });
+            var ToMail = Appsettings.app(new string[] { "FromMailConfig", "ToMail" });
+            //await SendEmail.SendMailAvailableAsync(FromMailAddres, FromMailPwd, ToMail, $"{ DateTime.Now.ToString("yyyy-MM-dd")}Redis超出限制错误", "测试发送邮件抄送功能");//new string[] { "1162321342@qq.com" }
             var data = new MessageModel<dynamic>();
             var cheke = loginViewModel.CheckModel();
             if (cheke.Item1)
