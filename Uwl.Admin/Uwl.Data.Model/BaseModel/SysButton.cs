@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -30,6 +31,7 @@ namespace Uwl.Data.Model.BaseModel
         /// <summary>
         /// 按钮颜色/样式
         /// </summary>
+        [MaxLength(320)]
         public string ButtonStyle { get; set; }
         /// <summary>
         /// 隶属菜单
