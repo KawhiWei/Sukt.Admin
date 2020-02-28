@@ -53,8 +53,9 @@ namespace UwlAPI.Tools.Migrations
                     b.Property<string>("Others")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Test")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Test1")
+                        .HasColumnType("nvarchar(560)")
+                        .HasMaxLength(560);
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

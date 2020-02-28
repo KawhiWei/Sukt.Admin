@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Uwl.Data.Model.BaseModel
@@ -42,6 +43,7 @@ namespace Uwl.Data.Model.BaseModel
         /// <summary>
         /// 测试字段
         /// </summary>
-        public string Test { get; set; }
+        [MaxLength(560)]
+        public string Test1 { get; set; }
     }
 }

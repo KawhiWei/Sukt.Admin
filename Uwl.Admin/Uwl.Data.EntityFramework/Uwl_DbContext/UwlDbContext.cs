@@ -13,7 +13,7 @@ namespace Uwl.Data.EntityFramework.Uwl_DbContext
         //{
         //}
 
-        public UwlDbContext(DbContextOptions<UwlDbContext> options):base(options)
+        public UwlDbContext(DbContextOptions<UwlDbContext> options) : base(options)
         {
             //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DbBase, Migration.Migrations.Configuration>());
         }

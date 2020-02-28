@@ -1076,6 +1076,17 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:UwlAPI.Tools.StartupExtension.EntityFrameworkCoreAutoMigrate">
+            <summary>
+            EFCore自动迁移扩展
+            </summary>
+        </member>
+        <member name="M:UwlAPI.Tools.StartupExtension.EntityFrameworkCoreAutoMigrate.AutoMigrate(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            扩展方法
+            </summary>
+            <param name="app"></param>
+        </member>
         <member name="T:UwlAPI.Tools.StartupExtension.HttpContextExtension">
             <summary>
             启动服务

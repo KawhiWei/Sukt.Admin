@@ -188,6 +188,8 @@ namespace UwlAPI.Tools
 
             //}); ; //跨域第二种方法，使用策略，详细策略信息在ConfigureService中//loggerFactory.AddConsole();
             //app.UseWebSockets();
+            
+
             #region Environment
             //判断是否是环境变量
             if (env.IsDevelopment())
@@ -235,6 +237,7 @@ namespace UwlAPI.Tools
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRChat>("/api2/chatHub");
             });
+            app.AutoMigrate();//EFCore自动迁移扩展
             //app.AutoJob();
         }
     }
