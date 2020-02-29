@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Uwl.Data.Model.Enum;
 
@@ -39,5 +40,10 @@ namespace Uwl.Data.Model.BaseModel
         /// 组织架构状态
         /// </summary>
         public StateEnum OrganizeState { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        [MaxLength]
+        public string Remaker { get; set; }
     }
 }
