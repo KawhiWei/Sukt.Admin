@@ -43,7 +43,10 @@ namespace Sukt.Core.Shared.SuktAppModules
         }
         public void Configure(IApplicationBuilder applicationBuilder)
         {
-            throw new NotImplementedException();
+            foreach (var module in SuktSourceModules)
+            {
+                module.Configure(applicationBuilder);
+            }
         }
 
         
