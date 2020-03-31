@@ -220,12 +220,10 @@ namespace Sukt.Core.Shared.Extensions
 
             return type;
         }
-
         public static IConfiguration GetConfiguration(this IServiceCollection services)
         {
             return services.GetSingletonInstanceOrNull<IConfiguration>();
         }
-
         /// <summary>
         /// 获取单例注册服务对象
         /// </summary>
@@ -245,6 +243,5 @@ namespace Sukt.Core.Shared.Extensions
 
             return default;
         }
-
     }
 }

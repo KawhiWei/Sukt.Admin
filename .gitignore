@@ -46,3 +46,7 @@
 /Sukt.Core/src/Sukt.Core.XunitTest/bin
 /Sukt.Core/Sukt.Core.Test/obj
 /Sukt.Core/Sukt.Core.Test/bin
+/Sukt.Core/src/Sukt.Core.Models/obj
+/Sukt.Core/src/Sukt.Core.Models/bin
+/Sukt.Core/src/Sukt.Core.Domain/bin
+/Sukt.Core/src/Sukt.Core.Domain/obj

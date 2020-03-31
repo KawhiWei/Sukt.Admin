@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 

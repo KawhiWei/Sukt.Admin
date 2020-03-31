@@ -28,7 +28,6 @@ namespace Sukt.Core.Shared.Extensions
             TException exception = (TException)Activator.CreateInstance(typeof(TException), message);
             throw exception;
         }
-
         /// <summary>
         /// 验证指定值的断言表达式是否为真，不为值抛出<see cref="Exception"/>异常
         /// </summary>
@@ -43,7 +42,6 @@ namespace Sukt.Core.Shared.Extensions
             }
             Require<Exception>(assertionFunc(value), message);
         }
-
         /// <summary>
         /// 验证指定值的断言表达式是否为真，不为真抛出<typeparamref name="TException"/>异常
         /// </summary>
@@ -81,7 +79,6 @@ namespace Sukt.Core.Shared.Extensions
         {
             Require<ArgumentException>(!string.IsNullOrEmpty(value), $"参数“{paramName}”不能为空引用或空字符串。");
         }
-
         /// <summary>
         /// 检查Guid值不能为Guid.Empty，否则抛出<see cref="ArgumentException"/>异常。
         /// </summary>
@@ -92,7 +89,6 @@ namespace Sukt.Core.Shared.Extensions
         {
             Require<ArgumentException>(value != Guid.Empty, $"参数“{paramName}”的值不能为Guid.Empty");
         }
-
         /// <summary>
         /// 检查集合不能为空引用或空集合，否则抛出<see cref="ArgumentNullException"/>异常或<see cref="ArgumentException"/>异常。
         /// </summary>
