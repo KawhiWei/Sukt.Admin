@@ -61,7 +61,6 @@ namespace Sukt.Core.AutoMapper
 
                 }
             }
-
         }
     }
 }

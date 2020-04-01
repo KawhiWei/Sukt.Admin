@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Sukt.Core.Shared.EntityBase;
+using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 
 namespace Sukt.Core.Shared.Extensions

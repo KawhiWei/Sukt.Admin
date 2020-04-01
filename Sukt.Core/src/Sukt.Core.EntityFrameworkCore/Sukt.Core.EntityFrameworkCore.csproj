@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositorys\**" />
+    <EmbeddedResource Remove="Repositorys\**" />
+    <None Remove="Repositorys\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="MappingConfiguration\EntityManager.cs" />
     <Compile Remove="MappingConfiguration\IEntityManager.cs" />
+    <Compile Remove="UnitOfWork.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.Domain\Sukt.Core.Domain.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

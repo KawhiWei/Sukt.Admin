@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Sukt.Core.EntityFrameworkCore.MappingConfiguration
+namespace Sukt.Core.Shared
 {
     public static class ModelBuilderExtenions
     {

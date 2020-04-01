@@ -29,6 +29,5 @@ namespace Sukt.Core.Shared.Attributes.AutoMapper
         {
             get { return SuktAutoMapDirection.From | SuktAutoMapDirection.To; }
         }
-
     }
 }

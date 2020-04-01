@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sukt.Core.Domain.Unitofwork
+namespace Sukt.Core.EntityFrameworkCore
 {
     /// <summary>
     /// 工作单元
