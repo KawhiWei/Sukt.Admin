@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.Shared.EntityBase
+namespace Sukt.Core.Shared.Entity
 {
     /// <summary>
     /// 逻辑删除

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.EntityFrameworkCore.DbContexts
+namespace Sukt.Core.Shared
 {
     public class DefaultDbContext:SuktDbContextBase
     {

@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Domain.Unitofwork;
+﻿using Sukt.Core.EntityFrameworkCore;
+using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sukt.Core.Domain.ISuktRepository
+namespace Sukt.Core.Domain.ISuktBaseRepository
 {
-    public interface IEFCoreRepository<TEntity,Tkey>
+    public interface IEFCoreRepository<TEntity,Tkey> 
+        where TEntity:IEntity<Tkey>
     {
         IUnitOfWork UnitOfWork { get; }
+
         #region 查询
         /// <summary>
         /// 获取 <typeparamref name="TEntity"/>不跟踪数据更改（NoTracking）的查询数据源
         /// </summary>
-        IQueryable<TEntity> Entities { get; }
+        IQueryable<TEntity> NoTrackEntities { get; }
         /// <summary>
         /// 获取 <typeparamref name="TEntity"/>跟踪数据更改（Tracking）的查询数据源
         /// </summary>
@@ -51,7 +54,7 @@ namespace Sukt.Core.Domain.ISuktRepository
         /// </summary>
         /// <param name="predicate">条件</param>
         /// <returns>返回查询后数据源</returns>
-        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> NoTrackQuery(Expression<Func<TEntity, bool>> predicate);
         /// <summary>
         /// 查询不跟踪数据源
         /// </summary>

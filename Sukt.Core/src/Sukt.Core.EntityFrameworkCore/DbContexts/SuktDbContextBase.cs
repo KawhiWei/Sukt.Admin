@@ -1,17 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sukt.Core.Domain.Unitofwork;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Shared.SuktReflection;
-using Sukt.Core.EntityFrameworkCore.MappingConfiguration;
-using Sukt.Core.Shared.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Sukt.Core.Shared.SuktReflection;
+using Sukt.Core.Shared.Extensions;
+using Sukt.Core.EntityFrameworkCore;
 
-namespace Sukt.Core.EntityFrameworkCore.DbContexts
+namespace Sukt.Core.Shared
 {
     /// <summary>
     /// 上下文基类
@@ -28,10 +27,6 @@ namespace Sukt.Core.EntityFrameworkCore.DbContexts
         {
             _serviceProvider = serviceProvider;
         }
-        /// <summary>
-        /// 工作单元声明
-        /// </summary>
-        public IUnitOfWork unitOfWork {get;set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,18 +37,17 @@ namespace Sukt.Core.EntityFrameworkCore.DbContexts
                 item.Map(modelBuilder);
             }
         }
+        public IUnitOfWork unitOfWork { get; set; }
         /// <summary>
         /// 异步保存
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
 
             return base.SaveChangesAsync(cancellationToken);
         }
-
         /// <summary>
         /// 保存更改
         /// </summary>

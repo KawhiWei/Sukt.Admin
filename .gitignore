@@ -50,3 +50,8 @@
 /Sukt.Core/src/Sukt.Core.Models/bin
 /Sukt.Core/src/Sukt.Core.Domain/bin
 /Sukt.Core/src/Sukt.Core.Domain/obj
+/Sukt.Core/src/Sukt.Core.API/SuktCoreDB.txt
+/Sukt.Core/src/Sukt.Core.AspNetCore/obj
+/Sukt.Core/src/Sukt.Core.AspNetCore/bin
+/Sukt.Core/src/Sukt.Core.DomainRealization/bin
+/Sukt.Core/src/Sukt.Core.DomainRealization/obj

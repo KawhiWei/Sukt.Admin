@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Sukt.Core.Shared.EntityBase
+namespace Sukt.Core.Shared.Entity
 {
     public interface IEntity
     {

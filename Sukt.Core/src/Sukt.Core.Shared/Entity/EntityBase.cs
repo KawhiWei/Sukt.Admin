@@ -1,10 +1,10 @@
-﻿using Sukt.Core.Shared.EntityBase;
+﻿using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.Domain.Models
+namespace Sukt.Core.Shared.Entity
 {
     public class EntityBase<TKey> : IEntity<TKey> where TKey : IEquatable<TKey>
     {
