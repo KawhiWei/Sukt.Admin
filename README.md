@@ -60,7 +60,7 @@ Uwl.Admin.Core 框架是基于.Net Core2.2开发的一个开源后台管理框�
  Uwl.Extends                 自定义扩展
  Uwl.QuartzNet.JobCenter     基于Quartz.Net的任务计划调度中心
  UwlAPI.Tools                API接口开放
- 
+
 使用技术：
   .Net Core 3.x API（因为想单纯建造前替换分离，因此就选择的API）
   Swagger前瞻性文档说明，基于RESTful风格编写接口
@@ -75,4 +75,4 @@ Uwl.Admin.Core 框架是基于.Net Core2.2开发的一个开源后台管理框�
   Redis轻量级分布式缓存(暂未完成)
 
 本项目开源也是为.Net社区做一份贡献，希望大家多多为社区做贡献.
- 
+
