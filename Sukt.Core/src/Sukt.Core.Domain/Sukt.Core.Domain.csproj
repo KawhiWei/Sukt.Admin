@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\User\" />
+  </ItemGroup>
+
 </Project>

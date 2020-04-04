@@ -55,3 +55,5 @@
 /Sukt.Core/src/Sukt.Core.AspNetCore/bin
 /Sukt.Core/src/Sukt.Core.DomainRealization/bin
 /Sukt.Core/src/Sukt.Core.DomainRealization/obj
+/Sukt.Core/src/Sukt.Core.Swagger/bin
+/Sukt.Core/src/Sukt.Core.Swagger/obj

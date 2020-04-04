@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Sukt.Core.Application.Contracts.IDataDictionaryServices;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -11,6 +12,7 @@ namespace Sukt.Core.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private IDataDictionary _dictionary;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -18,14 +20,17 @@ namespace Sukt.Core.API.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDataDictionary dictionary)
         {
             _logger = logger;
+            _dictionary = dictionary;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+
+            _dictionary.GetDataDictionaryAsync();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
