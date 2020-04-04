@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Application.Contracts\Sukt.Core.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Domain\Sukt.Core.Domain.csproj" />
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
