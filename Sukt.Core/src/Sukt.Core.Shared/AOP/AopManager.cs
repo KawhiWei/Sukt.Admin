@@ -1,4 +1,6 @@
-﻿using AspectCore.DynamicProxy;
+﻿using AspectCore.Configuration;
+using AspectCore.DynamicProxy;
+using AspectCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.SuktReflection;
@@ -23,6 +25,10 @@ namespace Sukt.Core.Shared.AOP
                 foreach (var item in typs)
                 {
                     services.AddTransient(item);
+                    services.ConfigureDynamicProxy(cof =>
+                    {
+                        cof.Interceptors.AddTyped(item);
+                    });
                 }
             }
         }
