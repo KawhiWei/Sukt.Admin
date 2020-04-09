@@ -4,6 +4,7 @@ using Sukt.Core.Domain.ISuktBaseRepository;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.HttpContextUser;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Sukt.Core.DomainRealization.Base
             UnitOfWork = (serviceProvider.GetService(typeof(IUnitOfWork)) as IUnitOfWork);//获取工作单元实例
             _dbContext = UnitOfWork.GetDbContext();
             _dbSet = _dbContext.Set<TEntity>();
-
+            _suktUser= (serviceProvider.GetService(typeof(ISuktUser)) as ISuktUser);//获取用户登录存储解析Token实例
         }
         /// <summary>
         /// 表对象
@@ -41,7 +42,7 @@ namespace Sukt.Core.DomainRealization.Base
         /// <summary>
         /// 
         /// </summary>
-        private readonly IPrincipal _principal;
+        private readonly ISuktUser _suktUser;
         /// <summary>
         /// 工作单元
         /// </summary>
@@ -387,6 +388,7 @@ namespace Sukt.Core.DomainRealization.Base
             }
 
             IModifyAudited<TUserKey> entity1 = (IModifyAudited<TUserKey>)entity;
+            //entity1.LastModifyId = _suktUser.Id a;
             //entity1.LastModifyId = _principal?.Identity?.GetUesrId<TUserKey>();
             entity1.LastModifedAt = DateTime.Now;
             return (TEntity)entity1;

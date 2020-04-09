@@ -168,7 +168,33 @@ namespace Sukt.Core.Shared.Extensions
             return typeof(IEntity<>).IsGenericAssignableFrom(type) && !type.IsAbstract && !type.IsInterface;
         }
 
-
+        /// <summary>
+        /// 转换为Guid类型
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static Guid ToGuid(this string str)
+        {
+            Guid guid;
+            if (Guid.TryParse(str, out guid))
+            {
+                return guid;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="thisValue"></param>
+        /// <returns></returns>
+        public static string ObjToString(this object thisValue)
+        {
+            if (thisValue != null) return thisValue.ToString().Trim();
+            return "";
+        }
 
         public static string ToDescription(this MemberInfo member)
         {

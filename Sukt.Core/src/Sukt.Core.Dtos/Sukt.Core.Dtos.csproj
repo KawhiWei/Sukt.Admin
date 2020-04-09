@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sukt.Core.Domain\Sukt.Core.Domain.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

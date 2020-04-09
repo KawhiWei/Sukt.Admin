@@ -20,8 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sukt.Core.Application.Contracts\Sukt.Core.Application.Contracts.csproj" />
     <ProjectReference Include="..\Sukt.Core.AspNetCore\Sukt.Core.AspNetCore.csproj" />
     <ProjectReference Include="..\Sukt.Core.DomainRealization\Sukt.Core.DomainRealization.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
