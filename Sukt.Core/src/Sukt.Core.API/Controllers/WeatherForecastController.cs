@@ -13,7 +13,6 @@ namespace Sukt.Core.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private IDictionaryContract _dictionary;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -38,10 +37,6 @@ namespace Sukt.Core.API.Controllers
             })
             .ToArray();
         }
-        [HttpPost]
-        public async Task<bool> CreateAsync(DataDictionaryInputDto input)
-        {
-            return await _dictionary.InsertAsync(input);
-        }
+        
     }
 }
