@@ -36,6 +36,7 @@ namespace Sukt.Core.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseAppModule<SuktAspNetCoreAppModuleManager>();
             //app.UseHttpsRedirection();
 
             //app.UseRouting();

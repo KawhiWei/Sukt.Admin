@@ -7,6 +7,15 @@
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp3.1\Sukt.Core.API.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Startups\AspNetCoreMvcModule.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.3" />
@@ -21,10 +30,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Application.Contracts\Sukt.Core.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
     <ProjectReference Include="..\Sukt.Core.AspNetCore\Sukt.Core.AspNetCore.csproj" />
     <ProjectReference Include="..\Sukt.Core.DomainRealization\Sukt.Core.DomainRealization.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Swagger\Sukt.Core.Swagger.csproj" />
   </ItemGroup>
 
   <ItemGroup>
