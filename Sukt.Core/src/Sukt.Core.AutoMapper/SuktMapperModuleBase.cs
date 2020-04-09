@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Sukt.Core.AutoMapper
 {
-    public class SuktMapperModuleBase: SuktAppModuleBase
+    public abstract class SuktMapperModuleBase: SuktAppModuleBase
     {
         /// <summary>
         /// 重写SuktAppModuleBase
