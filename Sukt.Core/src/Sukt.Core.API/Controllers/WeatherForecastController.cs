@@ -23,11 +23,11 @@ namespace Sukt.Core.API.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger, IDictionaryContract dictionary)
         {
             _logger = logger;
-            _dictionary = dictionary;
         }
         [HttpGet]
         public async Task<IEnumerable<WeatherForecast>> Get()
         {
+            await Task.CompletedTask;
             var rng = new Random();
             return  Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
