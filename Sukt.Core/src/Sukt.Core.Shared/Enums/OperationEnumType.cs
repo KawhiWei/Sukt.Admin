@@ -24,4 +24,14 @@ namespace Sukt.Core.Shared.Enums
         [Description("操作没有引发任何变化")]
         NoChanged = 20,
     }
+    /// <summary>
+    /// 排序方向
+    /// </summary>
+    public enum SortDirection
+    {
+
+        Ascending = 0,
+
+        Descending = 1
+    }
 }
