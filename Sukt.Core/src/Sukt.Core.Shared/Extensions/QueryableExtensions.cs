@@ -10,6 +10,7 @@ using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Enums;
+using System.Collections.Generic;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -29,7 +30,7 @@ namespace Sukt.Core.Shared.Extensions
 
             foreach (OrderCondition orderCondition in orderConditions)
             {
-                orderStr = orderStr + $"{orderCondition.SortField} {(orderCondition.SortDirection == SortDirection.Ascending ? "ascending" : "descending")}, ";
+                orderStr = orderStr + $"{orderCondition.SortField} {(orderCondition.SortDirection == SortDirectionEnum.Ascending ? "ascending" : "descending")}, ";
             }
             orderStr = orderStr.TrimEnd(", ".ToCharArray());
             return source.OrderBy(orderStr);
@@ -157,32 +158,32 @@ namespace Sukt.Core.Shared.Extensions
         //}
 
 
-        ///// <summary>
-        ///// 从集合中查询指定数据筛选的树数据
-        ///// </summary>
-        ///// <typeparam name="TEntity"></typeparam>
-        ///// <typeparam name="TResult"></typeparam>
-        ///// <param name="source"></param>
-        ///// <param name="predicate"></param>
-        ///// <param name="rootwhere"></param>
-        ///// <param name="childswhere"></param>
-        ///// <param name="addchilds"></param>
-        ///// <param name="entity"></param>
-        ///// <returns></returns>
-        //public static async Task<TreeResult<TResult>> ToTreeResultAsync<TEntity, TResult>(this IQueryable<TEntity> source,
-        //    Func<TResult, TResult, bool> rootwhere,
-        //    Func<TResult, TResult, bool> childswhere, Action<TResult, IEnumerable<TResult>> addchilds, TResult entity = default(TResult))
-        //{
+        /// <summary>
+        /// 从集合中查询指定数据筛选的树数据
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="predicate"></param>
+        /// <param name="rootwhere"></param>
+        /// <param name="childswhere"></param>
+        /// <param name="addchilds"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static async Task<TreeData<TResult>> ToTreeResultAsync<TEntity, TResult>(this IQueryable<TEntity> source,
+            Func<TResult, TResult, bool> rootwhere,
+            Func<TResult, TResult, bool> childswhere, Action<TResult, IEnumerable<TResult>> addchilds, TResult entity = default(TResult))
+        {
 
-        //    rootwhere.NotNull(nameof(rootwhere));
-        //    childswhere.NotNull(nameof(childswhere));
-        //    addchilds.NotNull(nameof(addchilds));
-        //    var list = await source.ToOutput<TResult>().ToListAsync();
-        //    var treeData = list.ToTree(rootwhere, childswhere, addchilds, entity);
-        //    return new TreeResult<TResult>
-        //    {
-        //        Data = treeData,
-        //    };
-        //}
+            rootwhere.NotNull(nameof(rootwhere));
+            childswhere.NotNull(nameof(childswhere));
+            addchilds.NotNull(nameof(addchilds));
+            var list = await source.ToOutput<TResult>().ToListAsync();
+            var treeData = list.ToTree(rootwhere, childswhere, addchilds, entity);
+            return new TreeData<TResult>
+            {
+                Data = treeData,
+            };
+        }
     }
 }

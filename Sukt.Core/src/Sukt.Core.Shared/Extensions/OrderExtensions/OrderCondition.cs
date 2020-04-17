@@ -18,7 +18,7 @@ namespace Sukt.Core.Shared.Extensions.OrderExtensions
         /// </summary>
         /// <param name="sortField">字段名称</param>
         public OrderCondition(string sortField)
-            : this(sortField, SortDirection.Ascending)
+            : this(sortField, SortDirectionEnum.Ascending)
         { }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Sukt.Core.Shared.Extensions.OrderExtensions
         /// </summary>
         /// <param name="sortField">字段名称</param>
         /// <param name="sortDirection">排序方式</param>
-        public OrderCondition(string sortField, SortDirection sortDirection)
+        public OrderCondition(string sortField, SortDirectionEnum sortDirection)
         {
             SortField = sortField;
             SortDirection = sortDirection;
@@ -40,6 +40,6 @@ namespace Sukt.Core.Shared.Extensions.OrderExtensions
         /// <summary>
         /// 获取或设置 排序方向
         /// </summary>
-        public SortDirection SortDirection { get; set; }
+        public SortDirectionEnum SortDirection { get; set; }
     }
 }
