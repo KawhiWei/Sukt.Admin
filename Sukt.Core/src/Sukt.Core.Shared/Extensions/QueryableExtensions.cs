@@ -180,6 +180,7 @@ namespace Sukt.Core.Shared.Extensions
             addchilds.NotNull(nameof(addchilds));
             var list = await source.ToOutput<TResult>().ToListAsync();
             var treeData = list.ToTree(rootwhere, childswhere, addchilds, entity);
+            Console.WriteLine("代理方法执行中");
             return new TreeData<TResult>
             {
                 Data = treeData,

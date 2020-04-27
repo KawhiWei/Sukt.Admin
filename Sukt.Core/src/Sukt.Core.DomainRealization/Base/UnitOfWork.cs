@@ -69,6 +69,7 @@ namespace Sukt.Core.DomainRealization.Base
                 }
                 _dbTransaction = _connection.BeginTransaction();
             }
+            Console.WriteLine("方法执行前");
             _dbContext.Database.UseTransaction(_dbTransaction);
             HasCommitted = false;
         }
@@ -82,6 +83,7 @@ namespace Sukt.Core.DomainRealization.Base
             _dbTransaction.Commit();
             _dbContext.Database.CurrentTransaction.Dispose();
             HasCommitted = true;
+            Console.WriteLine("方法执行后");
         }
         /// <summary>
         /// 回滚

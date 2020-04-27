@@ -57,3 +57,5 @@
 /Sukt.Core/src/Sukt.Core.DomainRealization/obj
 /Sukt.Core/src/Sukt.Core.Swagger/bin
 /Sukt.Core/src/Sukt.Core.Swagger/obj
+/Sukt.Core/src/Sukt.Core.Aop/obj
+/Sukt.Core/src/Sukt.Core.Aop/bin

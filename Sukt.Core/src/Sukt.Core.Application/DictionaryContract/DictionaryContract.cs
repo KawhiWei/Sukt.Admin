@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Application.Contracts.DictionaryContract;
+using Sukt.Core.Aop.AttributeAOP;
+using Sukt.Core.Application.Contracts;
 using Sukt.Core.Domain.DomainRepository.DictionaryRepository;
 using Sukt.Core.Domain.Models.DataDictionary;
 using Sukt.Core.Dtos.DataDictionaryDto;
@@ -15,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sukt.Core.Application.DictionaryContract
+namespace Sukt.Core.Application
 {
     /// <summary>
     /// 数据字典应用实现层
@@ -24,11 +25,11 @@ namespace Sukt.Core.Application.DictionaryContract
     public class DictionaryContract : IDictionaryContract
     {
         private readonly IDataDictionaryRepository _dataDictionary;
-
         public DictionaryContract(IDataDictionaryRepository dataDictionary)
         {
             _dataDictionary = dataDictionary;
         }
+        //[NonGlobalAopTran]
         public async Task<bool> InsertAsync(DataDictionaryInputDto input)
         {
             input.NotNull(nameof(input));
