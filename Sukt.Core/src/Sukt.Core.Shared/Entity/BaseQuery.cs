@@ -24,5 +24,7 @@ namespace Sukt.Core.Shared.Entity
         /// </summary>
         public SortDirectionEnum SortDirection { get; set; } = SortDirectionEnum.Ascending;
 
+
+
     }
 }

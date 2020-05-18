@@ -64,5 +64,22 @@ namespace Sukt.Core.API.Controllers.DataDictionary
                 Success = result.Success
             };
         }
+        /// <summary>
+        /// 测试动态表达式
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Description("测试动态表达式")]
+        public async Task<TreeData<TreeDictionaryOutDto>> GetTest()
+        {
+
+            var result = await _dictionary.GetTreeAsync();
+            return new TreeData<TreeDictionaryOutDto>()
+            {
+                Data = result.Data,
+                Message = result.Message,
+                Success = result.Success
+            };
+        }
     }
 }

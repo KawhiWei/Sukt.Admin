@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Sukt.Core.Shared.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -163,6 +164,24 @@ namespace Sukt.Core.Shared.Extensions
         public static IEnumerable<Type> GetImplementedInterfaces([NotNull]this Type type)
         {
             return type.GetTypeInfo().ImplementedInterfaces;
+        }
+        /// <summary>
+        /// 得到特性下描述 
+        /// </summary>
+        /// <typeparam name="TAttribute">动态特性</typeparam>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        public static string ToDescription<TAttribute>(this MemberInfo member)
+            where TAttribute : AttributeBase
+        {
+
+            var attributeBase = (AttributeBase)member.GetCustomAttribute<TAttribute>();
+            if (!attributeBase.IsNull())
+            {
+                return attributeBase.Description();
+            }
+            return member.Name;
+
         }
     }
 }
