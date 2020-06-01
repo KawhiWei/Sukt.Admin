@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sukt.Core.Application.Contracts.DictionaryContract;
+using Sukt.Core.Application.Contracts;
 using Sukt.Core.Dtos.DataDictionaryDto;
 
 namespace Sukt.Core.API.Controllers

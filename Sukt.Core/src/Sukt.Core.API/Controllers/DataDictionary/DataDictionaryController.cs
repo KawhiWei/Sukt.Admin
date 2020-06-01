@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sukt.Core.Application.Contracts.DictionaryContract;
+using Sukt.Core.Application.Contracts;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.AjaxResult;
@@ -38,12 +38,12 @@ namespace Sukt.Core.API.Controllers.DataDictionary
             return await _dictionary.InsertAsync(input);
         }
         /// <summary>
-        /// 添加一个数据字典
+        /// 分页查询
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<PageList<DataDictionaryOutDto>> GetPageAsync([FromQuery]BaseQuery input)
+        [HttpPost]
+        public async Task<PageList<DataDictionaryOutDto>> GetPageAsync([FromBody]BaseQuery input)
         {
             return (await _dictionary.GetResultAsync(input)).PageList();
         }
@@ -54,6 +54,23 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         [HttpGet]
         [Description("获取组织架构")]
         public async Task<TreeData<TreeDictionaryOutDto>> GetTreeAsync()
+        {
+
+            var result = await _dictionary.GetTreeAsync();
+            return new TreeData<TreeDictionaryOutDto>()
+            {
+                Data = result.Data,
+                Message = result.Message,
+                Success = result.Success
+            };
+        }
+        /// <summary>
+        /// 测试动态表达式
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Description("测试动态表达式")]
+        public async Task<TreeData<TreeDictionaryOutDto>> GetTest([FromBody] BaseQuery query)
         {
 
             var result = await _dictionary.GetTreeAsync();

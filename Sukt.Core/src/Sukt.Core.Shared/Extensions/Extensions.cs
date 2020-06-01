@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Sukt.Core.Shared.Attributes;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 
@@ -114,7 +115,20 @@ namespace Sukt.Core.Shared.Extensions
             return type;
         }
 
-
+        /// <summary>
+        /// 转换为Bool类型
+        /// </summary>
+        /// <param name="thisValue"></param>
+        /// <returns></returns>
+        public static bool ObjToBool(this object thisValue)
+        {
+            bool reval = false;
+            if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
+            {
+                return reval;
+            }
+            return reval;
+        }
 
 
         /// <summary>
@@ -226,6 +240,5 @@ namespace Sukt.Core.Shared.Extensions
 
 
         }
-
     }
 }
