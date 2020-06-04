@@ -15,11 +15,11 @@ namespace Sukt.Core.Aop.Aop
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
             _unitOfWork=context.ServiceProvider.GetService(typeof(IUnitOfWork)) as IUnitOfWork;
-            _unitOfWork.BeginTransaction();
+            //_unitOfWork.BeginTransaction();
             Console.WriteLine("代理方法执行前");
             await next(context);
             Console.WriteLine("代理方法执行后");
-            _unitOfWork.Commit();
+            //_unitOfWork.Commit();
         }
     }
 }

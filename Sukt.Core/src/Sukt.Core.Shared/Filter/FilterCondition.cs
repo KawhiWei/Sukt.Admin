@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Sukt.Core.Shared.Filter
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FilterCondition
     {
         /// <summary>

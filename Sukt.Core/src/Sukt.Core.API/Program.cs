@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using Sukt.Core.SeriLog;
 
 namespace Sukt.Core.API
 {
@@ -17,13 +18,14 @@ namespace Sukt.Core.API
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //    .MinimumLevel.Information()
+            //    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            //    .Enrich.FromLogContext()
+            //    .WriteTo.Console()
+            //    .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval: RollingInterval.Day)
+            //    .CreateLogger();
+            SeriLogLogger.SetSeriLoggerToFile("logs");
             CreateHostBuilder(args).Build().Run();
         }
 

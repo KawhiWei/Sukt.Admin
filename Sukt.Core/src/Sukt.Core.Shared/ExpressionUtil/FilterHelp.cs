@@ -17,19 +17,15 @@ namespace Sukt.Core.Shared.ExpressionUtil
     {
         public static Expression<Func<T, bool>> GetExpression<T>(QueryFilter filterItem)
         {
-
+            filterItem.NotNull("filterItem");
             ParameterExpression param = Expression.Parameter(typeof(T), "m");
-
-
             Expression expression = GetExpressionBody(param, filterItem);
-
             return Expression.Lambda<Func<T, bool>>(expression, param);
         }
         private static Expression GetExpressionBody(ParameterExpression param, QueryFilter filterItem)
         {
             List<Expression> expressions = new List<Expression>();
             Expression expression = Expression.Constant(true);
-            //expression = GetExpressionBody(param, filterItem.Filters, filterItem.Logic);
             foreach (var item in filterItem.Filters)
             {
                 expressions.Add(GetExpressionBody(param, item));
@@ -48,48 +44,28 @@ namespace Sukt.Core.Shared.ExpressionUtil
                 return expressions.Aggregate(Expression.OrElse);
             }
         }
-        private static Expression GetExpressionBody(ParameterExpression param, ICollection<FilterCondition> filters, FilterConnect logic)
-        {
-            Expression expression = Expression.Constant(true);
-            foreach (var filter in filters)
-            {
-                if (logic == FilterConnect.And)
-                {
-                    expression = Expression.AndAlso(expression, GetExpressionBody(param, filter));
-                }
-                else
-                {
-                    expression = Expression.AndAlso(expression, GetExpressionBody(param, filter));
-                }
-            }
-            return expression;
-        }
         private static Expression GetExpressionBody(ParameterExpression param, FilterCondition filter)
         {
-            try
+            var lambda = GetPropertyLambdaExpression(param, filter);
+            var constant = ChangeTypeToExpression(filter, lambda.Body.Type);
+            return GetOperateExpression(filter.Operator, lambda.Body, constant);
+        }
+        /// <summary>
+        /// 得到值
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="conversionType"></param>
+        /// <returns></returns>
+
+        private static Expression ChangeTypeToExpression(FilterCondition filter, Type conversionType)
+        {
+            var constant = Expression.Constant(true);
+            var value = filter.Value.AsTo(conversionType);
+            if ((filter.Value?.ToString().IsNullOrWhiteSpace() ?? false) || (value.ToString()?.IsNullOrWhiteSpace() ?? false))
             {
-                var lambda = GetPropertyLambdaExpression(param, filter);
-                ConstantExpression constant = Expression.Constant(true);
-                //object value = null;
-                if (lambda.Body.Type == typeof(Guid))
-                {
-                    Guid.TryParse(filter.Value.ToString(), out var value);
-                    constant = Expression.Constant(value, lambda.Body.Type);
-                }
-                else
-                {
-                    constant = Expression.Constant(filter.Value, lambda.Body.Type);
-                }
-
-                return GetOperateExpression(filter.Operator, lambda.Body, constant);
+                return constant;
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-
+            return Expression.Constant(value, conversionType);
         }
         private static Expression GetOperateExpression(FilterOperator operate, Expression member, Expression expression2)
         {
@@ -97,32 +73,22 @@ namespace Sukt.Core.Shared.ExpressionUtil
             {
                 case FilterOperator.Equal:
                     return Expression.Equal(member, expression2);
-
                 case FilterOperator.NotEqual:
                     return Expression.NotEqual(member, expression2);
-
                 case FilterOperator.GreaterThan:
                     return Expression.GreaterThan(member, expression2);
-
                 case FilterOperator.GreaterThanOrEqual:
                     return Expression.GreaterThanOrEqual(member, expression2);
-
                 case FilterOperator.LessThan:
                     return Expression.LessThan(member, expression2);
-
                 case FilterOperator.LessThanOrEqual:
                     return Expression.LessThanOrEqual(member, expression2);
-
                 case FilterOperator.Like:
-
                     return Like(member, expression2);
                 default:
                     return null;
-
             }
         }
-
-
         private static Expression Like(Expression member, Expression expression2)
         {
             if (expression2.Type != typeof(string))

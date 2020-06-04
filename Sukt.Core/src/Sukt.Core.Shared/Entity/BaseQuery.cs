@@ -1,4 +1,5 @@
 ﻿using Sukt.Core.Shared.Enums;
+using Sukt.Core.Shared.Filter;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,6 +24,15 @@ namespace Sukt.Core.Shared.Entity
         /// 排序方向
         /// </summary>
         public SortDirectionEnum SortDirection { get; set; } = SortDirectionEnum.Ascending;
+        /// <summary>
+        /// 查询条件
+        /// </summary>
+        public List<FilterCondition> Filters { get; set; }
+        /// <summary>
+        /// 查询条件And或者Or
+        /// </summary>
+        public FilterConnect FilterConnect { get; set; } = FilterConnect.And;
+
 
 
 

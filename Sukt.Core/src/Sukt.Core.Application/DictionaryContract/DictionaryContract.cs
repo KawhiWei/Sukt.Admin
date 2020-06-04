@@ -6,10 +6,12 @@ using Sukt.Core.Domain.Models.DataDictionary;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.Attributes.Dependency;
 using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.ExpressionUtil;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Extensions.OrderExtensions;
 using Sukt.Core.Shared.Extensions.PageExyensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
+using Sukt.Core.Shared.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,10 @@ namespace Sukt.Core.Application
             {
                 new OrderCondition(query.SortName,query.SortDirection)
             };
-            return await _dataDictionary.NoTrackEntities.ToPageAsync<DataDictionaryEntity, DataDictionaryOutDto>(x => x.IsDeleted == false, param);
+            QueryFilter queryFilter = new QueryFilter(query.FilterConnect, query.Filters);
+            var expression= FilterHelp.GetExpression<DataDictionaryEntity>(queryFilter);
+            var result= await _dataDictionary.NoTrackEntities.ToPageAsync<DataDictionaryEntity, DataDictionaryOutDto>(expression, param);
+            return result;
         }
         /// <summary>
         /// 获取树形数据

@@ -38,12 +38,12 @@ namespace Sukt.Core.API.Controllers.DataDictionary
             return await _dictionary.InsertAsync(input);
         }
         /// <summary>
-        /// 添加一个数据字典
+        /// 分页查询
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<PageList<DataDictionaryOutDto>> GetPageAsync([FromQuery]BaseQuery input)
+        [HttpPost]
+        public async Task<PageList<DataDictionaryOutDto>> GetPageAsync([FromBody]BaseQuery input)
         {
             return (await _dictionary.GetResultAsync(input)).PageList();
         }
@@ -70,7 +70,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         /// <returns></returns>
         [HttpPost]
         [Description("测试动态表达式")]
-        public async Task<TreeData<TreeDictionaryOutDto>> GetTest()
+        public async Task<TreeData<TreeDictionaryOutDto>> GetTest([FromBody] BaseQuery query)
         {
 
             var result = await _dictionary.GetTreeAsync();
