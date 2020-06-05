@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Sukt.Core.Shared.AppOption;
 using Sukt.Core.Shared.Helpers;
 using System;
 using System.Collections.Generic;
@@ -242,6 +244,17 @@ namespace Sukt.Core.Shared.Extensions
             }
 
             return default;
+        }
+        /// <summary>
+        /// 得到操作设置
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+
+        public static AppOptionSettings GetAppSettings(this IServiceCollection services)
+        {
+            services.NotNull(nameof(services));
+            return services.GetService<IOptions<AppOptionSettings>>()?.Value;
         }
     }
 }
