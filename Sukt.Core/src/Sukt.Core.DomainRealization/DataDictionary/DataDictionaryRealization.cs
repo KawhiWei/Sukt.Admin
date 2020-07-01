@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.DataDictionary;
 using Sukt.Core.Domain.Models.DataDictionary;
-using Sukt.Core.DomainRealization.Base;
+using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Attributes.Dependency;
 using System;
 using System.Collections.Generic;

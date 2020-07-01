@@ -34,7 +34,5 @@ namespace Sukt.Core.Shared.Entity
         public FilterConnect FilterConnect { get; set; } = FilterConnect.And;
 
 
-
-
     }
 }
