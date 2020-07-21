@@ -14,13 +14,13 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
-    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
@@ -39,6 +39,7 @@
     <ProjectReference Include="..\Sukt.Core.DomainRealization\Sukt.Core.DomainRealization.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Redis\Sukt.Core.Redis.csproj" />
     <ProjectReference Include="..\Sukt.Core.SeriLog\Sukt.Core.SeriLog.csproj" />
     <ProjectReference Include="..\Sukt.Core.Swagger\Sukt.Core.Swagger.csproj" />
   </ItemGroup>
