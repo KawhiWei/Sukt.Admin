@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Startups
 {
-    public  class CSRedisModule : CSRedisModuleBase
-    {
-    }
+    //public  class CSRedisModule : CSRedisModuleBase
+    //{
+    //}
 }

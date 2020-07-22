@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EntityConfigurations\**" />
     <Compile Remove="ISuktBaseRepository\**" />
+    <Compile Remove="Migrations\**" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="EntityConfigurations\**" />
     <EmbeddedResource Remove="ISuktBaseRepository\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="EntityConfigurations\**" />
     <None Remove="ISuktBaseRepository\**" />
+    <None Remove="Migrations\**" />
+    <None Remove="Models\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,12 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sukt.Core.Domain.Model\Sukt.Core.Domain.Model.csproj" />
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\User\" />
   </ItemGroup>
 
 </Project>

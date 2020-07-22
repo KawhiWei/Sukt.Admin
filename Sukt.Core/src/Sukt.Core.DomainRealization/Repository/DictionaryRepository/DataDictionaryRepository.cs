@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.DomainRepository.DictionaryRepository;
-using Sukt.Core.Domain.Models.DataDictionary;
+using Sukt.Core.Domain.Model.DataDictionary;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Attributes.Dependency;
 using System;

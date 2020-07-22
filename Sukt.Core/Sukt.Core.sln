@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Dtos", "src\Sukt.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.EntityFrameworkCore", "src\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj", "{DEC28E0F-9B4E-4DA9-BAFC-AA938F6F51EB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationWeb", "ApplicationWeb", "{3FF22E77-0B95-46DD-AA46-C27D850A836C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1、ApplicationWeb", "1、ApplicationWeb", "{3FF22E77-0B95-46DD-AA46-C27D850A836C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4A750E7C-B356-4C74-9BFC-F29D0D475E19}"
 EndProject
@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Shared", "src\Suk
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{D30BF6C1-A7A2-468E-AB8E-BE5DE8CDCD3B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EntityFrameworkCore", "EntityFrameworkCore", "{1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoMapper", "AutoMapper", "{B4F1745B-2459-42CB-A16F-3FB5D4403CEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.AutoMapper", "src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj", "{8A9EA654-941D-47F2-92BA-F348CBCA83B3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B40C7B0F-DDA5-49D4-9C3B-2B5E86AE1FAF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2、Application", "2、Application", "{B40C7B0F-DDA5-49D4-9C3B-2B5E86AE1FAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Application.Contracts", "src\Sukt.Core.Application.Contracts\Sukt.Core.Application.Contracts.csproj", "{F2D9C2E5-F262-4D26-AE9D-718EEB303F8D}"
 EndProject
@@ -51,9 +51,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GateWay", "GateWay", "{0A62
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.SeriLog", "src\Sukt.Core.SeriLog\Sukt.Core.SeriLog.csproj", "{0E6C3ABD-E9A9-44E4-83CD-F3B48BEA61A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.Redis", "src\Sukt.Core.Redis\Sukt.Core.Redis.csproj", "{12DEA52E-43A4-4BD1-84EC-15FEC53631CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Redis", "src\Sukt.Core.Redis\Sukt.Core.Redis.csproj", "{12DEA52E-43A4-4BD1-84EC-15FEC53631CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.Caching", "src\Sukt.Core.Caching\Sukt.Core.Caching.csproj", "{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Caching", "src\Sukt.Core.Caching\Sukt.Core.Caching.csproj", "{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.Domain.Model", "src\Sukt.Core.Domain.Model\Sukt.Core.Domain.Model.csproj", "{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,13 +127,17 @@ Global
 		{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A7F7FD0E-2E1D-4BCD-91F9-68047A6C7823} = {D30BF6C1-A7A2-468E-AB8E-BE5DE8CDCD3B}
-		{DEC28E0F-9B4E-4DA9-BAFC-AA938F6F51EB} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
+		{DEC28E0F-9B4E-4DA9-BAFC-AA938F6F51EB} = {4A750E7C-B356-4C74-9BFC-F29D0D475E19}
 		{85A3565F-029A-406C-89DD-CB30877CB46F} = {4A750E7C-B356-4C74-9BFC-F29D0D475E19}
 		{B4F1745B-2459-42CB-A16F-3FB5D4403CEE} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
 		{8A9EA654-941D-47F2-92BA-F348CBCA83B3} = {B4F1745B-2459-42CB-A16F-3FB5D4403CEE}
@@ -148,6 +154,7 @@ Global
 		{0E6C3ABD-E9A9-44E4-83CD-F3B48BEA61A8} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
 		{12DEA52E-43A4-4BD1-84EC-15FEC53631CE} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
 		{AAD64D4D-D593-4C98-9EA1-9FA3AB435A62} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
+		{4BEAAF98-1BF8-473A-A3EA-E7EA2B4D7FA8} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05B139D9-1492-4454-AF04-522949DE00D3}

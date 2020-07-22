@@ -2,7 +2,7 @@
 using Sukt.Core.Aop.AttributeAOP;
 using Sukt.Core.Application.Contracts;
 using Sukt.Core.Domain.DomainRepository.DictionaryRepository;
-using Sukt.Core.Domain.Models.DataDictionary;
+using Sukt.Core.Domain.Model.DataDictionary;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.Attributes.Dependency;
 using Sukt.Core.Shared.Entity;
