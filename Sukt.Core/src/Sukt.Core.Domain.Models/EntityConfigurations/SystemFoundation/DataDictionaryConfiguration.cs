@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sukt.Core.Domain.Model.DataDictionary;
+using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
 using Sukt.Core.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.Domain.Model.EntityConfigurations.DataDictionary
+namespace Sukt.Core.Domain.Models.EntityConfigurations.SystemFoundation
 {
     public class DataDictionaryConfiguration : EntityMappingConfiguration<DataDictionaryEntity, Guid>
     {

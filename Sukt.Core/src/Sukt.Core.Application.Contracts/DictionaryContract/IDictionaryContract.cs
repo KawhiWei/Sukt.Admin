@@ -1,6 +1,7 @@
 ﻿using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
+using Sukt.Core.Shared.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,18 +16,28 @@ namespace Sukt.Core.Application.Contracts
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<bool> InsertAsync(DataDictionaryInputDto input);
+        Task<OperationResponse> InsertAsync(DataDictionaryInputDto input);
         /// <summary>
         /// 分页获取
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<PageResult<DataDictionaryOutDto>> GetResultAsync(BaseQuery query);
+        Task<PageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query);
         /// <summary>
         /// 获取树形数据
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
         Task<TreeData<TreeDictionaryOutDto>> GetTreeAsync();
+        /// <summary>
+        /// 修改一行数据
+        /// </summary>
+        /// <returns></returns>
+        Task<OperationResponse> UpdateAsync(DataDictionaryInputDto input);
+        /// <summary>
+        /// 删除一行数据
+        /// </summary>
+        /// <returns></returns>
+        Task<OperationResponse> DeleteAsync(Guid Id);
     }
 }

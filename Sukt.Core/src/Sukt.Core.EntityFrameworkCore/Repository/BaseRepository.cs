@@ -2,9 +2,12 @@
 using Microsoft.Extensions.Logging;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Enums;
+using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.HttpContextUser;
 using Sukt.Core.Shared.OperationResult;
+using Sukt.Core.Shared.ResultMessageConst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Sukt.Core.EntityFrameworkCore
 {
@@ -82,39 +86,6 @@ namespace Sukt.Core.EntityFrameworkCore
         /// <param name="primaryKey"></param>
         /// <returns></returns>
         public virtual async Task<TDto> GetByIdToDtoAsync<TDto>(Tkey primaryKey) where TDto : class, new() => (await this.GetByIdAsync(primaryKey)).MapTo<TDto>();
-        /// <summary>
-        /// 查询不跟踪数据源
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public virtual IQueryable<TEntity> NoTrackQuery(Expression<Func<TEntity, bool>> predicate)
-        {
-            predicate.NotNull(nameof(predicate));
-            return this.NoTrackEntities.Where(predicate);
-        }
-        /// <summary>
-        /// 查询不跟踪数据源
-        /// </summary>
-        /// <typeparam name="TResult">返回实体</typeparam>
-        /// <param name="predicate">条件</param>
-        /// <param name="selector">数据筛选表达式</param>
-        /// <returns>返回查询后数据源</returns>
-        public virtual IQueryable<TResult> Query<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector)
-        {
-            predicate.NotNull(nameof(predicate));
-            selector.NotNull(nameof(selector));
-            return this.NoTrackEntities.Where(predicate).Select(selector);
-        }
-        /// <summary>
-        /// 查询跟踪数据源
-        /// </summary>
-        /// <param name="predicate">条件</param>
-        /// <returns>返回查询后数据源</returns>
-        public virtual IQueryable<TEntity> TrackQuery(Expression<Func<TEntity, bool>> predicate)
-        {
-            predicate.NotNull(nameof(predicate));
-            return this.TrackEntities.Where(predicate);
-        }
         #endregion
 
         #region Insert
@@ -155,29 +126,51 @@ namespace Sukt.Core.EntityFrameworkCore
             await _dbSet.AddRangeAsync(entitys);
             return await _dbContext.SaveChangesAsync();
         }
+        /// <summary>
+        /// 以异步DTO插入实体
+        /// </summary>
+        /// <typeparam name="TInputDto">添加DTO类型</typeparam>
+        /// <param name="dto">添加DTO</param>
+        /// <param name="checkFunc">添加信息合法性检查委托</param>
+        /// <param name="insertFunc">由DTO到实体的转换委托</param>
+        /// <returns>操作结果</returns>
+        public virtual async Task<OperationResponse> InsertAsync<TInputDto>(TInputDto dto, Func<TInputDto, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> insertFunc = null, Func<TEntity, TInputDto> completeFunc = null) where TInputDto : IInputDto<Tkey>
+        {
+            dto.NotNull(nameof(dto));
+            try
+            {
+                if (checkFunc.IsNotNull())
+                {
+                    await checkFunc(dto);
+                }
+                TEntity entity = dto.MapTo<TEntity>();
+
+                if (!insertFunc.IsNull())
+                {
+                    entity = await insertFunc(dto, entity);
+                }
+                entity = CheckInsert(entity);
+                await _dbSet.AddAsync(entity);
+
+                if (completeFunc.IsNotNull())
+                {
+                    dto = completeFunc(entity);
+                }
+                int count = await _dbContext.SaveChangesAsync();
+                return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+            }
+            catch (SuktAppException e)
+            {
+                return new OperationResponse(e.Message, OperationEnumType.Error);
+            }
+            catch (Exception ex)
+            {
+                return new OperationResponse(ex.Message, OperationEnumType.Error);
+            }
+        }
         #endregion
 
-        #region Delete
-        public virtual int Delete(params TEntity[] entitys)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<OperationResponse> DeleteAsync(Tkey primaryKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<int> DeleteAsync(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<int> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+        
 
         #region Update
         /// <summary>
@@ -219,8 +212,108 @@ namespace Sukt.Core.EntityFrameworkCore
             int count = await _dbContext.SaveChangesAsync();
             return count;
         }
+        /// <summary>
+        /// 以异步DTO更新实体
+        /// </summary>
+        /// <typeparam name="TInputDto">更新DTO类型</typeparam>
+        /// <param name="dto">更新DTO</param>
+        /// <param name="checkFunc">添加信息合法性检查委托</param>
+        /// <param name="updateFunc">由DTO到实体的转换委托</param>
+        /// <returns>操作结果</returns>
+        public virtual async Task<OperationResponse> UpdateAsync<TInputDto>(TInputDto dto, Func<TInputDto, TEntity, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> updateFunc = null) where TInputDto : class, IInputDto<Tkey>, new()
+        {
+            dto.NotNull(nameof(dto));
+            try
+            {
+                TEntity entity = await this.GetByIdAsync(dto.Id);
+
+                if (entity.IsNull())
+                {
+                    return new OperationResponse($"该{dto.Id}键的数据不存在", OperationEnumType.QueryNull);
+                }
+                if (checkFunc.IsNotNull())
+                {
+                    await checkFunc(dto, entity);
+                }
+                entity = dto.MapTo(entity);
+                if (!updateFunc.IsNull())
+                {
+                    entity = await updateFunc(dto, entity);
+                }
+                entity = CheckUpdate(entity);
+                _dbSet.Update(entity);
+                int count = await _dbContext.SaveChangesAsync();
+                return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+            }
+            catch (SuktAppException e)
+            {
+                return new OperationResponse(e.Message, OperationEnumType.Error);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
 
+
+        #region Delete
+        public virtual int Delete(params TEntity[] entitys)
+        {
+            foreach (var entity in entitys)
+            {
+                CheckDelete(entity);
+            }
+            return _dbContext.SaveChanges();
+        }
+        public virtual async Task<OperationResponse> DeleteAsync(Tkey primaryKey)
+        {
+            TEntity entity = await this.GetByIdAsync(primaryKey);
+            if (entity.IsNull())
+            {
+                return new OperationResponse($"该{primaryKey}键的数据不存在", OperationEnumType.QueryNull);
+            }
+            int count = await this.DeleteAsync(entity);
+            return new OperationResponse(count > 0 ? ResultMessage.DeleteSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+        }
+        public virtual async Task<int> DeleteAsync(TEntity entity)
+        {
+            entity = await this.GetByIdAsync(entity.Id);
+            if (entity.IsNull())
+            {
+                throw new SuktAppException($"该{entity.Id}键的数据不存在");
+            }
+            CheckDelete(entity);
+            return await _dbContext.SaveChangesAsync();
+        }
+        public virtual async Task<int> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        {
+            predicate.NotNull(nameof(predicate));
+            if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
+            {
+                List<MemberBinding> newMemberBindings = new List<MemberBinding>();
+                ParameterExpression parameterExpression = Expression.Parameter(typeof(TEntity), "o"); //参数
+
+                ConstantExpression constant = Expression.Constant(true);
+                var propertyName = nameof(ISoftDelete.IsDeleted);
+                var propertyInfo = typeof(TEntity).GetProperty(propertyName);
+                var memberAssignment = Expression.Bind(propertyInfo, constant); //绑定属性
+                newMemberBindings.Add(memberAssignment);
+
+                //创建实体
+                var newEntity = Expression.New(typeof(TEntity));
+                var memberInit = Expression.MemberInit(newEntity, newMemberBindings.ToArray()); //成员初始化
+                Expression<Func<TEntity, TEntity>> updateExpression = Expression.Lambda<Func<TEntity, TEntity>> //生成要更新的Expression
+                (
+                   memberInit,
+                   new ParameterExpression[] { parameterExpression }
+                );
+
+                return await NoTrackEntities.Where(predicate).UpdateAsync(updateExpression, cancellationToken);
+            }
+            return await NoTrackEntities.Where(predicate).DeleteAsync(cancellationToken);
+        }
+        #endregion
 
         #region 帮助方法
         /// <summary>
@@ -479,7 +572,5 @@ namespace Sukt.Core.EntityFrameworkCore
 
 
         //}
-
-
     }
 }

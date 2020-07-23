@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Sukt.Core.Domain.Model.DataDictionary;
+using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
 using Sukt.Core.Shared.Entity;
 using System;
 using System.Collections.Generic;

@@ -49,7 +49,7 @@ namespace Sukt.Core.API.Startups
             }
             var mysqlconn = File.ReadAllText(dbcontext).Trim(); ;
             services.AddDbContext<DefaultDbContext>(option => {
-                option.UseMySql(mysqlconn, assembly => { assembly.MigrationsAssembly("Sukt.Core.Domain.Model"); });
+                option.UseMySql(mysqlconn, assembly => { assembly.MigrationsAssembly("Sukt.Core.Domain.Models"); });
             });
             return services;
         }

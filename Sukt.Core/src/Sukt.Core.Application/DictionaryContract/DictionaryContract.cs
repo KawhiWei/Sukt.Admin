@@ -2,16 +2,15 @@
 using Sukt.Core.Aop.AttributeAOP;
 using Sukt.Core.Application.Contracts;
 using Sukt.Core.Domain.DomainRepository.DictionaryRepository;
-using Sukt.Core.Domain.Model.DataDictionary;
+using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.Attributes.Dependency;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.ExpressionUtil;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.Extensions.OrderExtensions;
-using Sukt.Core.Shared.Extensions.PageExyensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.Filter;
+using Sukt.Core.Shared.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,22 +31,23 @@ namespace Sukt.Core.Application
             _dataDictionary = dataDictionary;
         }
         //[NonGlobalAopTran]
-        public async Task<bool> InsertAsync(DataDictionaryInputDto input)
+        public async Task<OperationResponse> InsertAsync(DataDictionaryInputDto input)
         {
             input.NotNull(nameof(input));
-            var entity = input.MapTo<DataDictionaryEntity>();
-            return await _dataDictionary.InsertAsync(entity) > 0;
+            return await _dataDictionary.InsertAsync(input);
         }
-        public async Task<PageResult<DataDictionaryOutDto>> GetResultAsync(BaseQuery query)
+        public async Task<OperationResponse> UpdateAsync(DataDictionaryInputDto input)
         {
-            var param = new PageParameters(query.PageIndex, query.PageRow);
-            param.OrderConditions = new OrderCondition[]
-            {
-                new OrderCondition(query.SortName,query.SortDirection)
-            };
-            QueryFilter queryFilter = new QueryFilter(query.FilterConnect, query.Filters);
-            var expression= FilterHelp.GetExpression<DataDictionaryEntity>(queryFilter);
-            var result= await _dataDictionary.NoTrackEntities.ToPageAsync<DataDictionaryEntity, DataDictionaryOutDto>(expression, param);
+            var result = await _dataDictionary.UpdateAsync(input);
+            return result;
+        }
+        public async Task<OperationResponse> DeleteAsync(Guid Id)
+        {
+            return await _dataDictionary.DeleteAsync(Id);
+        }
+        public async Task<PageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query)
+        {
+            var result= await _dataDictionary.NoTrackEntities.ToPageAsync<DataDictionaryEntity, DataDictionaryOutDto>(query);
             return result;
         }
         /// <summary>

@@ -49,26 +49,6 @@ namespace Sukt.Core.EntityFrameworkCore
         /// <param name="primaryKey">主键</param>
         /// <returns>返回查询后实体并转成Dto</returns>
         Task<TDto> GetByIdToDtoAsync<TDto>(Tkey primaryKey) where TDto : class, new();
-        /// <summary>
-        ///查询不跟踪数据源
-        /// </summary>
-        /// <param name="predicate">条件</param>
-        /// <returns>返回查询后数据源</returns>
-        IQueryable<TEntity> NoTrackQuery(Expression<Func<TEntity, bool>> predicate);
-        /// <summary>
-        /// 查询不跟踪数据源
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="predicate">条件</param>
-        /// <param name="selector">数据筛选表达式</param>
-        /// <returns>返回查询后数据源</returns>
-        IQueryable<TResult> Query<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> selector);
-        /// <summary>
-        ///查询跟踪数据源
-        /// </summary>
-        /// <param name="predicate">条件</param>
-        /// <returns>返回查询后数据源</returns>
-        IQueryable<TEntity> TrackQuery(Expression<Func<TEntity, bool>> predicate);
         #endregion
 
         #region 添加 
@@ -99,6 +79,7 @@ namespace Sukt.Core.EntityFrameworkCore
         /// <param name="entitys">要插入实体集合</param>
         /// <returns></returns>
         int Insert(params TEntity[] entitys);
+        Task<OperationResponse> InsertAsync<TInputDto>(TInputDto dto, Func<TInputDto, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> insertFunc = null, Func<TEntity, TInputDto> completeFunc = null) where TInputDto : IInputDto<Tkey>;
         #endregion
 
         #region 更新
@@ -110,7 +91,7 @@ namespace Sukt.Core.EntityFrameworkCore
         /// <param name="checkFunc">添加信息合法性检查委托</param>
         /// <param name="updateFunc">由DTO到实体的转换委托</param>
         /// <returns>业务操作结果</returns>
-        //Task<OperationResponse> UpdateAsync<TInputDto>(TInputDto dto, Func<TInputDto, TEntity, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> updateFunc = null) where TInputDto : class, IInputDto<Tkey>, new();
+        Task<OperationResponse> UpdateAsync<TInputDto>(TInputDto dto, Func<TInputDto, TEntity, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> updateFunc = null) where TInputDto : class, IInputDto<Tkey>, new();
         /// <summary>
         /// 异步更新
         /// </summary>

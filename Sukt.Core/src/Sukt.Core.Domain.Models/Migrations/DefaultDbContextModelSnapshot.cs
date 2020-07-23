@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.Shared;
 
-namespace Sukt.Core.Domain.Model.Migrations
+namespace Sukt.Core.Domain.Models.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
     partial class DefaultDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace Sukt.Core.Domain.Model.Migrations
                 .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Sukt.Core.Domain.Model.DataDictionary.DataDictionaryEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.SystemFoundation.DataDictionary.DataDictionaryEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

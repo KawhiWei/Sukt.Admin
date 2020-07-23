@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.Shared;
 
-namespace Sukt.Core.Domain.Model.Migrations
+namespace Sukt.Core.Domain.Models.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20200722101329_sukt20200722_v1")]
-    partial class sukt20200722_v1
+    [Migration("20200723012231_suktcore_20200723_v1")]
+    partial class suktcore_20200723_v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace Sukt.Core.Domain.Model.Migrations
                 .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Sukt.Core.Domain.Model.DataDictionary.DataDictionaryEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.SystemFoundation.DataDictionary.DataDictionaryEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

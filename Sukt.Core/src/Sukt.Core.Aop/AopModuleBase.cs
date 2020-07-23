@@ -28,7 +28,6 @@ namespace Sukt.Core.Aop
             {
                 List<Type> types = new List<Type>();
                 //types.Add(typeof(AopTran));
-
                 foreach (var item in typs)
                 {
                     //service.AddTransient(item);

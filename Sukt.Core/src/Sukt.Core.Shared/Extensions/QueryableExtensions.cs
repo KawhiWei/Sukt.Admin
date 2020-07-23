@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Enums;
 using System.Collections.Generic;
+using Sukt.Core.Shared.ExpressionUtil;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -50,7 +51,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             pageParameters.NotNull(nameof(pageParameters));
 
-            var result = await source.WhereAsync(pageParameters.PageIndex, pageParameters.PageSize, predicate, pageParameters.OrderConditions);
+            var result = await source.WhereAsync(pageParameters.PageIndex, pageParameters.PageRow, predicate, pageParameters.OrderConditions);
             var list = await result.data.ToArrayAsync();
             var total = result.totalNumber;
             return new PageResult<TEntity>(list, total);
@@ -71,7 +72,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             pageParameters.NotNull(nameof(pageParameters));
             selector.NotNull(nameof(selector));
-            var result = await source.WhereAsync(pageParameters.PageIndex, pageParameters.PageSize, predicate, pageParameters.OrderConditions);
+            var result = await source.WhereAsync(pageParameters.PageIndex, pageParameters.PageRow, predicate, pageParameters.OrderConditions);
             var list = await result.data.Select(selector).ToArrayAsync();
             var total = result.totalNumber;
             return new PageResult<TResult>(list, total);
@@ -88,11 +89,18 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="predicate">查询条件表达式</param>
         /// <param name="pageParameters">分页参数</param>
         /// <returns></returns>
-        public static async Task<PageResult<TOutputDto>> ToPageAsync<TEntity, TOutputDto>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, PageParameters pageParameters)
+        public static async Task<PageResult<TOutputDto>> ToPageAsync<TEntity, TOutputDto>(this IQueryable<TEntity> source, IPagedRequest request)
           where TOutputDto : IOutputDto
         {
-            pageParameters.NotNull(nameof(pageParameters));
-            var result = await source.WhereAsync(pageParameters.PageIndex, pageParameters.PageSize, predicate, pageParameters.OrderConditions);
+            request.NotNull(nameof(request));
+            var isFiltered = request is IFilteredPagedRequest;
+            Expression<Func<TEntity, bool>> expression = null;
+            if (isFiltered)
+            {
+                var filter = (request as IFilteredPagedRequest).queryFilter;
+                expression = filter == null ? null : FilterHelp.GetExpression<TEntity>(filter);
+            }
+            var result = await source.WhereAsync(request.PageIndex, request.PageRow, expression, request.OrderConditions);
             var list = await result.data.ToOutput<TOutputDto>().ToArrayAsync();
             var total = result.totalNumber;
             return new PageResult<TOutputDto>(list, total);

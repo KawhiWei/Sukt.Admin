@@ -1,4 +1,4 @@
-﻿using Sukt.Core.Domain.Model.DataDictionary;
+﻿using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
 using Sukt.Core.Shared.Attributes.AutoMapper;
 using Sukt.Core.Shared.Entity;
 using System;
