@@ -1,11 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Caching
 {
-    public interface ICache
+    /// <summary>
+    /// 缓存接口
+    /// </summary>
+    /// <typeparam name="TCacheData">缓存数据</typeparam>
+    public interface ICache<TCacheData> : ICache<string, TCacheData>
+         where TCacheData : class
+    {
+
+    }
+    /// <summary>
+    /// 缓存接口
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TCacheData">缓存数据</typeparam>
+    public interface ICache<TKey, TCacheData>
+         where TCacheData : class
     {
 
         /// <summary>
@@ -13,15 +30,16 @@ namespace Sukt.Core.Caching
         /// </summary>
         /// <param name="key">键</param>
         /// <returns>返回得到</returns>
-        TCacheData Get<TCacheData>(string key);
+        TCacheData Get(TKey key);
 
         /// <summary>
         /// 得到或添加
         /// </summary>
+        /// <param name="key">键</param>
         /// <param name="func"></param>
         /// <returns></returns>
-        TCacheData GetOrAdd<TCacheData>(
-        string key,
+        TCacheData GetOrAdd(
+        TKey key,
         Func<TCacheData> func);
 
         /// <summary>
@@ -30,7 +48,7 @@ namespace Sukt.Core.Caching
         /// <param name="key"></param>
         /// <param name="token">键</param>
         /// <returns></returns>
-        Task<TCacheData> GetAsync<TCacheData>(string key, CancellationToken token = default);
+        Task<TCacheData> GetAsync(TKey key, CancellationToken token = default);
 
         /// <summary>
         /// 得到或添加
@@ -39,8 +57,8 @@ namespace Sukt.Core.Caching
         /// <param name="func"></param>
         /// <param name="token"></param>
         /// <returns>返回得到或添加后的缓存数据</returns>
-        Task<TCacheData> GetOrAddAsync<TCacheData>(
-             [NotNull] string key,
+        Task<TCacheData> GetOrAddAsync(
+             [NotNull] TKey key,
              Func<Task<TCacheData>> func,
              CancellationToken token = default
          );
@@ -53,7 +71,7 @@ namespace Sukt.Core.Caching
         /// </summary>
         /// <param name="key">键</param>
         /// <param name="value">值</param>
-        void Set<TCacheData>(string key, TCacheData value);
+        void Set(TKey key, TCacheData value);
 
         /// <summary>
         /// 异步设置缓存
@@ -62,7 +80,7 @@ namespace Sukt.Core.Caching
         /// <param name="value">值</param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task SetAsync<TCacheData>(string key, TCacheData value, CancellationToken token = default);
+        Task SetAsync(TKey key, TCacheData value, CancellationToken token = default);
         #endregion
 
 
@@ -73,7 +91,7 @@ namespace Sukt.Core.Caching
         /// 删除缓存
         /// </summary>
         /// <param name="key">要删除的键</param>
-        void Remove(string key);
+        void Remove(TKey key);
 
         /// <summary>
         /// 异步删除缓存
@@ -81,7 +99,7 @@ namespace Sukt.Core.Caching
         /// <param name="key"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task RemoveAsync(string key, CancellationToken token = default);
+        Task RemoveAsync(TKey key, CancellationToken token = default);
         #endregion
     }
 }

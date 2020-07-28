@@ -48,7 +48,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         [Description("修改一个数据字典")]
         public async Task<AjaxResult> UpdateAsync(DataDictionaryInputDto input)
         {
-            return (await _dictionary.UpdateAsync(input)).ToAjaxResult();
+            return (await _dictionary.UpdateAsync(input)).ToAjaxResult();  
         }
         /// <summary>
         /// 分页查询

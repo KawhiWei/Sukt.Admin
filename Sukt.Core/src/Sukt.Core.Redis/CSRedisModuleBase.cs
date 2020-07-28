@@ -17,7 +17,7 @@ namespace Sukt.Core.Redis
 
         public override IServiceCollection ConfigureServices(IServiceCollection service)
         {
-            var redisPath = service.GetConfiguration()["Destiny:Redis:ConnectionString"];
+            var redisPath = service.GetConfiguration()["SuktCore:Redis:ConnectionString"];
             var basePath = ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             var redisConn = Path.Combine(basePath, redisPath);
             if (!File.Exists(redisConn))
@@ -27,8 +27,9 @@ namespace Sukt.Core.Redis
             var connStr = File.ReadAllText(redisConn).Trim();
             var csredis = new CSRedisClient(connStr);
             RedisHelper.Initialization(csredis);
-            service.TryAddTransient(typeof(ICache<>), typeof(CSRedis<>));
-            service.TryAddTransient(typeof(ICache<,>), typeof(CSRedis<,>));
+            service.TryAddTransient(typeof(ICache<>), typeof(CSRedisCache<>));
+            service.TryAddTransient(typeof(ICache<,>), typeof(CSRedisCache<,>));
+            service.TryAddTransient<ICache, CSRedisCache>();
             return service;
         }
     }
