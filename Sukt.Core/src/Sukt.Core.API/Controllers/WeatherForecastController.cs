@@ -4,8 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sukt.Core.Application.Contracts;
-using Sukt.Core.Dtos.DataDictionaryDto;
+using Sukt.Core.Application;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -20,7 +19,7 @@ namespace Sukt.Core.API.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDictionaryContract dictionary)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }

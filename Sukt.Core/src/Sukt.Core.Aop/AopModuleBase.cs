@@ -22,7 +22,7 @@ namespace Sukt.Core.Aop
             typefinder.NotNull(nameof(typefinder));
             var typs = typefinder.Find(o => o.IsClass && !o.IsAbstract && !o.IsInterface && o.IsSubclassOf(typeof(AbstractInterceptor)));
             var InterceptorsModule = service.GetConfiguration()["SuktCore:InterceptorsModule"];
-            var IInterceptorsModule = service.GetConfiguration()["SuktCore:IInterceptorsModule"];
+            //var IInterceptorsModule = service.GetConfiguration()["SuktCore:IInterceptorsModule"];
             
             if (typs?.Length > 0)
             {
@@ -35,7 +35,7 @@ namespace Sukt.Core.Aop
                     {
                         var Enabled = service.GetConfiguration()[$"SuktCore:AopManager:{item.Name}:Enabled"].ObjToBool();
                         if(Enabled)
-                            cof.Interceptors.AddTyped(item, Predicates.ForNameSpace(InterceptorsModule),Predicates.ForNameSpace(IInterceptorsModule));////这种是配置只需要代理的层, Predicates.ForNameSpace("Sukt.Core.Application.Contracts")
+                            cof.Interceptors.AddTyped(item, Predicates.ForNameSpace(InterceptorsModule)/*,Predicates.ForNameSpace(IInterceptorsModule)*/);////这种是配置只需要代理的层, Predicates.ForNameSpace("Sukt.Core.Application.Contracts")
                         //config.NonAspectPredicates.AddService("IUnitofWork");//需要过滤掉不需要代理的服务层  
                     });
                 }

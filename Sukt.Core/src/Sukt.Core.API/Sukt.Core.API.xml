@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sukt.Core.API</name>
+    </assembly>
+    <members>
+        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.CreateAsync(Sukt.Core.Dtos.DataDictionaryDto.DataDictionaryInputDto)">
+            <summary>
+            添加一个数据字典
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.UpdateAsync(Sukt.Core.Dtos.DataDictionaryDto.DataDictionaryInputDto)">
+            <summary>
+            修改一个数据字典
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.GetPageAsync(Sukt.Core.Shared.Entity.PageRequest)">
+            <summary>
+            分页查询
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.DeleteAsyc(System.Nullable{System.Guid})">
+            <summary>
+            删除一个数据字典
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.AddRepository(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加仓储
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.AddUnitOfWork(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加工作单元
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.UseSql(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            重写方法
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

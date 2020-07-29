@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Sukt.Core.Application.Contracts;
+using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.AjaxResult;

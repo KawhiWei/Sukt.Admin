@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.Domain\Sukt.Core.Domain.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
