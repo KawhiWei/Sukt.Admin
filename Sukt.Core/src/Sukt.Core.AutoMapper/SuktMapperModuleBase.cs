@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.Attributes.AutoMapper;
 using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.SuktAppModules;
+using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktReflection;
 using System;
 using System.Linq;
@@ -11,15 +11,16 @@ using System.Reflection;
 
 namespace Sukt.Core.AutoMapper
 {
-    public abstract class SuktMapperModuleBase: SuktAppModuleBase
+    public class SuktAutoMapperModuleBase: SuktAppModule
     {
         /// <summary>
-        /// 重写SuktAppModuleBase
+        /// 重写SuktAppModule
         /// </summary>
         /// <param name="service"></param>
         /// <returns></returns>
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
+            var service = context.Services;
             var assemblyFinder = service.GetOrAddSingletonService<IAssemblyFinder, AssemblyFinder>();
             var assemblys = assemblyFinder.FindAll();
             var suktAutoMapTypes = assemblys.SelectMany(x => x.GetTypes()).Where(s => s.IsClass && !s.IsAbstract && s.HasAttribute<SuktAutoMapperAttribute>(true)).Distinct().ToArray();
@@ -29,7 +30,6 @@ namespace Sukt.Core.AutoMapper
             },assemblys,ServiceLifetime.Singleton);
             var mapper = service.GetService<IMapper>();//获取autoMapper实例
             AutoMapperExtension.SetMapper(mapper);
-            return base.ConfigureServices(service);
         }
         /// <summary>
         /// 创建扩展方法

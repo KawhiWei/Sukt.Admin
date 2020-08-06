@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MediatRTest.cs" />
+    <Compile Remove="SuktDependencyModuleTest.cs" />
+    <Compile Remove="SuktTestAutoMapper.cs" />
+    <Compile Remove="SuktTestServerFixtureBase.cs" />
+    <Compile Remove="SuktTestStartup.cs" />
+    <Compile Remove="SuktWebApplicationFactory.cs" />
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
 
@@ -27,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
+    <ProjectReference Include="..\src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj" />
   </ItemGroup>
 
 </Project>

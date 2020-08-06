@@ -1,20 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Shared.SuktAppModules;
+using Sukt.Core.Shared.Modules;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Sukt.Core.EntityFrameworkCore
 {
-    public abstract class EntityFrameworkCoreModuleBase: SuktAppModuleBase
+    public abstract class EntityFrameworkCoreModuleBase: SuktAppModule
     {
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
-            service = UseSql(service);
-            service = AddUnitOfWork(service); ;
-            service = AddRepository(service);
+            UseSql(context.Services);
+            AddUnitOfWork(context.Services); ;
+            AddRepository(context.Services);
 
-            return base.ConfigureServices(service);
+            //return base.ConfigureServices(service);
         }
         protected abstract IServiceCollection AddUnitOfWork(IServiceCollection services);
 

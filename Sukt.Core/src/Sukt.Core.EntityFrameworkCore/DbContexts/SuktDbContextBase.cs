@@ -9,6 +9,7 @@ using System.Threading;
 using Sukt.Core.Shared.SuktReflection;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.EntityFrameworkCore;
+using Sukt.Core.Shared.Entity;
 
 namespace Sukt.Core.Shared
 {

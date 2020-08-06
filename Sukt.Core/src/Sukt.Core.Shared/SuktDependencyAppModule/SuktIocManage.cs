@@ -36,7 +36,7 @@ namespace Sukt.Core.Shared.SuktDependencyAppModule
         /// </summary>
         internal void SetApplicationServiceProvider(IServiceProvider provider)
         {
-            _provider.NotNull(nameof(provider));
+            provider.NotNull(nameof(provider));
             _provider = provider;
         }
         /// <summary>

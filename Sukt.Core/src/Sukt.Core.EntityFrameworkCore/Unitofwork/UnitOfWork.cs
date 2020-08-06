@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared;
+using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;

@@ -2,6 +2,7 @@
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.OperationResult;
+using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.Application
 {
-    public interface IDictionaryContract
+    public interface IDictionaryContract: IScopedDependency
     {
         /// <summary>
         /// 新增

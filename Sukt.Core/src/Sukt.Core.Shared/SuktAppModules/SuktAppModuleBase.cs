@@ -6,6 +6,8 @@ using System.Text;
 
 namespace Sukt.Core.Shared.SuktAppModules
 {
+#warning 准备删除
+
     /// <summary>
     /// start服务模块基类
     /// </summary>

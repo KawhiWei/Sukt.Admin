@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Sukt.Core.Shared.AppOption;
 using Sukt.Core.Shared.Helpers;
+using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -256,5 +257,92 @@ namespace Sukt.Core.Shared.Extensions
             services.NotNull(nameof(services));
             return services.GetService<IOptions<AppOptionSettings>>()?.Value;
         }
+        public static T GetSingletonInstance<T>(this IServiceCollection services)
+        {
+            var service = services.GetSingletonInstanceOrNull<T>();
+            if (service == null)
+            {
+                throw new InvalidOperationException("找不到singleton服务: " + typeof(T).AssemblyQualifiedName);
+            }
+
+            return service;
+        }
+
+        #region New Module
+        public static ObjectAccessor<T> TryAddObjectAccessor<T>(this IServiceCollection services)
+        {
+            if (services.Any(s => s.ServiceType == typeof(ObjectAccessor<T>)))
+            {
+                return services.GetSingletonInstance<ObjectAccessor<T>>();
+            }
+
+            return services.AddObjectAccessor<T>();
+        }
+
+        public static ObjectAccessor<T> AddObjectAccessor<T>(this IServiceCollection services)
+        {
+            return services.AddObjectAccessor(new ObjectAccessor<T>());
+        }
+
+        public static ObjectAccessor<T> AddObjectAccessor<T>(this IServiceCollection services, T obj)
+        {
+            return services.AddObjectAccessor(new ObjectAccessor<T>(obj));
+        }
+
+        public static ObjectAccessor<T> AddObjectAccessor<T>(this IServiceCollection services, ObjectAccessor<T> accessor)
+        {
+            if (services.Any(s => s.ServiceType == typeof(ObjectAccessor<T>)))
+            {
+                throw new Exception("在类型“{typeof(T).AssemblyQualifiedName)}”之前注册了对象: ");
+            }
+
+            //Add to the beginning for fast retrieve
+            services.Insert(0, ServiceDescriptor.Singleton(typeof(ObjectAccessor<T>), accessor));
+            services.Insert(0, ServiceDescriptor.Singleton(typeof(IObjectAccessor<T>), accessor));
+
+            return accessor;
+        }
+
+        public static T GetObjectOrNull<T>(this IServiceCollection services)
+            where T : class
+        {
+            return services.GetSingletonInstanceOrNull<IObjectAccessor<T>>()?.Value;
+        }
+
+        public static T GetObject<T>(this IServiceCollection services)
+            where T : class
+        {
+            return services.GetObjectOrNull<T>() ?? throw new Exception($"找不到的对象 {typeof(T).AssemblyQualifiedName} 服务。请确保您以前使用过AddObjectAccessor！");
+        }
+        public static IServiceProvider BuildServiceProviderFromFactory([NotNull] this IServiceCollection services)
+        {
+
+
+            foreach (var service in services)
+            {
+                var factoryInterface = service.ImplementationInstance?.GetType()
+                    .GetTypeInfo()
+                    .GetInterfaces()
+                    .FirstOrDefault(i => i.GetTypeInfo().IsGenericType &&
+                                         i.GetGenericTypeDefinition() == typeof(IServiceProviderFactory<>));
+
+                if (factoryInterface == null)
+                {
+                    continue;
+                }
+
+                var containerBuilderType = factoryInterface.GenericTypeArguments[0];
+                return (IServiceProvider)typeof(Extensions)
+                    .GetTypeInfo()
+                    .GetMethods()
+                    .Single(m => m.Name == nameof(BuildServiceProviderFromFactory) && m.IsGenericMethod)
+                    .MakeGenericMethod(containerBuilderType)
+                    .Invoke(null, new object[] { services, null });
+            }
+
+            return services.BuildServiceProvider();
+        }
+        #endregion
+
     }
 }

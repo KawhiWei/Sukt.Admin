@@ -2,6 +2,7 @@
 using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Attributes.Dependency;
+using Sukt.Core.Shared.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -2,7 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared;
+using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Events;
 using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Startups
 {
+    [SuktDependsOn(
+        typeof(EventBusAppModuleBase)
+        )]
     public class EntityFrameworkCoreMySqlModule : EntityFrameworkCoreModuleBase
     {
         /// <summary>

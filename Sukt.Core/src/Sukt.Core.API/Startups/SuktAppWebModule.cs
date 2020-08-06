@@ -1,8 +1,15 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Sukt.Core.Aop;
+using Sukt.Core.AutoMapper;
+using Sukt.Core.Consul;
+using Sukt.Core.Redis;
 using Sukt.Core.Shared.AppOption;
+using Sukt.Core.Shared.Events;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.SuktAppModules;
+using Sukt.Core.Shared.Modules;
+using Sukt.Core.Shared.SuktDependencyAppModule;
+using Sukt.Core.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +17,22 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Startups
 {
-    public class AspNetCoreMvcModule: SuktAppModuleBase
+    [SuktDependsOn(
+        typeof(AopModule),
+        typeof(SuktAutoMapperModuleBase),
+        typeof(CSRedisModuleBase),
+        typeof(ConsulModuleBase),
+        typeof(SwaggerModule),
+        typeof(DependencyAppModule),
+        typeof(EventBusAppModuleBase),
+        typeof(EntityFrameworkCoreMySqlModule)
+        )]
+    public class SuktAppWebModule: SuktAppModule
     {
         private string _corePolicyName = string.Empty;
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
+            var service = context.Services;
             service.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
@@ -36,10 +54,10 @@ namespace Sukt.Core.API.Startups
                     });
                 });
             }
-            return service;
         }
-        public override void Configure(IApplicationBuilder applicationBuilder)
+        public override void ApplicationInitialization(ApplicationContext context)
         {
+            var applicationBuilder = context.GetApplicationBuilder();
             applicationBuilder.UseRouting();
             if (!_corePolicyName.IsNullOrEmpty())
             {

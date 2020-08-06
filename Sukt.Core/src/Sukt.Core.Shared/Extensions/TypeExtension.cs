@@ -183,5 +183,67 @@ namespace Sukt.Core.Shared.Extensions
             return member.Name;
 
         }
+        public static bool HasMatchingGenericArity(this Type interfaceType, TypeInfo typeInfo)
+        {
+            if (typeInfo.IsGenericType)
+            {
+                var interfaceTypeInfo = interfaceType.GetTypeInfo();
+
+                if (interfaceTypeInfo.IsGenericType)
+                {
+                    var argumentCount = interfaceType.GenericTypeArguments.Length;
+                    var parameterCount = typeInfo.GenericTypeParameters.Length;
+
+                    return argumentCount == parameterCount;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+        public static Type GetRegistrationType(this Type interfaceType, TypeInfo typeInfo)
+        {
+            if (typeInfo.IsGenericTypeDefinition)
+            {
+                var interfaceTypeInfo = interfaceType.GetTypeInfo();
+
+                if (interfaceTypeInfo.IsGenericType)
+                {
+                    return interfaceType.GetGenericTypeDefinition();
+                }
+            }
+
+            return interfaceType;
+        }
+        /// <summary>
+        /// 是原始的扩展包括空
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="includeEnums"></param>
+        /// <returns></returns>
+        public static bool IsPrimitiveExtendedIncludingNullable(this Type type, bool includeEnums = false)
+        {
+            if (IsPrimitiveExtended(type, includeEnums)) return true;
+
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                return IsPrimitiveExtended(type.GenericTypeArguments[0], includeEnums);
+
+            return false;
+        }
+
+        private static bool IsPrimitiveExtended(Type type, bool includeEnums)
+        {
+            if (type.GetTypeInfo().IsPrimitive) return true;
+
+            if (includeEnums && type.GetTypeInfo().IsEnum) return true;
+
+            return type == typeof(string) ||
+                   type == typeof(decimal) ||
+                   type == typeof(DateTime) ||
+                   type == typeof(DateTimeOffset) ||
+                   type == typeof(TimeSpan) ||
+                   type == typeof(Guid);
+        }
     }
 }

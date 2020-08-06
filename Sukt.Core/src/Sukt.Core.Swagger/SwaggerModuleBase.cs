@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.SuktAppModules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +12,18 @@ using System.IO;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
+using Sukt.Core.Shared.Modules;
 
 namespace Sukt.Core.Swagger
 {
-    public abstract class SwaggerModuleBase: SuktAppModuleBase
+    public class SwaggerModule: SuktAppModule
     {
         private string _url = string.Empty;
         private string _title = string.Empty;
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
-            IConfiguration configuration = service.GetConfiguration();
+            IConfiguration configuration = context.Services.GetConfiguration();
+            //IConfiguration configuration = service.GetConfiguration();
             var title = configuration["SuktCore:Swagger:Title"];
             var version = configuration["SuktCore:Swagger:Version"];
             var url = configuration["SuktCore:Swagger:Url"];
@@ -43,7 +44,7 @@ namespace Sukt.Core.Swagger
             }
             _title = title;
             _url = url;
-            service.AddSwaggerGen(x =>
+            context.Services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc(version, new OpenApiInfo { Title = title, Version = version });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
@@ -80,10 +81,11 @@ namespace Sukt.Core.Swagger
                     }
                 });
             });
-            return service;
+            //return service;
         }
-        public override void Configure(IApplicationBuilder applicationBuilder)
+        public override void ApplicationInitialization(ApplicationContext context)
         {
+            var applicationBuilder = context.GetApplicationBuilder();
             applicationBuilder.UseSwagger();
             applicationBuilder.UseSwaggerUI(x =>
             {

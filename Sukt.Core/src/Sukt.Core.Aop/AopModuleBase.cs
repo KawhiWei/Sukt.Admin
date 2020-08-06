@@ -4,7 +4,7 @@ using AspectCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Aop.Aop;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.SuktAppModules;
+using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktReflection;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,11 @@ namespace Sukt.Core.Aop
     /// <summary>
     /// 全局AOP模块
     /// </summary>
-    public abstract class AopModuleBase: SuktAppModuleBase
+    public class AopModule: SuktAppModule
     {
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
+            var service = context.Services;
             var typefinder = service.GetOrAddSingletonService<ITypeFinder, TypeFinder>();
             typefinder.NotNull(nameof(typefinder));
             var typs = typefinder.Find(o => o.IsClass && !o.IsAbstract && !o.IsInterface && o.IsSubclassOf(typeof(AbstractInterceptor)));
@@ -40,7 +41,6 @@ namespace Sukt.Core.Aop
                     });
                 }
             }
-            return service; 
         }
     }
 }

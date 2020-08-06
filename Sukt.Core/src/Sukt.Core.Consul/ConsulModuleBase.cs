@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sukt.Core.Shared.ConsulEntity;
 using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.Network;
-using Sukt.Core.Shared.SuktAppModules;
 using System;
 
 namespace Sukt.Core.Consul
 {
-    public abstract class ConsulModuleBase: SuktAppModuleBase
+    public class ConsulModuleBase: SuktAppModule
     {
         /// <summary>
         /// 服务地址
@@ -30,17 +30,18 @@ namespace Sukt.Core.Consul
         /// </summary>
         private int _Prot = 80;
 
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
+            var service = context.Services;
             IConfiguration configuration = service.GetConfiguration();
             _consulIp = configuration["Consul:IP"];
             _consulPort = Convert.ToInt32(configuration["Consul:Port"]);
             _Prot = Convert.ToInt32(configuration["Service:Port"]);
             _serviceName = configuration["Service:Name"];
-            return service;
         }
-        public override void Configure(IApplicationBuilder applicationBuilder)
+        public override void ApplicationInitialization(ApplicationContext context)
         {
+            var applicationBuilder = context.GetApplicationBuilder();
             ConsulServiceEntity serviceEntity = new ConsulServiceEntity
             {
                 IP = NetworkHelper.LocalIPAddress,

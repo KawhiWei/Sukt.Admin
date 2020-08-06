@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sukt.Core.Caching;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.SuktAppModules;
+using Sukt.Core.Shared.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,11 +12,12 @@ using System.Text;
 
 namespace Sukt.Core.Redis
 {
-    public abstract class CSRedisModuleBase: SuktAppModuleBase
+    public class CSRedisModuleBase: SuktAppModule
     {
 
-        public override IServiceCollection ConfigureServices(IServiceCollection service)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
+            var service = context.Services;
             var redisPath = service.GetConfiguration()["SuktCore:Redis:ConnectionString"];
             var basePath = ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             var redisConn = Path.Combine(basePath, redisPath);
@@ -27,10 +28,9 @@ namespace Sukt.Core.Redis
             var connStr = File.ReadAllText(redisConn).Trim();
             var csredis = new CSRedisClient(connStr);
             RedisHelper.Initialization(csredis);
-            service.TryAddTransient(typeof(ICache<>), typeof(CSRedisCache<>));
-            service.TryAddTransient(typeof(ICache<,>), typeof(CSRedisCache<,>));
-            service.TryAddTransient<ICache, CSRedisCache>();
-            return service;
+            service.TryAddSingleton(typeof(ICache<>), typeof(CSRedisCache<>));
+            service.TryAddSingleton(typeof(ICache<,>), typeof(CSRedisCache<,>));
+            service.TryAddSingleton<ICache, CSRedisCache>();
         }
     }
 }
