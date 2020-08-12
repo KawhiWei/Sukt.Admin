@@ -1,6 +1,7 @@
 ﻿using Sukt.Core.Shared.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Sukt.Core.Shared.Extensions.OrderExtensions
@@ -41,5 +42,30 @@ namespace Sukt.Core.Shared.Extensions.OrderExtensions
         /// 获取或设置 排序方向
         /// </summary>
         public SortDirectionEnum SortDirection { get; set; }
+    }
+    public class OrderCondition<T> : OrderCondition
+    {
+
+        /// <summary>
+        /// 使用排序字段 初始化一个<see cref="OrderCondition"/>类型的新实例
+        /// </summary>
+        public OrderCondition(Expression<Func<T, object>> keySelector)
+            : this(keySelector, SortDirectionEnum.Ascending)
+        { }
+
+        /// <summary>
+        /// 使用排序字段与排序方式 初始化一个<see cref="OrderCondition"/>类型的新实例
+        /// </summary>
+        public OrderCondition(Expression<Func<T, object>> keySelector, SortDirectionEnum sortDirection)
+            : base(GetPropertyName(keySelector), sortDirection)
+        { }
+
+        /// <summary>
+        /// 从泛型委托获取属性名
+        /// </summary>
+        private static string GetPropertyName(Expression<Func<T, object>> keySelector)
+        {
+            return keySelector.GetPropertyName();
+        }
     }
 }

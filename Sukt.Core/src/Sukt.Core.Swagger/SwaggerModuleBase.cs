@@ -20,6 +20,7 @@ namespace Sukt.Core.Swagger
     {
         private string _url = string.Empty;
         private string _title = string.Empty;
+        private string _version = string.Empty;
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             IConfiguration configuration = context.Services.GetConfiguration();
@@ -44,6 +45,7 @@ namespace Sukt.Core.Swagger
             }
             _title = title;
             _url = url;
+            _version = version;
             context.Services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc(version, new OpenApiInfo { Title = title, Version = version });
@@ -87,9 +89,15 @@ namespace Sukt.Core.Swagger
         {
             var applicationBuilder = context.GetApplicationBuilder();
             applicationBuilder.UseSwagger();
+            applicationBuilder.UseSwagger();
+            var template = $"doc/" + "BasicsService" + "/{documentName}/swagger.json";
+            applicationBuilder.UseSwagger(c =>
+            {
+                c.RouteTemplate = template;
+            });
             applicationBuilder.UseSwaggerUI(x =>
             {
-                x.SwaggerEndpoint(_url, _title);
+                x.SwaggerEndpoint(_url, $"{_version}");
                 x.RoutePrefix = string.Empty;
             });
         }

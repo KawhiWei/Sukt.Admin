@@ -13,5 +13,9 @@ namespace Sukt.Core.Shared.ResultMessageConst
         public const string DeleteSuccess = "删除成功";
         public const string DeleteFail = "删除成功";
         public const string NoChangeInOperation = "操作没有引发任何变化";
+        public const string LoadSucces = "加载成功";
+        public const string DataSuccess = "查询数据成功";
+        public const string Unauthorized = "未经授权";
+        public const string Uncertified = "当前用户权限不足";
     }
 }

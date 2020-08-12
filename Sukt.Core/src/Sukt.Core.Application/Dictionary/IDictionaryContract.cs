@@ -29,7 +29,7 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<TreeData<TreeDictionaryOutDto>> GetTreeAsync();
+        Task<OperationResponse> GetTreeAsync();
         /// <summary>
         /// 修改一行数据
         /// </summary>

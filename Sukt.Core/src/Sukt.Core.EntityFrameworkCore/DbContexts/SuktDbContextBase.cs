@@ -38,6 +38,8 @@ namespace Sukt.Core.Shared
                 item.Map(modelBuilder);
             }
         }
+        protected virtual Task BeforeSaveChanges() => Task.CompletedTask;
+        protected virtual Task AfterSaveChanges() => Task.CompletedTask;
         public IUnitOfWork unitOfWork { get; set; }
         /// <summary>
         /// 异步保存

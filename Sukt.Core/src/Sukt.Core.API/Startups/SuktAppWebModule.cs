@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Aop;
+using Sukt.Core.AspNetCore.Filters;
 using Sukt.Core.AutoMapper;
 using Sukt.Core.Consul;
 using Sukt.Core.Redis;
@@ -33,8 +34,13 @@ namespace Sukt.Core.API.Startups
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             var service = context.Services;
-            service.AddControllers().AddNewtonsoftJson(options => {
-                options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+            service.AddControllers(x=>{
+                x.SuppressAsyncSuffixInActionNames = false;
+                x.Filters.Add<PermissionAuthorizationFilter>();
+                x.Filters.Add<AuditLogFilter>();
+
+            }).AddNewtonsoftJson(options => {
+                //options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
             var configuration = service.GetConfiguration();

@@ -5,11 +5,13 @@ using Sukt.Core.Domain.Repository.DomainRepository;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.Attributes.Dependency;
 using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.ExpressionUtil;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.Filter;
 using Sukt.Core.Shared.OperationResult;
+using Sukt.Core.Shared.ResultMessageConst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +56,7 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<TreeData<TreeDictionaryOutDto>> GetTreeAsync()
+        public async Task<OperationResponse> GetTreeAsync()
         {
             var list = await _dataDictionary.NoTrackEntities.ToTreeResultAsync<DataDictionaryEntity, TreeDictionaryOutDto>(
                 (p, c) =>
@@ -74,7 +76,8 @@ namespace Sukt.Core.Application
                     p.Children.AddRange(datalist);
                 }
                 );
-            return list;
+            OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
+            return operationResponse;
         }
     }
 }

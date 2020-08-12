@@ -178,7 +178,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="addchilds"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static async Task<TreeData<TResult>> ToTreeResultAsync<TEntity, TResult>(this IQueryable<TEntity> source,
+        public static async Task<List<TResult>> ToTreeResultAsync<TEntity, TResult>(this IQueryable<TEntity> source,
             Func<TResult, TResult, bool> rootwhere,
             Func<TResult, TResult, bool> childswhere, Action<TResult, IEnumerable<TResult>> addchilds, TResult entity = default(TResult))
         {
@@ -189,10 +189,11 @@ namespace Sukt.Core.Shared.Extensions
             var list = await source.ToOutput<TResult>().ToListAsync();
             var treeData = list.ToTree(rootwhere, childswhere, addchilds, entity);
             Console.WriteLine("代理方法执行中");
-            return new TreeData<TResult>
-            {
-                Data = treeData,
-            };
+            //return new TreeData<TResult>
+            //{
+            //    Data = treeData,
+            //};
+            return treeData;
         }
     }
 }
