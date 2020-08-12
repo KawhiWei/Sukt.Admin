@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Events;
@@ -27,7 +26,9 @@ namespace Sukt.Core.API.Startups
         /// <returns></returns>
         protected override IServiceCollection AddRepository(IServiceCollection services)
         {
-            return services.AddScoped(typeof(IEFCoreRepository<,>), typeof(BaseRepository<,>));
+            services.AddScoped(typeof(IEFCoreRepository<,>), typeof(BaseRepository<,>));
+            services.AddScoped(typeof(IMongoDBRepository<,>), typeof(MongoDBRepository<,>));
+            return services;
         }
         /// <summary>
         /// 添加工作单元

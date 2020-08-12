@@ -1,5 +1,4 @@
 ﻿using AspectCore.DynamicProxy;
-using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
 using System;
 using System.Collections.Generic;

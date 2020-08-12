@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Shared.Audit;
+﻿using Sukt.Core.Shared;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,14 @@ namespace Sukt.Core.Application.Audit
     /// </summary>
     public class AuditStoreContract : IAuditStore
     {
-        public Task SaveAudit(List<AuditEntry> audit)
+        private IMongoDBRepository<AuditEntry,Guid> _mongoDBRepository;
+        public AuditStoreContract(IMongoDBRepository<AuditEntry, Guid> mongoDBRepository)
         {
-            return Task.CompletedTask;
+            _mongoDBRepository = mongoDBRepository;
+        }
+        public async Task SaveAudit(List<AuditEntry> audit)
+        {
+            await _mongoDBRepository.InsertAsync(audit);
         }
     }
 }

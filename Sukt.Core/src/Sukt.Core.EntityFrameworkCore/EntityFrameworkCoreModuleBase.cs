@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.EntityFrameworkCore
+namespace Sukt.Core.Shared
 {
     public abstract class EntityFrameworkCoreModuleBase: SuktAppModule
     {

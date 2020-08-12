@@ -1,6 +1,5 @@
 ﻿using AspectCore.DependencyInjection;
 using AspectCore.DynamicProxy;
-using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.SuktDependencyAppModule;

@@ -29,6 +29,8 @@ namespace Sukt.Core.Shared.Audit
             foreach (var entityEntry in @event.Entries)
             {
                 var auditmodel = new AuditEntry();
+                auditmodel.LastModifedAt = DateTime.Now;
+                auditmodel.CreatedAt = DateTime.Now;
                 auditmodel.NewValues = new Dictionary<string, object>();
                 auditmodel.OriginalValues = new Dictionary<string, object>();
                 var properties = entityEntry.Metadata.GetProperties();

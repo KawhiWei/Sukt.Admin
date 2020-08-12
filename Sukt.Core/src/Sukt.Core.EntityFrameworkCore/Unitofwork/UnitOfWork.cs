@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sukt.Core.EntityFrameworkCore
+namespace Sukt.Core.Shared
 {
     public class UnitOfWork<TDbContext> : IUnitOfWork where TDbContext : SuktDbContextBase
     {

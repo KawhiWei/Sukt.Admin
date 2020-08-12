@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Sukt.Core.Shared.Audit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Text;
 
 namespace Sukt.Core.Shared.Entity
 {
+    [MongoDBTable("SuktAuditLog")]
     public class AuditEntry: EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
         /// <summary>
