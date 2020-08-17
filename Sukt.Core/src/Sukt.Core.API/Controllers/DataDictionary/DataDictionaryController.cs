@@ -10,6 +10,7 @@ using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.DataDictionaryDto;
 using Sukt.Core.Shared.AjaxResult;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
@@ -35,6 +36,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         /// <returns></returns>
         [HttpPost]
         [Description("创建一个数据字典")]
+        [AuditLog]
         public async Task<AjaxResult> CreateAsync(DataDictionaryInputDto input)
         {
             return (await _dictionary.InsertAsync(input)).ToAjaxResult();

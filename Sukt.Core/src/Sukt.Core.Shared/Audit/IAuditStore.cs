@@ -9,6 +9,6 @@ namespace Sukt.Core.Shared.Audit
 {
     public interface IAuditStore : IScopedDependency
     {
-        Task SaveAudit(List<AuditEntry> audit);
+        Task SaveAudit(List<AuditEntryInputDto> audit);
     }
 }

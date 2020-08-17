@@ -8,6 +8,6 @@ namespace Sukt.Core.Shared.Audit
 {
     public class AuditEvent : EventBase
     {
-        public IEnumerable<EntityEntry> Entries { get; set; }
+        public List<AuditEntryInputDto> AuditList { get; set; }
     }
 }
