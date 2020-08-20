@@ -59,6 +59,9 @@
     <None Update="SuktCoreDB.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="SuktCoreMongoDb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SuktCoreRedis.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -15,25 +15,35 @@ namespace Sukt.Core.Application.Audit
     public class AuditStoreContract : IAuditStore
     {
         private IMongoDBRepository<AuditLog, Guid> _auditLogRepository;
-        private IMongoDBRepository<AuditEntry, Guid> _mongoDBRepository;
-        private IMongoDBRepository<AuditPropertysEntry, Guid> _auditPropertyRepository;
+        private IMongoDBRepository<AuditEntry, Guid> _auditEntryRepository;
+        private IMongoDBRepository<AuditPropertysEntry, Guid> _auditPropertysEntryRepository;
 
-        public AuditStoreContract(IMongoDBRepository<AuditLog, Guid> auditLogRepository, IMongoDBRepository<AuditEntry, Guid> mongoDBRepository, IMongoDBRepository<AuditPropertysEntry, Guid> auditPropertyRepository)
+        public AuditStoreContract(IMongoDBRepository<AuditLog, Guid> auditLogRepository, IMongoDBRepository<AuditEntry, Guid> auditEntryRepository, IMongoDBRepository<AuditPropertysEntry, Guid> auditPropertysEntryRepository)
         {
             _auditLogRepository = auditLogRepository;
-            _mongoDBRepository = mongoDBRepository;
-            _auditPropertyRepository = auditPropertyRepository;
+            _auditEntryRepository = auditEntryRepository;
+            _auditPropertysEntryRepository = auditPropertysEntryRepository;
         }
 
-        public async Task SaveAudit(List<AuditEntryInputDto> audit)
+        public async Task SaveAudit(AuditLog auditLog, List<AuditEntryInputDto> audit)
         {
-            //var list= audit.MapTo<AuditEntry>();
-            
-
-
-            await Task.CompletedTask;
-
-            //await _mongoDBRepository.InsertAsync(audit);
+            List<AuditEntry> auditEntry = new List<AuditEntry>();
+            List<AuditPropertysEntry> auditpropertyentry = new List<AuditPropertysEntry>();
+            foreach (var item in audit)
+            {
+                var model = item.MapTo<AuditEntry>();
+                model.AuditLogId = auditLog.Id;
+                foreach (var Property in item.PropertysEntryInputDto)
+                {
+                    var propertymodel= Property.MapTo<AuditPropertysEntry>();
+                    propertymodel.AuditEntryId = model.Id;
+                    auditpropertyentry.Add(propertymodel);
+                }
+                auditEntry.Add(model);
+            }
+            await _auditLogRepository.InsertAsync(auditLog);
+            await _auditEntryRepository.InsertAsync(auditEntry);
+            await _auditPropertysEntryRepository.InsertAsync(auditpropertyentry);
         }
     }
 }

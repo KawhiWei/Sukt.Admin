@@ -1,9 +1,12 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +23,18 @@ namespace Sukt.Core.Shared
 
         public MongoDBRepository(IServiceProvider serviceProvider)
         {
-            var client = new MongoClient("mongodb://10.1.40.207:27017");
-            var database = client.GetDatabase("IDNAudit");
+            var configuration = serviceProvider.GetService<IConfiguration>();
+            var Dbpath = configuration["SuktCore:DbContext:MongoDBConnectionString"];
+            var MongoDBDataBase = configuration["SuktCore:DbContext:MongoDBDataBase"];
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
+            var dbcontext = Path.Combine(basePath, Dbpath);
+            if (!File.Exists(dbcontext))
+            {
+                throw new Exception("未找到存放数据库链接的文件");
+            }
+            var connection = File.ReadAllText(dbcontext).Trim();
+            var client = new MongoClient(connection);
+            var database = client.GetDatabase(MongoDBDataBase);
             Type t = typeof(TData);
             var table = t.GetAttribute<MongoDBTableAttribute>();
             if (table == null)

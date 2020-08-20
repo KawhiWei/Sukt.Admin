@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-
+using Sukt.Core.Shared.Extensions;
 namespace Sukt.Core.Shared.Audit
 {
     /// <summary>
@@ -13,6 +13,10 @@ namespace Sukt.Core.Shared.Audit
     [DisplayName("审计日志主表")]
     public class AuditLog : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public AuditLog()
+        {
+            Id = Guid.NewGuid();
+        }
         /// <summary>
         /// 浏览器信息
         /// </summary>

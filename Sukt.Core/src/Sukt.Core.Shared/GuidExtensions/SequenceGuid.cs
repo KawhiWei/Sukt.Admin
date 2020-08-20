@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sukt.Core.Shared.GuidExtensions
+namespace Sukt.Core.Shared.Extensions
 {
-    public static class SequenceGuid
+    public static partial class Extensions
     {
         /// <summary>
         /// 生成有序的Guid扩展

@@ -326,3 +326,5 @@ __pycache__/
 *.pyc
 
 
+/Sukt.Core/src/Sukt.Core.API/SuktCoreRedis.txt
+/Sukt.Core/src/Sukt.Core.API/SuktCoreMongoDb.txt

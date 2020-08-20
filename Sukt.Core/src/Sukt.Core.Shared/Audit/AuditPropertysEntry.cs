@@ -33,6 +33,11 @@ namespace Sukt.Core.Shared.Audit
         /// </summary>
         [DisplayName("属性类型")]
         public string PropertiesType { get; set; }
+        /// <summary>
+        /// 实体表Id
+        /// </summary>
+        [DisplayName("实体表Id")]
+        public Guid AuditEntryId { get; set; }
         #region 公共字段
         /// <summary>
         /// 创建人

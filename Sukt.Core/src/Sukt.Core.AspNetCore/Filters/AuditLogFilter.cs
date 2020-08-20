@@ -40,18 +40,19 @@ namespace Sukt.Core.AspNetCore.Filters
         /// <param name="context"></param>
         public void OnResultExecuted(ResultExecutedContext context)
         {
-            
             var action = context.ActionDescriptor as ControllerActionDescriptor;
             var actionname = action.MethodInfo.ToDescription();//获取控制器特性
-            if(action.EndpointMetadata.Any(x=>x is AuditLogAttribute))
+            IServiceProvider provider = context.HttpContext.RequestServices;
+            var dic = provider.GetService<DictionaryAccessor>();
+            dic.TryGetValue("audit", out object auditEntry);
+            if (action.EndpointMetadata.Any(x=>x is AuditLogAttribute)&& auditEntry!=null)
             {
-                IServiceProvider provider = context.HttpContext.RequestServices;
-                var dic = provider.GetService<DictionaryAccessor>();
-                dic.TryGetValue("audit", out object auditEntry);
-                provider.GetService<IAuditStore>()?.SaveAudit((auditEntry as List<AuditEntryInputDto>)).GetAwaiter().GetResult(); //不用异步，或则用异步IResultFilterAsync
+                AuditLog auditLog = new AuditLog();
+                auditLog.Ip = context.HttpContext.GetClientIP();
+                auditLog.FunctionName = $"{context.Controller.GetType().ToDescription()}-{action.MethodInfo.ToDescription()}";
+                auditLog.Action = context.HttpContext.Request.Path;
+                provider.GetService<IAuditStore>()?.SaveAudit(auditLog,(auditEntry as List<AuditEntryInputDto>)).GetAwaiter().GetResult(); //不用异步，或则用异步IResultFilterAsync
             }
-            
-            
         }
         /// <summary>
         /// 方法返回中

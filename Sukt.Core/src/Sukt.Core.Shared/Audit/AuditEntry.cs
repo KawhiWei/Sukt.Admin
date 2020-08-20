@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.GuidExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace Sukt.Core.Shared.Audit
     {
         public AuditEntry()
         {
-            Id = SequenceGuid.GuidSequence();
+            Id = Guid.NewGuid();
         }
         /// <summary>
         /// 实体名称
