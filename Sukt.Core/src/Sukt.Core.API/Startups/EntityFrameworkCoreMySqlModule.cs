@@ -27,7 +27,6 @@ namespace Sukt.Core.API.Startups
         protected override IServiceCollection AddRepository(IServiceCollection services)
         {
             services.AddScoped(typeof(IEFCoreRepository<,>), typeof(BaseRepository<,>));
-            services.AddScoped(typeof(IMongoDBRepository<,>), typeof(MongoDBRepository<,>));
             return services;
         }
         /// <summary>

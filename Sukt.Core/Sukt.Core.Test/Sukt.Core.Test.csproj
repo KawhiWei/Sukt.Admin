@@ -17,6 +17,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.Development.json" />
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -32,6 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
+    <ProjectReference Include="..\src\Sukt.Core.MongoDB\Sukt.Core.MongoDB.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj" />
   </ItemGroup>

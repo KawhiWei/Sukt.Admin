@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Linq;
 using System.ComponentModel;
 using Sukt.Core.Shared.Extensions;
+using System.Diagnostics;
 
 namespace Sukt.Core.AspNetCore.Filters
 {
@@ -18,8 +19,9 @@ namespace Sukt.Core.AspNetCore.Filters
     /// </summary>
     public class AuditLogFilter : IActionFilter, IResultFilter
     {
+        private Stopwatch _stopwatch = new Stopwatch();
         /// <summary>
-        /// 方法执行完成
+        /// 执行行动时
         /// </summary>
         /// <param name="context"></param>
         public void OnActionExecuted(ActionExecutedContext context)
@@ -32,7 +34,7 @@ namespace Sukt.Core.AspNetCore.Filters
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            
+            _stopwatch.Start();
         }
         /// <summary>
         /// 方法返回完成后
@@ -40,6 +42,7 @@ namespace Sukt.Core.AspNetCore.Filters
         /// <param name="context"></param>
         public void OnResultExecuted(ResultExecutedContext context)
         {
+            _stopwatch.Stop();
             var action = context.ActionDescriptor as ControllerActionDescriptor;
             var actionname = action.MethodInfo.ToDescription();//获取控制器特性
             IServiceProvider provider = context.HttpContext.RequestServices;
@@ -47,10 +50,14 @@ namespace Sukt.Core.AspNetCore.Filters
             dic.TryGetValue("audit", out object auditEntry);
             if (action.EndpointMetadata.Any(x=>x is AuditLogAttribute)&& auditEntry!=null)
             {
-                AuditLog auditLog = new AuditLog();
-                auditLog.Ip = context.HttpContext.GetClientIP();
-                auditLog.FunctionName = $"{context.Controller.GetType().ToDescription()}-{action.MethodInfo.ToDescription()}";
-                auditLog.Action = context.HttpContext.Request.Path;
+                AuditLog auditLog = new AuditLog
+                {
+                    BrowserInformation= context.HttpContext.Request.Headers["User-Agent"].ToString(),
+                    ExecutionDuration = _stopwatch.ElapsedMilliseconds,
+                    Ip = context.HttpContext.GetClientIP(),
+                    FunctionName = $"{context.Controller.GetType().ToDescription()}-{action.MethodInfo.ToDescription()}",
+                    Action = context.HttpContext.Request.Path
+                };
                 provider.GetService<IAuditStore>()?.SaveAudit(auditLog,(auditEntry as List<AuditEntryInputDto>)).GetAwaiter().GetResult(); //不用异步，或则用异步IResultFilterAsync
             }
         }

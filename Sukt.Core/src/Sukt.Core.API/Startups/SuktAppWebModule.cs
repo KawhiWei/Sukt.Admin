@@ -26,7 +26,8 @@ namespace Sukt.Core.API.Startups
         typeof(SwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
-        typeof(EntityFrameworkCoreMySqlModule)
+        typeof(EntityFrameworkCoreMySqlModule),
+        typeof(MongoDBModelule)
         )]
     public class SuktAppWebModule: SuktAppModule
     {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MongoDB.Driver.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sukt.Core.Shared
+namespace Sukt.Core.MongoDB.Repositorys
 {
-    public interface IMongoDBRepository<TData,Tkey>
+    public interface IMongoDBRepository<TData, Tkey>
     {
         //Find<T> – 返回集合中与提供的搜索条件匹配的所有文档。
         //InsertOne – 插入提供的对象作为集合中的新文档。
@@ -23,5 +24,9 @@ namespace Sukt.Core.Shared
         /// <param name="entitys"></param>
         /// <returns></returns>
         Task InsertAsync(List<TData> entitys);
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        IMongoQueryable<TData> Entities { get; }
     }
 }

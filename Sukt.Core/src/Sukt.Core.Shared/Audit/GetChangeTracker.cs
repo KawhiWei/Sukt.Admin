@@ -26,6 +26,7 @@ namespace Sukt.Core.Shared.Audit
             foreach (var entityEntry in Entries)
             {
                 var auditentry = new AuditEntryInputDto();
+                auditentry.TableName = entityEntry.Metadata.GetTableName();
                 auditentry.EntityAllName = entityEntry.Metadata.Name;
                 auditentry.EntityDisplayName = entityEntry.Entity.GetType().ToDescription();
                 //auditentry.TableName=
@@ -62,10 +63,9 @@ namespace Sukt.Core.Shared.Audit
                         AuditPropertys.NewValues = propertyEntry.CurrentValue?.ToString();
                         AuditPropertys.OriginalValues = propertyEntry.OriginalValue?.ToString();
                         AuditPropertys.PropertiesType = propertie.ClrType.FullName;
-                        AuditPropertys.Properties = propertyEntry.Metadata.PropertyInfo.ToDescription();
+                        AuditPropertys.PropertieDisplayName = propertyEntry.Metadata.PropertyInfo.ToDescription();
                         auditentry.PropertysEntryInputDto.Add(AuditPropertys);
                     }
-
                 }
                 list.Add(auditentry);
             }

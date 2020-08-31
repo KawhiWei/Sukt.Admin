@@ -59,7 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Domain.Services",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestModule", "TestModule", "{69529977-4BDB-4C35-9953-1A0496F7B1A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.TestBase", "src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj", "{6ED0A304-03C0-4986-B49F-BBE87487DC3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.TestBase", "src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj", "{6ED0A304-03C0-4986-B49F-BBE87487DC3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.MongoDB", "src\Sukt.Core.MongoDB\Sukt.Core.MongoDB.csproj", "{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +141,10 @@ Global
 		{6ED0A304-03C0-4986-B49F-BBE87487DC3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ED0A304-03C0-4986-B49F-BBE87487DC3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ED0A304-03C0-4986-B49F-BBE87487DC3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{A9B3D210-C176-4C2A-A75A-21DB5414BF27} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
 		{69529977-4BDB-4C35-9953-1A0496F7B1A7} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
 		{6ED0A304-03C0-4986-B49F-BBE87487DC3C} = {69529977-4BDB-4C35-9953-1A0496F7B1A7}
+		{23DCF52F-C79A-46F1-B96C-AEC4B8E23A8D} = {B061BE61-AEF2-4F5E-B900-280FBB10BFC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05B139D9-1492-4454-AF04-522949DE00D3}

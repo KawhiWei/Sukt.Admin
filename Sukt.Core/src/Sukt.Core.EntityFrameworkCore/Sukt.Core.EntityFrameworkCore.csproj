@@ -13,6 +13,7 @@
   <ItemGroup>
     <Compile Remove="MappingConfiguration\EntityManager.cs" />
     <Compile Remove="MappingConfiguration\IEntityManager.cs" />
+    <Compile Remove="Repository\MongoDBRepository.cs" />
     <Compile Remove="UnitOfWork.cs" />
   </ItemGroup>
 
