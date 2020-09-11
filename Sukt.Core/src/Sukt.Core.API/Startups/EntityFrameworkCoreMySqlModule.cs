@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sukt.Core.MultiTenancy;
 using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Events;
@@ -54,8 +55,10 @@ namespace Sukt.Core.API.Startups
                 throw new Exception("未找到存放数据库链接的文件");
             }
             var mysqlconn = File.ReadAllText(dbcontext).Trim(); ;
-            services.AddDbContext<DefaultDbContext>(option => {
-                option.UseMySql(mysqlconn, assembly => { assembly.MigrationsAssembly("Sukt.Core.Domain.Models"); });
+            services.AddDbContext<DefaultDbContext>((serviceProvider, options) => {
+                var resolver = serviceProvider.GetRequiredService<ISuktConnectionStringResolver>();
+                var ss= resolver.Resolve();
+                options.UseMySql(mysqlconn, assembly => { assembly.MigrationsAssembly("Sukt.Core.Domain.Models"); });
             });
             return services;
         }

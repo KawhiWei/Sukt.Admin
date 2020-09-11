@@ -199,7 +199,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <typeparam name="TType"></typeparam>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static TType GetService<TType>(this IServiceCollection services)
+        public static TType GetBuildService<TType>(this IServiceCollection services)
         {
             var provider = services.BuildServiceProvider();
             return provider.GetService<TType>();
@@ -211,21 +211,45 @@ namespace Sukt.Core.Shared.Extensions
         /// <typeparam name="TImplementation"></typeparam>
         /// <param name="services"></param>
         /// <returns></returns>
-        public static TType GetOrAddSingletonService<TType, TImplementation>(this IServiceCollection services) where TType : class
-       where TImplementation : class, TType
+        public static TServiceType GetOrAddSingletonService<TServiceType, TImplementation>(this IServiceCollection services)
+            where TServiceType : class
+        where TImplementation : class, TServiceType
         {
-            var type = services.GetService<TType>();
+
+
+
+            var type = services.GetSingletonInstanceOrNull<TServiceType>();
             if (type is null)
             {
-                services.AddSingleton<TType, TImplementation>();
-                type = services.GetService<TType>();
+                var provider = services.BuildServiceProvider();
+                var serviceType = (TServiceType)provider.GetInstance(new ServiceDescriptor(typeof(TServiceType), typeof(TImplementation), ServiceLifetime.Singleton));
+                return serviceType;
             }
 
             return type;
         }
+
+        /// <summary>
+        /// 得到或添加Singleton服务
+        /// </summary>
+        /// <typeparam name="TServiceType"></typeparam>
+
+        public static TServiceType GetOrAddSingletonService<TServiceType>(this IServiceCollection services, Func<TServiceType> factory) where TServiceType : class
+        {
+
+
+            var servciceType = services.GetSingletonInstanceOrNull<TServiceType>();
+            if (servciceType is null)
+            {
+                servciceType = factory();
+                services.AddSingleton<TServiceType>(servciceType);
+            }
+
+            return servciceType;
+        }
         public static IConfiguration GetConfiguration(this IServiceCollection services)
         {
-            return services.GetSingletonInstanceOrNull<IConfiguration>();
+            return services.GetBuildService<IConfiguration>();
         }
         /// <summary>
         /// 获取单例注册服务对象
@@ -255,7 +279,7 @@ namespace Sukt.Core.Shared.Extensions
         public static AppOptionSettings GetAppSettings(this IServiceCollection services)
         {
             services.NotNull(nameof(services));
-            return services.GetService<IOptions<AppOptionSettings>>()?.Value;
+            return services.GetBuildService<IOptions<AppOptionSettings>>()?.Value;
         }
         public static T GetSingletonInstance<T>(this IServiceCollection services)
         {

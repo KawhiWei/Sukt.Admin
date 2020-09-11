@@ -238,7 +238,7 @@ namespace Sukt.Core.Shared
             {
                 await this.BeginTransactionAsync();
                 result = await func.Invoke();
-                if (!result.Successed)
+                if (!result.Success)
                 {
                     await this.RollbackAsync();
                     return result;

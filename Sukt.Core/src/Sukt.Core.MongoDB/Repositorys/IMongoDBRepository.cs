@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver.Linq;
+﻿using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,5 +29,6 @@ namespace Sukt.Core.MongoDB.Repositorys
         /// 查询数据
         /// </summary>
         IMongoQueryable<TData> Entities { get; }
+        IMongoCollection<TData> Collection { get; }
     }
 }

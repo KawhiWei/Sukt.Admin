@@ -46,7 +46,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="predicate">查询条件表达式</param>
         /// <param name="pageParameters">分页参数</param>
         /// <returns></returns>
-        public static async Task<PageResult<TEntity>> ToPageAsync<TEntity>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, PageParameters pageParameters)
+        public static async Task<IPageResult<TEntity>> ToPageAsync<TEntity>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, PageParameters pageParameters)
 
         {
             pageParameters.NotNull(nameof(pageParameters));
@@ -68,7 +68,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="pageParameters">分页参数</param>
         /// <param name="selector">数据筛选表达式</param>
         /// <returns></returns>
-        public static async Task<PageResult<TResult>> ToPageAsync<TEntity, TResult>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, PageParameters pageParameters, Expression<Func<TEntity, TResult>> selector)
+        public static async Task<IPageResult<TResult>> ToPageAsync<TEntity, TResult>(this IQueryable<TEntity> source, Expression<Func<TEntity, bool>> predicate, PageParameters pageParameters, Expression<Func<TEntity, TResult>> selector)
         {
             pageParameters.NotNull(nameof(pageParameters));
             selector.NotNull(nameof(selector));
@@ -89,7 +89,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="predicate">查询条件表达式</param>
         /// <param name="pageParameters">分页参数</param>
         /// <returns></returns>
-        public static async Task<PageResult<TOutputDto>> ToPageAsync<TEntity, TOutputDto>(this IQueryable<TEntity> source, IPagedRequest request)
+        public static async Task<IPageResult<TOutputDto>> ToPageAsync<TEntity, TOutputDto>(this IQueryable<TEntity> source, IPagedRequest request)
           where TOutputDto : IOutputDto
         {
             request.NotNull(nameof(request));

@@ -12,7 +12,7 @@ namespace Sukt.Core.Shared.OperationResult
         {
             var message = operationResponse.Message ?? operationResponse.Type.ToDescription();
             AjaxResultType type = operationResponse.Type.ToAjaxResultType();
-            return new AjaxResult(message, type, operationResponse.Data) { Success = operationResponse.Successed };
+            return new AjaxResult(message, type, operationResponse.Data) { Success = operationResponse.Success };
         }
 
 
@@ -21,7 +21,7 @@ namespace Sukt.Core.Shared.OperationResult
         {
             var message = operationResult.Message ?? operationResult.Type.ToDescription();
             AjaxResultType type = operationResult.Type.ToAjaxResultType();
-            return new AjaxResult(message, type, operationResult.Data) { Success = operationResult.Successed };
+            return new AjaxResult(message, type, operationResult.Data) { Success = operationResult.Success };
         }
 
         public static AjaxResultType ToAjaxResultType(this OperationEnumType responseType)

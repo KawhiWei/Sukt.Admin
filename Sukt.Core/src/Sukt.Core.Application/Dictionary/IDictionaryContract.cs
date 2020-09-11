@@ -2,7 +2,7 @@
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.OperationResult;
-using Sukt.Core.Shared.SuktDependencyAppModule;
+using Sukt.Core.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +23,7 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<PageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query);
+        Task<IPageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query);
         /// <summary>
         /// 获取树形数据
         /// </summary>

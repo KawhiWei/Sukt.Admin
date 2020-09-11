@@ -22,7 +22,7 @@ namespace Sukt.Core.TestBase
             var services = CreateServiceCollection();
             BeforeAddApplication(services);
             var application = services.AddApplication<TStartupModule>();
-            Application = services.GetService<IModuleApplication>();
+            Application = services.GetBuildService<IModuleApplication>();
             AfterAddApplication(services);
             RootServiceProvider = CreateServiceProvider(services);
             TestServiceScope = RootServiceProvider.CreateScope();

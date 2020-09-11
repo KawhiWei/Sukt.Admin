@@ -18,10 +18,12 @@ namespace Sukt.Core.MongoDB.Repositorys
 
         private readonly IMongoCollection<TData> _collection;
         private readonly MongoDbContextBase _mongoDbContext;
+        public virtual IMongoCollection<TData> Collection { get; private set; }
         public MongoDBRepository(IServiceProvider serviceProvider, MongoDbContextBase mongoDbContext)
         {
             _mongoDbContext = mongoDbContext;
             _collection = _mongoDbContext.Collection<TData>();
+            Collection = _mongoDbContext.Collection<TData>();
         }
 
         public async Task InsertAsync(TData entity)

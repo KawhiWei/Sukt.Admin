@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 

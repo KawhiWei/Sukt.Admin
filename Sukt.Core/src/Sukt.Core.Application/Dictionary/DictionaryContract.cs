@@ -46,7 +46,7 @@ namespace Sukt.Core.Application
         {
             return await _dataDictionary.DeleteAsync(Id);
         }
-        public async Task<PageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query)
+        public async Task<IPageResult<DataDictionaryOutDto>> GetResultAsync(PageRequest query)
         {
             var result= await _dataDictionary.NoTrackEntities.ToPageAsync<DataDictionaryEntity, DataDictionaryOutDto>(query);
             return result;

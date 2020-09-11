@@ -14,6 +14,7 @@ using Sukt.Core.API.Startups;
 using Sukt.Core.AspNetCore;
 using Sukt.Core.AspNetCore.Extensions;
 using Sukt.Core.AspNetCore.Middleware;
+using Sukt.Core.MultiTenancy;
 using Sukt.Core.Shared.Modules;
 
 namespace Sukt.Core.API
@@ -40,6 +41,7 @@ namespace Sukt.Core.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseMultiTenancy();
             app.UseErrorHandling();
             app.InitializeApplication();
             //app.UseAppModule<SuktAspNetCoreAppModuleManager>();

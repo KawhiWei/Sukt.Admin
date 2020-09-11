@@ -28,7 +28,7 @@ namespace Sukt.Core.AutoMapper
             {
                 this.CreateMapping<SuktAutoMapperAttribute>(suktAutoMapTypes, mapper);
             },assemblys,ServiceLifetime.Singleton);
-            var mapper = service.GetService<IMapper>();//获取autoMapper实例
+            var mapper = service.GetBuildService<IMapper>();//获取autoMapper实例
             AutoMapperExtension.SetMapper(mapper);
         }
         /// <summary>

@@ -31,7 +31,7 @@ namespace Sukt.Core.Shared.OperationResult
         public OperationEnumType Type { get; set; }
 
    
-        public override bool  Successed => Type == OperationEnumType.Success;
+        public override bool  Success => Type == OperationEnumType.Success;
 
         public bool Error()
         {

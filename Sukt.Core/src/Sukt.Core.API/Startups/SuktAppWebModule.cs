@@ -22,12 +22,14 @@ namespace Sukt.Core.API.Startups
         typeof(AopModule),
         typeof(SuktAutoMapperModuleBase),
         typeof(CSRedisModuleBase),
+        typeof(IdentityModule),
         typeof(ConsulModuleBase),
         typeof(SwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
         typeof(EntityFrameworkCoreMySqlModule),
-        typeof(MongoDBModelule)
+        typeof(MongoDBModule),
+        typeof(MultiTenancyModule)
         )]
     public class SuktAppWebModule: SuktAppModule
     {
