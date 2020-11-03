@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.IdentityServer4Store.Store
 {
+
     public class ClientStoreBase : IClientStore
     {
         private readonly ILogger<ClientStoreBase> _logger;

@@ -73,7 +73,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.IdentityServer4St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.IdentityServerFour", "src\Sukt.Core.IdentityServerFour\Sukt.Core.IdentityServerFour.csproj", "{B9B20E51-3D2E-4175-ADA3-E4D0E81E565B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.AuthenticationCenter", "src\Sukt.Core.AuthenticationCenter\Sukt.Core.AuthenticationCenter.csproj", "{C3C83CAD-93D4-4A40-B04A-99FE95B01CCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.AuthenticationCenter", "src\Sukt.Core.AuthenticationCenter\Sukt.Core.AuthenticationCenter.csproj", "{C3C83CAD-93D4-4A40-B04A-99FE95B01CCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
