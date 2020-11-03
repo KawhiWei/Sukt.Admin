@@ -1,7 +1,6 @@
 ﻿using AutoMapper.Internal;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.MultiTenancy
 {
@@ -9,6 +8,7 @@ namespace Sukt.Core.MultiTenancy
     public class ConnectionStrings : Dictionary<string, string>
     {
         public const string DefaultConnectionStringName = "Default";
+
         public string Default
         {
             get => this.GetOrDefault(DefaultConnectionStringName);

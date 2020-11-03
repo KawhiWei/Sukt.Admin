@@ -1,7 +1,5 @@
 ﻿using Sukt.Core.Shared.Attributes.Dependency;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.SuktReflection
 {
@@ -14,6 +12,7 @@ namespace Sukt.Core.Shared.SuktReflection
         /// <param name="predicate"></param>
         /// <returns></returns>
         TItem[] Find(Func<TItem, bool> predicate);
+
         /// <summary>
         /// 获取全部
         /// </summary>

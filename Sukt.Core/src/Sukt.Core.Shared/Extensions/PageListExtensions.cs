@@ -1,8 +1,5 @@
 ﻿using Sukt.Core.Shared.AjaxResult;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {

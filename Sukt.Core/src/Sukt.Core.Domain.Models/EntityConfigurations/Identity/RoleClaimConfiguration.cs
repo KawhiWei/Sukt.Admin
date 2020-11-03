@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using Sukt.Core.Shared;
-using System.Collections.Generic;
-using System.Text;
+using System;
 
 namespace Sukt.Core.Domain.Models
 {

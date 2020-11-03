@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Sukt.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +23,6 @@ namespace Sukt.Core.Caching
 
         public async Task<TCacheData> GetAsync<TCacheData>(string key, CancellationToken token = default)
         {
-
             return await Task.Run(() => (TCacheData)_cache.Get(key));
         }
 
@@ -35,7 +32,6 @@ namespace Sukt.Core.Caching
 
             func.NotNull(nameof(func));
             var value = this.Get<TCacheData>(key);
-
 
             if (!Equals(value, default(TCacheData)))
             {
@@ -59,7 +55,6 @@ namespace Sukt.Core.Caching
 
             func.NotNull(nameof(func));
             var value = await this.GetAsync<TCacheData>(key);
-
 
             if (!Equals(value, default(TCacheData)))
             {

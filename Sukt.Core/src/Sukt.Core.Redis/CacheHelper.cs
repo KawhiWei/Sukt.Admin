@@ -1,8 +1,6 @@
 ﻿using Sukt.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,7 +38,6 @@ namespace Sukt.Core.Redis
 
             func.NotNull(nameof(func));
             var value = Get<TKey, TCacheData>(key);
-
 
             if (!Equals(value, default(TCacheData)))
             {
@@ -82,10 +79,8 @@ namespace Sukt.Core.Redis
            CancellationToken token = default
        )
         {
-
             func.NotNull(nameof(func));
             var value = await GetAsync<TKey, TCacheData>(key);
-
 
             if (!Equals(value, default(TCacheData)))
             {
@@ -102,7 +97,6 @@ namespace Sukt.Core.Redis
             await SetAsync(key, value);
             return value;
         }
-
 
         #region 设置
 
@@ -129,9 +123,8 @@ namespace Sukt.Core.Redis
             value.NotNull(nameof(value));
             await RedisHelper.SetAsync(GetKey(key), value);
         }
-        #endregion
 
-
+        #endregion 设置
 
         #region 删除
 
@@ -154,6 +147,7 @@ namespace Sukt.Core.Redis
         {
             await RedisHelper.DelAsync(GetKey(key));
         }
-        #endregion
+
+        #endregion 删除
     }
 }

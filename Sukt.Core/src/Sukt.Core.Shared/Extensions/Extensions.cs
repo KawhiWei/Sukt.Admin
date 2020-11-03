@@ -1,20 +1,15 @@
-﻿using System;
+﻿using Sukt.Core.Shared.Entity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Sukt.Core.Shared.Attributes;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Extensions;
 
 namespace Sukt.Core.Shared.Extensions
 {
     public static partial class Extensions
     {
-
-
         /// <summary>
         /// 判断类型是否为Nullable类型
         /// </summary>
@@ -22,10 +17,8 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns> 是返回True，不是返回False </returns>
         public static bool IsNullableType(this Type type)
         {
-
             return ((type != null) && type.IsGenericType) && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
         }
-
 
         /// 判断当前类型是否可由指定类型派生
         /// </summary>
@@ -43,6 +36,7 @@ namespace Sukt.Core.Shared.Extensions
             baseType.NotNull(nameof(baseType));
             return type.IsClass && (!canAbstract && !type.IsAbstract) && type.IsBaseOn(baseType);
         }
+
         /// <summary>
         /// 返回当前类型是否是指定基类的派生类
         /// </summary>
@@ -106,7 +100,6 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns> </returns>
         public static Type GetUnNullableType(this Type type)
         {
-
             if (IsNullableType(type))
             {
                 NullableConverter nullableConverter = new NullableConverter(type);
@@ -115,21 +108,20 @@ namespace Sukt.Core.Shared.Extensions
             return type;
         }
 
-        /// <summary>
-        /// 转换为Bool类型
-        /// </summary>
-        /// <param name="thisValue"></param>
-        /// <returns></returns>
-        public static bool ObjToBool(this object thisValue)
-        {
-            bool reval = false;
-            if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
-            {
-                return reval;
-            }
-            return reval;
-        }
-
+        ///// <summary>
+        ///// 转换为Bool类型
+        ///// </summary>
+        ///// <param name="thisValue"></param>
+        ///// <returns></returns>
+        //public static bool ObjToBool(this object thisValue)
+        //{
+        //    bool reval = false;
+        //    if (thisValue != null && thisValue != DBNull.Value && bool.TryParse(thisValue.ToString(), out reval))
+        //    {
+        //        return reval;
+        //    }
+        //    return reval;
+        //}
 
         /// <summary>
         /// 判断是否IEnumerable、ICollection类型
@@ -151,12 +143,9 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>存在返回第一个，不存在返回null</returns>
         public static T GetAttribute<T>(this MemberInfo memberInfo, bool inherit = true) where T : Attribute
         {
-
             var attributes = memberInfo.GetCustomAttributes(typeof(T), inherit);
             return attributes.FirstOrDefault() as T;
         }
-
-
 
         /// <summary>
         /// 从类型成员获取指定Attribute特性
@@ -199,8 +188,9 @@ namespace Sukt.Core.Shared.Extensions
                 return Guid.Empty;
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="thisValue"></param>
         /// <returns></returns>
@@ -212,7 +202,6 @@ namespace Sukt.Core.Shared.Extensions
 
         public static string ToDescription(this MemberInfo member)
         {
-
             DescriptionAttribute desc = member.GetCustomAttribute<DescriptionAttribute>();
             if (!desc.IsNull())
             {
@@ -226,19 +215,12 @@ namespace Sukt.Core.Shared.Extensions
                 return display.DisplayName;
             }
             return member.Name;
-
         }
-
-
 
         public static string GetKeySelector(this Type type, string keyName)
         {
-
-
             string[] propertyNames = keyName.Split(".");
             return propertyNames.Select(o => type.GetProperty(o)).FirstOrDefault()?.Name;
-
-
         }
     }
 }

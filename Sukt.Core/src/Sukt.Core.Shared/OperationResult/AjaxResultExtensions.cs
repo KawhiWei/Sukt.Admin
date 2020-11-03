@@ -1,8 +1,5 @@
 ﻿using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.OperationResult
 {
@@ -14,8 +11,6 @@ namespace Sukt.Core.Shared.OperationResult
             AjaxResultType type = operationResponse.Type.ToAjaxResultType();
             return new AjaxResult(message, type, operationResponse.Data) { Success = operationResponse.Success };
         }
-
-
 
         public static AjaxResult ToAjaxResult<T>(this OperationResponse<T> operationResult)
         {

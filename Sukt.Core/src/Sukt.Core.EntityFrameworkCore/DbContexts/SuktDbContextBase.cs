@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
-using Sukt.Core.Shared.SuktReflection;
-using Sukt.Core.Shared.Extensions;
-using Sukt.Core.EntityFrameworkCore;
 using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.SuktReflection;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared
 {
@@ -19,6 +16,7 @@ namespace Sukt.Core.Shared
     public class SuktDbContextBase : DbContext
     {
         private readonly IServiceProvider _serviceProvider = null;
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -28,6 +26,7 @@ namespace Sukt.Core.Shared
         {
             _serviceProvider = serviceProvider;
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -38,9 +37,13 @@ namespace Sukt.Core.Shared
                 item.Map(modelBuilder);
             }
         }
+
         protected virtual Task BeforeSaveChanges() => Task.CompletedTask;
+
         protected virtual Task AfterSaveChanges() => Task.CompletedTask;
+
         public IUnitOfWork unitOfWork { get; set; }
+
         /// <summary>
         /// 异步保存
         /// </summary>
@@ -48,9 +51,9 @@ namespace Sukt.Core.Shared
         /// <returns></returns>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-
             return base.SaveChangesAsync(cancellationToken);
         }
+
         /// <summary>
         /// 保存更改
         /// </summary>

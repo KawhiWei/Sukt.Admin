@@ -1,8 +1,6 @@
 ﻿using AspectCore.Configuration;
 using AspectCore.DynamicProxy;
 using AspectCore.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Aop.Aop;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktReflection;
@@ -14,7 +12,7 @@ namespace Sukt.Core.Aop
     /// <summary>
     /// 全局AOP模块
     /// </summary>
-    public class AopModule: SuktAppModule
+    public class AopModule : SuktAppModule
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
@@ -24,7 +22,7 @@ namespace Sukt.Core.Aop
             var typs = typefinder.Find(o => o.IsClass && !o.IsAbstract && !o.IsInterface && o.IsSubclassOf(typeof(AbstractInterceptor)));
             var InterceptorsModule = service.GetConfiguration()["SuktCore:InterceptorsModule"];
             //var IInterceptorsModule = service.GetConfiguration()["SuktCore:IInterceptorsModule"];
-            
+
             if (typs?.Length > 0)
             {
                 List<Type> types = new List<Type>();
@@ -35,9 +33,9 @@ namespace Sukt.Core.Aop
                     service.ConfigureDynamicProxy(cof =>
                     {
                         var Enabled = service.GetConfiguration()[$"SuktCore:AopManager:{item.Name}:Enabled"].ObjToBool();
-                        if(Enabled)
+                        if (Enabled)
                             cof.Interceptors.AddTyped(item, Predicates.ForNameSpace(InterceptorsModule)/*,Predicates.ForNameSpace(IInterceptorsModule)*/);////这种是配置只需要代理的层, Predicates.ForNameSpace("Sukt.Core.Application.Contracts")
-                        //config.NonAspectPredicates.AddService("IUnitofWork");//需要过滤掉不需要代理的服务层  
+                        //config.NonAspectPredicates.AddService("IUnitofWork");//需要过滤掉不需要代理的服务层
                     });
                 }
             }

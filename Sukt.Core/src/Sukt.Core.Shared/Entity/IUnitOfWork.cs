@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Shared.OperationResult;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared.Entity
 {
-    public interface IUnitOfWork: IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         /// <summary>
         /// 得到上下文

@@ -20,8 +20,8 @@ namespace Sukt.Core.Shared.Extensions
         {
             list.RemoveAt(index);
             return list;
-
         }
+
         /// <summary>
         /// 移除
         /// </summary>
@@ -30,7 +30,6 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns></returns>
         public static List<T> RemoveAll<T>(this List<T> list) where T : class, new()
         {
-
             list.NotNullOrEmpty(nameof(list));
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -38,6 +37,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return list;
         }
+
         /// <summary>串联对象数组的各个元素，其中在每个元素之间使用指定的分隔符。</summary>
         /// <returns>一个由 <paramref name="values" /> 的元素组成的字符串，这些元素以 <paramref name="separator" /> 字符串分隔。如果 <paramref name="values" /> 为空数组，该方法将返回 <see cref="F:System.String.Empty" />。</returns>
         /// <param name="separator">要用作分隔符的字符串。只有在 <paramref name="separator" /> 具有多个元素时，<paramref name="values" /> 才包括在返回的字符串中。</param>
@@ -49,6 +49,7 @@ namespace Sukt.Core.Shared.Extensions
             values = values.Where(o => !o.AsTo<string>().IsNullOrEmpty());
             return string.Join(separator, values);
         }
+
         /// <summary>
         /// 去重
         /// </summary>
@@ -62,6 +63,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             return source.GroupBy(keySelector).Select(gropby => gropby.First());
         }
+
         /// <summary>
         /// 去重
         /// </summary>
@@ -73,9 +75,9 @@ namespace Sukt.Core.Shared.Extensions
         public static IList<TSource> ToDistinctBy<TSource, TKey>(this IEnumerable<TSource> source,
              Func<TSource, TKey> keySelector)
         {
-
             return source.DistinctBy(keySelector).ToList();
         }
+
         /// <summary>
         /// 把集合转成SqlIn
         /// </summary>
@@ -96,13 +98,12 @@ namespace Sukt.Core.Shared.Extensions
 
             enumerable.ToList().ForEach(o =>
             {
-
                 sb.AppendFormat("{0}{1}{2}{3}", left, o, right, separator);
-
             });
             string newStr = sb.ToString()?.TrimEnd($"{separator}".ToCharArray());
             return newStr;
         }
+
         /// <summary>
         /// 根据集合字典转成字典
         /// </summary>
@@ -121,12 +122,14 @@ namespace Sukt.Core.Shared.Extensions
             }
             return dic;
         }
+
         public static IEnumerable<TSource> WhereIf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, bool condition) where TSource : IEnumerable
         {
             source.NotNullOrEmpty(nameof(source));
             predicate.NotNull(nameof(predicate));
             return condition ? source.Where(predicate) : source;
         }
+
         /// <summary>
         /// 给IEnumerable拓展ForEach方法
         /// </summary>
@@ -140,6 +143,7 @@ namespace Sukt.Core.Shared.Extensions
                 func(item);
             }
         }
+
         /// <summary>
         /// 给IEnumerable拓展ForEach方法
         /// </summary>
@@ -148,13 +152,13 @@ namespace Sukt.Core.Shared.Extensions
         /// <param name="func">方法</param>
         public static void ForEach<T>(this IEnumerable<T> iEnumberable, Action<T, int> func)
         {
-
             var array = iEnumberable.ToArray();
             for (int i = 0; i < array.Count(); i++)
             {
                 func(array[i], i);
             }
         }
+
         /// <summary>
         /// 将列表转换为树形结构（泛型无限递归）
         /// </summary>
@@ -199,6 +203,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return treelist;
         }
+
         /// <summary>
         /// 把集合的元素转成指定的类型
         /// </summary>
@@ -215,6 +220,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return CastIterator<TTarget>(source);
         }
+
         private static IEnumerable<TResult> CastIterator<TResult>(IEnumerable source)
         {
             foreach (object current in source)
@@ -223,6 +229,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             yield break;
         }
+
         public static bool AddIfNotContains<T>([NotNull] this ICollection<T> source, T item)
         {
             source.NotNull(nameof(source));

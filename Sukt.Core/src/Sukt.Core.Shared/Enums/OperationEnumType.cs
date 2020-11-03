@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Sukt.Core.Shared.Enums
 {
@@ -13,24 +10,22 @@ namespace Sukt.Core.Shared.Enums
         [Description("操作引发错误")]
         Error = 5,
 
-
         [Description("系统出现异常")]
         Exp = 10,
 
         [Description("数据源不存在")]
         QueryNull = 15,
 
-
         [Description("操作没有引发任何变化")]
         NoChanged = 20,
     }
+
     public enum AjaxResultType
     {
         /// <summary>
         /// 消息结果
         /// </summary>
         [Description("消息结果")]
-
         Info = 203,
 
         /// <summary>

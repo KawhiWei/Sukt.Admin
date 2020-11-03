@@ -1,20 +1,16 @@
 ﻿using CSRedis;
 using Microsoft.DotNet.PlatformAbstractions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sukt.Core.Caching;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Modules;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Sukt.Core.Redis
 {
-    public class CSRedisModuleBase: SuktAppModule
+    public class CSRedisModuleBase : SuktAppModule
     {
-
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             var service = context.Services;

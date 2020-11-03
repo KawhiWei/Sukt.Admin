@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Sukt.Core.AutoMapper
 {
-    public class SuktAutoMapperModuleBase: SuktAppModule
+    public class SuktAutoMapperModuleBase : SuktAppModule
     {
         /// <summary>
         /// 重写SuktAppModule
@@ -27,17 +27,18 @@ namespace Sukt.Core.AutoMapper
             service.AddAutoMapper(mapper =>
             {
                 this.CreateMapping<SuktAutoMapperAttribute>(suktAutoMapTypes, mapper);
-            },assemblys,ServiceLifetime.Singleton);
+            }, assemblys, ServiceLifetime.Singleton);
             var mapper = service.GetBuildService<IMapper>();//获取autoMapper实例
             AutoMapperExtension.SetMapper(mapper);
         }
+
         /// <summary>
         /// 创建扩展方法
         /// </summary>
         /// <typeparam name="TAttribute"></typeparam>
         /// <param name="sourceTypes"></param>
         /// <param name="mapperConfigurationExpression"></param>
-        private void CreateMapping<TAttribute>(Type[] sourceTypes, IMapperConfigurationExpression mapperConfigurationExpression)where TAttribute : SuktAutoMapperAttribute
+        private void CreateMapping<TAttribute>(Type[] sourceTypes, IMapperConfigurationExpression mapperConfigurationExpression) where TAttribute : SuktAutoMapperAttribute
         {
             foreach (var sourceType in sourceTypes)
             {
@@ -58,7 +59,6 @@ namespace Sukt.Core.AutoMapper
                     {
                         mapperConfigurationExpression.CreateMap(tatgetType, sourceType);
                     }
-
                 }
             }
         }

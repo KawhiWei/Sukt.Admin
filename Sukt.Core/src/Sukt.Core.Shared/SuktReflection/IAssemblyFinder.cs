@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using System.Reflection;
 
 namespace Sukt.Core.Shared.SuktReflection
 {
-    public interface IAssemblyFinder:IFinder<Assembly>
+    public interface IAssemblyFinder : IFinder<Assembly>
     {
-
     }
 }

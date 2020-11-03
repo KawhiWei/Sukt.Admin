@@ -5,9 +5,7 @@ using Sukt.Core.AspNetCore.Extensions;
 using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.OperationResult;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.AspNetCore.Middleware
@@ -22,17 +20,15 @@ namespace Sukt.Core.AspNetCore.Middleware
             _next = next;
             _logger = loggerFactory.CreateLogger<ExceptionHandlingMiddleware>();
         }
+
         public async Task Invoke(HttpContext context)
         {
-
             try
             {
                 await _next(context);
             }
-
             catch (Exception ex)
             {
-
                 _logger.LogError(new EventId(), ex, ex.Message);
                 if (context.Request.IsAjaxRequest() || context.Request.IsJsonContextType())
                 {
@@ -49,6 +45,7 @@ namespace Sukt.Core.AspNetCore.Middleware
             }
         }
     }
+
     public static class ErrorHandlingExtensions
     {
         /// <summary>

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using System.Text;
 
 namespace Sukt.Core.Shared.SuktReflection
 {
@@ -17,7 +16,6 @@ namespace Sukt.Core.Shared.SuktReflection
         /// <returns></returns>
         private static IList<Assembly> GetAllAssemblies()
         {
-
             string[] filters =
             {
                 "mscorlib",
@@ -44,7 +42,6 @@ namespace Sukt.Core.Shared.SuktReflection
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 
@@ -55,6 +52,7 @@ namespace Sukt.Core.Shared.SuktReflection
         {
             return GetAllAssemblies().ToArray();
         }
+
         /// <summary>
         /// 根据程序集名字得到程序集
         /// </summary>

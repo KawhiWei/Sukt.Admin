@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {
@@ -13,8 +11,8 @@ namespace Sukt.Core.Shared.Modules
         {
             services.AddApplication(typeof(T));
             return services;
-
         }
+
         private static IServiceCollection AddApplication(this IServiceCollection services, Type type)
         {
             if (services == null)
@@ -28,6 +26,7 @@ namespace Sukt.Core.Shared.Modules
             runner.ConfigureServices(services);
             return services;
         }
+
         public static IApplicationBuilder InitializeApplication(this IApplicationBuilder builder)
         {
             builder.ApplicationServices.GetRequiredService<ObjectAccessor<IApplicationBuilder>>().Value = builder;

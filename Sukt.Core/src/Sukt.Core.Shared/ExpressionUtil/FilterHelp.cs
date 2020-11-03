@@ -3,14 +3,12 @@ using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Filter;
-using Sukt.Core.Shared.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.ExpressionUtil
 {
@@ -33,7 +31,6 @@ namespace Sukt.Core.Shared.ExpressionUtil
 
         private static Expression GetExpressionBody(ParameterExpression param, QueryFilter queryFilter)
         {
-
             List<Expression> expressions = new List<Expression>();
             Expression expression = Expression.Constant(true);
             if (queryFilter is null || (queryFilter?.Filters.Count() == 0 && queryFilter?.Filters.Count() == 0)) //为空
@@ -61,14 +58,11 @@ namespace Sukt.Core.Shared.ExpressionUtil
 
         private static Expression GetExpressionBody(ParameterExpression param, FilterCondition filter)
         {
-
             var lambda = GetPropertyLambdaExpression(param, filter);
             var constant = ChangeTypeToExpression(filter, lambda.Body.Type);
 
             return GetOperateExpression(filter.Operator, lambda.Body, constant);
-
         }
-
 
         /// <summary>
         /// 得到值
@@ -89,6 +83,7 @@ namespace Sukt.Core.Shared.ExpressionUtil
 
             return Expression.Constant(value, conversionType);
         }
+
         private static Expression GetOperateExpression(FilterOperator operate, Expression member, Expression expression)
         {
             switch (operate)
@@ -114,12 +109,11 @@ namespace Sukt.Core.Shared.ExpressionUtil
                 case FilterOperator.Like:
 
                     return Like(member, expression);
+
                 default:
                     throw new SuktAppException($"此{operate}过滤条件不存在！！！");
-
             }
         }
-
 
         private static Expression Like(Expression member, Expression expression)
         {

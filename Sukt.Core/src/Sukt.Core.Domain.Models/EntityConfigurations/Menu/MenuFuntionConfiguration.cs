@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Shared;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Domain.Models.Menu
 {

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Menu;
 using Sukt.Core.Shared.OperationResult;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -21,11 +18,13 @@ namespace Sukt.Core.API.Controllers
     {
         private readonly IMenuContract _menu;
         private readonly ILogger<MenuController> _logger = null;
+
         public MenuController(IMenuContract menu, ILogger<MenuController> logger)
         {
             _menu = menu;
             _logger = logger;
         }
+
         /// <summary>
         /// 创建菜单
         /// </summary>
@@ -37,6 +36,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.InsertAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 修改菜单
         /// </summary>
@@ -48,6 +48,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.UpdateAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 删除菜单
         /// </summary>
@@ -59,6 +60,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.DeleteAsync(id)).ToAjaxResult();
         }
+
         /// <summary>
         /// 获取表格菜单列表
         /// </summary>
@@ -69,6 +71,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.GetMenuTableAsync()).ToAjaxResult();
         }
+
         /// <summary>
         /// 根据Id加载菜单
         /// </summary>
@@ -80,6 +83,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.GetLoadFromMenuAsync(id)).ToAjaxResult();
         }
+
         /// <summary>
         /// 根据用户角色获取菜单
         /// </summary>

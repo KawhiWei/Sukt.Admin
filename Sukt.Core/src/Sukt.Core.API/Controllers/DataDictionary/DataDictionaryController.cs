@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
@@ -13,22 +7,25 @@ using Sukt.Core.Shared.AjaxResult;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.OperationResult;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Controllers.DataDictionary
 {
     [Description("数据字典管理")]
     public class DataDictionaryController : ApiControllerBase
     {
-        private readonly IDictionaryContract _dictionary=null;
-        private readonly ILogger<DataDictionaryController> _logger=null;
+        private readonly IDictionaryContract _dictionary = null;
+        private readonly ILogger<DataDictionaryController> _logger = null;
 
         public DataDictionaryController(IDictionaryContract dictionary, ILogger<DataDictionaryController> logger)
         {
             _dictionary = dictionary;
             _logger = logger;
         }
+
         /// <summary>
         /// 添加一个数据字典
         /// </summary>
@@ -41,6 +38,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         {
             return (await _dictionary.InsertAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 修改一个数据字典
         /// </summary>
@@ -50,8 +48,9 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         [Description("修改一个数据字典")]
         public async Task<AjaxResult> UpdateAsync(DataDictionaryInputDto input)
         {
-            return (await _dictionary.UpdateAsync(input)).ToAjaxResult();  
+            return (await _dictionary.UpdateAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 分页查询
         /// </summary>
@@ -63,6 +62,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         {
             return (await _dictionary.GetResultAsync(query)).PageList();
         }
+
         /// <summary>
         /// 删除一个数据字典
         /// </summary>
@@ -73,7 +73,6 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         public async Task<AjaxResult> DeleteAsyc(Guid? id)
         {
             return (await _dictionary.DeleteAsync(id.Value)).ToAjaxResult();
-
         }
     }
 }

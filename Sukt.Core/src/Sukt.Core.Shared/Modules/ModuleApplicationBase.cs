@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {
@@ -18,11 +17,14 @@ namespace Sukt.Core.Shared.Modules
         public IServiceCollection Services { get; set; }
 
         public IServiceProvider ServiceProvider { get; set; }
+
         /// <summary>
         /// 模块接口容器
         /// </summary>
         public IReadOnlyList<ISuktAppModule> Modules { get; set; }
+
         private List<ISuktAppModule> _source = new List<ISuktAppModule>();
+
         public ModuleApplicationBase(Type startupModuleType, IServiceCollection services)
         {
             StartupModuleType = startupModuleType;
@@ -34,6 +36,7 @@ namespace Sukt.Core.Shared.Modules
             _source = this.GetAllModule(services);
             Modules = this.LoadModules();
         }
+
         private List<ISuktAppModule> GetAllModule(IServiceCollection services)
         {
             var typeFinder = services.GetOrAddSingletonService<ITypeFinder, TypeFinder>();
@@ -41,11 +44,13 @@ namespace Sukt.Core.Shared.Modules
             var modules = typs.Select(o => CreateModule(services, o)).Distinct();
             return modules.ToList();
         }
+
         protected virtual void SetServiceProvider(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
             ServiceProvider.GetRequiredService<ObjectAccessor<IServiceProvider>>().Value = ServiceProvider;
         }
+
         /// <summary>
         /// 获取所有需要加载的模块
         /// </summary>
@@ -72,6 +77,7 @@ namespace Sukt.Core.Shared.Modules
             }
             return modules;
         }
+
         /// <summary>
         /// 创建模块
         /// </summary>
@@ -84,6 +90,7 @@ namespace Sukt.Core.Shared.Modules
             services.AddSingleton(moduleType, module);
             return module;
         }
+
         public virtual void Dispose()
         {
         }

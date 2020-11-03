@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.Core.Shared.Entity
+﻿namespace Sukt.Core.Shared.Entity
 {
     /// <summary>
     /// 逻辑删除

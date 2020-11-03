@@ -1,26 +1,23 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.PlatformAbstractions;
-using System.IO;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
 using Sukt.Core.Shared.Modules;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IO;
+using System.Reflection;
 
 namespace Sukt.Core.Swagger
 {
-    public class SwaggerModule: SuktAppModule
+    public class SwaggerModule : SuktAppModule
     {
         private string _url = string.Empty;
         private string _title = string.Empty;
         private string _version = string.Empty;
+
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             IConfiguration configuration = context.Services.GetConfiguration();
@@ -40,7 +37,6 @@ namespace Sukt.Core.Swagger
 
             if (title.IsNullOrEmpty())
             {
-
                 throw new SuktAppException("标题不能为空 ！！！");
             }
             _title = title;
@@ -64,7 +60,7 @@ namespace Sukt.Core.Swagger
                 {
                     return true;
                 });
-                ////https://github.com/domaindrivendev/Swashbuckle.AspNetCore  
+                ////https://github.com/domaindrivendev/Swashbuckle.AspNetCore
                 //s.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
                 //s.OperationFilter<SecurityRequirementsOperationFilter>();  // 很重要！这里配置安全校验，和之前的版本不一样
                 x.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -85,6 +81,7 @@ namespace Sukt.Core.Swagger
             });
             //return service;
         }
+
         public override void ApplicationInitialization(ApplicationContext context)
         {
             var applicationBuilder = context.GetApplicationBuilder();

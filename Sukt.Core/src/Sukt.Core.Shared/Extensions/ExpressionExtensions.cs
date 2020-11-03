@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -110,8 +109,10 @@ namespace Sukt.Core.Shared.Extensions
                     }
                 case ExpressionType.Parameter:
                     return parameter;
+
                 case ExpressionType.Constant:
                     return expression;
+
                 case ExpressionType.TypeIs:
                     {
                         var typeis = expression as TypeBinaryExpression;
@@ -122,6 +123,7 @@ namespace Sukt.Core.Shared.Extensions
                     throw new Exception($"Unhandled expression type:{expression.NodeType}");
             }
         }
+
         /// <summary>
         /// 表达树类型转换
         /// </summary>
@@ -138,6 +140,7 @@ namespace Sukt.Core.Shared.Extensions
             var x = Parser(p, expression);
             return Expression.Lambda<Func<TToProperty, bool>>(x, p);
         }
+
         /// <summary>
         /// 得到表达树对应属性的名字
         /// </summary>
@@ -155,7 +158,6 @@ namespace Sukt.Core.Shared.Extensions
                 var operand = unaryExpression.Operand;
                 var memberExpression = operand as MemberExpression;
                 name = memberExpression?.Member.Name;
-
             }
             else if (body is MemberExpression)
             {
@@ -171,6 +173,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return name;
         }
+
         ///// <summary>
         ///// And操作
         ///// </summary>
@@ -188,7 +191,6 @@ namespace Sukt.Core.Shared.Extensions
             var exp = ReplaceParameter(expr1, expr2, out ParameterExpression newParameter);
             var body = Expression.And(exp.left, exp.right);
             return Expression.Lambda<Func<T, bool>>(body, newParameter);
-
         }
 
         /// <summary>
@@ -212,6 +214,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return expr1.And(expr2);
         }
+
         /// <summary>
         /// Or操作
         /// </summary>
@@ -252,6 +255,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return expr1.Or(expr2);
         }
+
         /// <summary>
         /// 替换参数
         /// </summary>
@@ -263,7 +267,6 @@ namespace Sukt.Core.Shared.Extensions
         public static (Expression left, Expression right) ReplaceParameter<T>(this Expression<Func<T, bool>> expr1,
             Expression<Func<T, bool>> expr2, out ParameterExpression newParameter)
         {
-
             newParameter = Expression.Parameter(typeof(T), "c");
             NewExpressionVisitor visitor = new NewExpressionVisitor(newParameter);
 
@@ -271,6 +274,7 @@ namespace Sukt.Core.Shared.Extensions
             var right = visitor.Replace(expr2.Body);
             return (left, right);
         }
+
         public static Dictionary<string, object> ExpressionToDictValues<T>(this Expression<Func<T, T>> expression)
         {
             var dictValues = new Dictionary<string, object>();
@@ -281,7 +285,6 @@ namespace Sukt.Core.Shared.Extensions
                 expressionBody = ((UnaryExpression)expressionBody).Operand;
             }
             var entityType = typeof(T);
-
 
             var memberInitExpression = expressionBody as MemberInitExpression;
             if (memberInitExpression == null)
@@ -322,22 +325,18 @@ namespace Sukt.Core.Shared.Extensions
                     if (constantExpression != null)
                     {
                         value = constantExpression.Value;
-
                     }
                     else
                     {
                         //
                         var lambda = Expression.Lambda(memberExpression, null);
                         value = lambda.Compile().DynamicInvoke();
-
-
                     }
 
                     dictValues.Add(propertyName, value);
                 }
                 else
                 {
-
                     memberExpression = memberExpression.Visit((MemberExpression m) =>
                     {
                         if (m.Expression.NodeType == ExpressionType.Constant)
@@ -351,28 +350,28 @@ namespace Sukt.Core.Shared.Extensions
                         return m;
                     });
 
-
-
-
                     dictValues.Add(propertyName, memberExpression);
                 }
             }
 
-
             return dictValues;
         }
     }
+
     public class NewExpressionVisitor : ExpressionVisitor
     {
         public ParameterExpression NewParameter { get; private set; }
+
         public NewExpressionVisitor(ParameterExpression param)
         {
             this.NewParameter = param;
         }
+
         public Expression Replace(Expression exp)
         {
             return this.Visit(exp);
         }
+
         protected override Expression VisitParameter(ParameterExpression node)
         {
             return this.NewParameter;

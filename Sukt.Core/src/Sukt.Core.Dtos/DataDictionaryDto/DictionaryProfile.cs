@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Dtos.DataDictionaryDto
 {
-    public class DictionaryProfile: Profile
+    public class DictionaryProfile : Profile
     {
         public DictionaryProfile()
         {

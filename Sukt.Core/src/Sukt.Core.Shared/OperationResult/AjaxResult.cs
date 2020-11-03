@@ -1,8 +1,5 @@
 ﻿using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.OperationResult
 {
@@ -10,16 +7,16 @@ namespace Sukt.Core.Shared.OperationResult
     {
         public AjaxResult() : this(null)
         {
-
         }
+
         public AjaxResult(AjaxResultType type = AjaxResultType.Success) : this("", null, type)
         {
-
         }
+
         public AjaxResult(string message, AjaxResultType type = AjaxResultType.Success, object data = null) : this(message, data, type)
         {
-
         }
+
         public AjaxResult(string message, object data, AjaxResultType type)
         {
             this.Message = message;
@@ -47,8 +44,6 @@ namespace Sukt.Core.Shared.OperationResult
 
         public object Data { get; set; }
 
-
-
         /// <summary>
         /// 是否成功
         /// </summary>
@@ -60,8 +55,6 @@ namespace Sukt.Core.Shared.OperationResult
         /// </summary>
 
         public AjaxResultType Type { get; set; }
-
-
 
         /// <summary>
         /// 是否成功
@@ -94,7 +87,6 @@ namespace Sukt.Core.Shared.OperationResult
         /// <returns></returns>
         public string ToJson()
         {
-
             return this.ToObject().ToJson();
         }
     }

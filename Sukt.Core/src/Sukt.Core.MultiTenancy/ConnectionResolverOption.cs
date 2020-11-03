@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.Core.MultiTenancy
+﻿namespace Sukt.Core.MultiTenancy
 {
     public class ConnectionResolverOption
     {
@@ -14,6 +10,7 @@ namespace Sukt.Core.MultiTenancy
 
         public DatabaseIntegration DBType { get; set; }
     }
+
     public enum ConnectionResolverType
     {
         Default = 0,
@@ -21,6 +18,7 @@ namespace Sukt.Core.MultiTenancy
         ByTabel = 2,
         BySchema = 3
     }
+
     public enum DatabaseIntegration
     {
         None = 0,

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
@@ -50,6 +51,7 @@
     <ProjectReference Include="..\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
     <ProjectReference Include="..\Sukt.Core.Consul\Sukt.Core.Consul.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
+    <ProjectReference Include="..\Sukt.Core.IdentityServer4Store\Sukt.Core.IdentityServer4Store.csproj" />
     <ProjectReference Include="..\Sukt.Core.MultiTenancy\Sukt.Core.MultiTenancy.csproj" />
     <ProjectReference Include="..\Sukt.Core.Redis\Sukt.Core.Redis.csproj" />
     <ProjectReference Include="..\Sukt.Core.SeriLog\Sukt.Core.SeriLog.csproj" />

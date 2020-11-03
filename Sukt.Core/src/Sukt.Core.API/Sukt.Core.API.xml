@@ -4,6 +4,30 @@
         <name>Sukt.Core.API</name>
     </assembly>
     <members>
+        <member name="T:Sukt.Core.API.Controllers.AuditLogController">
+            <summary>
+            功能管理
+            </summary>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.AuditLogController.GetAuditLogPageAsync(Sukt.Core.Shared.Entity.PageRequest)">
+            <summary>
+            分页获取审计日志
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.AuditLogController.GetAuditEntryListByAuditLogIdAsync(System.String)">
+            <summary>
+            获取操作实体列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.AuditLogController.GetAuditEntryListByAuditEntryIdAsync(System.String)">
+            <summary>
+            获取实体属性列表
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.CreateAsync(Sukt.Core.Dtos.DataDictionaryDto.DataDictionaryInputDto)">
             <summary>
             添加一个数据字典
@@ -75,6 +99,18 @@
             <summary>
             健康监测
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sukt.Core.API.Controllers.IdentityController">
+            <summary>
+            身份认证管理
+            </summary>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityController.LoginAsync(Sukt.Core.Dtos.LoginIdentity.LoginInputDto)">
+            <summary>
+            登录
+            </summary>
+            <param name="loginDto"></param>
             <returns></returns>
         </member>
         <member name="T:Sukt.Core.API.Controllers.MenuController">

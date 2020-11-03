@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace Sukt.Core.Shared.HttpContextUser
 {
-    public class SuktUser: ISuktUser
+    public class SuktUser : ISuktUser
     {
         private readonly IHttpContextAccessor _accessor;
 
@@ -17,6 +16,7 @@ namespace Sukt.Core.Shared.HttpContextUser
         {
             _accessor = accessor;
         }
+
         public string Name => _accessor.HttpContext.User.Identity.Name;
 
         public Guid Id => GetClaimValueByType("jti").FirstOrDefault().ToGuid();
@@ -32,6 +32,7 @@ namespace Sukt.Core.Shared.HttpContextUser
                     where item.Type == ClaimType
                     select item.Value).ToList();
         }
+
         public string GetToken()
         {
             return _accessor.HttpContext.Request.Headers["Authorization"].ObjToString().Replace("Bearer ", "");

@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Sukt.Core.Identity;
 using Sukt.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Identity

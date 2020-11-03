@@ -1,5 +1,4 @@
 ﻿using Sukt.Core.Caching;
-using Sukt.Core.Shared.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -16,7 +15,6 @@ namespace Sukt.Core.Redis
 
         public async Task<TCacheData> GetAsync<TCacheData>(string key, CancellationToken token = default)
         {
-
             return await CacheHelper.GetAsync<string, TCacheData>(key);
         }
 
@@ -37,19 +35,16 @@ namespace Sukt.Core.Redis
 
         public async Task RemoveAsync(string key, CancellationToken token = default)
         {
-
             await CacheHelper.RemoveAsync(key);
         }
 
         public void Set<TCacheData>(string key, TCacheData value)
         {
-
             CacheHelper.Set(key, value);
         }
 
         public async Task SetAsync<TCacheData>(string key, TCacheData value, CancellationToken token = default)
         {
-
             await CacheHelper.SetAsync(key, value);
         }
     }

@@ -1,15 +1,9 @@
-﻿using Sukt.Core.Shared.Extensions.OrderExtensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.Core.Shared.Extensions.PageExyensions
+﻿namespace Sukt.Core.Shared.Extensions.PageExyensions
 {
     //public class PageParameters
     //{
     //    public PageParameters() : this(1, 10)
     //    {
-
     //    }
 
     //    public PageParameters(int pageIndex, int pageSize)
@@ -18,7 +12,6 @@ namespace Sukt.Core.Shared.Extensions.PageExyensions
     //        PageSize = pageSize;
     //        OrderConditions = new OrderCondition[] { };
     //    }
-
 
     //    /// <summary>
     //    /// 分页索引

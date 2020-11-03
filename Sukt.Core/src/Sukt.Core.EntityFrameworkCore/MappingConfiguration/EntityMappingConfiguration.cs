@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared
 {
@@ -12,7 +9,6 @@ namespace Sukt.Core.Shared
         where TKey : IEquatable<TKey>
     {
         public Type DbContextType => typeof(DefaultDbContext);
-
 
         public Type EntityType => typeof(TEntity);
 

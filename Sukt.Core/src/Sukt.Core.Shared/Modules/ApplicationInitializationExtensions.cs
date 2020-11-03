@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.SuktDependencyAppModule;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {

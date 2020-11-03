@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Sukt.Core.Shared.OperationResult;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Sukt.Core.EntityFrameworkCore
+﻿namespace Sukt.Core.EntityFrameworkCore
 {
     /// <summary>
     /// 工作单元

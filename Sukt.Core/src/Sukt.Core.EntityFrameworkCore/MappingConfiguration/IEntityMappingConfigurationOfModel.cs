@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared
 {

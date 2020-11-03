@@ -2,9 +2,7 @@
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Sukt.Core.Dtos.Identity.Role
 {
@@ -17,16 +15,19 @@ namespace Sukt.Core.Dtos.Identity.Role
         /// </summary>
         [DisplayName("角色名称")]
         public string Name { get; set; }
+
         /// <summary>
         /// 标准化角色名称
         /// </summary>
         [DisplayName("标准化角色名称")]
         public string NormalizedName { get; set; }
+
         /// <summary>
         /// 租户ID
         /// </summary>
         [DisplayName("租户")]
         public Guid TenantId { get; set; }
+
         /// <summary>
         /// 是否管理员
         /// </summary>

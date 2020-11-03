@@ -7,7 +7,6 @@ namespace Sukt.Core.Caching
 {
     public interface ICache
     {
-
         /// <summary>
         /// 得到
         /// </summary>
@@ -45,7 +44,6 @@ namespace Sukt.Core.Caching
              CancellationToken token = default
          );
 
-
         #region 设置
 
         /// <summary>
@@ -63,9 +61,8 @@ namespace Sukt.Core.Caching
         /// <param name="token"></param>
         /// <returns></returns>
         Task SetAsync<TCacheData>(string key, TCacheData value, CancellationToken token = default);
-        #endregion
 
-
+        #endregion 设置
 
         #region 删除
 
@@ -82,6 +79,7 @@ namespace Sukt.Core.Caching
         /// <param name="token"></param>
         /// <returns></returns>
         Task RemoveAsync(string key, CancellationToken token = default);
-        #endregion
+
+        #endregion 删除
     }
 }

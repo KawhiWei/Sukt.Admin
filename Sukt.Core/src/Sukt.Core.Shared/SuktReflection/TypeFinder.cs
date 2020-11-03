@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Sukt.Core.Shared.SuktReflection
 {
@@ -9,6 +7,7 @@ namespace Sukt.Core.Shared.SuktReflection
     {
         private readonly IAssemblyFinder _assemblyFinder = null;
         private readonly object _syncObj = new object();
+
         public TypeFinder(IAssemblyFinder assemblyFinder)
         {
             _assemblyFinder = assemblyFinder;

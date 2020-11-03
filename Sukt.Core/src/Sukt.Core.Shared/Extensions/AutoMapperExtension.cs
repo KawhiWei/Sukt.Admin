@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
     public static class AutoMapperExtension
     {
         private static IMapper _mapper = null;
+
         /// <summary>
         /// 写入AutoMapper实例
         /// </summary>
@@ -18,6 +18,7 @@ namespace Sukt.Core.Shared.Extensions
             mapper.NotNull(nameof(mapper));
             _mapper = mapper;
         }
+
         /// <summary>
         /// 检查传入的实例
         /// </summary>
@@ -25,6 +26,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             _mapper.NotNull(nameof(_mapper));
         }
+
         /// 将对象映射为指定类型
         /// </summary>
         /// <typeparam name="TTarget">要映射的目标类型</typeparam>
@@ -37,6 +39,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return _mapper.Map<TTarget>(source);
         }
+
         /// <summary>
         /// 使用源类型的对象更新目标类型的对象
         /// </summary>
@@ -52,6 +55,7 @@ namespace Sukt.Core.Shared.Extensions
             target.NotNull(nameof(target));
             return _mapper.Map(source, target);
         }
+
         /// <summary>
         ///  将数据源映射为指定<typeparamref name="TTarget"/>的集合
         /// </summary>
@@ -64,18 +68,20 @@ namespace Sukt.Core.Shared.Extensions
             sources.NotNull(nameof(sources));
             return _mapper.Map<IEnumerable<TTarget>>(sources);
         }
+
         /// <summary>
         /// 将数据源映射为指定<typeparamref name="TOutputDto"/>的集合
         /// </summary>
         /// <param name="source">数据源</param>
         /// <param name="membersToExpand">成员展开</param>
-        public static IQueryable<TOutputDto> ToOutput<TOutputDto>(this IQueryable source,params Expression<Func<TOutputDto, object>>[] membersToExpand)
+        public static IQueryable<TOutputDto> ToOutput<TOutputDto>(this IQueryable source, params Expression<Func<TOutputDto, object>>[] membersToExpand)
         {
             CheckMapper();
             return _mapper.ProjectTo<TOutputDto>(source, membersToExpand);
         }
 
         #region AutoMapper 9.0后不能这样用
+
         /// <summary>
         ///// 将对象映射为指定类型
         ///// </summary>
@@ -109,15 +115,11 @@ namespace Sukt.Core.Shared.Extensions
         ///// <param name="sources">数据源</param>
         ///// <returns></returns>
 
-        //public static IEnumerable<TTarget> MapToList<TTarget>(this IEnumerable<object> sources) 
+        //public static IEnumerable<TTarget> MapToList<TTarget>(this IEnumerable<object> sources)
         //{
         //    sources.NotNull(nameof(sources));
         //    return Mapper.Map<IEnumerable<TTarget>>(sources);
         //}
-
-
-
-
 
         ///// <summary>
         ///// 将数据源映射为指定<typeparamref name="TOutputDto"/>的集合
@@ -133,11 +135,11 @@ namespace Sukt.Core.Shared.Extensions
         //    }
         //    catch (Exception ex)
         //    {
-
         //        throw ex;
         //    }
 
         //}
-        #endregion
+
+        #endregion AutoMapper 9.0后不能这样用
     }
 }

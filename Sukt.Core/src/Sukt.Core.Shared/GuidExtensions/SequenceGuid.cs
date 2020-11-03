@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -18,7 +16,7 @@ namespace Sukt.Core.Shared.Extensions
             // 获取用于生成字节字符串的天数和毫秒数
             TimeSpan days = new TimeSpan(now.Ticks - baseDate.Ticks);
             TimeSpan msecs = now.TimeOfDay;
-            // 转换为字节数组 
+            // 转换为字节数组
             // 注意，SQL Server精确到1/300毫秒，所以我们除以3.333333
             byte[] daysArray = BitConverter.GetBytes(days.Days);
             byte[] msecsArray = BitConverter.GetBytes((long)(msecs.TotalMilliseconds / 3.333333));

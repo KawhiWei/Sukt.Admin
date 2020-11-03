@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.Modules;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Identity
 {
@@ -27,7 +25,9 @@ namespace Sukt.Core.Identity
             UseIdentityBuilder(identityBuilder);
             AddAuthentication(context.Services);
         }
+
         protected abstract Action<IdentityOptions> IdentityOption();
+
         protected abstract void AddAuthentication(IServiceCollection services);
 
         protected abstract IdentityBuilder UseIdentityBuilder(IdentityBuilder identityBuilder);

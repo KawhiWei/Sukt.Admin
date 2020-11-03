@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared.Audit
@@ -35,15 +32,19 @@ namespace Sukt.Core.Shared.Audit
                     case EntityState.Detached:
                         auditentry.OperationType = DataOperationType.None;
                         break;
+
                     case EntityState.Unchanged:
                         auditentry.OperationType = DataOperationType.None;
                         break;
+
                     case EntityState.Deleted:
                         auditentry.OperationType = DataOperationType.Delete;
                         break;
+
                     case EntityState.Modified:
                         auditentry.OperationType = DataOperationType.Update;
                         break;
+
                     case EntityState.Added:
                         auditentry.OperationType = DataOperationType.Add;
                         break;

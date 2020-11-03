@@ -5,7 +5,6 @@ using Sukt.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Sukt.Core.Shared.Helpers
 {
@@ -19,26 +18,26 @@ namespace Sukt.Core.Shared.Helpers
         private static readonly JsonSerializerSettings JsonSettings;
 
         private const string EmptyJson = "[]";
-        #endregion
+
+        #endregion Private fields
 
         #region Constructor
 
         static JsonHelper()
 
         {
-
             var datetimeConverter = new IsoDateTimeConverter { DateTimeFormat = "yyyy-MM-dd HH:mm:ss" };
 
             JsonSettings = new JsonSerializerSettings
             {
-
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
             JsonSettings.Converters.Add(datetimeConverter);
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Public Methods
 
@@ -135,8 +134,6 @@ namespace Sukt.Core.Shared.Helpers
 
             try
             {
-
-
                 result = string.IsNullOrWhiteSpace(json) ? default(T) : JsonConvert.DeserializeObject<T>(json, jsonSettings);
             }
             catch (JsonSerializationException) //在发生该异常后，再以集合的方式重试一次.
@@ -160,7 +157,8 @@ namespace Sukt.Core.Shared.Helpers
             }
             return result;
         }
-        #endregion
+
+        #endregion Public Methods
 
         #region Public Extend Methods
 
@@ -189,9 +187,6 @@ namespace Sukt.Core.Shared.Helpers
             return FromJson<T>(json, Formatting.None, JsonSettings);
         }
 
-
-
-
         /// <summary>
         /// 应用默认的Formatting枚举值None和默认的JsonSerializerSettings设置,序列化对象到JSON格式的字符串
         /// </summary>
@@ -201,8 +196,6 @@ namespace Sukt.Core.Shared.Helpers
         {
             return ToJson(obj, Formatting.None, JsonSettings);
         }
-
-
 
         public static string ToJson<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, bool isFilterNull = true)
         {
@@ -243,7 +236,8 @@ namespace Sukt.Core.Shared.Helpers
         {
             return DelegateToJson(source, enumerable => enumerable.Where(predicate).Select(selector), isFilterNull);
         }
-        #endregion
+
+        #endregion Public Extend Methods
 
         #region Private Methods
 
@@ -271,7 +265,6 @@ namespace Sukt.Core.Shared.Helpers
         /// <returns></returns>
         public static object ToObject(this JObject jObject, string key)
         {
-
             return jObject.To<object>(key);
         }
 
@@ -287,6 +280,7 @@ namespace Sukt.Core.Shared.Helpers
             key.NotNullOrEmpty(nameof(key));
             return jObject.Value<T>(key);
         }
+
         /// <summary>
         /// 委托处理需要序列化为JSON格式的对象，返回标准的JSON格式的字符串。
         /// 默认过滤null对象，如果需要在上层调用时，自己进行条件过滤null对象，
@@ -319,6 +313,6 @@ namespace Sukt.Core.Shared.Helpers
             return enumerable.Any() ? func(enumerable) : EmptyJson;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

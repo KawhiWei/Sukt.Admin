@@ -2,24 +2,22 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sukt.Core.MongoDB.Repositorys;
 using Sukt.Core.Shared.Modules;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.MongoDB
 {
-    public abstract class MongoDBModuleBase: SuktAppModule
+    public abstract class MongoDBModuleBase : SuktAppModule
     {
-
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             AddDbContext(context.Services);
             AddRepository(context.Services);
         }
+
         public virtual void AddRepository(IServiceCollection services)
         {
             services.TryAddScoped(typeof(IMongoDBRepository<,>), typeof(MongoDBRepository<,>));
         }
+
         protected abstract void AddDbContext(IServiceCollection services);
     }
 }

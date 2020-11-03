@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace Sukt.Core.Identity
+﻿namespace Sukt.Core.Identity
 {
     public class Class1
     {
-
     }
 }

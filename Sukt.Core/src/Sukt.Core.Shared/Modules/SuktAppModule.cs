@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {
@@ -10,13 +9,12 @@ namespace Sukt.Core.Shared.Modules
     {
         public virtual void ApplicationInitialization(ApplicationContext context)
         {
-            
         }
 
         public virtual void ConfigureServices(ConfigureServicesContext context)
         {
-            
         }
+
         /// <summary>
         /// 获取模块程序集
         /// </summary>
@@ -24,7 +22,7 @@ namespace Sukt.Core.Shared.Modules
         /// <returns></returns>
         public Type[] GetDependedTypes(Type moduleType = null)
         {
-            if(moduleType==null)
+            if (moduleType == null)
             {
                 moduleType = GetType();
             }
@@ -50,6 +48,7 @@ namespace Sukt.Core.Shared.Modules
             }
             return dependList.Distinct().ToArray();
         }
+
         /// <summary>
         /// 判断是否是模块
         /// </summary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,12 +16,12 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>分割后的数据</returns>
         public static string[] Split(this string value, string strSplit, bool removeEmptyEntries = false)
         {
-
             value.NotNullOrEmpty(nameof(value));
             strSplit.NotNullOrEmpty(nameof(strSplit));
             return value.Split(new[] { strSplit },
                 removeEmptyEntries ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
         }
+
         /// <summary>
         /// 将字符中拼接
         /// </summary>
@@ -46,6 +45,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return sb.ToString().TrimEnd(separator.ToCharArray());
         }
+
         /// <summary>
         ///把字符串转成SQL中IN
         /// </summary>
@@ -74,6 +74,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return sb.ToString().TrimEnd(inMiddleSeparator.ToCharArray());
         }
+
         /// <summary>
         /// 是否为空或者为null或者空格
         /// </summary>
@@ -83,6 +84,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             return string.IsNullOrWhiteSpace(value);
         }
+
         /// <summary>
         /// 是否为空或者为null
         /// </summary>
@@ -90,9 +92,9 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>返回true/false</returns>
         public static bool IsNullOrEmpty(this string value)
         {
-
             return string.IsNullOrEmpty(value);
         }
+
         /// <summary>
         /// 判断是否数字
         /// </summary>
@@ -102,6 +104,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             return Regex.IsMatch(value, @"^[0-9]*$");
         }
+
         /// <summary>
         /// 在指定的输入字符串中搜索指定的正则表达式的第一个匹配项
         /// </summary>
@@ -116,6 +119,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return Regex.Match(value, pattern).Value;
         }
+
         public static string FormatWith(this string format, params object[] args)
         {
             format.NotNull("format");

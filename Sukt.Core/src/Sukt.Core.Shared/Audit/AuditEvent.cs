@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Sukt.Core.Shared.Events;
-using System;
+﻿using Sukt.Core.Shared.Events;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Audit
 {

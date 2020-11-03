@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Sukt.Core.Application;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -23,12 +22,13 @@ namespace Sukt.Core.API.Controllers
         {
             _logger = logger;
         }
+
         [HttpGet]
         public async Task<IEnumerable<WeatherForecast>> Get()
         {
             await Task.CompletedTask;
             var rng = new Random();
-            return  Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
@@ -36,6 +36,5 @@ namespace Sukt.Core.API.Controllers
             })
             .ToArray();
         }
-        
     }
 }

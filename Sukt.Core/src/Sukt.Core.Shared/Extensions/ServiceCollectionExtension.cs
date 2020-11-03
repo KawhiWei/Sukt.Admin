@@ -5,11 +5,9 @@ using Sukt.Core.Shared.AppOption;
 using Sukt.Core.Shared.Helpers;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -17,6 +15,7 @@ namespace Sukt.Core.Shared.Extensions
     {
         void ConfigureServices(IServiceCollection services);
     }
+
     /// <summary>
     /// 服务集合扩展
     /// </summary>
@@ -30,6 +29,7 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>services</returns>
         public static IServiceCollection RegisterAssemblyTypes(this IServiceCollection services, params Assembly[] assemblies)
             => RegisterAssemblyTypes(services, null, ServiceLifetime.Singleton, assemblies);
+
         /// <summary>
         /// RegisterAssemblyTypes
         /// </summary>
@@ -40,6 +40,7 @@ namespace Sukt.Core.Shared.Extensions
         public static IServiceCollection RegisterAssemblyTypes(this IServiceCollection services,
             ServiceLifetime serviceLifetime, params Assembly[] assemblies)
             => RegisterAssemblyTypes(services, null, serviceLifetime, assemblies);
+
         /// <summary>
         /// RegisterAssemblyTypes
         /// </summary>
@@ -50,6 +51,7 @@ namespace Sukt.Core.Shared.Extensions
         public static IServiceCollection RegisterAssemblyTypes(this IServiceCollection services,
             Func<Type, bool> typesFilter, params Assembly[] assemblies)
             => RegisterAssemblyTypes(services, typesFilter, ServiceLifetime.Singleton, assemblies);
+
         /// <summary>
         /// RegisterAssemblyTypes
         /// </summary>
@@ -80,6 +82,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return services;
         }
+
         /// <summary>
         /// RegisterTypeAsImplementedInterfaces
         /// </summary>
@@ -89,6 +92,7 @@ namespace Sukt.Core.Shared.Extensions
         public static IServiceCollection RegisterAssemblyTypesAsImplementedInterfaces(this IServiceCollection services,
             params Assembly[] assemblies)
             => RegisterAssemblyTypesAsImplementedInterfaces(services, typesFilter: null, ServiceLifetime.Singleton, assemblies);
+
         /// <summary>
         /// RegisterTypeAsImplementedInterfaces
         /// </summary>
@@ -99,6 +103,7 @@ namespace Sukt.Core.Shared.Extensions
         public static IServiceCollection RegisterAssemblyTypesAsImplementedInterfaces(this IServiceCollection services,
             ServiceLifetime serviceLifetime, params Assembly[] assemblies)
             => RegisterAssemblyTypesAsImplementedInterfaces(services, typesFilter: null, serviceLifetime, assemblies);
+
         /// <summary>
         /// RegisterTypeAsImplementedInterfaces, singleton by default
         /// </summary>
@@ -142,6 +147,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return services;
         }
+
         /// <summary>
         /// RegisterTypeAsImplementedInterfaces
         /// </summary>
@@ -153,7 +159,6 @@ namespace Sukt.Core.Shared.Extensions
         {
             if (type != null)
             {
-
                 foreach (var interfaceType in type.GetImplementedInterfaces())
                 {
                     services.Add(new ServiceDescriptor(interfaceType, type, serviceLifetime));
@@ -161,6 +166,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             return services;
         }
+
         /// <summary>
         /// RegisterAssemblyModules
         /// </summary>
@@ -193,6 +199,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return services;
         }
+
         /// <summary>
         /// 得到注入服务
         /// </summary>
@@ -204,6 +211,7 @@ namespace Sukt.Core.Shared.Extensions
             var provider = services.BuildServiceProvider();
             return provider.GetService<TType>();
         }
+
         /// <summary>
         /// 得到或添加Singleton服务
         /// </summary>
@@ -215,9 +223,6 @@ namespace Sukt.Core.Shared.Extensions
             where TServiceType : class
         where TImplementation : class, TServiceType
         {
-
-
-
             var type = services.GetSingletonInstanceOrNull<TServiceType>();
             if (type is null)
             {
@@ -236,8 +241,6 @@ namespace Sukt.Core.Shared.Extensions
 
         public static TServiceType GetOrAddSingletonService<TServiceType>(this IServiceCollection services, Func<TServiceType> factory) where TServiceType : class
         {
-
-
             var servciceType = services.GetSingletonInstanceOrNull<TServiceType>();
             if (servciceType is null)
             {
@@ -247,10 +250,12 @@ namespace Sukt.Core.Shared.Extensions
 
             return servciceType;
         }
+
         public static IConfiguration GetConfiguration(this IServiceCollection services)
         {
             return services.GetBuildService<IConfiguration>();
         }
+
         /// <summary>
         /// 获取单例注册服务对象
         /// </summary>
@@ -270,6 +275,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return default;
         }
+
         /// <summary>
         /// 得到操作设置
         /// </summary>
@@ -281,6 +287,7 @@ namespace Sukt.Core.Shared.Extensions
             services.NotNull(nameof(services));
             return services.GetBuildService<IOptions<AppOptionSettings>>()?.Value;
         }
+
         public static T GetSingletonInstance<T>(this IServiceCollection services)
         {
             var service = services.GetSingletonInstanceOrNull<T>();
@@ -293,6 +300,7 @@ namespace Sukt.Core.Shared.Extensions
         }
 
         #region New Module
+
         public static ObjectAccessor<T> TryAddObjectAccessor<T>(this IServiceCollection services)
         {
             if (services.Any(s => s.ServiceType == typeof(ObjectAccessor<T>)))
@@ -338,10 +346,9 @@ namespace Sukt.Core.Shared.Extensions
         {
             return services.GetObjectOrNull<T>() ?? throw new Exception($"找不到的对象 {typeof(T).AssemblyQualifiedName} 服务。请确保您以前使用过AddObjectAccessor！");
         }
+
         public static IServiceProvider BuildServiceProviderFromFactory([NotNull] this IServiceCollection services)
         {
-
-
             foreach (var service in services)
             {
                 var factoryInterface = service.ImplementationInstance?.GetType()
@@ -366,7 +373,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return services.BuildServiceProvider();
         }
-        #endregion
 
+        #endregion New Module
     }
 }

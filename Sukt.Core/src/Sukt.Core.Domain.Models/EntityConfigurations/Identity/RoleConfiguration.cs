@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using Sukt.Core.Shared;
-using System.Collections.Generic;
-using System.Text;
+using System;
 
 namespace Sukt.Core.Domain.Models
 {
@@ -16,6 +14,7 @@ namespace Sukt.Core.Domain.Models
             b.Property(o => o.NormalizedName).HasMaxLength(50);
             b.Property(o => o.IsAdmin).HasDefaultValue(false);
             b.Property(o => o.IsDeleted).HasDefaultValue(false);
+            b.ToTable("Role");
         }
     }
 }

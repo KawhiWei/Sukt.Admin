@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Enums;
+using Sukt.Core.Shared.ExpressionUtil;
+using Sukt.Core.Shared.Extensions.OrderExtensions;
+using Sukt.Core.Shared.Extensions.ResultExtensions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Sukt.Core.Shared.Extensions.OrderExtensions;
-using Sukt.Core.Shared.Extensions.PageExyensions;
-using Sukt.Core.Shared.Extensions.ResultExtensions;
-using Microsoft.EntityFrameworkCore;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Enums;
-using System.Collections.Generic;
-using Sukt.Core.Shared.ExpressionUtil;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -37,7 +35,6 @@ namespace Sukt.Core.Shared.Extensions
             return source.OrderBy(orderStr);
         }
 
-
         /// <summary>
         /// 从集合中查询指定数据筛选的分页信息
         /// </summary>
@@ -55,7 +52,6 @@ namespace Sukt.Core.Shared.Extensions
             var list = await result.data.ToArrayAsync();
             var total = result.totalNumber;
             return new PageResult<TEntity>(list, total);
-
         }
 
         /// <summary>
@@ -77,8 +73,6 @@ namespace Sukt.Core.Shared.Extensions
             var total = result.totalNumber;
             return new PageResult<TResult>(list, total);
         }
-
-
 
         /// <summary>
         /// 从集合中查询指定输出DTO的分页信息
@@ -106,7 +100,6 @@ namespace Sukt.Core.Shared.Extensions
             return new PageResult<TOutputDto>(list, total);
         }
 
-
         private static async Task<(IQueryable<TEntity> data, int totalNumber)> WhereAsync<TEntity>(this IQueryable<TEntity> source, int pageIndex,
               int pageSize, Expression<Func<TEntity, bool>> predicate, OrderCondition[] orderConditions)
         {
@@ -119,7 +112,6 @@ namespace Sukt.Core.Shared.Extensions
             if (orderConditions == null || orderConditions.Length == 0)
             {
                 orderSource = source.OrderBy("Id ascending");
-
             }
             else
             {
@@ -128,10 +120,8 @@ namespace Sukt.Core.Shared.Extensions
 
             source = orderSource;
 
-
             return (!source.IsNull() ? source.Skip(pageSize * (pageIndex - 1)).Take(pageSize) : Enumerable.Empty<TEntity>().AsQueryable(), total);
         }
-
 
         /// <summary>
         /// 动态查询
@@ -142,7 +132,6 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns></returns>
         //public static IQueryable<TEntity> Filter<TEntity>(this IQueryable<TEntity> source, FilterInfo[] filterInfos)
         //{
-
         //    source.NotNull(nameof(source));
         //    filterInfos.NotNull(nameof(filterInfos));
         //    StringBuilder strWhere = new StringBuilder();
@@ -153,7 +142,6 @@ namespace Sukt.Core.Shared.Extensions
         //        //"City == @0 and Orders.Count >= @1"
         //        if (index != filterInfos.Length)
         //        {
-
         //            strWhere.Append($"{filterInfo.Key} {filterInfo.Operator.ToDescription<FilterCodeAttribute>()} @{count} {filterInfo.Connect.ToDescription<FilterCodeAttribute>()} ");
         //        }
         //        else
@@ -164,7 +152,6 @@ namespace Sukt.Core.Shared.Extensions
         //    }
         //    return strWhere.Length > 0 ? source.Where(strWhere.ToString(), filterInfos.Select(o => o.Value).ToArray()) : source;
         //}
-
 
         /// <summary>
         /// 从集合中查询指定数据筛选的树数据
@@ -182,7 +169,6 @@ namespace Sukt.Core.Shared.Extensions
             Func<TResult, TResult, bool> rootwhere,
             Func<TResult, TResult, bool> childswhere, Action<TResult, IEnumerable<TResult>> addchilds, TResult entity = default(TResult))
         {
-
             rootwhere.NotNull(nameof(rootwhere));
             childswhere.NotNull(nameof(childswhere));
             addchilds.NotNull(nameof(addchilds));

@@ -10,14 +10,12 @@ using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.ResultMessageConst;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application.Identity.Role
 {
-    public class RoleContract:IRoleContract
+    public class RoleContract : IRoleContract
     {
         private readonly IEFCoreRepository<RoleMenuEntity, Guid> _roleMenuRepository;
         private readonly RoleManager<RoleEntity> _roleManager;
@@ -27,6 +25,7 @@ namespace Sukt.Core.Application.Identity.Role
             _roleMenuRepository = roleMenuRepository;
             _roleManager = roleManager;
         }
+
         /// <summary>
         /// 创建角色及分配权限
         /// </summary>
@@ -36,28 +35,29 @@ namespace Sukt.Core.Application.Identity.Role
         {
             input.NotNull(nameof(input));
             var role = input.MapTo<RoleEntity>();
-           return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _roleManager.CreateAsync(role);
-                if (!result.Succeeded)
-                {
-                    return result.ToOperationResponse();
-                }
-                if(input.MenuIds?.Any()==true)
-                {
-                    ;
-                    if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
-                    {
-                        MenuId = x,
-                        RoleId = role.Id,
-                    }).ToArray()) <= 0)
-                    {
-                        return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
-                    }
-                }
-                return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-            });
+            return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
+             {
+                 var result = await _roleManager.CreateAsync(role);
+                 if (!result.Succeeded)
+                 {
+                     return result.ToOperationResponse();
+                 }
+                 if (input.MenuIds?.Any() == true)
+                 {
+                     ;
+                     if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
+                     {
+                         MenuId = x,
+                         RoleId = role.Id,
+                     }).ToArray()) <= 0)
+                     {
+                         return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
+                     }
+                 }
+                 return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
+             });
         }
+
         /// <summary>
         /// 修改角色及分配权限
         /// </summary>
@@ -66,7 +66,7 @@ namespace Sukt.Core.Application.Identity.Role
         public async Task<OperationResponse> UpdateAsync(RoleInputDto input)
         {
             input.NotNull(nameof(input));
-            var  role= await _roleManager.FindByIdAsync(input.Id.ToString());
+            var role = await _roleManager.FindByIdAsync(input.Id.ToString());
             role = input.MapTo(role);
             return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
             {
@@ -90,6 +90,7 @@ namespace Sukt.Core.Application.Identity.Role
                 return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
             });
         }
+
         public async Task<OperationResponse> DeleteAsync(Guid id)
         {
             id.NotNull(nameof(id));
@@ -97,6 +98,7 @@ namespace Sukt.Core.Application.Identity.Role
             await _roleManager.DeleteAsync(role);
             return new OperationResponse(ResultMessage.DeleteSuccess, OperationEnumType.Success);
         }
+
         /// <summary>
         /// 分页获取角色
         /// </summary>
@@ -105,7 +107,7 @@ namespace Sukt.Core.Application.Identity.Role
         public async Task<IPageResult<RoleOutPutPageDto>> GetPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
-            return  await _roleManager.Roles.AsNoTracking().ToPageAsync<RoleEntity, RoleOutPutPageDto>(request);
+            return await _roleManager.Roles.AsNoTracking().ToPageAsync<RoleEntity, RoleOutPutPageDto>(request);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Models.Menu;
 using Sukt.Core.Dtos.Menu;
@@ -26,28 +25,31 @@ namespace Sukt.Core.Application
             _menu = menu;
             _menuFunction = menuFunction;
         }
+
         public async Task<OperationResponse> GetMenuTableAsync()
         {
-           var list= await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, MenuTableOutputDto>(
-                (p, c) =>
-                {
-                    return c.ParentId == null || c.ParentId == Guid.Empty;
-                },
-                (p, c) =>{
-                    return p.Id == c.ParentId;
-                },
-                (p, datalist) =>
-                {
-                    if(p.Children==null)
-                    {
-                        p.Children = new List<MenuTableOutputDto>();
-                    }
-                    p.Children.AddRange(datalist);
-                }                
-                );
+            var list = await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, MenuTableOutputDto>(
+                 (p, c) =>
+                 {
+                     return c.ParentId == null || c.ParentId == Guid.Empty;
+                 },
+                 (p, c) =>
+                 {
+                     return p.Id == c.ParentId;
+                 },
+                 (p, datalist) =>
+                 {
+                     if (p.Children == null)
+                     {
+                         p.Children = new List<MenuTableOutputDto>();
+                     }
+                     p.Children.AddRange(datalist);
+                 }
+                 );
             OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
             return operationResponse;
         }
+
         public async Task<OperationResponse> InsertAsync(MenuInputDto input)
         {
             input.NotNull(nameof(input));
@@ -60,12 +62,12 @@ namespace Sukt.Core.Application
                     {
                         MenuId = input.Id,
                         FunctionId = x
-
                     }).ToArray());
                 }
                 return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
             });
         }
+
         public async Task<OperationResponse> UpdateAsync(MenuInputDto input)
         {
             input.NotNull(nameof(input));
@@ -79,34 +81,36 @@ namespace Sukt.Core.Application
                     {
                         MenuId = input.Id,
                         FunctionId = x
-
                     }).ToArray());
                 }
                 return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
             });
         }
+
         public async Task<OperationResponse> DeleteAsync(Guid id)
         {
             id.NotNull(nameof(id));
             return await _menu.DeleteAsync(id);
         }
+
         public async Task<OperationResponse> GetLoadFromMenuAsync(Guid id)
         {
             id.NotNull(nameof(id));
-            var menu= await _menu.GetByIdAsync(id);
+            var menu = await _menu.GetByIdAsync(id);
             var menudto = menu.MapTo<MenuLoadOutputDto>();
-            menudto.FuncIds= await _menuFunction.NoTrackEntities.Where(x => x.MenuId == id).Select(x => x.FunctionId).ToListAsync();
+            menudto.FuncIds = await _menuFunction.NoTrackEntities.Where(x => x.MenuId == id).Select(x => x.FunctionId).ToListAsync();
             return new OperationResponse(ResultMessage.DataSuccess, menudto, OperationEnumType.Success);
         }
+
         public async Task<OperationResponse> GetUserMenuTreeAsync()
         {
-
             var list = await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, RouterMenuOutput>(
                 (p, c) =>
                 {
                     return c.ParentId == null || c.ParentId == Guid.Empty;
                 },
-                (p, c) => {
+                (p, c) =>
+                {
                     return p.Id == c.ParentId;
                 },
                 (p, datalist) =>
@@ -118,7 +122,6 @@ namespace Sukt.Core.Application
                 );
             OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
             return operationResponse;
-            
         }
     }
 }

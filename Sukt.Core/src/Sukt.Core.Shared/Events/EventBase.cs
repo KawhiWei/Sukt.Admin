@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Events
 {
@@ -15,6 +13,7 @@ namespace Sukt.Core.Shared.Events
             EventAt = DateTimeOffset.UtcNow;
             EventId = Guid.NewGuid().ToString();
         }
+
         /// <summary>
         /// 事件构造函数
         /// </summary>
@@ -24,15 +23,18 @@ namespace Sukt.Core.Shared.Events
             EventId = eventId;
             EventAt = DateTimeOffset.UtcNow;
         }
+
         public EventBase(string eventId, DateTimeOffset eventAt)
         {
             EventId = eventId;
             EventAt = eventAt;
         }
+
         /// <summary>
         /// 基类属性
         /// </summary>
         public DateTimeOffset EventAt { get; private set; }
+
         /// <summary>
         /// 基类属性
         /// </summary>

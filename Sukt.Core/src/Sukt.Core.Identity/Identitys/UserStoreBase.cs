@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,7 +45,6 @@ namespace Sukt.Core.Identity
 
         private bool _disposed;
 
-
         protected UserStoreBase(
             IEFCoreRepository<TUser, TUserKey> userRepository,
             IEFCoreRepository<TUserLogin, Guid> userLoginRepository,
@@ -63,7 +61,6 @@ namespace Sukt.Core.Identity
             _userTokenRepository = userTokenRepository;
             _roleRepository = roleRepository;
             _userRoleRepository = userRoleRepository;
-
         }
 
         #region Implementation of IQueryableUserStore<TUser>
@@ -74,9 +71,7 @@ namespace Sukt.Core.Identity
         /// <value>An <see cref="T:System.Linq.IQueryable`1" /> collection of users.</value>
         public IQueryable<TUser> Users => _userRepository.TrackEntities;
 
-
-
-        #endregion
+        #endregion Implementation of IQueryableUserStore<TUser>
 
         #region Implementation of IDisposable
 
@@ -86,7 +81,7 @@ namespace Sukt.Core.Identity
             _disposed = true;
         }
 
-        #endregion
+        #endregion Implementation of IDisposable
 
         #region Implementation of IUserStore<TUser>
 
@@ -101,7 +96,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(ConvertIdToString(user.Id));
         }
 
@@ -115,7 +109,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.UserName);
         }
@@ -132,7 +125,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.UserName = userName;
             return Task.CompletedTask;
         }
@@ -147,7 +139,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.NormalizedUserName);
         }
@@ -164,7 +155,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.NormalizedUserName = normalizedName;
             return Task.CompletedTask;
         }
@@ -180,9 +170,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             await _userRepository.InsertAsync(user);
-
 
             return IdentityResult.Success;
         }
@@ -197,7 +185,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             if (string.IsNullOrEmpty(user.Email))
             {
@@ -222,7 +209,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             if (user.IsSystem)
             {
@@ -265,7 +251,7 @@ namespace Sukt.Core.Identity
             return Task.FromResult(_userRepository.TrackEntities.FirstOrDefault(m => m.NormalizedUserName == normalizedUserName));
         }
 
-        #endregion
+        #endregion Implementation of IUserStore<TUser>
 
         #region Implementation of IUserLoginStore<TUser>
 
@@ -280,8 +266,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
-
 
             TUserLogin userLogin = new TUserLogin()
             {
@@ -307,8 +291,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
-
             await _userLoginRepository.DeleteBatchAsync(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.ProviderKey == providerKey);
         }
 
@@ -324,7 +306,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             IList<UserLoginInfo> loginInfos = _userLoginRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m =>
                 new UserLoginInfo(m.LoginProvider, m.ProviderKey, m.ProviderDisplayName)).ToList();
@@ -355,7 +336,7 @@ namespace Sukt.Core.Identity
             return Task.FromResult(user);
         }
 
-        #endregion
+        #endregion Implementation of IUserLoginStore<TUser>
 
         #region Implementation of IUserClaimStore<TUser>
 
@@ -372,7 +353,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             IList<Claim> claims = _userClaimRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id))
                 .Select(m => new Claim(m.ClaimType, m.ClaimValue)).ToList();
             return Task.FromResult(claims);
@@ -387,7 +367,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             TUserClaim[] userClaims = claims.Select(m => new TUserClaim() { UserId = user.Id, ClaimType = m.Type, ClaimValue = m.Value }).ToArray();
             await _userClaimRepository.InsertAsync(userClaims);
@@ -405,7 +384,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             List<TUserClaim> userClaims = _userClaimRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id) && m.ClaimType == claim.Type && m.ClaimValue == claim.Value).ToList();
             foreach (TUserClaim userClaim in userClaims)
@@ -428,7 +406,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             await _userClaimRepository.DeleteBatchAsync(m =>
                 m.UserId.Equals(user.Id) && claims.Any(n => n.Type == m.ClaimType && n.Value == m.ClaimValue));
         }
@@ -447,14 +424,13 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             TUserKey[] userIds = _userClaimRepository.TrackEntities.Where(m => m.ClaimType == claim.Type && m.ClaimValue == claim.Value)
                 .Select(m => m.UserId).ToArray();
             IList<TUser> users = _userRepository.TrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
             return Task.FromResult(users);
         }
 
-        #endregion
+        #endregion Implementation of IUserClaimStore<TUser>
 
         #region Implementation of IUserPasswordStore<TUser>
 
@@ -470,7 +446,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.PasswordHash = passwordHash;
             return Task.CompletedTask;
         }
@@ -485,7 +460,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.PasswordHash);
         }
@@ -504,11 +478,10 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(!string.IsNullOrEmpty(user.PasswordHash));
         }
 
-        #endregion
+        #endregion Implementation of IUserPasswordStore<TUser>
 
         #region Implementation of IUserSecurityStampStore<TUser>
 
@@ -524,10 +497,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.SecurityStamp = stamp;
-
-
 
             return Task.CompletedTask;
         }
@@ -543,11 +513,10 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.SecurityStamp);
         }
 
-        #endregion
+        #endregion Implementation of IUserSecurityStampStore<TUser>
 
         #region Implementation of IUserEmailStore<TUser>
 
@@ -563,8 +532,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
-
             user.Email = email;
             return Task.CompletedTask;
         }
@@ -579,7 +546,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.Email);
         }
@@ -599,7 +565,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.EmailConfirmed);
         }
 
@@ -614,7 +579,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             user.EmailConfirmed = true;
             return Task.CompletedTask;
@@ -650,7 +614,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.NormalizedUserName);
         }
 
@@ -666,12 +629,11 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.NormalizeEmail = normalizedEmail;
             return Task.CompletedTask;
         }
 
-        #endregion
+        #endregion Implementation of IUserEmailStore<TUser>
 
         #region Implementation of IUserLockoutStore<TUser>
 
@@ -690,7 +652,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.LockoutEnd);
         }
 
@@ -705,7 +666,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             user.LockoutEnd = lockoutEnd;
             return Task.CompletedTask;
@@ -722,7 +682,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.AccessFailedCount++;
             return Task.FromResult(user.AccessFailedCount);
         }
@@ -736,7 +695,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             user.AccessFailedCount = 0;
             return Task.CompletedTask;
@@ -752,7 +710,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.AccessFailedCount);
         }
@@ -770,7 +727,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.LockoutEnabled);
         }
 
@@ -786,12 +742,11 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.LockoutEnabled = enabled;
             return Task.CompletedTask;
         }
 
-        #endregion
+        #endregion Implementation of IUserLockoutStore<TUser>
 
         #region Implementation of IUserPhoneNumberStore<TUser>
 
@@ -807,7 +762,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.PhoneNumber = phoneNumber;
             return Task.CompletedTask;
         }
@@ -822,7 +776,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(user.PhoneNumber);
         }
@@ -841,7 +794,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.PhoneNumberConfirmed);
         }
 
@@ -857,12 +809,11 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             user.PhoneNumberConfirmed = confirmed;
             return Task.CompletedTask;
         }
 
-        #endregion
+        #endregion Implementation of IUserPhoneNumberStore<TUser>
 
         #region Implementation of IUserTwoFactorStore<TUser>
 
@@ -878,7 +829,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             user.TwoFactorEnabled = enabled;
             return Task.CompletedTask;
@@ -899,11 +849,10 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(user.TwoFactorEnabled);
         }
 
-        #endregion
+        #endregion Implementation of IUserTwoFactorStore<TUser>
 
         #region Implementation of IUserAuthenticationTokenStore<TUser>
 
@@ -918,7 +867,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             TUserToken token = _userTokenRepository.NoTrackEntities
                 .FirstOrDefault(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.Name == name);
@@ -945,7 +893,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             await _userTokenRepository.DeleteBatchAsync(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.Name == name);
         }
 
@@ -960,13 +907,12 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             string value = _userTokenRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.Name == name)
                 .Select(m => m.Value).FirstOrDefault();
             return Task.FromResult(value);
         }
 
-        #endregion
+        #endregion Implementation of IUserAuthenticationTokenStore<TUser>
 
         #region Implementation of IUserAuthenticatorKeyStore<TUser>
 
@@ -997,7 +943,7 @@ namespace Sukt.Core.Identity
             return GetTokenAsync(user, InternalLoginProvider, AuthenticatorKeyTokenName, cancellationToken);
         }
 
-        #endregion
+        #endregion Implementation of IUserAuthenticatorKeyStore<TUser>
 
         #region Implementation of IUserTwoFactorRecoveryCodeStore<TUser>
 
@@ -1027,8 +973,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
-
             string mergedCodes = await GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken) ?? String.Empty;
             string[] splitCodes = mergedCodes.Split(';');
             if (splitCodes.Contains(code))
@@ -1051,7 +995,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             string mergedCodes = await GetTokenAsync(user, InternalLoginProvider, RecoveryCodeTokenName, cancellationToken);
             if (mergedCodes.Length > 0)
             {
@@ -1060,7 +1003,7 @@ namespace Sukt.Core.Identity
             return 0;
         }
 
-        #endregion
+        #endregion Implementation of IUserTwoFactorRecoveryCodeStore<TUser>
 
         #region Implementation of IUserRoleStore<TUser>
 
@@ -1075,8 +1018,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
-
 
             TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == normalizedRoleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
@@ -1099,8 +1040,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
-
             TRole role = _roleRepository.TrackEntities.FirstOrDefault(m => m.NormalizedName == normalizedRoleName);
             if (role == null)
             {
@@ -1120,7 +1059,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             IList<string> list = new List<string>();
             //var roleIds = _userRoleRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId); //为什么不这样写。。。。。。
@@ -1150,7 +1088,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
             {
@@ -1173,7 +1110,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
             {
@@ -1184,7 +1120,7 @@ namespace Sukt.Core.Identity
             return Task.FromResult(users);
         }
 
-        #endregion
+        #endregion Implementation of IUserRoleStore<TUser>
 
         #region Other
 
@@ -1227,6 +1163,6 @@ namespace Sukt.Core.Identity
             }
         }
 
-        #endregion
+        #endregion Other
     }
 }

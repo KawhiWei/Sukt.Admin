@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos;
 using Sukt.Core.Shared.OperationResult;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -28,6 +25,7 @@ namespace Sukt.Core.API.Controllers
             _userContract = userContract;
             _logger = logger;
         }
+
         /// <summary>
         /// 添加用户
         /// </summary>
@@ -39,6 +37,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _userContract.InsertAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 根据Id加载表单用户
         /// </summary>
@@ -50,6 +49,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _userContract.LoadUserFormAsync(id.Value)).ToAjaxResult();
         }
+
         /// <summary>
         /// 修改用户
         /// </summary>
@@ -61,6 +61,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _userContract.UpdateAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 删除用户
         /// </summary>

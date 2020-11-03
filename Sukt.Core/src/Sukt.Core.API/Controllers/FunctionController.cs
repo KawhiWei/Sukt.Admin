@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using IDN.Services.BasicsService.Application;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Function;
 using Sukt.Core.Shared.AjaxResult;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -19,7 +16,7 @@ namespace Sukt.Core.API.Controllers
     /// 功能管理
     /// </summary>
     [Description("功能管理")]
-    public class FunctionController :  ApiControllerBase
+    public class FunctionController : ApiControllerBase
     {
         private readonly IFunctionContract _function;
 
@@ -27,6 +24,7 @@ namespace Sukt.Core.API.Controllers
         {
             _function = function;
         }
+
         /// <summary>
         /// 创建功能
         /// </summary>
@@ -38,6 +36,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _function.InsertAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 修改功能
         /// </summary>
@@ -49,6 +48,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _function.UpdateAsync(input)).ToAjaxResult();
         }
+
         /// <summary>
         /// 删除功能
         /// </summary>
@@ -60,6 +60,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _function.DeleteAsync(id.Value)).ToAjaxResult();
         }
+
         /// <summary>
         /// 异步得到功能分页
         /// </summary>
@@ -71,6 +72,7 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _function.GetFunctionPageAsync(request)).PageList();
         }
+
         /// <summary>
         /// 异步获取功能下拉框列表
         /// </summary>

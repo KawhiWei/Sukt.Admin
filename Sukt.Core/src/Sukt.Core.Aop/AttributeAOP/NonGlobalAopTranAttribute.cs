@@ -1,8 +1,6 @@
 ﻿using AspectCore.DynamicProxy;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Aop.AttributeAOP
@@ -13,6 +11,7 @@ namespace Sukt.Core.Aop.AttributeAOP
     public class NonGlobalAopTranAttribute : AbstractInterceptorAttribute
     {
         private IUnitOfWork _unitOfWork { get; set; }
+
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
             _unitOfWork = context.ServiceProvider.GetService(typeof(IUnitOfWork)) as IUnitOfWork;

@@ -1,17 +1,6 @@
-﻿using Sukt.Core.EntityFrameworkCore;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.OperationResult;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Sukt.Core.EntityFrameworkCore
+﻿namespace Sukt.Core.EntityFrameworkCore
 {
-    //public interface IEFCoreRepository<TEntity,Tkey> 
+    //public interface IEFCoreRepository<TEntity,Tkey>
     //    where TEntity:IEntity<Tkey>
     //{
     //    IUnitOfWork UnitOfWork { get; }
@@ -51,7 +40,7 @@ namespace Sukt.Core.EntityFrameworkCore
     //    Task<TDto> GetByIdToDtoAsync<TDto>(Tkey primaryKey) where TDto : class, new();
     //    #endregion
 
-    //    #region 添加 
+    //    #region 添加
     //    /// <summary>
     //    /// 以异步DTO插入实体
     //    /// </summary>

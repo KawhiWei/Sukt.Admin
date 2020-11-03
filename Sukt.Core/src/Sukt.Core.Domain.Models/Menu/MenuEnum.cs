@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models.Menu
 {
@@ -15,11 +12,13 @@ namespace Sukt.Core.Domain.Models.Menu
         /// </summary>
         [Description("菜单")]
         MenuType = 0,
+
         /// <summary>
         /// Tab页
         /// </summary>
         [Description("Tab页")]
         Tab = 5,
+
         /// <summary>
         /// 按钮
         /// </summary>

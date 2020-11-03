@@ -3,8 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sukt.Core.Shared.AppOption;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared.Extensions
@@ -21,8 +19,9 @@ namespace Sukt.Core.Shared.Extensions
             ILoggerFactory factory = provider.GetService<ILoggerFactory>();
             return factory.CreateLogger<T>();
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="provider"></param>
@@ -34,12 +33,12 @@ namespace Sukt.Core.Shared.Extensions
             return factory.CreateLogger(type);
         }
 
-
         public static AppOptionSettings GetAppSettings(this IServiceProvider provider)
         {
             provider.NotNull(nameof(provider));
             return provider.GetService<IOptions<AppOptionSettings>>()?.Value;
         }
+
         public static object GetInstance(this IServiceProvider provider, ServiceDescriptor descriptor)
         {
             if (descriptor.ImplementationInstance != null)
@@ -71,7 +70,6 @@ namespace Sukt.Core.Shared.Extensions
             var t = provider.GetService<T>();
             action(t);
         }
-
 
         /// <summary>
         ///创建一个IServiceScope，其中包含一个IServiceProvider，用于从新创建的作用域解析依赖项，然后运行关联的回调。
@@ -149,6 +147,12 @@ namespace Sukt.Core.Shared.Extensions
             using var scope = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var service = scope.ServiceProvider.GetRequiredService<TS>();
             return await callback(service);
+        }
+
+        public static void CreateScoped(this IServiceProvider provider, Action<IServiceProvider> callback)
+        {
+            using var scope = provider.CreateScope();
+            callback(scope.ServiceProvider);
         }
     }
 }

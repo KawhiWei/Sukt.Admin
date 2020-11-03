@@ -1,11 +1,18 @@
-﻿using Sukt.Core.MongoDB.Repositorys;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using Sukt.Core.MongoDB.Repositorys;
 using Sukt.Core.Shared;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
+using Sukt.Core.Shared.Enums;
+using Sukt.Core.Shared.ExpressionUtil;
 using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.Extensions.ResultExtensions;
+using Sukt.Core.Shared.OperationResult;
+using Sukt.Core.Shared.ResultMessageConst;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application.Audit
@@ -15,11 +22,11 @@ namespace Sukt.Core.Application.Audit
     /// </summary>
     public class AuditStoreContract : IAuditStore
     {
-        private IMongoDBRepository<AuditLog, Guid> _auditLogRepository;
-        private IMongoDBRepository<AuditEntry, Guid> _auditEntryRepository;
-        private IMongoDBRepository<AuditPropertysEntry, Guid> _auditPropertysEntryRepository;
+        private IMongoDBRepository<AuditLog, ObjectId> _auditLogRepository;
+        private IMongoDBRepository<AuditEntry, ObjectId> _auditEntryRepository;
+        private IMongoDBRepository<AuditPropertysEntry, ObjectId> _auditPropertysEntryRepository;
 
-        public AuditStoreContract(IMongoDBRepository<AuditLog, Guid> auditLogRepository, IMongoDBRepository<AuditEntry, Guid> auditEntryRepository, IMongoDBRepository<AuditPropertysEntry, Guid> auditPropertysEntryRepository)
+        public AuditStoreContract(IMongoDBRepository<AuditLog, ObjectId> auditLogRepository, IMongoDBRepository<AuditEntry, ObjectId> auditEntryRepository, IMongoDBRepository<AuditPropertysEntry, ObjectId> auditPropertysEntryRepository)
         {
             _auditLogRepository = auditLogRepository;
             _auditEntryRepository = auditEntryRepository;
@@ -36,7 +43,7 @@ namespace Sukt.Core.Application.Audit
                 model.AuditLogId = auditLog.Id;
                 foreach (var Property in item.PropertysEntryInputDto)
                 {
-                    var propertymodel= Property.MapTo<AuditPropertysEntry>();
+                    var propertymodel = Property.MapTo<AuditPropertysEntry>();
                     propertymodel.AuditEntryId = model.Id;
                     auditpropertyentry.Add(propertymodel);
                 }
@@ -45,6 +52,64 @@ namespace Sukt.Core.Application.Audit
             await _auditLogRepository.InsertAsync(auditLog);
             await _auditEntryRepository.InsertAsync(auditEntry);
             await _auditPropertysEntryRepository.InsertAsync(auditpropertyentry);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IPageResult<AuditLogOutputPageDto>> GetAuditLogPageAsync(PageRequest request)
+        {
+            var exp = FilterHelp.GetExpression<AuditLog>(request.queryFilter);
+
+            return await _auditLogRepository.Collection.ToPageAsync(exp, request, x => new AuditLogOutputPageDto
+            {
+                BrowserInformation = x.BrowserInformation,
+                Ip = x.Ip,
+                FunctionName = x.FunctionName,
+                Action = x.Action,
+                ExecutionDuration = x.ExecutionDuration,
+                CreatedId = x.CreatedId,
+                CreatedAt = x.CreatedAt,
+                Id = x.Id
+            });
+        }
+        /// <summary>
+        /// 获取操作实体列表
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OperationResponse> GetAuditEntryListByAuditLogIdAsync(ObjectId id)
+        {
+            var list = await _auditEntryRepository.Entities.Where(x => x.AuditLogId == id)
+                .Select(x => new AuditEntryOutputDto
+                {
+                    Id = x.Id,
+                    EntityAllName = x.EntityAllName,
+                    EntityDisplayName = x.EntityDisplayName,
+                    TableName = x.TableName,
+                    KeyValues = x.KeyValues,
+                    OperationType = x.OperationType
+                }).ToListAsync();
+            OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
+            return operationResponse;
+        }
+        /// <summary>
+        /// 获取实体表Id获取每个属性的操作日志
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OperationResponse> GetAuditEntryListByAuditEntryIdAsync(ObjectId id)
+        {
+            var list = await _auditPropertysEntryRepository.Entities.Where(x => x.AuditEntryId == id)
+                .Select(x => new AuditPropertyEntryOutputDto
+                {
+                    Properties = x.Properties,
+                    OriginalValues = x.OriginalValues,
+                    NewValues = x.NewValues,
+                    PropertiesType = x.PropertiesType,
+                    PropertieDisplayName = x.PropertieDisplayName,
+                })
+                .ToListAsync();
+            OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
+            return operationResponse;
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.Core.Shared.ResultMessageConst
+﻿namespace Sukt.Core.Shared.ResultMessageConst
 {
     public static class ResultMessage
     {
@@ -17,5 +13,8 @@ namespace Sukt.Core.Shared.ResultMessageConst
         public const string DataSuccess = "查询数据成功";
         public const string Unauthorized = "未经授权";
         public const string Uncertified = "当前用户权限不足";
+        public const string UserNameNotFind = "此用户不存在!!";
+        public const string PassWordNotCheck = "密码输入错误!!";
+        public const string LoginSusscess = "登录成功";
     }
 }

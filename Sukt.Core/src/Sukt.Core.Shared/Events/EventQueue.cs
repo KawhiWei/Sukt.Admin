@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Concurrent;
 
 namespace Sukt.Core.Shared.Events
 {
@@ -12,6 +9,7 @@ namespace Sukt.Core.Shared.Events
     {
         private readonly ConcurrentDictionary<string, ConcurrentQueue<EventBase>> _eventQueues =
         new ConcurrentDictionary<string, ConcurrentQueue<EventBase>>();
+
         /// <summary>
         /// 排队一个队列
         /// </summary>
@@ -23,6 +21,7 @@ namespace Sukt.Core.Shared.Events
             var queue = _eventQueues.GetOrAdd(queueName, q => new ConcurrentQueue<EventBase>());
             queue.Enqueue(@event);
         }
+
         /// <summary>
         /// 尝试取消排队
         /// </summary>
@@ -34,6 +33,7 @@ namespace Sukt.Core.Shared.Events
             var queue = _eventQueues.GetOrAdd(queueName, q => new ConcurrentQueue<EventBase>());
             return queue.TryDequeue(out @event);
         }
+
         /// <summary>
         /// 尝试删除一个队列
         /// </summary>
@@ -43,6 +43,7 @@ namespace Sukt.Core.Shared.Events
         {
             return _eventQueues.TryRemove(queueName, out _);
         }
+
         /// <summary>
         /// 是否包含队列
         /// </summary>

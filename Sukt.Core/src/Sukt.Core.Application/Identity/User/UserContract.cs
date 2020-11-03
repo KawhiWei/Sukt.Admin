@@ -9,9 +9,7 @@ using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.ResultMessageConst;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application
@@ -21,6 +19,7 @@ namespace Sukt.Core.Application
         private readonly UserManager<UserEntity> _userManager = null;
         private readonly IUnitOfWork _unitOfWork = null;
         private readonly IEFCoreRepository<UserRoleEntity, Guid> _userRoleRepository = null;
+
         public UserContract(UserManager<UserEntity> userManager, IUnitOfWork unitOfWork, IEFCoreRepository<UserRoleEntity, Guid> userroleRepository)
         {
             _userManager = userManager;
@@ -49,13 +48,15 @@ namespace Sukt.Core.Application
                return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
            });
         }
+
         public async Task<OperationResponse> LoadUserFormAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             var userdto = user.MapTo<UserLoadFormOutputDto>();
             userdto.RoleIds = await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToListAsync();
-            return new OperationResponse(ResultMessage.LoadSucces,userdto, OperationEnumType.Success);
+            return new OperationResponse(ResultMessage.LoadSucces, userdto, OperationEnumType.Success);
         }
+
         public async Task<OperationResponse> UpdateAsync(UserUpdateInputDto input)
         {
             input.NotNull(nameof(input));
@@ -78,6 +79,7 @@ namespace Sukt.Core.Application
                 return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
             });
         }
+
         public async Task<OperationResponse> DeleteAsync(Guid id)
         {
             id.NotNull(nameof(id));

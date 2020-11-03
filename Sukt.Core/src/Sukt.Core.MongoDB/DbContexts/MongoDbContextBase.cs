@@ -4,9 +4,7 @@ using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace Sukt.Core.MongoDB.DbContexts
 {
@@ -18,14 +16,17 @@ namespace Sukt.Core.MongoDB.DbContexts
         {
             _options = options;
         }
+
         /// <summary>
         /// 连接字符串
         /// </summary>
         private string ConnectionString => _options.ConnectionString;
+
         /// <summary>
         /// 文档库名称
         /// </summary>
         public IMongoDatabase Database => GetDbContext();
+
         /// <summary>
         /// 获取一个文档
         /// </summary>
@@ -35,6 +36,7 @@ namespace Sukt.Core.MongoDB.DbContexts
         {
             return Database.GetCollection<TEntity>(GetTableName<TEntity>());
         }
+
         /// <summary>
         /// 获取表名
         /// </summary>
@@ -54,8 +56,8 @@ namespace Sukt.Core.MongoDB.DbContexts
                 throw new SuktAppException("Table name does not exist!");
             }
             return table.TableName;
-
         }
+
         /// <summary>
         /// 连接字符串
         /// </summary>
@@ -71,9 +73,9 @@ namespace Sukt.Core.MongoDB.DbContexts
             var database = new MongoClient(mongoUrl).GetDatabase(databaseName);
             return database;
         }
+
         public void Dispose()
         {
-            
         }
     }
 }

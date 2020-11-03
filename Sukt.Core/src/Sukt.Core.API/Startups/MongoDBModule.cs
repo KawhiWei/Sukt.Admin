@@ -3,10 +3,7 @@ using Sukt.Core.MongoDB;
 using Sukt.Core.MongoDB.DbContexts;
 using Sukt.Core.Shared.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Startups
 {

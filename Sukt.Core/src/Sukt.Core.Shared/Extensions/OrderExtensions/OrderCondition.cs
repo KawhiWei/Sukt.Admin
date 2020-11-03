@@ -1,8 +1,6 @@
 ﻿using Sukt.Core.Shared.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions.OrderExtensions
 {
@@ -43,9 +41,9 @@ namespace Sukt.Core.Shared.Extensions.OrderExtensions
         /// </summary>
         public SortDirectionEnum SortDirection { get; set; }
     }
+
     public class OrderCondition<T> : OrderCondition
     {
-
         /// <summary>
         /// 使用排序字段 初始化一个<see cref="OrderCondition"/>类型的新实例
         /// </summary>

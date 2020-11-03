@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -54,7 +53,7 @@ namespace Sukt.Core.Shared.Extensions
         /// </summary>
         /// <param name="type">type</param>
         /// <returns></returns>
-        public static bool IsValueTuple([NotNull]this Type type)
+        public static bool IsValueTuple([NotNull] this Type type)
                 => type.IsValueType && type.FullName?.StartsWith("System.ValueTuple`", StringComparison.Ordinal) == true;
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Sukt.Core.Shared.Extensions
         /// </summary>
         /// <param name="type">type</param>
         /// <returns></returns>
-        public static string GetDescription([NotNull]this Type type) =>
+        public static string GetDescription([NotNull] this Type type) =>
             type.GetCustomAttribute<DescriptionAttribute>()?.Description ?? string.Empty;
 
         /// <summary>
@@ -71,12 +70,12 @@ namespace Sukt.Core.Shared.Extensions
         /// </summary>
         /// <param name="type">type</param>
         /// <returns></returns>
-        public static bool IsPrimitiveType([NotNull]this Type type)
+        public static bool IsPrimitiveType([NotNull] this Type type)
             => (Nullable.GetUnderlyingType(type) ?? type).IsPrimitive;
 
         public static bool IsPrimitiveType<T>() => typeof(T).IsPrimitiveType();
 
-        public static bool IsBasicType([NotNull]this Type type) => BasicTypes.Contains(type) || type.IsEnum;
+        public static bool IsBasicType([NotNull] this Type type) => BasicTypes.Contains(type) || type.IsEnum;
 
         public static bool IsBasicType<T>() => typeof(T).IsBasicType();
 
@@ -161,12 +160,13 @@ namespace Sukt.Core.Shared.Extensions
         /// </summary>
         /// <param name="type">type</param>
         /// <returns>当前类型实现的接口的集合。</returns>
-        public static IEnumerable<Type> GetImplementedInterfaces([NotNull]this Type type)
+        public static IEnumerable<Type> GetImplementedInterfaces([NotNull] this Type type)
         {
             return type.GetTypeInfo().ImplementedInterfaces;
         }
+
         /// <summary>
-        /// 得到特性下描述 
+        /// 得到特性下描述
         /// </summary>
         /// <typeparam name="TAttribute">动态特性</typeparam>
         /// <param name="member"></param>
@@ -174,15 +174,14 @@ namespace Sukt.Core.Shared.Extensions
         public static string ToDescription<TAttribute>(this MemberInfo member)
             where TAttribute : AttributeBase
         {
-
             var attributeBase = (AttributeBase)member.GetCustomAttribute<TAttribute>();
             if (!attributeBase.IsNull())
             {
                 return attributeBase.Description();
             }
             return member.Name;
-
         }
+
         public static bool HasMatchingGenericArity(this Type interfaceType, TypeInfo typeInfo)
         {
             if (typeInfo.IsGenericType)
@@ -202,6 +201,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return true;
         }
+
         public static Type GetRegistrationType(this Type interfaceType, TypeInfo typeInfo)
         {
             if (typeInfo.IsGenericTypeDefinition)
@@ -216,6 +216,7 @@ namespace Sukt.Core.Shared.Extensions
 
             return interfaceType;
         }
+
         /// <summary>
         /// 是原始的扩展包括空
         /// </summary>

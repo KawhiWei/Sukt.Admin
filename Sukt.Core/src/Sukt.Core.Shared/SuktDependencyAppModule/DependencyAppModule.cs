@@ -1,34 +1,30 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sukt.Core.Shared.Attributes.Dependency;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktReflection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.SuktDependencyAppModule
 {
     /// <summary>
     /// 自动注入模块，继承与SuktAppModuleBase类进行实现
     /// </summary>
-    public class DependencyAppModule: SuktAppModule
+    public class DependencyAppModule : SuktAppModule
     {
-
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             var services = context.Services;
             AddAutoInjection(services);
         }
+
         private void AddAutoInjection(IServiceCollection services)
         {
-            var servicesTypes = AssemblyHelper.GetAssembliesByName("Sukt.Core.Application").SelectMany(type => type.DefinedTypes);
             var typeFinder = services.GetOrAddSingletonService<ITypeFinder, TypeFinder>();
             var baseTypes = new Type[] { typeof(IScopedDependency), typeof(ITransientDependency), typeof(ISingletonDependency) };
-            var types = typeFinder.FindAll()?.Concat(servicesTypes).Distinct();
+            var types = typeFinder.FindAll().Distinct();
             types = types.Where(type => type.IsClass && !type.IsAbstract && (baseTypes.Any(b => b.IsAssignableFrom(type))) || type.GetCustomAttribute<DependencyAttribute>() != null);
             foreach (var implementedInterType in types)
             {
@@ -55,6 +51,7 @@ namespace Sukt.Core.Shared.SuktDependencyAppModule
                 }
             }
         }
+
         private ServiceLifetime? GetServiceLifetime(Type type)
         {
             var attr = type.GetCustomAttribute<DependencyAttribute>();
@@ -73,7 +70,6 @@ namespace Sukt.Core.Shared.SuktDependencyAppModule
                 return ServiceLifetime.Transient;
             }
 
-
             if (typeof(ISingletonDependency).IsAssignableFrom(type))
             {
                 return ServiceLifetime.Singleton;
@@ -86,6 +82,7 @@ namespace Sukt.Core.Shared.SuktDependencyAppModule
         {
             var app = context.GetApplicationBuilder();
         }
+
         //public override IServiceCollection ConfigureServices(IServiceCollection service)
         //{
         //    SuktIocManage.Instance.SetServiceCollection(service);//写入服务集合

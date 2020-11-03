@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.Core.MultiTenancy
+﻿namespace Sukt.Core.MultiTenancy
 {
     public interface ITenantDbContext
     {

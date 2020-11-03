@@ -1,5 +1,4 @@
 ﻿using Consul;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,20 +10,23 @@ using System;
 
 namespace Sukt.Core.Consul
 {
-    public class ConsulModuleBase: SuktAppModule
+    public class ConsulModuleBase : SuktAppModule
     {
         /// <summary>
         /// 服务地址
         /// </summary>
         private string _serviceName = string.Empty;
+
         /// <summary>
         /// Consul服务地址
         /// </summary>
         private string _consulIp = string.Empty;
+
         /// <summary>
         /// Consul服务端口
         /// </summary>
         private int _consulPort = 80;
+
         /// <summary>
         /// docker容器内部端口
         /// </summary>
@@ -39,6 +41,7 @@ namespace Sukt.Core.Consul
             _Prot = Convert.ToInt32(configuration["Service:Port"]);
             _serviceName = configuration["Service:Name"];
         }
+
         public override void ApplicationInitialization(ApplicationContext context)
         {
             var applicationBuilder = context.GetApplicationBuilder();
@@ -76,6 +79,5 @@ namespace Sukt.Core.Consul
                 consulClient.Agent.ServiceDeregister(registration.ID).Wait();//服务停止时取消注册
             });
         }
-
     }
 }

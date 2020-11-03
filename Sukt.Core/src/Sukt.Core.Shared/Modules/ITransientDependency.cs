@@ -1,7 +1,4 @@
 ﻿using Sukt.Core.Shared.Attributes.Dependency;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared
 {
@@ -11,6 +8,5 @@ namespace Sukt.Core.Shared
     [IgnoreDependency]
     public interface ITransientDependency
     {
-
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Sukt.Core.Shared.Attributes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -20,7 +18,6 @@ namespace Sukt.Core.Shared.Extensions
             MemberInfo member = type.GetMember(value.ToString()).FirstOrDefault();
             return member.ToDescription();
         }
-
 
         /// <summary>
         /// 得到枚举值指定特性下描述

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +21,6 @@ namespace Sukt.Core.Identity
         private readonly IEFCoreRepository<TRole, TRoleKey> _roleRepository;
         private readonly IEFCoreRepository<TRoleClaim, Guid> _roleClaimRepository;
         private bool _disposed;
-
 
         protected RoleStoreBase(
             IEFCoreRepository<TRole, TRoleKey> roleRepository,
@@ -40,7 +38,7 @@ namespace Sukt.Core.Identity
             _disposed = true;
         }
 
-        #endregion
+        #endregion Implementation of IDisposable
 
         #region Implementation of IQueryableRoleStore<TRole>
 
@@ -50,7 +48,7 @@ namespace Sukt.Core.Identity
         /// <value>An <see cref="T:System.Linq.IQueryable`1" /> collection of roles.</value>
         public IQueryable<TRole> Roles => _roleRepository.TrackEntities;
 
-        #endregion
+        #endregion Implementation of IQueryableRoleStore<TRole>
 
         #region Implementation of IRoleStore<TRole>
 
@@ -114,7 +112,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(ConvertIdToString(role.Id));
         }
 
@@ -128,7 +125,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             return Task.FromResult(role.Name);
         }
@@ -145,7 +141,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             role.Name = roleName;
             return Task.CompletedTask;
         }
@@ -161,7 +156,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             return Task.FromResult(role.NormalizedName);
         }
 
@@ -176,7 +170,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             role.NormalizedName = normalizedName;
             return Task.CompletedTask;
@@ -210,7 +203,7 @@ namespace Sukt.Core.Identity
             return Task.FromResult(_roleRepository.TrackEntities.FirstOrDefault(m => m.NormalizedName == normalizedRoleName));
         }
 
-        #endregion
+        #endregion Implementation of IRoleStore<TRole>
 
         #region Implementation of IRoleClaimStore<TRole>
 
@@ -227,7 +220,6 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-
             IList<Claim> list = _roleClaimRepository.NoTrackEntities.Where(m => m.RoleId.Equals(role.Id)).Select(n => new Claim(n.ClaimType, n.ClaimValue)).ToList();
             return Task.FromResult(list);
         }
@@ -243,7 +235,6 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
 
             TRoleClaim roleClaim = new TRoleClaim() { RoleId = role.Id, ClaimType = claim.Type, ClaimValue = claim.Value };
             await _roleClaimRepository.InsertAsync(roleClaim);
@@ -262,10 +253,9 @@ namespace Sukt.Core.Identity
             ThrowIfDisposed();
 
             await _roleClaimRepository.DeleteBatchAsync(m => m.RoleId.Equals(role.Id) && m.ClaimValue == claim.Type && m.ClaimValue == claim.Value);
-
         }
 
-        #endregion
+        #endregion Implementation of IRoleClaimStore<TRole>
 
         /// <summary>
         /// Converts the provided <paramref name="id"/> to a strongly typed key object.

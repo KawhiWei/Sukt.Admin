@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
+    <ProjectReference Include="..\src\Sukt.Core.CodeGenerator\Sukt.Core.CodeGenerator.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.MongoDB\Sukt.Core.MongoDB.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj" />

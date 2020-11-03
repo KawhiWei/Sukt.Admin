@@ -1,8 +1,5 @@
 ﻿using Sukt.Core.Shared.Filter;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace Sukt.Core.Shared.Enums
 {
@@ -10,7 +7,7 @@ namespace Sukt.Core.Shared.Enums
     public enum FilterOperator
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [FilterCode("==")]
         [Description("等于")]
@@ -44,6 +41,7 @@ namespace Sukt.Core.Shared.Enums
         [Description("模糊查询")]
         Like,
     }
+
     [Description("过滤连接器")]
     public enum FilterConnect
     {

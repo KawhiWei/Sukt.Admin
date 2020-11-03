@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -28,6 +27,7 @@ namespace Sukt.Core.Shared.Extensions
             TException exception = (TException)Activator.CreateInstance(typeof(TException), message);
             throw exception;
         }
+
         /// <summary>
         /// 验证指定值的断言表达式是否为真，不为值抛出<see cref="Exception"/>异常
         /// </summary>
@@ -42,6 +42,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             Require<Exception>(assertionFunc(value), message);
         }
+
         /// <summary>
         /// 验证指定值的断言表达式是否为真，不为真抛出<typeparamref name="TException"/>异常
         /// </summary>
@@ -58,6 +59,7 @@ namespace Sukt.Core.Shared.Extensions
             }
             Require<TException>(assertionFunc(value), message);
         }
+
         /// <summary>
         /// 检查参数不能为空引用，否则抛出<see cref="ArgumentNullException"/>异常。
         /// </summary>
@@ -68,6 +70,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             Require<ArgumentNullException>(value != null, $"参数“{paramName}”不能为空引用。");
         }
+
         /// <summary>
         /// 检查字符串不能为空引用或空字符串，否则抛出<see cref="ArgumentNullException"/>异常或<see cref="ArgumentException"/>异常。
         /// </summary>
@@ -79,6 +82,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             Require<ArgumentException>(!string.IsNullOrEmpty(value), $"参数“{paramName}”不能为空引用或空字符串。");
         }
+
         /// <summary>
         /// 检查Guid值不能为Guid.Empty，否则抛出<see cref="ArgumentException"/>异常。
         /// </summary>
@@ -89,6 +93,7 @@ namespace Sukt.Core.Shared.Extensions
         {
             Require<ArgumentException>(value != Guid.Empty, $"参数“{paramName}”的值不能为Guid.Empty");
         }
+
         /// <summary>
         /// 检查集合不能为空引用或空集合，否则抛出<see cref="ArgumentNullException"/>异常或<see cref="ArgumentException"/>异常。
         /// </summary>
@@ -102,6 +107,7 @@ namespace Sukt.Core.Shared.Extensions
             NotNull(collection, paramName);
             Require<ArgumentException>(collection.Any(), $"参数“{paramName}”不能为空引用或空集合。");
         }
+
         /// <summary>
         ///  检查集合不能为空委托，否则抛出<see cref="ArgumentNullException"/>异常或<see cref="ArgumentException"/>异常。
         /// </summary>
@@ -114,6 +120,7 @@ namespace Sukt.Core.Shared.Extensions
             NotNull(func, paramName);
             Require<ArgumentException>(func.IsNotNull(), $"参数“{paramName}”不能为空委托。");
         }
+
         /// <summary>
         /// 把对象类型转换为指定类型
         /// </summary>
@@ -130,9 +137,7 @@ namespace Sukt.Core.Shared.Extensions
             //如果是Nullable类型
             if (type.IsNullableType())
             {
-
                 type = type.GetUnNullableType();
-
             }
             //枚举类型
             if (type.IsEnum)
@@ -152,12 +157,12 @@ namespace Sukt.Core.Shared.Extensions
 
             if (value?.GetType() == typeof(Guid))
             {
-
                 return value.ToString();
             }
 
             return Convert.ChangeType(value, type);
         }
+
         /// <summary>
         /// 把对象类型转换为指定类型
         /// </summary>
@@ -166,9 +171,9 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>转化后的指定类型的对象</returns>
         public static T AsTo<T>(this object value)
         {
-
             return (T)AsTo(value, typeof(T));
         }
+
         /// <summary>
         /// 类型转换
         /// </summary>
@@ -177,9 +182,9 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns></returns>
         public static T As<T>(this object obj) where T : class
         {
-
             return (T)obj;
         }
+
         /// <summary>
         /// 是否为Null
         /// </summary>
@@ -187,14 +192,14 @@ namespace Sukt.Core.Shared.Extensions
         /// <returns>true为null,false不为null</returns>
         public static bool IsNull(this object value)
         {
-
             return value == null ? true : false;
         }
+
         public static bool IsNotNull(this object value)
         {
-
             return !value.IsNull();
         }
+
         /// <summary>
         /// 判断特性相应是否存在
         /// </summary>

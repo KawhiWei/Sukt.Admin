@@ -1,16 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Sukt.Core.EntityFrameworkCore;
-using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Enums;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,30 +18,37 @@ namespace Sukt.Core.Shared
         /// DBContext对象
         /// </summary>
         private readonly SuktDbContextBase _dbContext = null;
+
         public UnitOfWork(TDbContext dbContext)
         {
             _dbContext = dbContext as SuktDbContextBase;
         }
+
         /// <summary>
         /// 日志
         /// </summary>
         private readonly ILogger _logger = null;
+
         /// <summary>
         /// 是否释放
         /// </summary>
         private bool _disposed;
+
         /// <summary>
         /// 是否提交
         /// </summary>
         public bool HasCommitted { get; private set; }
+
         /// <summary>
         /// 事务
         /// </summary>
         private DbTransaction _dbTransaction = null;
+
         /// <summary>
         /// 上下文
         /// </summary>
         private DbConnection _connection = null;
+
         /// <summary>
         /// 获取上下文连接
         /// </summary>
@@ -56,7 +59,9 @@ namespace Sukt.Core.Shared
             _dbContext.unitOfWork = this;
             return _dbContext as DbContext;
         }
+
         #region 同步事务
+
         /// <summary>
         /// 事务开启
         /// </summary>
@@ -74,6 +79,7 @@ namespace Sukt.Core.Shared
             _dbContext.Database.UseTransaction(_dbTransaction);
             HasCommitted = false;
         }
+
         /// <summary>
         /// 提交事务
         /// </summary>
@@ -86,6 +92,7 @@ namespace Sukt.Core.Shared
             HasCommitted = true;
             Console.WriteLine("方法执行后");
         }
+
         /// <summary>
         /// 回滚
         /// </summary>
@@ -102,6 +109,7 @@ namespace Sukt.Core.Shared
             }
             HasCommitted = true;
         }
+
         public void UseTran(Action action)
         {
             action.NotNull(nameof(action));
@@ -120,9 +128,8 @@ namespace Sukt.Core.Shared
                 _logger.LogError(ex.Message);
                 this.Rollback();
             }
-
-            
         }
+
         /// <summary>
         /// 开启事务 如果成功提交事务，失败回滚事务
         /// </summary>
@@ -156,9 +163,11 @@ namespace Sukt.Core.Shared
                 };
             }
         }
-        #endregion
+
+        #endregion 同步事务
 
         #region 异步事务
+
         /// <summary>
         /// 开启异步事务
         /// </summary>
@@ -177,6 +186,7 @@ namespace Sukt.Core.Shared
             _dbContext.Database.UseTransaction(_dbTransaction);
             HasCommitted = false;
         }
+
         /// <summary>
         /// 提交异步事务
         /// </summary>
@@ -191,6 +201,7 @@ namespace Sukt.Core.Shared
             await _dbContext.Database.CurrentTransaction.DisposeAsync();
             HasCommitted = true;
         }
+
         /// <summary>
         /// 异步回滚事务
         /// </summary>
@@ -207,6 +218,7 @@ namespace Sukt.Core.Shared
             }
             HasCommitted = true;
         }
+
         /// <summary>
         /// 异步开启事务 如果成功提交事务，失败回滚事务
         /// </summary>
@@ -223,6 +235,7 @@ namespace Sukt.Core.Shared
             await func?.Invoke();
             Commit();
         }
+
         public async Task<OperationResponse> UseTranAsync(Func<Task<OperationResponse>> func)
         {
             func.NotNull(nameof(func));
@@ -257,10 +270,12 @@ namespace Sukt.Core.Shared
             }
             return result;
         }
-        #endregion
+
+        #endregion 异步事务
+
         public void Dispose()
         {
-            if(_disposed)
+            if (_disposed)
             {
                 return;
             }

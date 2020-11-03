@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {
-    public class StartupModuleRunner: ModuleApplicationBase, IStartupModuleRunner
+    public class StartupModuleRunner : ModuleApplicationBase, IStartupModuleRunner
     {
         /// <summary>
         /// 程序启动运行时
@@ -43,6 +41,7 @@ namespace Sukt.Core.Shared.Modules
                 cfg.ApplicationInitialization(ctx);
             }
         }
+
         public override void Dispose()
         {
             base.Dispose();

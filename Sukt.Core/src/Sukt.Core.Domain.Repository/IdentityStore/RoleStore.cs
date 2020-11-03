@@ -2,8 +2,6 @@
 using Sukt.Core.Identity;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Domain.Repository
 {

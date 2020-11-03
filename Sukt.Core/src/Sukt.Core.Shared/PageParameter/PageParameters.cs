@@ -1,7 +1,4 @@
 ﻿using Sukt.Core.Shared.Extensions.OrderExtensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.PageParameter
 {
@@ -13,9 +10,10 @@ namespace Sukt.Core.Shared.PageParameter
             PageSize = pageSize;
             OrderConditions = new OrderCondition[] { };
         }
-            /// <summary>
-            /// 分页索引
-            /// </summary>
+
+        /// <summary>
+        /// 分页索引
+        /// </summary>
 
         public virtual int PageIndex { get; set; }
 

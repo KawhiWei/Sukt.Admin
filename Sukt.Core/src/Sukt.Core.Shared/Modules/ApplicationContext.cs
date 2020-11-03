@@ -1,8 +1,6 @@
 ﻿using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sukt.Core.Shared.Modules
 {
@@ -16,7 +14,7 @@ namespace Sukt.Core.Shared.Modules
             serviceProvider.NotNull(nameof(serviceProvider));
             ServiceProvider = serviceProvider;
         }
+
         public IServiceProvider ServiceProvider { get; set; }
-        
     }
 }

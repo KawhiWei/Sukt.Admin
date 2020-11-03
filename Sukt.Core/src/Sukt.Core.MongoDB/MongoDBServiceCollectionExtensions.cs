@@ -8,7 +8,7 @@ namespace Sukt.Core.MongoDB
 {
     public static class MongoDBServiceCollectionExtensions
     {
-        public static IServiceCollection AddMongoDbContext<TContext>(this IServiceCollection services,[CanBeNull] Action<MongoDbContextOptions> optionAction) where TContext : MongoDbContextBase
+        public static IServiceCollection AddMongoDbContext<TContext>(this IServiceCollection services, [CanBeNull] Action<MongoDbContextOptions> optionAction) where TContext : MongoDbContextBase
         {
             MongoDbContextOptions options = new MongoDbContextOptions();
             optionAction(options);

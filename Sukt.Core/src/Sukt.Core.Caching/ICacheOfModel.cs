@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,8 +12,8 @@ namespace Sukt.Core.Caching
     public interface ICache<TCacheData> : ICache<string, TCacheData>
          where TCacheData : class
     {
-
     }
+
     /// <summary>
     /// 缓存接口
     /// </summary>
@@ -24,7 +22,6 @@ namespace Sukt.Core.Caching
     public interface ICache<TKey, TCacheData>
          where TCacheData : class
     {
-
         /// <summary>
         /// 得到
         /// </summary>
@@ -63,7 +60,6 @@ namespace Sukt.Core.Caching
              CancellationToken token = default
          );
 
-
         #region 设置
 
         /// <summary>
@@ -81,9 +77,8 @@ namespace Sukt.Core.Caching
         /// <param name="token"></param>
         /// <returns></returns>
         Task SetAsync(TKey key, TCacheData value, CancellationToken token = default);
-        #endregion
 
-
+        #endregion 设置
 
         #region 删除
 
@@ -100,6 +95,7 @@ namespace Sukt.Core.Caching
         /// <param name="token"></param>
         /// <returns></returns>
         Task RemoveAsync(TKey key, CancellationToken token = default);
-        #endregion
+
+        #endregion 删除
     }
 }

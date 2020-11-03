@@ -1,7 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +12,7 @@ namespace Sukt.Core.Shared.Events.EventBus
         {
             _mediator = mediator;
         }
+
         /// <summary>
         ///  发布事件
         /// </summary>

@@ -3,9 +3,7 @@ using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared
@@ -23,7 +21,6 @@ namespace Sukt.Core.Shared
             findFluent = findFluent.OrderBy(request.OrderConditions);
             var lists = await findFluent.ToListAsync();
             return new PageResult<TEntity>() { Data = lists, Message = "加载成功", Success = true, Total = count.AsTo<int>() };
-
         }
 
         public static async Task<PageResult<TResult>> ToPageAsync<TEntity, TResult>(this IMongoCollection<TEntity> collection, Expression<Func<TEntity, bool>> predicate, IPagedRequest request, Expression<Func<TEntity, TResult>> selector)
@@ -34,7 +31,6 @@ namespace Sukt.Core.Shared
             findFluent = findFluent.OrderBy(request.OrderConditions);
             var lists = await findFluent.Project(selector).ToListAsync();
             return new PageResult<TResult>() { Data = lists, Message = "加载成功", Success = true, Total = count.AsTo<int>() };
-
         }
     }
 }

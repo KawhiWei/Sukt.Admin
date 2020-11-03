@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
     public static partial class Extensions
     {
-
         /// <summary>
         /// 获取本机IP
         /// </summary>
@@ -29,7 +26,7 @@ namespace Sukt.Core.Shared.Extensions
 
         /// <summary>
         /// 获取请求端的Ip地址
-        /// string ip1 = HttpContext.Request.Headers["X-Real-IP"]; 
+        /// string ip1 = HttpContext.Request.Headers["X-Real-IP"];
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>

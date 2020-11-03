@@ -3,19 +3,17 @@ using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Extensions;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace Sukt.Core.Shared
 {
     public static class FindFluentSortBy<TEntity, TProjection>
     {
         private static readonly ConcurrentDictionary<string, Expression<Func<TEntity, object>>> Cache = new ConcurrentDictionary<string, Expression<Func<TEntity, object>>>();
+
         public static IOrderedFindFluent<TEntity, TProjection> OrderBy(IFindFluent<TEntity, TProjection> findFluent, string propertyName, Enums.SortDirectionEnum sortDirection)
         {
-
             propertyName.NotNullOrEmpty("propertyName");
             var keySelector = GetKeySelector(propertyName);
             return sortDirection == Enums.SortDirectionEnum.Ascending

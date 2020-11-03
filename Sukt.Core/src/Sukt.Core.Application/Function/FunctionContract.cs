@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models.Function;
 using Sukt.Core.Dtos.Function;
 using Sukt.Core.Shared.Entity;
@@ -16,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IDN.Services.BasicsService.Application
+namespace Sukt.Core.Application
 {
     public class FunctionContract : IFunctionContract
     {
@@ -32,29 +31,33 @@ namespace IDN.Services.BasicsService.Application
             id.NotEmpty(nameof(id));
             return await _functionRepository.DeleteAsync(id);
         }
+
         private IQueryable<FunctionEntity> Entities => _functionRepository.NoTrackEntities;
+
         public async Task<OperationResponse> InsertAsync(FunctionInputDto input)
         {
             input.NotNull(nameof(input));
             return await _functionRepository.InsertAsync(input, async f =>
              {
                  bool isExist = await this.Entities.Where(x => x.LinkUrl.ToLower() == input.LinkUrl.ToLower()).AnyAsync();
-                 if(isExist)
+                 if (isExist)
                      throw new SuktAppException("此功能已存在!!!");
              });
         }
-        public async Task <IPageResult<FunctionOutputPageDto>> GetFunctionPageAsync(PageRequest request)
+
+        public async Task<IPageResult<FunctionOutputPageDto>> GetFunctionPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
             OrderCondition<FunctionEntity>[] orderConditions = new OrderCondition<FunctionEntity>[] { new OrderCondition<FunctionEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
             request.OrderConditions = orderConditions;
             return await _functionRepository.NoTrackEntities.ToPageAsync<FunctionEntity, FunctionOutputPageDto>(request);
-
         }
+
         public async Task<OperationResponse> UpdateAsync(FunctionInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _functionRepository.UpdateAsync(input, async(f,e)=>{
+            return await _functionRepository.UpdateAsync(input, async (f, e) =>
+            {
                 bool isExist = await this.Entities.Where(o => o.Id != f.Id && o.LinkUrl.ToLower() == f.LinkUrl.ToLower()).AnyAsync();
                 if (isExist)
                 {
@@ -62,13 +65,13 @@ namespace IDN.Services.BasicsService.Application
                 }
             });
         }
+
         /// <summary>
         /// 获取功能下拉框列表
         /// </summary>
         /// <returns></returns>
         public async Task<OperationResponse<IEnumerable<SelectListItem>>> GetFunctionSelectListItemAsync()
         {
-
             var functions = await _functionRepository.NoTrackEntities.OrderBy(o => o.Name).Select(x => new SelectListItem
             {
                 Value = x.Id.ToString().ToLower(),
