@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Models.Menu;
 using Sukt.Core.Dtos.Menu;
@@ -53,38 +52,42 @@ namespace Sukt.Core.Application
         public async Task<OperationResponse> InsertAsync(MenuInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _menu.UnitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _menu.InsertAsync(input);
-                if (input.FuncIds?.Any() == true)
-                {
-                    int count = await _menuFunction.InsertAsync(input.FuncIds.Select(x => new MenuFunctionEntity
-                    {
-                        MenuId = input.Id,
-                        FunctionId = x
-                    }).ToArray());
-                }
-                return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-            });
+
+            return await _menu.InsertAsync(input);
+            //return await _menu.UnitOfWork.UseTranAsync(async () =>
+            //{
+
+            //    if (input.FuncIds?.Any() == true)
+            //    {
+            //        int count = await _menuFunction.InsertAsync(input.FuncIds.Select(x => new MenuFunctionEntity
+            //        {
+            //            MenuId = input.Id,
+            //            FunctionId = x
+            //        }).ToArray());
+            //    }
+            //    return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
+            //});
         }
 
         public async Task<OperationResponse> UpdateAsync(MenuInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _menu.UnitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _menu.UpdateAsync(input);
-                await _menuFunction.DeleteBatchAsync(x => x.MenuId == input.Id);
-                if (input.FuncIds?.Any() == true)
-                {
-                    int count = await _menuFunction.InsertAsync(input.FuncIds.Select(x => new MenuFunctionEntity
-                    {
-                        MenuId = input.Id,
-                        FunctionId = x
-                    }).ToArray());
-                }
-                return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
-            });
+            return await _menu.UpdateAsync(input);
+
+            //return await _menu.UnitOfWork.UseTranAsync(async () =>
+            //{
+            //    var result = await _menu.UpdateAsync(input);
+            //    await _menuFunction.DeleteBatchAsync(x => x.MenuId == input.Id);
+            //    if (input.FuncIds?.Any() == true)
+            //    {
+            //        int count = await _menuFunction.InsertAsync(input.FuncIds.Select(x => new MenuFunctionEntity
+            //        {
+            //            MenuId = input.Id,
+            //            FunctionId = x
+            //        }).ToArray());
+            //    }
+            //    return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
+            //});
         }
 
         public async Task<OperationResponse> DeleteAsync(Guid id)

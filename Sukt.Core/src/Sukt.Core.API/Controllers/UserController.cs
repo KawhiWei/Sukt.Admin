@@ -14,7 +14,6 @@ namespace Sukt.Core.API.Controllers
     /// 用户管理
     /// </summary>
     [Description("用户管理")]
-    [ApiController]
     public class UserController : ApiControllerBase
     {
         private readonly IUserContract _userContract;

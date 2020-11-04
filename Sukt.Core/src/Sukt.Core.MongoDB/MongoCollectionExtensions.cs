@@ -15,7 +15,7 @@ namespace Sukt.Core.Shared
     {
         public static async Task<PageResult<TEntity>> ToPageAsync<TEntity>(this IMongoCollection<TEntity> collection, Expression<Func<TEntity, bool>> predicate, IPagedRequest request)
         {
-            var count = !predicate.IsNotNull() ? await collection.CountDocumentsAsync(predicate) : await collection.CountDocumentsAsync(FilterDefinition<TEntity>.Empty);
+            var count = predicate.IsNotNull() ? await collection.CountDocumentsAsync(predicate) : await collection.CountDocumentsAsync(FilterDefinition<TEntity>.Empty);
             var findFluent = collection.Find(predicate).Skip(request.PageRow * (request.PageIndex - 1)).Limit(request.PageRow);
 
             findFluent = findFluent.OrderBy(request.OrderConditions);
@@ -25,7 +25,7 @@ namespace Sukt.Core.Shared
 
         public static async Task<PageResult<TResult>> ToPageAsync<TEntity, TResult>(this IMongoCollection<TEntity> collection, Expression<Func<TEntity, bool>> predicate, IPagedRequest request, Expression<Func<TEntity, TResult>> selector)
         {
-            var count = !predicate.IsNotNull() ? await collection.CountDocumentsAsync(predicate) : await collection.CountDocumentsAsync(FilterDefinition<TEntity>.Empty);
+            var count = predicate.IsNotNull() ? await collection.CountDocumentsAsync(predicate) : await collection.CountDocumentsAsync(FilterDefinition<TEntity>.Empty);
             var findFluent = collection.Find(predicate).Skip(request.PageRow * (request.PageIndex - 1)).Limit(request.PageRow);
 
             findFluent = findFluent.OrderBy(request.OrderConditions);

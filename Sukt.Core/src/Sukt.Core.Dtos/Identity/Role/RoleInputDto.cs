@@ -28,11 +28,17 @@ namespace Sukt.Core.Dtos.Identity.Role
         /// </summary>
         [DisplayName("是否管理员")]
         public bool IsAdmin { get; set; }
-
+    }
+    /// <summary>
+    /// 角色设置权限Dto
+    /// </summary>
+    public class RoleMenuInputDto : InputDto<Guid>
+    {
         /// <summary>
         /// 菜单Id
         /// </summary>
         [DisplayName("菜单Id")]
         public List<Guid> MenuIds { get; set; }
     }
+
 }

@@ -37,5 +37,11 @@ namespace Sukt.Core.Application.Identity.Role
         /// <param name="request"></param>
         /// <returns></returns>
         Task<IPageResult<RoleOutPutPageDto>> GetPageAsync(PageRequest request);
+        /// <summary>
+        /// 角色分配权限
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto);
     }
 }

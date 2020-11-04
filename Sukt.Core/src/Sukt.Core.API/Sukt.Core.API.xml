@@ -158,6 +158,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Sukt.Core.API.Controllers.MenuFunctionController.AllocationMenuFunctionAsync(Sukt.Core.Dtos.MenuFunction.MenuFunctionInputDto)">
+            <summary>
+            分配菜单功能
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MenuFunctionController.GetLoadMenuFunctionAsync(System.Nullable{System.Guid})">
+            <summary>
+            获取用户角色
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.RoleController">
             <summary>
             角色管理
@@ -191,6 +203,12 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Sukt.Core.API.Controllers.RoleController.AllocationRoleMenuAsync(Sukt.Core.Dtos.Identity.Role.RoleMenuInputDto)">
+            <summary>
+            角色分配权限
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.UserController">
             <summary>
             用户管理
@@ -222,6 +240,18 @@
             删除用户
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.UserRoleController.AllocationUserRoleAsync(Sukt.Core.Dtos.Identity.UserRole.UserRoleInputDto)">
+            <summary>
+            用户分配角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.UserRoleController.GetLoadUserRoleAsync(System.Nullable{System.Guid})">
+            <summary>
+            获取用户角色
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.AddRepository(Microsoft.Extensions.DependencyInjection.IServiceCollection)">

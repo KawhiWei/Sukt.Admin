@@ -2,7 +2,6 @@
 using Sukt.Core.Shared.Attributes.AutoMapper;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Dtos.Menu
@@ -81,7 +80,5 @@ namespace Sukt.Core.Dtos.Menu
         /// </summary>
         [DisplayName("菜单对应子应用")]
         public string MicroName { get; set; }
-
-        public List<Guid> FuncIds { get; set; } = new List<Guid>();
     }
 }

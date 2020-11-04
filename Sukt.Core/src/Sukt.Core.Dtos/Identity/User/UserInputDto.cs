@@ -2,7 +2,6 @@
 using Sukt.Core.Shared.Attributes.AutoMapper;
 using Sukt.Core.Shared.Entity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -93,11 +92,6 @@ namespace Sukt.Core.Dtos
         [DisplayName("部门")]
         public string Department { get; set; }
 
-        /// <summary>
-        /// 角色ID
-        /// </summary>
-        [DisplayName("角色ID")]
-        public List<Guid> RoleIds { get; set; }
     }
 
     /// <summary>
@@ -178,11 +172,5 @@ namespace Sukt.Core.Dtos
         /// </summary>
         [DisplayName("部门")]
         public string Department { get; set; }
-
-        /// <summary>
-        /// 角色ID
-        /// </summary>
-        [DisplayName("角色ID")]
-        public List<Guid> RoleIds { get; set; }
     }
 }

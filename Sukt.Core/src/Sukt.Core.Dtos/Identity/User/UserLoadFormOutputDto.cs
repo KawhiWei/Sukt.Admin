@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Sukt.Core.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,7 +12,7 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
     {
         public UserLoadFormOutputDto()
         {
-            RoleIds = new List<Guid>();
+
         }
 
         /// <summary>
@@ -87,11 +86,5 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
         /// </summary>
         [DisplayName("部门")]
         public string Department { get; set; }
-
-        /// <summary>
-        /// 角色ID
-        /// </summary>
-        [DisplayName("角色ID")]
-        public List<Guid> RoleIds { get; set; }
     }
 }

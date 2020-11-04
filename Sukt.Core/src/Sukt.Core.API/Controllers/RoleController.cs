@@ -17,7 +17,6 @@ namespace Sukt.Core.API.Controllers
     /// 角色管理
     /// </summary>
     [Description("角色管理")]
-    [ApiController]
     public class RoleController : ApiControllerBase
     {
         private readonly IRoleContract _roleContract = null;
@@ -64,7 +63,6 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _roleContract.DeleteAsync(id)).ToAjaxResult();
         }
-
         /// <summary>
         /// 分页获取角色
         /// </summary>
@@ -75,6 +73,16 @@ namespace Sukt.Core.API.Controllers
         public async Task<PageList<RoleOutPutPageDto>> GetPageAsync([FromBody] PageRequest request)
         {
             return (await _roleContract.GetPageAsync(request)).PageList();
+        }
+        /// <summary>
+        /// 角色分配权限
+        /// </summary>
+        /// <returns></returns>
+        [Description("角色分配权限")]
+        [HttpPost]
+        public async Task<AjaxResult> AllocationRoleMenuAsync([FromBody] RoleMenuInputDto dto)
+        {
+            return (await _roleContract.AllocationRoleMenuAsync(dto)).ToAjaxResult();
         }
     }
 }

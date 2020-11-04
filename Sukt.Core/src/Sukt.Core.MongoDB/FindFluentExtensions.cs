@@ -11,7 +11,8 @@ namespace Sukt.Core.Shared
             IOrderedFindFluent<TEntity, TEntity> orderFindFluent = null;
             if (orderConditions == null || orderConditions.Length == 0)
             {
-                findFluent = FindFluentSortBy<TEntity, TEntity>.OrderBy(findFluent, "Id", Enums.SortDirectionEnum.Ascending);
+                orderFindFluent = FindFluentSortBy<TEntity, TEntity>.OrderBy(findFluent, "Id", Enums.SortDirectionEnum.Ascending);
+                //findFluent = FindFluentSortBy<TEntity, TEntity>.OrderBy(findFluent, "Id", Enums.SortDirectionEnum.Ascending);
             }
             orderConditions.ForEach((e, i) =>
             {

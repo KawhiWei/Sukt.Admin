@@ -35,27 +35,43 @@ namespace Sukt.Core.Application.Identity.Role
         {
             input.NotNull(nameof(input));
             var role = input.MapTo<RoleEntity>();
+            return (await _roleManager.CreateAsync(role)).ToOperationResponse();
+            //return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
+            // {
+            //     var result = await _roleManager.CreateAsync(role);
+            //     if (!result.Succeeded)
+            //     {
+            //         return result.ToOperationResponse();
+            //     }
+            //     if (input.MenuIds?.Any() == true)
+            //     {
+            //         ;
+            //         if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
+            //         {
+            //             MenuId = x,
+            //             RoleId = role.Id,
+            //         }).ToArray()) <= 0)
+            //         {
+            //             return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
+            //         }
+            //     }
+            //     return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
+            // });
+        }
+
+        public async Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto)
+        {
+            dto.NotNull(nameof(dto));
             return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-             {
-                 var result = await _roleManager.CreateAsync(role);
-                 if (!result.Succeeded)
-                 {
-                     return result.ToOperationResponse();
-                 }
-                 if (input.MenuIds?.Any() == true)
-                 {
-                     ;
-                     if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
-                     {
-                         MenuId = x,
-                         RoleId = role.Id,
-                     }).ToArray()) <= 0)
-                     {
-                         return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
-                     }
-                 }
-                 return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-             });
+            {
+                await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == dto.Id);
+                await _roleMenuRepository.InsertAsync(dto.MenuIds.Select(x => new RoleMenuEntity
+                {
+                    RoleId = dto.Id,
+                    MenuId = x,
+                }).ToArray());
+                return new OperationResponse(ResultMessage.AllocationSucces, OperationEnumType.Success);
+            });
         }
 
         /// <summary>
@@ -68,27 +84,29 @@ namespace Sukt.Core.Application.Identity.Role
             input.NotNull(nameof(input));
             var role = await _roleManager.FindByIdAsync(input.Id.ToString());
             role = input.MapTo(role);
-            return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _roleManager.UpdateAsync(role);
-                if (!result.Succeeded)
-                {
-                    return result.ToOperationResponse();
-                }
-                if (input.MenuIds?.Any() == true)
-                {
-                    await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == input.Id);
-                    if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
-                    {
-                        MenuId = x,
-                        RoleId = role.Id,
-                    }).ToArray()) <= 0)
-                    {
-                        return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
-                    }
-                }
-                return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-            });
+            return (await _roleManager.UpdateAsync(role)).ToOperationResponse();
+
+            //return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
+            //{
+            //    var result = await _roleManager.UpdateAsync(role);
+            //    if (!result.Succeeded)
+            //    {
+            //        return result.ToOperationResponse();
+            //    }
+            //    if (input.MenuIds?.Any() == true)
+            //    {
+            //        await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == input.Id);
+            //        if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
+            //        {
+            //            MenuId = x,
+            //            RoleId = role.Id,
+            //        }).ToArray()) <= 0)
+            //        {
+            //            return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
+            //        }
+            //    }
+            //    return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
+            //});
         }
 
         public async Task<OperationResponse> DeleteAsync(Guid id)

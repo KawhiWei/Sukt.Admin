@@ -1,6 +1,5 @@
 ﻿using IDN.Services.BasicsService.Dtos.Identity.User;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Dtos;
 using Sukt.Core.Shared.Entity;
@@ -9,7 +8,6 @@ using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.ResultMessageConst;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application
@@ -32,28 +30,30 @@ namespace Sukt.Core.Application
             input.NotNull(nameof(input));
             var user = input.MapTo<UserEntity>();
             var passwordHash = input.PasswordHash;
-            return await _unitOfWork.UseTranAsync(async () =>
-           {
-               var result = passwordHash.IsNullOrEmpty() ? await _userManager.CreateAsync(user) : await _userManager.CreateAsync(user, passwordHash);
-               if (!result.Succeeded)
-                   return result.ToOperationResponse();
-               if (input.RoleIds?.Any() == true)
-               {
-                   await _userRoleRepository.InsertAsync(input.RoleIds.Select(x => new UserRoleEntity
-                   {
-                       RoleId = x,
-                       UserId = user.Id,
-                   }).ToArray());
-               }
-               return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-           });
+            var result = passwordHash.IsNullOrEmpty() ? await _userManager.CreateAsync(user) : await _userManager.CreateAsync(user, passwordHash);
+            return result.ToOperationResponse();
+            // return await _unitOfWork.UseTranAsync(async () =>
+            //{
+
+            //    if (!result.Succeeded)
+            //        return result.ToOperationResponse();
+            //    if (input.RoleIds?.Any() == true)
+            //    {
+            //        await _userRoleRepository.InsertAsync(input.RoleIds.Select(x => new UserRoleEntity
+            //        {
+            //            RoleId = x,
+            //            UserId = user.Id,
+            //        }).ToArray());
+            //    }
+            //    return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
+            //});
         }
 
         public async Task<OperationResponse> LoadUserFormAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             var userdto = user.MapTo<UserLoadFormOutputDto>();
-            userdto.RoleIds = await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToListAsync();
+            //userdto.RoleIds = await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToListAsync();
             return new OperationResponse(ResultMessage.LoadSucces, userdto, OperationEnumType.Success);
         }
 
@@ -62,22 +62,24 @@ namespace Sukt.Core.Application
             input.NotNull(nameof(input));
             var user = await _userManager.FindByIdAsync(input.Id.ToString());
             user = input.MapTo(user);
-            return await _unitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _userManager.UpdateAsync(user);
-                if (!result.Succeeded)
-                    return result.ToOperationResponse();
-                await _userRoleRepository.DeleteBatchAsync(x => x.UserId == input.Id);
-                if (input.RoleIds?.Any() == true)
-                {
-                    await _userRoleRepository.InsertAsync(input.RoleIds.Select(x => new UserRoleEntity
-                    {
-                        RoleId = x,
-                        UserId = user.Id,
-                    }).ToArray());
-                }
-                return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
-            });
+            return (await _userManager.UpdateAsync(user)).ToOperationResponse();
+            //return result;
+            //return await _unitOfWork.UseTranAsync(async () =>
+            //{
+
+            //    if (!result.Succeeded)
+            //        return result.ToOperationResponse();
+            //    await _userRoleRepository.DeleteBatchAsync(x => x.UserId == input.Id);
+            //    if (input.RoleIds?.Any() == true)
+            //    {
+            //        await _userRoleRepository.InsertAsync(input.RoleIds.Select(x => new UserRoleEntity
+            //        {
+            //            RoleId = x,
+            //            UserId = user.Id,
+            //        }).ToArray());
+            //    }
+            //    return new OperationResponse(ResultMessage.UpdateSuccess, OperationEnumType.Success);
+            //});
         }
 
         public async Task<OperationResponse> DeleteAsync(Guid id)

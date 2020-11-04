@@ -20,8 +20,8 @@ namespace Sukt.Core.API.Startups
         typeof(AopModule),
         typeof(SuktAutoMapperModuleBase),
         typeof(CSRedisModuleBase),
-        typeof(IdentityServerAuthModule),
-        //typeof(ConsulModuleBase),
+        typeof(IdentityModule),//如果是用户及角色等通用功能使用IdentityModule   作为微服务架构则使用IdentityServerAuthModule
+                               //typeof(ConsulModuleBase),
         typeof(SwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
