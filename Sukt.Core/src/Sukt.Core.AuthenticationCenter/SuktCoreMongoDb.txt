@@ -1,1 +1,0 @@
-mongodb://1065.cloud:8890/SuktCoreAuditLog
