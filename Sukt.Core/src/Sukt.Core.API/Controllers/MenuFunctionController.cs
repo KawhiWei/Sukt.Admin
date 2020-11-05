@@ -2,6 +2,7 @@
 using Sukt.Core.Application.MenuFunction;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.MenuFunction;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [Description("分配菜单功能")]
         [HttpPost]
+        [AuditLog]
         public async Task<AjaxResult> AllocationMenuFunctionAsync(MenuFunctionInputDto input)
         {
             return (await _menuFunctionContract.AllocationMenuFunctionAsync(input)).ToAjaxResult();

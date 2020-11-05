@@ -9,7 +9,7 @@ namespace Sukt.Core.Shared.Audit
     /// 审计日志属性表
     /// </summary>
     [DisplayName("审计日志属性表")]
-    [MongoDBTable("SuktPropertyLog")]
+    [MongoDBTable("PropertyLog")]
     public class AuditPropertysEntry : EntityBase<ObjectId>, IFullAuditedEntity<Guid>
     {
         /// <summary>

@@ -46,6 +46,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         /// <returns></returns>
         [HttpPut]
         [Description("修改一个数据字典")]
+        [AuditLog]
         public async Task<AjaxResult> UpdateAsync(DataDictionaryInputDto input)
         {
             return (await _dictionary.UpdateAsync(input)).ToAjaxResult();
@@ -70,6 +71,7 @@ namespace Sukt.Core.API.Controllers.DataDictionary
         /// <returns></returns>
         [Description("异步删除数据字典")]
         [HttpDelete]
+        [AuditLog]
         public async Task<AjaxResult> DeleteAsyc(Guid? id)
         {
             return (await _dictionary.DeleteAsync(id.Value)).ToAjaxResult();

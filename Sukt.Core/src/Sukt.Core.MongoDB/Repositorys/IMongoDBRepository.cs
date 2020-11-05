@@ -1,7 +1,6 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Sukt.Core.Shared.OperationResult;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.MongoDB.Repositorys
@@ -24,7 +23,7 @@ namespace Sukt.Core.MongoDB.Repositorys
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        Task InsertAsync(List<TData> entitys);
+        Task InsertAsync(TData[] entitys);
 
         /// <summary>
         /// 查询数据

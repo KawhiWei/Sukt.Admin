@@ -2,6 +2,7 @@
 using Sukt.Core.Application.Identity.UserRole;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Identity.UserRole;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [Description("用户分配角色")]
         [HttpPost]
+        [AuditLog]
         public async Task<AjaxResult> AllocationUserRoleAsync([FromBody] UserRoleInputDto dto)
         {
             return (await _userRoleContract.AllocationRoleAsync(dto)).ToAjaxResult();

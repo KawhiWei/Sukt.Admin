@@ -8,7 +8,7 @@ namespace Sukt.Core.Shared.Audit
     /// <summary>
     ///
     /// </summary>
-    [MongoDBTable("SuktAuditLog")]
+    [MongoDBTable("AuditLog")]
     [DisplayName("审计日志主表")]
     public class AuditLog : EntityBase<ObjectId>, IFullAuditedEntity<Guid>
     {

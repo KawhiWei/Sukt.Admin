@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.ComponentModel;
@@ -32,6 +33,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("添加用户")]
+        [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] UserInputDto input)
         {
             return (await _userContract.InsertAsync(input)).ToAjaxResult();
@@ -56,6 +58,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Description("修改用户")]
+        [AuditLog]
         public async Task<AjaxResult> UpdateAsync([FromBody] UserUpdateInputDto input)
         {
             return (await _userContract.UpdateAsync(input)).ToAjaxResult();
@@ -68,6 +71,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Description("删除用户")]
+        [AuditLog]
         public async Task<AjaxResult> DeleteAsync(Guid? id)
         {
             return (await _userContract.DeleteAsync(id.Value)).ToAjaxResult();

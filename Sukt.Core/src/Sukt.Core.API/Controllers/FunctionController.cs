@@ -3,6 +3,7 @@ using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Function;
 using Sukt.Core.Shared.AjaxResult;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
@@ -32,6 +33,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("创建功能")]
+        [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] FunctionInputDto input)
         {
             return (await _function.InsertAsync(input)).ToAjaxResult();
@@ -44,6 +46,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Description("修改功能")]
+        [AuditLog]
         public async Task<AjaxResult> UpdateAsync([FromBody] FunctionInputDto input)
         {
             return (await _function.UpdateAsync(input)).ToAjaxResult();
@@ -56,6 +59,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Description("删除功能")]
+        [AuditLog]
         public async Task<AjaxResult> DeleteAsyc(Guid? id)
         {
             return (await _function.DeleteAsync(id.Value)).ToAjaxResult();

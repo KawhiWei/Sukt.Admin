@@ -11,7 +11,6 @@ using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.Extensions.ResultExtensions;
 using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.ResultMessageConst;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,8 +49,8 @@ namespace Sukt.Core.Application.Audit
                 auditEntry.Add(model);
             }
             await _auditLogRepository.InsertAsync(auditLog);
-            await _auditEntryRepository.InsertAsync(auditEntry);
-            await _auditPropertysEntryRepository.InsertAsync(auditpropertyentry);
+            await _auditEntryRepository.InsertAsync(auditEntry.ToArray());
+            await _auditPropertysEntryRepository.InsertAsync(auditpropertyentry.ToArray());
         }
         /// <summary>
         /// 

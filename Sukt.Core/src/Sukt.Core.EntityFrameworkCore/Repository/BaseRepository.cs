@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Enums;
@@ -20,6 +22,7 @@ namespace Sukt.Core.Shared
     public class BaseRepository<TEntity, Tkey> : IEFCoreRepository<TEntity, Tkey>
         where TEntity : class, IEntity<Tkey> where Tkey : IEquatable<Tkey>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public BaseRepository(IServiceProvider serviceProvider)
         {
             UnitOfWork = (serviceProvider.GetService(typeof(IUnitOfWork)) as IUnitOfWork);//获取工作单元实例
@@ -27,6 +30,7 @@ namespace Sukt.Core.Shared
             _dbSet = _dbContext.Set<TEntity>();
             _suktUser = (serviceProvider.GetService(typeof(ISuktUser)) as ISuktUser);//获取用户登录存储解析Token实例
             _logger = serviceProvider.GetLogger<BaseRepository<TEntity, Tkey>>();
+            _httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
         }
 
         /// <summary>
@@ -437,7 +441,7 @@ namespace Sukt.Core.Shared
             }
 
             ICreatedAudited<TUserKey> entity1 = (ICreatedAudited<TUserKey>)entity;
-            //entity1.CreatedId = (TUserKey) Guid.NewGuid()//_principal?.Identity.GetUesrId<TUserKey>();
+            entity1.CreatedId = _httpContextAccessor.HttpContext.User?.Identity.GetUesrId<TUserKey>();
             entity1.CreatedAt = DateTime.Now;
             return (TEntity)entity1;
         }
@@ -496,7 +500,7 @@ namespace Sukt.Core.Shared
 
             IModifyAudited<TUserKey> entity1 = (IModifyAudited<TUserKey>)entity;
             //entity1.LastModifyId = _suktUser.Id a;
-            //entity1.LastModifyId = _principal?.Identity?.GetUesrId<TUserKey>();
+            entity1.LastModifyId = _httpContextAccessor.HttpContext.User?.Identity.GetUesrId<TUserKey>();
             entity1.LastModifedAt = DateTime.Now;
             return (TEntity)entity1;
         }

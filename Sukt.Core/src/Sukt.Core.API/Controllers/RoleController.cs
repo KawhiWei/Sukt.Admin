@@ -4,6 +4,7 @@ using Sukt.Core.Application.Identity.Role;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Identity.Role;
 using Sukt.Core.Shared.AjaxResult;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using Sukt.Core.Shared.OperationResult;
@@ -35,6 +36,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("添加角色")]
+        [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] RoleInputDto input)
         {
             return (await _roleContract.CreateAsync(input)).ToAjaxResult();
@@ -47,6 +49,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Description("修改角色")]
+        [AuditLog]
         public async Task<AjaxResult> UpdateAsync([FromBody] RoleInputDto input)
         {
             return (await _roleContract.UpdateAsync(input)).ToAjaxResult();
@@ -59,6 +62,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Description("删除角色")]
+        [AuditLog]
         public async Task<AjaxResult> DeleteAsync(Guid id)
         {
             return (await _roleContract.DeleteAsync(id)).ToAjaxResult();

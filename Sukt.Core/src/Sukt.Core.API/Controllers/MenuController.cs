@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Menu;
+using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.OperationResult;
 using System;
 using System.ComponentModel;
@@ -32,6 +33,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("创建菜单")]
+        [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] MenuInputDto input)
         {
             return (await _menu.InsertAsync(input)).ToAjaxResult();
@@ -44,6 +46,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Description("修改菜单")]
+        [AuditLog]
         public async Task<AjaxResult> UpdateAsync([FromBody] MenuInputDto input)
         {
             return (await _menu.UpdateAsync(input)).ToAjaxResult();
@@ -56,6 +59,7 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Description("删除菜单")]
+        [AuditLog]
         public async Task<AjaxResult> DeleteAsync(Guid id)
         {
             return (await _menu.DeleteAsync(id)).ToAjaxResult();
