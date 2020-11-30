@@ -151,7 +151,7 @@ namespace Sukt.Core.MongoDB.Repositorys
             }
 
             ICreatedAudited<TUserKey> entity1 = (ICreatedAudited<TUserKey>)entity;
-            entity1.CreatedId = _httpContextAccessor.HttpContext.User?.Identity.GetUesrId<TUserKey>();
+            entity1.CreatedId = _httpContextAccessor.HttpContext.User?.Identity.GetIdentityServer4SubjectId<TUserKey>();
             entity1.CreatedAt = DateTime.Now;
             return (TData)entity1;
         }
@@ -206,7 +206,7 @@ namespace Sukt.Core.MongoDB.Repositorys
 
             IModifyAudited<TUserKey> entity1 = (IModifyAudited<TUserKey>)entity;
             //entity1.LastModifyId = _suktUser.Id a;
-            entity1.LastModifyId = _httpContextAccessor.HttpContext.User?.Identity.GetUesrId<TUserKey>();
+            entity1.LastModifyId = _httpContextAccessor.HttpContext.User?.Identity.GetIdentityServer4SubjectId<TUserKey>();
             entity1.LastModifedAt = DateTime.Now;
             return (TData)entity1;
         }

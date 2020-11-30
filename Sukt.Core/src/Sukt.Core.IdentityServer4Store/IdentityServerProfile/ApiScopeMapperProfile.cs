@@ -12,7 +12,7 @@ namespace Sukt.Core.IdentityServerFourStore.IdentityServerProfile
         public ApiScopeMapperProfile()
         {
             CreateMap<ApiScopeProperty, KeyValuePair<string, string>>()
-                .ReverseMap();
+                           .ReverseMap();
 
             CreateMap<ApiScopeClaim, string>()
                .ConstructUsing(x => x.Type)

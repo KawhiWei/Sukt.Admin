@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.AutoMapper;
 using Sukt.Core.Domain.Models;
@@ -11,7 +10,6 @@ using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
 using System.Linq;
-using System.Security.Principal;
 
 namespace Sukt.Core.AuthenticationCenter.Startups
 {
@@ -72,14 +70,11 @@ namespace Sukt.Core.AuthenticationCenter.Startups
                     });
                 });
             }
-
-
-
-            context.Services.AddTransient<IPrincipal>(provider =>
-            {
-                IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();
-                return accessor?.HttpContext?.User;
-            });
+            //context.Services.AddTransient<IPrincipal>(provider =>
+            //{
+            //    IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();
+            //    return accessor?.HttpContext?.User;
+            //});
         }
     }
 }

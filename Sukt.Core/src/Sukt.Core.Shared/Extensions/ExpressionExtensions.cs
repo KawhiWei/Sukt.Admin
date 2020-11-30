@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Sukt.Core.Shared.Extensions
 {
@@ -189,6 +191,14 @@ namespace Sukt.Core.Shared.Extensions
             }
 
             var exp = ReplaceParameter(expr1, expr2, out ParameterExpression newParameter);
+
+            if (exp.left is ConstantExpression constant && constant.Value.IsTrue())
+            {
+
+                return expr2;
+
+            }
+
             var body = Expression.And(exp.left, exp.right);
             return Expression.Lambda<Func<T, bool>>(body, newParameter);
         }
@@ -273,6 +283,50 @@ namespace Sukt.Core.Shared.Extensions
             var left = visitor.Replace(expr1.Body);
             var right = visitor.Replace(expr2.Body);
             return (left, right);
+        }
+
+        /// <summary>
+        /// In操作
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="constant"></param>
+        /// <returns></returns>
+        public static Expression In(this MemberExpression member, Expression constant)
+        {
+            var constantExpression = constant as ConstantExpression;
+            if (constantExpression is null)
+            {
+                throw new ArgumentException("“In”操作值只支持ConstantExpression类型");
+            }
+
+            if (!(constantExpression.Value is IList) || !constantExpression.Value.GetType().IsGenericType)
+            {
+                throw new ArgumentException("“In”操作只支持列表作为参数。");
+            }
+
+
+            var type = constantExpression.Value.GetType();
+            var inInfo = type.GetMethod("Contains", new[] { type.GetGenericArguments()[0] });
+            return GetExpressionHandlingNullables(member, constantExpression, type, inInfo) ?? Expression.Call(constantExpression, inInfo, member);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="constant1"></param>
+        /// <param name="type"></param>
+        /// <param name="inInfo"></param>
+        /// <returns></returns>
+        private static Expression GetExpressionHandlingNullables(MemberExpression member, ConstantExpression constant1, Type type, MethodInfo inInfo)
+        {
+            var listUnderlyingType = Nullable.GetUnderlyingType(type.GetGenericArguments()[0]);
+            var memberUnderlingType = Nullable.GetUnderlyingType(member.Type);
+            if (listUnderlyingType != null && memberUnderlingType == null)
+            {
+                return Expression.Call(constant1, inInfo, member.Expression);
+            }
+
+            return null;
         }
 
         public static Dictionary<string, object> ExpressionToDictValues<T>(this Expression<Func<T, T>> expression)

@@ -41,6 +41,20 @@ namespace Sukt.Core.IdentityServer4Store
                     {
                         "SuktCore.API"
                     }
+                },
+                new ApiResource() {
+                    Name="Destiny.Core.Flow.API",
+                    // include the following using claims in access token (in addition to subject id)
+                    //requires using using IdentityModel;
+                    UserClaims = { JwtClaimTypes.Name, JwtClaimTypes.Role },
+                    ApiSecrets = new List<Secret>()
+                    {
+                        new Secret("DestinyCoreFlowAPI_secret".Sha256())
+                    },
+                    Scopes =
+                    {
+                        "Destiny.Core.Flow.API"
+                    }
                 }
             };
         }
@@ -51,43 +65,46 @@ namespace Sukt.Core.IdentityServer4Store
             // javascript client
             return new List<Client> {
                 new Client {
-                    ClientId = "SuktCoreWebClient",
-                    ClientName = "SuktCoreWebClient",
+                    ClientId = "BasicsWebClient",
+                    ClientName = "BasicsWebClient",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
                     ClientSecrets =
                     {
-                        new Secret("SuktCore.API_secret".Sha256())
+                        new Secret("BasicsWebClient_secret".Sha256())
                     },
-
-                    RedirectUris =           { "http://localhost:8080/Callback" },
-                    PostLogoutRedirectUris = { "http://localhost:8080" },
-                    AllowedCorsOrigins =     { "http://localhost:8080" },
+                    AllowOfflineAccess=true,//返回刷新token
+                    RedirectUris ={ "http://localhost:8848/callback","https://admin.destinycore.club" },
+                    PostLogoutRedirectUris = { "http://localhost:8848" ,"https://admin.destinycore.club"},
+                    AllowedCorsOrigins =     { "http://localhost:8848" ,"https://admin.destinycore.club"},
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "roles",
-                        "SuktCore.API"
+                        "SuktCore.API",
+                        "Destiny.Core.Flow.API"
                     },
                 },
                 new Client {
-                    ClientId = "SuktCoreWebClientpwd",
-                    ClientName = "SuktCoreWebClientpwd",
+
+                    ClientId = "BasicsPwdClient",
+                    ClientName = "BasicsPwdClient",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowAccessTokensViaBrowser = true,
                     ClientSecrets =
                     {
-                        new Secret("SuktCoreAPI".Sha256())
+                        new Secret("BasicsPwdClient_secret".Sha256())
                     },
-
-                    RedirectUris =           { "http://localhost:8080/Callback" },
-                    PostLogoutRedirectUris = { "http://localhost:8080" },
-                    AllowedCorsOrigins =     { "http://localhost:8080" },
+                    AllowOfflineAccess=true,//返回刷新token
+                    RedirectUris =           { "http://localhost:8848/callback","https://admin.destinycore.club" },
+                    PostLogoutRedirectUris = { "http://localhost:8848" ,"https://admin.destinycore.club"},
+                    AllowedCorsOrigins =     { "http://localhost:8848" ,"https://admin.destinycore.club"},
                     AllowedScopes = {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "roles",
-                        "SuktCore.API"
+                        "SuktCore.API",
+                        "Destiny.Core.Flow.API"
                     },
                 },
             };
@@ -101,6 +118,11 @@ namespace Sukt.Core.IdentityServer4Store
                 {
                     Name = "SuktCore.API",
                     DisplayName = "SuktCore.API",
+                },
+                new ApiScope()
+                {
+                    Name = "Destiny.Core.Flow.API",
+                    DisplayName = "Destiny.Core.Flow.API",
                 }
             };
         }

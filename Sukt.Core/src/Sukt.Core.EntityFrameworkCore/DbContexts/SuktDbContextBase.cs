@@ -15,7 +15,7 @@ namespace Sukt.Core.Shared
     /// </summary>
     public class SuktDbContextBase : DbContext
     {
-        private readonly IServiceProvider _serviceProvider = null;
+        protected readonly IServiceProvider _serviceProvider = null;
 
         /// <summary>
         /// 构造函数

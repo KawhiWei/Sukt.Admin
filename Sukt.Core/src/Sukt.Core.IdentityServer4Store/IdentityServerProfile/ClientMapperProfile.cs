@@ -62,6 +62,7 @@ namespace Sukt.Core.IdentityServerFourStore.IdentityServerProfile
             CreateMap<ClientSecret, IdentityServer4.Models.Secret>(MemberList.Destination)
                 .ForMember(dest => dest.Type, opt => opt.Condition(srs => srs != null))
                 .ReverseMap();
+
         }
     }
 }

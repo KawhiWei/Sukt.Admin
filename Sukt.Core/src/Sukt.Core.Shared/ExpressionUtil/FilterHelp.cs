@@ -74,7 +74,11 @@ namespace Sukt.Core.Shared.ExpressionUtil
         private static Expression ChangeTypeToExpression(FilterCondition filter, Type conversionType)
         {
             var constant = Expression.Constant(true);
+            if (filter.Operator == FilterOperator.In)
+            {
 
+                return Expression.Constant(filter.Value);
+            }
             var value = filter.Value.AsTo(conversionType);
             if (value == null)
             {
@@ -109,6 +113,8 @@ namespace Sukt.Core.Shared.ExpressionUtil
                 case FilterOperator.Like:
 
                     return Like(member, expression);
+                case FilterOperator.In:
+                    return (member as MemberExpression).In(expression);
 
                 default:
                     throw new SuktAppException($"此{operate}过滤条件不存在！！！");
