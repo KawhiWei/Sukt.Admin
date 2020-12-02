@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Sukt.Core.AutoMapper;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.IdentityServerFourStore;
@@ -53,6 +54,8 @@ namespace Sukt.Core.AuthenticationCenter.Startups
         {
             var service = context.Services;
             service.AddMvc();
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
+            context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             var configuration = service.GetConfiguration();
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
             var settings = service.GetAppSettings();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Sukt.Core.Aop;
 using Sukt.Core.AspNetCore.Filters;
 using Sukt.Core.AutoMapper;
@@ -49,6 +50,8 @@ namespace Sukt.Core.API.Startups
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
             var configuration = service.GetConfiguration();
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
+            context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
             var settings = service.GetAppSettings();
             if (!settings.Cors.PolicyName.IsNullOrEmpty() && !settings.Cors.Url.IsNullOrEmpty()) //添加跨域

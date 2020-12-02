@@ -1,26 +1,36 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Sukt.Core.Shared.AppOption;
+using Sukt.Core.Shared.Exceptions;
 using Sukt.Core.Shared.Helpers;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Sukt.Core.Shared.Extensions
 {
-    public interface IServiceModule
-    {
-        void ConfigureServices(IServiceCollection services);
-    }
-
     /// <summary>
     /// 服务集合扩展
     /// </summary>
     public static class ServiceCollectionExtension
     {
+        /// <summary>
+        /// 得到注入服务
+        /// </summary>
+        /// <typeparam name="TType"></typeparam>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static TType GetService<TType>(this IServiceCollection services)
+        {
+
+            var provider = services.BuildServiceProvider();
+            return provider.GetService<TType>();
+        }
         /// <summary>
         /// RegisterAssemblyTypes
         /// </summary>
@@ -164,39 +174,6 @@ namespace Sukt.Core.Shared.Extensions
                     services.Add(new ServiceDescriptor(interfaceType, type, serviceLifetime));
                 }
             }
-            return services;
-        }
-
-        /// <summary>
-        /// RegisterAssemblyModules
-        /// </summary>
-        /// <param name="services">services</param>
-        /// <param name="assemblies">assemblies</param>
-        /// <returns>services</returns>
-        public static IServiceCollection RegisterAssemblyModules(
-            [NotNull] this IServiceCollection services, params Assembly[] assemblies)
-        {
-            if (assemblies == null || assemblies.Length == 0)
-            {
-                assemblies = ReflectHelper.GetAssemblies();
-            }
-            foreach (var type in assemblies.SelectMany(ass => ass.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract && typeof(IServiceModule).IsAssignableFrom(t))
-            )
-            {
-                try
-                {
-                    if (Activator.CreateInstance(type) is IServiceModule module)
-                    {
-                        module.ConfigureServices(services);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-
             return services;
         }
 
@@ -375,5 +352,79 @@ namespace Sukt.Core.Shared.Extensions
         }
 
         #endregion New Module
+
+        #region 读取文件
+
+        /// <summary>
+        /// 得到文件容器
+        /// </summary>
+        /// <param name="services">服务接口</param>
+        /// <param name="fileName">文件名+后缀名</param>
+        /// <param name="fileNotExistsMsg">文件不存提示信息</param>
+        /// <returns>返回文件中的文件</returns>
+        public static string GetFileText(this IServiceCollection services, string fileName, string fileNotExistsMsg)
+        {
+            fileName.NotNullOrEmpty(nameof(fileName));
+            var fileProvider = services.GetSingletonInstanceOrNull<IFileProvider>();
+
+            if (fileProvider == null)
+            {
+
+                throw new SuktAppException("IFileProvider接口不存在");
+            }
+
+
+            var fileInfo = fileProvider.GetFileInfo(fileName);
+            if (!fileInfo.Exists)
+            {
+                if (!fileNotExistsMsg.IsNullOrEmpty())
+                {
+                    throw new SuktAppException(fileNotExistsMsg);
+                }
+
+            }
+            var text = ReadAllText(fileInfo);
+            if (text.IsNullOrEmpty())
+            {
+                throw new SuktAppException("文件内容不存在");
+            }
+            return text;
+        }
+
+
+
+        /// <summary>
+        /// 根据配置得到文件内容
+        /// </summary>
+        /// <param name="services">服务接口</param>
+        /// <param name=""></param>
+        /// <param name="sectionKey">分区键</param>
+        /// <param name="fileNotExistsMsg">文件不存提示信息</param>
+        /// <returns>返回文件中的文件</returns>
+        public static string GetFileByConfiguration(this IServiceCollection services, string sectionKey, string fileNotExistsMsg)
+        {
+
+
+            sectionKey.NotNullOrEmpty(nameof(sectionKey));
+            var configuration = services.GetService<IConfiguration>();
+            var value = configuration?.GetSection(sectionKey)?.Value;
+            return services.GetFileText(value, fileNotExistsMsg);
+
+        }
+
+        /// <summary>
+        /// 读取全部文本
+        /// </summary>
+        /// <param name="fileInfo">文件信息接口</param>
+        /// <returns></returns>
+        private static string ReadAllText(IFileInfo fileInfo)
+        {
+            byte[] buffer;
+            using var stream = fileInfo.CreateReadStream();
+            buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+            return Encoding.Default.GetString(buffer).Trim();
+        }
+        #endregion
     }
 }

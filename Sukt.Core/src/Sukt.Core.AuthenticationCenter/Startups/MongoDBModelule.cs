@@ -9,7 +9,7 @@ namespace Sukt.Core.AuthenticationCenter.Startups
     {
         protected override void AddDbContext(IServiceCollection services)
         {
-            var connection = services.GetConfiguration()["SuktCore:DbContext:MongoDBConnectionString"];
+            var connection = services.GetFileByConfiguration("SuktCore:DbContext:MongoDBConnectionString", "未找到存放MongoDB数据库链接的文件");
             services.AddMongoDbContext<DefaultMongoDbContext>(options =>
             {
                 options.ConnectionString = connection;
