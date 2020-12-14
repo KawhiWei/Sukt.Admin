@@ -5,7 +5,7 @@ using Sukt.Core.Aop;
 using Sukt.Core.AspNetCore.Filters;
 using Sukt.Core.AutoMapper;
 using Sukt.Core.Domain.Models;
-using Sukt.Core.Redis;
+using Sukt.Core.Shared;
 using Sukt.Core.Shared.AppOption;
 using Sukt.Core.Shared.Events;
 using Sukt.Core.Shared.Extensions;
@@ -20,14 +20,14 @@ namespace Sukt.Core.API.Startups
     [SuktDependsOn(
         typeof(AopModule),
         typeof(SuktAutoMapperModuleBase),
-        typeof(CSRedisModuleBase),
-        typeof(IdentityServerAuthModule),//如果是用户及角色等通用功能使用IdentityModule   作为微服务架构则使用IdentityServerAuthModule
-                                         //typeof(ConsulModuleBase),
-                                         //typeof(IdentityModule), 
+        //typeof(CSRedisModuleBase),
+        typeof(IdentityModule),//如果是用户及角色等通用功能使用IdentityModule   作为微服务架构则使用IdentityServerAuthModule
+                               //typeof(ConsulModuleBase),
+                               //typeof(IdentityModule), 
         typeof(SwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
-        typeof(EntityFrameworkCoreMySqlModule),
+        typeof(EntityFrameworkCoreModule),
         typeof(MongoDBModule),
         typeof(MultiTenancyModule),
         typeof(MigrationModuleBase)

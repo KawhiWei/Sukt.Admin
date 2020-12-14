@@ -25,10 +25,16 @@ namespace Sukt.Core.Shared
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var auditlist = await _changeTracker.GetChangeTrackerList(this.ChangeTracker.Entries());
+            var auditlist = _changeTracker.GetChangeTrackerList(this.ChangeTracker.Entries());
             var result = await base.SaveChangesAsync(cancellationToken);
-            //await this.AfterSaveChanges();
             await _bus.PublishAsync(new AuditEvent() { AuditList = auditlist });
+            return result;
+        }
+        public override int SaveChanges()
+        {
+            var auditlist = _changeTracker.GetChangeTrackerList(ChangeTracker.Entries());
+            var result = base.SaveChanges();
+            _bus.PublishAsync(new AuditEvent() { AuditList = auditlist });
             return result;
         }
     }

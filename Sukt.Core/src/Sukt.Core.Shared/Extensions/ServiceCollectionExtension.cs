@@ -352,9 +352,6 @@ namespace Sukt.Core.Shared.Extensions
         }
 
         #endregion New Module
-
-        #region 读取文件
-
         /// <summary>
         /// 得到文件容器
         /// </summary>
@@ -391,8 +388,6 @@ namespace Sukt.Core.Shared.Extensions
             return text;
         }
 
-
-
         /// <summary>
         /// 根据配置得到文件内容
         /// </summary>
@@ -425,6 +420,19 @@ namespace Sukt.Core.Shared.Extensions
             stream.Read(buffer, 0, buffer.Length);
             return Encoding.Default.GetString(buffer).Trim();
         }
-        #endregion
+
+        /// <summary>
+        /// 添加文件提供器
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddFileProvider(this IServiceCollection services)
+        {
+
+            var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
+            return services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
+
+        }
+
     }
 }

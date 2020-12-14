@@ -18,7 +18,7 @@ namespace Sukt.Core.AuthenticationCenter.Startups
         typeof(IdentityModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
-        typeof(EntityFrameworkCoreMySqlModule),
+        typeof(AuthenticationCenterEntityFrameworkCoreModule),
         typeof(SuktAutoMapperModuleBase),
         typeof(IdentityServer4Module),
         typeof(MigrationModuleBase)

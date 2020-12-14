@@ -1,8 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sukt.Core.Shared.AppOption;
+using Sukt.Core.Shared.Exceptions;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared.Extensions
@@ -154,5 +158,76 @@ namespace Sukt.Core.Shared.Extensions
             using var scope = provider.CreateScope();
             callback(scope.ServiceProvider);
         }
+        #region 读取文件
+
+        /// <summary>
+        /// 得到文件容器
+        /// </summary>
+        /// <param name="services">服务接口</param>
+        /// <param name="fileName">文件名+后缀名</param>
+        /// <param name="fileNotExistsMsg">文件不存提示信息</param>
+        /// <returns>返回文件中的文件</returns>
+        public static string GetFileText(this IServiceProvider provider, string fileName, string fileNotExistsMsg)
+        {
+            fileName.NotNullOrEmpty(nameof(fileName));
+            var fileProvider = provider.GetService<IFileProvider>();
+            fileProvider.NotNull(nameof(fileProvider));
+
+
+
+            var fileInfo = fileProvider.GetFileInfo(fileName);
+
+            if (!fileInfo.Exists)
+            {
+
+                if (!fileNotExistsMsg.IsNullOrEmpty())
+                {
+                    throw new SuktAppException(fileNotExistsMsg);
+                }
+
+            }
+            var text = ReadAllText(fileInfo);
+            if (text.IsNullOrEmpty())
+            {
+                throw new SuktAppException("文件内容不存在");
+            }
+            return text;
+        }
+
+
+
+        /// <summary>
+        /// 根据配置得到文件内容
+        /// </summary>
+        /// <param name="services">服务接口</param>
+        /// <param name=""></param>
+        /// <param name="sectionKey">分区键</param>
+        /// <param name="fileNotExistsMsg">文件不存提示信息</param>
+        /// <returns>返回文件中的文件</returns>
+        public static string GetFileByConfiguration(this IServiceProvider provider, string sectionKey, string fileNotExistsMsg)
+        {
+
+
+            sectionKey.NotNullOrEmpty(nameof(sectionKey));
+            var configuration = provider.GetService<IConfiguration>();
+            var value = configuration?.GetSection(sectionKey)?.Value;
+            return provider.GetFileText(value, fileNotExistsMsg);
+
+        }
+
+        /// <summary>
+        /// 读取全部文本
+        /// </summary>
+        /// <param name="fileInfo">文件信息接口</param>
+        /// <returns></returns>
+        private static string ReadAllText(IFileInfo fileInfo)
+        {
+            byte[] buffer;
+            using var stream = fileInfo.CreateReadStream();
+            buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+            return Encoding.Default.GetString(buffer).Trim();
+        }
+        #endregion
     }
 }

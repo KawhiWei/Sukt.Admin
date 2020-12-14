@@ -254,26 +254,5 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.AddRepository(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            添加仓储
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.AddUnitOfWork(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            添加工作单元
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Startups.EntityFrameworkCoreMySqlModule.UseSql(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            重写方法
-            </summary>
-            <param name="services"></param>
-            <returns></returns>
-        </member>
     </members>
 </doc>

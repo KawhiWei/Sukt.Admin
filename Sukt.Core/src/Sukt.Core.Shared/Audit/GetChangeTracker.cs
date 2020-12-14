@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Sukt.Core.Shared.Extensions;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Sukt.Core.Shared.Audit
 {
@@ -16,9 +15,8 @@ namespace Sukt.Core.Shared.Audit
         /// </summary>
         /// <param name="Entries"></param>
         /// <returns></returns>
-        public async Task<List<AuditEntryInputDto>> GetChangeTrackerList(IEnumerable<EntityEntry> Entries)
+        public List<AuditEntryInputDto> GetChangeTrackerList(IEnumerable<EntityEntry> Entries)
         {
-            await Task.CompletedTask;
             var list = new List<AuditEntryInputDto>();
             foreach (var entityEntry in Entries)
             {
