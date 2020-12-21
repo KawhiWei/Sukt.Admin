@@ -1,4 +1,4 @@
-using AspectCore.Extensions.Hosting;
+﻿using AspectCore.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -27,8 +27,14 @@ namespace Sukt.Core.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //如果API项目需要接入GRPC服务需要配置两个Kestrel主机，分别指定两个不通端口，因为GRPC默认是使用https 
+                    //webBuilder.ConfigureKestrel(opt =>
+                    //{
+                    //    opt.ListenLocalhost(8852, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1);
+                    //    opt.ListenLocalhost(9852, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
+                    //});
                     webBuilder.UseStartup<Startup>()
-                    .UseSerilog()//ע��Serilog��־�м��//����������log��
+                    .UseSerilog()//注入Serilog日志中间件//这里是配置log的
                     .ConfigureLogging((hostingContext, builder) =>
                     {
                         builder.ClearProviders();
@@ -38,6 +44,6 @@ namespace Sukt.Core.API
                         builder.AddDebug();
                     });
                 })
-            .UseDynamicProxy();//ʹ�ö�̬������Ҫ��Program���ô˷���
+            .UseDynamicProxy();//使用动态代理需要在Program引用此方法
     }
 }

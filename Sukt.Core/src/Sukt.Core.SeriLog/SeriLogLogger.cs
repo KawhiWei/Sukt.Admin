@@ -14,13 +14,26 @@ namespace Sukt.Core.SeriLog
         public static void SetSeriLoggerToFile(string fileName)
         {
             Log.Logger = new LoggerConfiguration()
+#if DEBUG
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+#else
+                 .MinimumLevel.Error()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+#endif
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Map(le => MapData(le),
+#if DEBUG
+
+       .WriteTo.Console(LogEventLevel.Information)
+                       .WriteTo.Map(le => MapData(le),
                 (key, log) =>
-                 log.Async(o => o.File(Path.Combine(fileName, @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"))))
+                 log.Async(o => o.File(Path.Combine(fileName, @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"))), restrictedToMinimumLevel: LogEventLevel.Information)
+#else
+       .WriteTo.Console(LogEventLevel.Error)
+                       .WriteTo.Map(le => MapData(le),
+                (key, log) =>
+                 log.Async(o => o.File(Path.Combine(fileName, @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"))), restrictedToMinimumLevel:LogEventLevel.Error)
+#endif
                 .CreateLogger();
 
             (DateTime time, LogEventLevel level) MapData(LogEvent logEvent)
