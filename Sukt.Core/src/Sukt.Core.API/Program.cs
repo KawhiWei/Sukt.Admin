@@ -1,10 +1,14 @@
 ﻿using AspectCore.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using Sukt.Core.SeriLog;
+using System;
+using System.IO;
 
 namespace Sukt.Core.API
 {
@@ -19,7 +23,7 @@ namespace Sukt.Core.API
             //    .WriteTo.Console()
             //    .WriteTo.File(Path.Combine("logs", @"log.txt"), rollingInterval: RollingInterval.Day)
             //    .CreateLogger();
-            SeriLogLogger.SetSeriLoggerToFile("logs");
+            //SeriLogLogger.SetSeriLoggerToFile("logs");
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -34,7 +38,51 @@ namespace Sukt.Core.API
                     //    opt.ListenLocalhost(9852, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
                     //});
                     webBuilder.UseStartup<Startup>()
-                    .UseSerilog()//注入Serilog日志中间件//这里是配置log的
+                    .ConfigureKestrel(options =>
+                    {
+
+#if DEBUG
+
+                        options.ListenLocalhost(8361, o => o.Protocols =
+                            HttpProtocols.Http2);
+
+                        // ADDED THIS LINE to fix the problem
+                        options.ListenLocalhost(8001, o => o.Protocols =
+                            HttpProtocols.Http1);
+#else
+
+                        // ADDED THIS LINE to fix the problem
+                        options.ListenAnyIP(80, o => o.Protocols =
+                            HttpProtocols.Http1);
+                        options.ListenAnyIP(8331, o => o.Protocols =
+                                                    HttpProtocols.Http2);
+
+#endif
+                    })
+                    .UseSerilog((webHost, configuration) =>
+                    {
+
+                        //得到配置文件
+                        var serilog = webHost.Configuration.GetSection("Serilog");
+                        //最小级别
+                        var minimumLevel = serilog["MinimumLevel:Default"];
+                        //日志事件级别
+                        var logEventLevel = (LogEventLevel)Enum.Parse(typeof(LogEventLevel), minimumLevel);
+
+
+                        configuration.ReadFrom.
+                        Configuration(webHost.Configuration.GetSection("Serilog")).Enrich.FromLogContext().WriteTo.Console(logEventLevel);
+                        configuration.WriteTo.Map(le => MapData(le),
+                (key, log) =>
+                 log.Async(o => o.File(Path.Combine("Logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
+
+                        (DateTime time, LogEventLevel level) MapData(LogEvent logEvent)
+                        {
+
+                            return (new DateTime(logEvent.Timestamp.Year, logEvent.Timestamp.Month, logEvent.Timestamp.Day, logEvent.Timestamp.Hour, logEvent.Timestamp.Minute, logEvent.Timestamp.Second), logEvent.Level);
+                        }
+
+                    })//注入Serilog日志中间件//这里是配置log的
                     .ConfigureLogging((hostingContext, builder) =>
                     {
                         builder.ClearProviders();

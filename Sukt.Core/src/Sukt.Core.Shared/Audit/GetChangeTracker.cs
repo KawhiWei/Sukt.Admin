@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Sukt.Core.Shared.Attributes;
 using Sukt.Core.Shared.Extensions;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Sukt.Core.Shared.Audit
 {
@@ -18,57 +21,100 @@ namespace Sukt.Core.Shared.Audit
         public List<AuditEntryInputDto> GetChangeTrackerList(IEnumerable<EntityEntry> Entries)
         {
             var list = new List<AuditEntryInputDto>();
-            foreach (var entityEntry in Entries)
+            EntityState[] states = { EntityState.Added, EntityState.Modified, EntityState.Deleted };
+            return Entries.Where(x => x.Entity != null && states.Contains(x.State) && x.GetType().IsDefined(typeof(DisableAuditingAttribute)) == false).ToArray().Select(o => this.CreateAuditEntry(o)).ToList();
+        }
+
+        private AuditEntryInputDto CreateAuditEntry(EntityEntry entityEntry)
+        {
+            var entity = entityEntry.Entity;
+            var type = entity.GetType();
+            var displayName = type.ToDescription(); //得到实体上特性
+            DataOperationType changeType = DataOperationType.Add;
+            switch (entityEntry.State)
             {
-                var auditentry = new AuditEntryInputDto();
-                auditentry.TableName = entityEntry.Metadata.GetTableName();
-                auditentry.EntityAllName = entityEntry.Metadata.Name;
-                auditentry.EntityDisplayName = entityEntry.Entity.GetType().ToDescription();
-                //auditentry.TableName=
-                switch (entityEntry.State)
-                {
-                    case EntityState.Detached:
-                        auditentry.OperationType = DataOperationType.None;
-                        break;
+                case EntityState.Deleted:
+                    changeType = DataOperationType.Delete;
+                    break;
 
-                    case EntityState.Unchanged:
-                        auditentry.OperationType = DataOperationType.None;
-                        break;
+                case EntityState.Modified:
+                    changeType = DataOperationType.Update;
+                    break;
 
-                    case EntityState.Deleted:
-                        auditentry.OperationType = DataOperationType.Delete;
-                        break;
-
-                    case EntityState.Modified:
-                        auditentry.OperationType = DataOperationType.Update;
-                        break;
-
-                    case EntityState.Added:
-                        auditentry.OperationType = DataOperationType.Add;
-                        break;
-                }
-                var properties = entityEntry.Metadata.GetProperties();
-                foreach (var propertie in properties)
-                {
-                    var AuditPropertys = new AuditPropertysEntryInputDto();
-                    var propertyEntry = entityEntry.Property(propertie.Name);//获取字段名
-                    if (propertyEntry.Metadata.IsPrimaryKey())
-                    {
-                        auditentry.KeyValues.Add(propertie.Name, propertyEntry.CurrentValue?.ToString());
-                    }
-                    else
-                    {
-                        AuditPropertys.Properties = propertie.Name;
-                        AuditPropertys.NewValues = propertyEntry.CurrentValue?.ToString();
-                        AuditPropertys.OriginalValues = propertyEntry.OriginalValue?.ToString();
-                        AuditPropertys.PropertiesType = propertie.ClrType.FullName;
-                        AuditPropertys.PropertieDisplayName = propertyEntry.Metadata.PropertyInfo.ToDescription();
-                        auditentry.PropertysEntryInputDto.Add(AuditPropertys);
-                    }
-                }
-                list.Add(auditentry);
+                case EntityState.Added:
+                    changeType = DataOperationType.Add;
+                    break;
             }
-            return list;
+            AuditEntryInputDto auditEntryInput = new AuditEntryInputDto();
+            auditEntryInput.KeyValues = new Dictionary<string, object>();
+            auditEntryInput.EntityAllName = type.FullName;
+            auditEntryInput.EntityDisplayName = displayName;
+            auditEntryInput.OperationType = changeType;
+            auditEntryInput.PropertysEntryInputDto = GetAuditPropertys(entityEntry);
+            auditEntryInput.KeyValues = new Dictionary<string, object>() {
+                { "Id",GetEntityKey(entity)}
+            };
+            return auditEntryInput;
+        }
+        /// <summary>
+        /// 得到实体主键 
+        /// </summary>
+        /// <param name="entityAsObj"></param>
+        /// <returns></returns>
+        private string GetEntityKey(object entityAsObj)
+        {
+            return entityAsObj
+                .GetType().GetProperty("Id")?
+                .GetValue(entityAsObj)?
+                .ToJson();
+        }
+        /// <summary>
+        /// 得到审计属性
+        /// </summary>
+        /// <param name="entityEntry"></param>
+        /// <returns></returns>
+        private List<AuditPropertysEntryInputDto> GetAuditPropertys(EntityEntry entityEntry)
+        {
+            List<AuditPropertysEntryInputDto> propertyDtos = new List<AuditPropertysEntryInputDto>();
+
+            foreach (var propertie in entityEntry.CurrentValues.Properties.Where(p => !p.IsConcurrencyToken && p.PropertyInfo.GetCustomAttribute<DisableAuditingAttribute>() == null))
+            {
+                var propertyEntry = entityEntry.Property(propertie.Name);//获取字段名
+                AuditPropertysEntryInputDto propertyDto = new AuditPropertysEntryInputDto();
+                propertyDto.Properties = propertie.Name;
+                propertyDto.PropertieDisplayName = propertyEntry.Metadata.PropertyInfo.ToDescription();
+                propertyDto.PropertiesType = propertie.ClrType.FullName;
+                if (propertie.IsPrimaryKey())
+                {
+                    continue;
+                }
+                if (entityEntry.State == EntityState.Added)
+                {
+                    var currentValue = propertyEntry.CurrentValue?.ToString();
+                    propertyDto.NewValues = currentValue;
+                    propertyDtos.Add(propertyDto);
+                }
+                else if (entityEntry.State == EntityState.Modified)
+                {
+                    var originalValue = propertyEntry.OriginalValue?.ToString();
+                    var currentValue = propertyEntry.CurrentValue?.ToString();
+                    if (currentValue != originalValue)
+                    {
+                        propertyDto.NewValues = currentValue;
+
+                        propertyDto.OriginalValues = originalValue;
+                        propertyDtos.Add(propertyDto);
+                    }
+                }
+                else if (entityEntry.State == EntityState.Deleted)
+                {
+
+                    var originalValue = propertyEntry.OriginalValue?.ToString();
+                    propertyDto.OriginalValues = originalValue;
+                    propertyDtos.Add(propertyDto);
+                }
+            }
+            return propertyDtos;
         }
     }
 }

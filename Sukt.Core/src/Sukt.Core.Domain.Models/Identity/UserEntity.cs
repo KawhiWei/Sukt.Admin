@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Identity;
+﻿using Sukt.Core.Domain.Models.Identity.Enum;
+using Sukt.Core.Identity;
 using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
@@ -52,13 +53,16 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("部门")]
         public string Department { get; set; }
-
         /// <summary>
         /// 租户ID
         /// </summary>
         [DisplayName("租户")]
         public Guid TenantId { get; set; }
-
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        [DisplayName("用户类型")]
+        public UserTypeEnum UserType { get; set; }
         #region 公共字段
 
         /// <summary>

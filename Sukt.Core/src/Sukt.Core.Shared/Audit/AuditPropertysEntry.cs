@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using Sukt.Core.Shared.Entity;
-using System;
 using System.ComponentModel;
 
 namespace Sukt.Core.Shared.Audit
@@ -10,7 +9,7 @@ namespace Sukt.Core.Shared.Audit
     /// </summary>
     [DisplayName("审计日志属性表")]
     [MongoDBTable("PropertyLog")]
-    public class AuditPropertysEntry : EntityBase<ObjectId>, IFullAuditedEntity<Guid>
+    public class AuditPropertysEntry : EntityBase<ObjectId>
     {
         /// <summary>
         /// 属性名称
@@ -47,39 +46,5 @@ namespace Sukt.Core.Shared.Audit
         /// </summary>
         [DisplayName("实体表Id")]
         public ObjectId AuditEntryId { get; set; }
-
-        #region 公共字段
-
-        /// <summary>
-        /// 创建人
-        /// </summary>
-        [DisplayName("创建人")]
-        public Guid? CreatedId { get; set; }
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        [DisplayName("创建时间")]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// 最后修改人
-        /// </summary>
-        [DisplayName("最后修改人")]
-        public Guid? LastModifyId { get; set; }
-
-        /// <summary>
-        /// 最后修改时间
-        /// </summary>
-        [DisplayName("最后修改时间")]
-        public DateTime LastModifedAt { get; set; }
-
-        /// <summary>
-        /// 是否删除
-        /// </summary>
-        [DisplayName("是否删除")]
-        public bool IsDeleted { get; set; }
-
-        #endregion 公共字段
     }
 }

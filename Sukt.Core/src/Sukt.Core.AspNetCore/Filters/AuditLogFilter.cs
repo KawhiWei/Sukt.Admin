@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.Extensions;
+using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Sukt.Core.AspNetCore.Filters
 {
@@ -16,48 +15,65 @@ namespace Sukt.Core.AspNetCore.Filters
     /// </summary>
     public class AuditLogFilter : IActionFilter, IResultFilter
     {
-        private Stopwatch _stopwatch = new Stopwatch();
-
         /// <summary>
         /// 执行行动时
         /// </summary>
         /// <param name="context"></param>
         public void OnActionExecuted(ActionExecutedContext context)
         {
-        }
+            if (context.Result is ObjectResult result)
+            {
+                if (result.Value is AjaxResult ajax)
+                {
+                    var type = ajax.Type;
+                    IServiceProvider provider = context.HttpContext.RequestServices;
 
+                    AuditEntryDictionaryScoped dict = provider.GetService<AuditEntryDictionaryScoped>();
+                    if (!ajax.Success)
+                    {
+                        dict.AuditChange.Message = ajax.Message;
+                    }
+
+                    dict.AuditChange.ResultType = type;
+                }
+            }
+        }
         /// <summary>
         /// 方法执行中
         /// </summary>
         /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            _stopwatch.Start();
+            IServiceProvider serviceProvider = context.HttpContext.RequestServices;
+            var controllerAction = context.ActionDescriptor as ControllerActionDescriptor;
+            var isAuditEnabled = serviceProvider.GetAppSettings().AuditEnabled;
+            if (isAuditEnabled)
+            {
+                AuditEntryDictionaryScoped auditEntryDictionaryScoped = serviceProvider.GetService<AuditEntryDictionaryScoped>();
+                AuditChangeInputDto auditChange = new AuditChangeInputDto();
+                auditChange.BrowserInformation = context.HttpContext.Request.Headers["User-Agent"].ToString();
+                auditChange.Ip = context.HttpContext.GetClientIP();
+                auditChange.FunctionName = $"{context.Controller.GetType().ToDescription()}-{controllerAction.MethodInfo.ToDescription()}";
+                auditChange.Action = context.HttpContext.Request.Path;
+                auditChange.StartTime = DateTime.Now;
+                auditEntryDictionaryScoped.AuditChange = auditChange;
+            }
         }
-
         /// <summary>
         /// 方法返回完成后
         /// </summary>
         /// <param name="context"></param>
         public void OnResultExecuted(ResultExecutedContext context)
         {
-            _stopwatch.Stop();
+            IServiceProvider serviceProvider = context.HttpContext.RequestServices;
             var action = context.ActionDescriptor as ControllerActionDescriptor;
-            var actionname = action.MethodInfo.ToDescription();//获取控制器特性
-            IServiceProvider provider = context.HttpContext.RequestServices;
-            var dic = provider.GetService<DictionaryAccessor>();
-            dic.TryGetValue("audit", out object auditEntry);
-            if (action.EndpointMetadata.Any(x => x is AuditLogAttribute) && auditEntry != null)
+            var isAuditEnabled = serviceProvider.GetAppSettings().AuditEnabled;
+            if (isAuditEnabled)
             {
-                AuditLog auditLog = new AuditLog
-                {
-                    BrowserInformation = context.HttpContext.Request.Headers["User-Agent"].ToString(),
-                    ExecutionDuration = _stopwatch.ElapsedMilliseconds,
-                    Ip = context.HttpContext.GetClientIP(),
-                    FunctionName = $"{context.Controller.GetType().ToDescription()}-{action.MethodInfo.ToDescription()}",
-                    Action = context.HttpContext.Request.Path
-                };
-                provider.GetService<IAuditStore>()?.SaveAudit(auditLog, (auditEntry as List<AuditEntryInputDto>)).GetAwaiter().GetResult(); //不用异步，或则用异步IResultFilterAsync
+
+                var dic = serviceProvider.GetService<AuditEntryDictionaryScoped>();
+                dic.AuditChange.ExecutionDuration = DateTime.Now.Subtract(dic.AuditChange.StartTime).TotalMilliseconds;
+                serviceProvider.GetService<IAuditStore>()?.SaveAudit(dic.AuditChange).GetAwaiter().GetResult();
             }
         }
 

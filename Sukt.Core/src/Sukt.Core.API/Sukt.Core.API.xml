@@ -170,6 +170,44 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Sukt.Core.API.Controllers.MultiTenantController">
+            <summary>
+            功能管理
+            </summary>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.CreateAsync(Sukt.Core.Dtos.MultiTenant.MultiTenantInputDto)">
+            <summary>
+            创建租户
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.UpdateAsync(Sukt.Core.Dtos.MultiTenant.MultiTenantInputDto)">
+            <summary>
+            修改租户
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.LoadAsync(System.Nullable{System.Guid})">
+            <summary>
+            加载租户
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.GetLoadPageAsync(Sukt.Core.Shared.Entity.PageRequest)">
+            <summary>
+            分页获获取租户
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Sukt.Core.API.Controllers.OrganizationController">
+            <summary>
+            功能管理
+            </summary>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.RoleController">
             <summary>
             角色管理

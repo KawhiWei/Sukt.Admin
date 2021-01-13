@@ -32,11 +32,20 @@ namespace Sukt.Core.Application.Audit
             _auditPropertysEntryRepository = auditPropertysEntryRepository;
         }
 
-        public async Task SaveAudit(AuditLog auditLog, List<AuditEntryInputDto> audit)
+        public async Task SaveAudit(AuditChangeInputDto audit)
         {
             List<AuditEntry> auditEntry = new List<AuditEntry>();
             List<AuditPropertysEntry> auditpropertyentry = new List<AuditPropertysEntry>();
-            foreach (var item in audit)
+            AuditLog auditLog = new AuditLog();
+            auditLog.BrowserInformation = audit.BrowserInformation;
+            auditLog.Action = audit.Action;
+            auditLog.Ip = audit.Ip;
+            auditLog.FunctionName = audit.FunctionName;
+            auditLog.ExecutionDuration = audit.ExecutionDuration;
+            //auditLog.UserId = audit.UserId;
+            auditLog.ResultType = audit.ResultType;
+            auditLog.Message = audit.Message;
+            foreach (var item in audit.AuditEntryInputDtos)
             {
                 var model = item.MapTo<AuditEntry>();
                 model.AuditLogId = auditLog.Id;
@@ -67,8 +76,6 @@ namespace Sukt.Core.Application.Audit
                 FunctionName = x.FunctionName,
                 Action = x.Action,
                 ExecutionDuration = x.ExecutionDuration,
-                CreatedId = x.CreatedId,
-                CreatedAt = x.CreatedAt,
                 Id = x.Id
             });
         }

@@ -13,6 +13,10 @@ namespace Sukt.Core.Shared.AppOption
         /// </summary>
         public AuthOptions Auth { get; set; }
         public Dictionary<string, DestinyContextOptions> DbContexts { get; set; }
+        /// <summary>
+        /// 是否启用审计 
+        /// </summary>
+        public bool AuditEnabled { get; set; }
     }
 
     /// <summary>
