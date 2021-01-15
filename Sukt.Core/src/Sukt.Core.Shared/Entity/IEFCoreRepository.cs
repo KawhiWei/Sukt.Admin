@@ -70,21 +70,22 @@ namespace Sukt.Core.Shared.Entity
         /// </summary>
         /// <param name="entity">要插入实体</param>
         /// <returns>影响的行数</returns>
-        Task<int> InsertAsync(TEntity entity);
+        Task<OperationResponse> InsertAsync(TEntity entity);
+        Task<OperationResponse> InsertAsync(TEntity entity, Func<TEntity, Task> checkFunc = null, Func<TEntity, TEntity, Task<TEntity>> insertFunc = null, Func<TEntity, TEntity> completeFunc = null);
 
         /// <summary>
         /// 以异步批量插入实体
         /// </summary>
         /// <param name="entitys">要插入实体集合</param>
         /// <returns>影响的行数</returns>
-        Task<int> InsertAsync(TEntity[] entitys);
+        Task<OperationResponse> InsertAsync(TEntity[] entitys);
 
         /// <summary>
         /// 批量插入实体
         /// </summary>
         /// <param name="entitys">要插入实体集合</param>
         /// <returns></returns>
-        int Insert(params TEntity[] entitys);
+        OperationResponse Insert(params TEntity[] entitys);
 
         Task<OperationResponse> InsertAsync<TInputDto>(TInputDto dto, Func<TInputDto, Task> checkFunc = null, Func<TInputDto, TEntity, Task<TEntity>> insertFunc = null, Func<TEntity, TInputDto> completeFunc = null) where TInputDto : IInputDto<Tkey>;
 
@@ -107,14 +108,14 @@ namespace Sukt.Core.Shared.Entity
         /// </summary>
         /// <param name="entity">要更新实体</param>
         /// <returns>返回更新受影响条数</returns>
-        Task<int> UpdateAsync(TEntity entity);
+        Task<OperationResponse> UpdateAsync(TEntity entity);
 
         /// <summary>
         /// 同步更新
         /// </summary>
         /// <param name="entity">要更新实体</param>
         /// <returns>返回更新受影响条数</returns>
-        int Update(TEntity entity);
+        OperationResponse Update(TEntity entity);
 
         #endregion 更新
 
@@ -139,14 +140,14 @@ namespace Sukt.Core.Shared.Entity
         /// </summary>
         /// <param name="predicate">查询条件谓语表达式</param>
         /// <returns>操作影响的行数</returns>
-        Task<int> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken));
+        Task<OperationResponse> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="entitys">要删除实体集合</param>
         /// <returns>操作影响的行数</returns>
-        int Delete(params TEntity[] entitys);
+        OperationResponse Delete(params TEntity[] entitys);
 
         #endregion 删除
     }

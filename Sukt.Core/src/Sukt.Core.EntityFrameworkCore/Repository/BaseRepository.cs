@@ -109,12 +109,13 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        public virtual int Insert(params TEntity[] entitys)
+        public virtual OperationResponse Insert(params TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = CheckInsert(entitys);
+            entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor);// CheckInsert(entitys);
             _dbSet.AddRange(entitys);
-            return _dbContext.SaveChanges();
+            var count = _dbContext.SaveChanges();
+            return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         /// <summary>
@@ -122,12 +123,14 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<int> InsertAsync(TEntity entity)
+        public virtual async Task<OperationResponse> InsertAsync(TEntity entity)
         {
             entity.NotNull(nameof(entity));
-            entity = CheckInsert(entity);
+            //entity = CheckInsert(entity);
+            entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);
             await _dbSet.AddAsync(entity);
-            return await _dbContext.SaveChangesAsync();
+            int count = await _dbContext.SaveChangesAsync();
+            return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         /// <summary>
@@ -135,14 +138,56 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        public virtual async Task<int> InsertAsync(TEntity[] entitys)
+        public virtual async Task<OperationResponse> InsertAsync(TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = CheckInsert(entitys);
+            entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor); //CheckInsert(entitys);
             await _dbSet.AddRangeAsync(entitys);
-            return await _dbContext.SaveChangesAsync();
+            int count = await _dbContext.SaveChangesAsync();
+            return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
+        /// <summary>
+        /// 异步添加单条实体
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual async Task<OperationResponse> InsertAsync(TEntity entity, Func<TEntity, Task> checkFunc = null, Func<TEntity, TEntity, Task<TEntity>> insertFunc = null, Func<TEntity, TEntity> completeFunc = null)
+        {
+            entity.NotNull(nameof(entity));
+            try
+            {
+                if (checkFunc.IsNotNull())
+                {
+                    await checkFunc(entity);
+                }
+                if (!insertFunc.IsNull())
+                {
+                    entity = await insertFunc(entity, entity);
+                }
+                entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
+                await _dbSet.AddAsync(entity);
 
+                if (completeFunc.IsNotNull())
+                {
+                    entity = completeFunc(entity);
+                }
+                int count = await _dbContext.SaveChangesAsync();
+                return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+            }
+            catch (SuktAppException e)
+            {
+                return new OperationResponse(e.Message, OperationEnumType.Error);
+            }
+            catch (Exception ex)
+            {
+                return new OperationResponse(ex.Message, OperationEnumType.Error);
+            }
+            //entity.NotNull(nameof(entity));
+            //entity = CheckInsert(entity);
+            //await _dbSet.AddAsync(entity);
+            //int count = await _dbContext.SaveChangesAsync();
+            //return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+        }
         /// <summary>
         /// 以异步DTO插入实体
         /// </summary>
@@ -166,7 +211,7 @@ namespace Sukt.Core.Shared
                 {
                     entity = await insertFunc(dto, entity);
                 }
-                entity = CheckInsert(entity);
+                entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
                 await _dbSet.AddAsync(entity);
 
                 if (completeFunc.IsNotNull())
@@ -195,13 +240,13 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual int Update(TEntity entity)
+        public virtual OperationResponse Update(TEntity entity)
         {
             entity.NotNull(nameof(entity));
-            entity = CheckUpdate(entity);
+            entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);// CheckUpdate(entity);
             _dbSet.Update(entity);
             int count = _dbContext.SaveChanges();
-            return count;
+            return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         /// <summary>
@@ -209,13 +254,13 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public virtual async Task<int> UpdateAsync(TEntity entity)
+        public virtual async Task<OperationResponse> UpdateAsync(TEntity entity)
         {
             entity.NotNull(nameof(entity));
-            entity = CheckUpdate(entity);
+            entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entity);
             _dbSet.Update(entity);
             int count = await _dbContext.SaveChangesAsync();
-            return count;
+            return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         /// <summary>
@@ -223,13 +268,13 @@ namespace Sukt.Core.Shared
         /// </summary>
         /// <param name="entitys"></param>
         /// <returns></returns>
-        public virtual async Task<int> UpdateAsync(TEntity[] entitys)
+        public virtual async Task<OperationResponse> UpdateAsync(TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = CheckUpdate(entitys);
+            entitys = entitys.CheckModification<TEntity, Tkey>(_httpContextAccessor);//.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entitys);
             _dbSet.UpdateRange(entitys);
             int count = await _dbContext.SaveChangesAsync();
-            return count;
+            return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         /// <summary>
@@ -260,7 +305,7 @@ namespace Sukt.Core.Shared
                 {
                     entity = await updateFunc(dto, entity);
                 }
-                entity = CheckUpdate(entity);
+                entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor); //CheckUpdate(entity);
                 _dbSet.Update(entity);
                 int count = await _dbContext.SaveChangesAsync();
                 return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -279,13 +324,15 @@ namespace Sukt.Core.Shared
 
         #region Delete
 
-        public virtual int Delete(params TEntity[] entitys)
+        public virtual OperationResponse Delete(params TEntity[] entitys)
         {
             foreach (var entity in entitys)
             {
                 CheckDelete(entity);
             }
-            return _dbContext.SaveChanges();
+            var count = _dbContext.SaveChanges();
+            return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
+
         }
 
         public virtual async Task<OperationResponse> DeleteAsync(Tkey primaryKey)
@@ -310,7 +357,7 @@ namespace Sukt.Core.Shared
             return await _dbContext.SaveChangesAsync();
         }
 
-        public virtual async Task<int> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        public virtual async Task<OperationResponse> DeleteBatchAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             predicate.NotNull(nameof(predicate));
             if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
@@ -332,10 +379,11 @@ namespace Sukt.Core.Shared
                    memberInit,
                    new ParameterExpression[] { parameterExpression }
                 );
-
-                return await NoTrackEntities.Where(predicate).UpdateAsync(updateExpression, cancellationToken);
+                var counts = await NoTrackEntities.Where(predicate).UpdateAsync(updateExpression, cancellationToken);
+                return new OperationResponse(counts > 0 ? ResultMessage.DeleteSuccess : ResultMessage.NoChangeInOperation, counts > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
             }
-            return await NoTrackEntities.Where(predicate).DeleteAsync(cancellationToken);
+            var count = await NoTrackEntities.Where(predicate).DeleteAsync(cancellationToken);
+            return new OperationResponse(count > 0 ? ResultMessage.DeleteSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
         }
 
         #endregion Delete
@@ -376,217 +424,112 @@ namespace Sukt.Core.Shared
             }
         }
 
-        ///// <summary>
-        ///// 检查软删除接口
-        ///// </summary>
-        ///// <param name="entity">要检查的实体</param>
-        ///// <returns>返回检查好的实体</returns>
-        //private TEntity CheckISoftDelete(TEntity entity)
-        //{
-        //    if (typeof(ISoftDelete).IsAssignableFrom(typeof(TEntity)))
-        //    {
-        //        ISoftDelete softDeletableEntity = (ISoftDelete)entity;
-        //        softDeletableEntity.IsDeleted = true;
-        //        var entity1 = (TEntity)softDeletableEntity;
-        //        return entity1;
-        //    }
-        //    return entity;
-        //}
+        //  /// <summary>
+        //  /// 检查创建
+        //  /// </summary>
+        //  /// <param name="entitys">实体集合</param>
+        //  /// <returns></returns>
+        //  private TEntity[] CheckInsert(TEntity[] entitys)
+        //  {
+        //      for (int i = 0; i < entitys.Length; i++)
+        //      {
+        //          var entity = entitys[i];
+        //          entitys[i] = CheckInsert(entity);
+        //      }
+        //      return entitys;
+        //  }
+        //  /// <summary>
+        //  /// 检查创建时间
+        //  /// </summary>
+        //  /// <param name="entity">实体</param>
+        //  /// <returns></returns>
+        //  private TEntity CheckInsert(TEntity entity)
+        //  {
+        //      var creationAudited = entity.GetType().GetInterface(/*$"ICreationAudited`1"*/typeof(ICreatedAudited<>).Name);
+        //      if (creationAudited == null)
+        //      {
+        //          return entity;
+        //      }
 
-        /// <summary>
-        /// 检查创建
-        /// </summary>
-        /// <param name="entitys">实体集合</param>
-        /// <returns></returns>
+        //      var typeArguments = creationAudited?.GenericTypeArguments[0];
+        //      var fullName = typeArguments?.FullName;
+        //      if (fullName == typeof(Guid).FullName)
+        //      {
+        //          entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckICreationAudited<Guid>(entity);
+        //      }
 
-        private TEntity[] CheckInsert(TEntity[] entitys)
-        {
-            for (int i = 0; i < entitys.Length; i++)
-            {
-                var entity = entitys[i];
-                entitys[i] = CheckInsert(entity);
-            }
-            return entitys;
-        }
+        //      return entity;
+        //  }
+        //  private TEntity CheckICreationAudited<TUserKey>(TEntity entity)
+        //     where TUserKey : struct, IEquatable<TUserKey>
+        //  {
+        //      if (!entity.GetType().IsBaseOn(typeof(ICreatedAudited<>)))
+        //      {
+        //          return entity;
+        //      }
 
-        /// <summary>
-        /// 检查创建时间
-        /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
-        private TEntity CheckInsert(TEntity entity)
-        {
-            var creationAudited = entity.GetType().GetInterface(/*$"ICreationAudited`1"*/typeof(ICreatedAudited<>).Name);
-            if (creationAudited == null)
-            {
-                return entity;
-            }
+        //      ICreatedAudited<TUserKey> entity1 = (ICreatedAudited<TUserKey>)entity;
+        //      entity1.CreatedId = _httpContextAccessor.HttpContext?.User?.Identity.GetUesrId<TUserKey>();
+        //      entity1.CreatedAt = DateTime.Now;
+        //      return (TEntity)entity1;
+        //  }
+        //  /// <summary>
+        //  /// 检查最后修改时间
+        //  /// </summary>
+        //  /// <param name="entitys"></param>
+        //  /// <returns></returns>
+        //  private TEntity[] CheckUpdate(TEntity[] entitys)
+        //  {
+        //      for (int i = 0; i < entitys.Length; i++)
+        //      {
+        //          var entity = entitys[i];
+        //          entitys[i] = CheckUpdate(entity);
+        //      }
+        //      return entitys;
+        //  }
+        //  /// <summary>
+        //  /// 检查最后修改时间
+        //  /// </summary>
+        //  /// <param name="entity">实体</param>
+        //  /// <returns></returns>
+        //  private TEntity CheckUpdate(TEntity entity)
+        //  {
+        //      var creationAudited = entity.GetType().GetInterface(/*$"ICreationAudited`1"*/typeof(IModifyAudited<>).Name);
+        //      if (creationAudited == null)
+        //      {
+        //          return entity;
+        //      }
 
-            var typeArguments = creationAudited?.GenericTypeArguments[0];
-            var fullName = typeArguments?.FullName;
-            if (fullName == typeof(Guid).FullName)
-            {
-                entity = CheckICreationAudited<Guid>(entity);
-            }
+        //      var typeArguments = creationAudited?.GenericTypeArguments[0];
+        //      var fullName = typeArguments?.FullName;
+        //      if (fullName == typeof(Guid).FullName)
+        //      {
+        //          entity = CheckIModificationAudited<Guid>(entity);
+        //      }
 
-            return entity;
-        }
-
-        private TEntity CheckICreationAudited<TUserKey>(TEntity entity)
-           where TUserKey : struct, IEquatable<TUserKey>
-        {
-            if (!entity.GetType().IsBaseOn(typeof(ICreatedAudited<>)))
-            {
-                return entity;
-            }
-
-            ICreatedAudited<TUserKey> entity1 = (ICreatedAudited<TUserKey>)entity;
-            entity1.CreatedId = _httpContextAccessor.HttpContext?.User?.Identity.GetUesrId<TUserKey>();
-            entity1.CreatedAt = DateTime.Now;
-            return (TEntity)entity1;
-        }
-
-        /// <summary>
-        /// 检查最后修改时间
-        /// </summary>
-        /// <param name="entitys"></param>
-        /// <returns></returns>
-        private TEntity[] CheckUpdate(TEntity[] entitys)
-        {
-            for (int i = 0; i < entitys.Length; i++)
-            {
-                var entity = entitys[i];
-                entitys[i] = CheckUpdate(entity);
-            }
-            return entitys;
-        }
-
-        /// <summary>
-        /// 检查最后修改时间
-        /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
-        private TEntity CheckUpdate(TEntity entity)
-        {
-            var creationAudited = entity.GetType().GetInterface(/*$"ICreationAudited`1"*/typeof(IModifyAudited<>).Name);
-            if (creationAudited == null)
-            {
-                return entity;
-            }
-
-            var typeArguments = creationAudited?.GenericTypeArguments[0];
-            var fullName = typeArguments?.FullName;
-            if (fullName == typeof(Guid).FullName)
-            {
-                entity = CheckIModificationAudited<Guid>(entity);
-            }
-
-            return entity;
-        }
-
-        /// <summary>
-        /// 检查最后修改时间
-        /// </summary>
-        /// <typeparam name="TUserKey"></typeparam>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public TEntity CheckIModificationAudited<TUserKey>(TEntity entity)
-      where TUserKey : struct, IEquatable<TUserKey>
-        {
-            if (!entity.GetType().IsBaseOn(typeof(IModifyAudited<>)))
-            {
-                return entity;
-            }
-
-            IModifyAudited<TUserKey> entity1 = (IModifyAudited<TUserKey>)entity;
-            //entity1.LastModifyId = _suktUser.Id a;
-            entity1.LastModifyId = _httpContextAccessor.HttpContext?.User?.Identity.GetUesrId<TUserKey>();
-            entity1.LastModifedAt = DateTime.Now;
-            return (TEntity)entity1;
-        }
-
-        #endregion 帮助方法
-
-        /// <summary>
-        /// 检查最后修改时间
-        /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns></returns>
-        //private Expression<Func<TEntity, TEntity>> CheckUpdate(Expression<Func<TEntity, TEntity>> updateExpression)
-        //{
-        //    var creationAudited = typeof(TEntity).GetType().GetInterface(/*$"ICreationAudited`1"*/typeof(IModificationAudited<>).Name);
-        //    if (creationAudited == null)
-        //    {
-        //        return updateExpression;
-        //    }
-
-        //    var typeArguments = creationAudited?.GenericTypeArguments[0];
-        //    var fullName = typeArguments?.FullName;
-        //    if (fullName == typeof(Guid).FullName)
-        //    {
-        //        return CheckIModificationAudited<Guid>(updateExpression);
-
-        //    }
-
-        //    return updateExpression;
-
-        //}
-
+        //      return entity;
+        //  }
         //  /// <summary>
         //  /// 检查最后修改时间
         //  /// </summary>
         //  /// <typeparam name="TUserKey"></typeparam>
-        //  /// <param name="updateExpression"></param>
+        //  /// <param name="entity"></param>
         //  /// <returns></returns>
-        //  public Expression<Func<TEntity, TEntity>> CheckIModificationAudited<TUserKey>(Expression<Func<TEntity, TEntity>> updateExpression)
+        //  public TEntity CheckIModificationAudited<TUserKey>(TEntity entity)
         //where TUserKey : struct, IEquatable<TUserKey>
         //  {
-        //      if (!typeof(TEntity).IsBaseOn(typeof(IModificationAudited<>)))
+        //      if (!entity.GetType().IsBaseOn(typeof(IModifyAudited<>)))
         //      {
-        //          return updateExpression;
-        //      }
-        //      List<MemberBinding> newMemberBindings = new List<MemberBinding>();
-        //      ParameterExpression parameterExpression = Expression.Parameter(typeof(TEntity), "o"); //参数
-
-        //      var memberBindings = ((MemberInitExpression)updateExpression?.Body)?.Bindings;
-        //      var propertyInfos = typeof(IModificationAudited<TUserKey>).GetProperties();
-        //      if (memberBindings?.Count > 0)
-        //      {
-        //          var propertyNames = propertyInfos.Select(o => o.Name);
-
-        //          foreach (var memberBinding in memberBindings.Where(o => !propertyNames.Contains(o.Member.Name)))
-        //          {
-        //              newMemberBindings.Add(memberBinding);
-        //          }
-        //      }
-        //      foreach (var propertyInfo in propertyInfos)
-        //      {
-        //          var propertyName = propertyInfo.Name;
-        //          ConstantExpression constant = Expression.Constant(DateTime.Now);
-        //          if (propertyName == nameof(IModificationAudited<TUserKey>.LastModifierTime))
-        //          {
-        //              var memberAssignment = Expression.Bind(propertyInfo, constant); //绑定属性
-        //              newMemberBindings.Add(memberAssignment);
-        //          }
-        //          else if (propertyName == nameof(IModificationAudited<TUserKey>.LastModifierUserId))
-        //          {
-        //              constant = Expression.Constant(_principal?.Identity?.GetUesrId<TUserKey>(), typeof(TUserKey));
-        //              var memberAssignment = Expression.Bind(propertyInfo, constant); //绑定属性
-        //              newMemberBindings.Add(memberAssignment);
-        //          }
+        //          return entity;
         //      }
 
-        //      //创建实体
-        //      var newEntity = Expression.New(typeof(TEntity));
-        //      var memberInit = Expression.MemberInit(newEntity, newMemberBindings.ToArray()); //成员初始化
-        //      Expression<Func<TEntity, TEntity>> updateExpression1 = Expression.Lambda<Func<TEntity, TEntity>> //生成要更新的Expression
-        //      (
-        //         memberInit,
-        //         new ParameterExpression[] { parameterExpression }
-        //      );
+        //      IModifyAudited<TUserKey> entity1 = (IModifyAudited<TUserKey>)entity;
+        //      //entity1.LastModifyId = _suktUser.Id a;
+        //      entity1.LastModifyId = _httpContextAccessor.HttpContext?.User?.Identity.GetUesrId<TUserKey>();
+        //      entity1.LastModifedAt = DateTime.Now;
+        //      return (TEntity)entity1;
+        //  }
 
-        //      return updateExpression1;
-
-        //}
+        #endregion 帮助方法
     }
 }

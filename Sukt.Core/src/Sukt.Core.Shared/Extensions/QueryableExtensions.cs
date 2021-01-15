@@ -53,7 +53,30 @@ namespace Sukt.Core.Shared.Extensions
             var total = result.totalNumber;
             return new PageResult<TEntity>(list, total);
         }
-
+        /// <summary>
+        /// 从集合中查询指定输出DTO的分页信息
+        /// </summary>
+        /// <typeparam name="TEntity">动态实体类型</typeparam>
+        /// <typeparam name="TOutputDto">输出DTO数据类型</typeparam>
+        /// <param name="source">数据源</param>
+        /// <param name="predicate">查询条件表达式</param>
+        /// <param name="pageParameters">分页参数</param>
+        /// <returns></returns>
+        public static async Task<PageResult<TEntity>> ToPageAsync<TEntity>(this IQueryable<TEntity> source, IPagedRequest request)
+        {
+            request.NotNull(nameof(request));
+            var isFiltered = request is IFilteredPagedRequest;
+            Expression<Func<TEntity, bool>> expression = null;
+            if (isFiltered)
+            {
+                var filter = (request as IFilteredPagedRequest).queryFilter;
+                expression = filter == null ? null : FilterHelp.GetExpression<TEntity>(filter);
+            }
+            var result = await source.WhereAsync(request.PageIndex, request.PageRow, expression, request.OrderConditions);
+            var list = await result.data.ToArrayAsync();
+            var total = result.totalNumber;
+            return new PageResult<TEntity>(list, total);
+        }
         /// <summary>
         /// 从集合中查询指定数据筛选的分页信息
         /// </summary>
