@@ -11,23 +11,10 @@ namespace Sukt.Core.IdentityServerFour
     public abstract class ClientRedirectUriBase : IEntity<Guid>
     {
         public Guid Id { get; set; }
-
         /// <summary>
         /// 重定向uri
         /// </summary>
         [DisplayName("重定向uri")]
-        public string RedirectUri { get; set; }
-
-        /// <summary>
-        /// 客户端id
-        /// </summary>
-        [DisplayName("客户端id")]
-        public Guid ClientId { get; set; }
-
-        ///// <summary>
-        ///// 所属客户端
-        ///// </summary>
-        //[DisplayName("所属客户端")]
-        //public Client Client { get; set; }
+        public string RedirectUri { get; protected set; }
     }
 }

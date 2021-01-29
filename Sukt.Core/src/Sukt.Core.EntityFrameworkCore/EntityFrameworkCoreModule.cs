@@ -14,6 +14,7 @@ namespace Sukt.Core.Shared
         protected virtual IServiceCollection AddRepository(IServiceCollection services)
         {
             services.AddScoped(typeof(IEFCoreRepository<,>), typeof(BaseRepository<,>));
+            services.AddScoped(typeof(IAggregateRootRepository<,>), typeof(AggregateRootBaseRepository<,>));
             return services;
         }
 

@@ -52,7 +52,7 @@ namespace Sukt.Core.Domain.Models.Entities
         /// 获取或设置创建用户ID
         /// </summary>
         [DisplayName("创建用户ID")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
         /// <summary>
         /// 获取或设置创建时间
         /// </summary>

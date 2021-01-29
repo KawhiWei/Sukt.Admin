@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,30 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// 客户端授权类型
     /// </summary>
     [DisplayName("客户端授权类型")]
-    public class ClientGrantType : ClientGrantTypeBase, IFullAuditedEntity<Guid>
+    public class ClientGrantType : EntityBase<Guid> /*ClientGrantTypeBase*/, IFullAuditedEntity<Guid>
     {
+        public ClientGrantType(string grantType)
+        {
+            GrantType = grantType;
+        }
+
+        /// <summary>
+        /// 授权类型
+        /// </summary>
+        [DisplayName("授权类型")]
+        public string GrantType { get; private set; }
+        /// <summary>
+        /// 所属客户端
+        /// </summary>
+        [DisplayName("所属客户端")]
+        public Client Client { get; set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -45,10 +59,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
 
         #endregion 公共字段
 
-        /// <summary>
-        /// 所属客户端
-        /// </summary>
-        [DisplayName("所属客户端")]
-        public Client Client { get; set; }
     }
 }

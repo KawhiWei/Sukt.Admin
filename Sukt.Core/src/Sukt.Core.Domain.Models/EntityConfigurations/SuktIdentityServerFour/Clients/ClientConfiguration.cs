@@ -6,7 +6,7 @@ using System;
 
 namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
 {
-    public class ClientConfiguration : EntityMappingConfiguration<Client, Guid>
+    public class ClientConfiguration : AggregateRootMappingConfiguration<Client, Guid>
     {
         public override void Map(EntityTypeBuilder<Client> b)
         {

@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,29 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// Api资源范围
     /// </summary>
     [DisplayName("Api资源范围")]
-    public class ApiResourceScope : ApiResourceScopeBase, IFullAuditedEntity<Guid>
+    public class ApiResourceScope : /*ApiResourceScopeBase*/EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public ApiResourceScope(string scope)
+        {
+            Scope = scope;
+        }
+        /// <summary>
+        /// 授权范围
+        /// </summary>
+        [Description("授权范围")]
+        public string Scope { get; private set; }
+        /// <summary>
+        /// api资源
+        /// </summary>
+        [Description("api资源")]
+        public ApiResource ApiResource { get; set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -44,11 +57,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         public bool IsDeleted { get; set; }
 
         #endregion 公共字段
-
-        /// <summary>
-        /// api资源
-        /// </summary>
-        [Description("api资源")]
-        public ApiResource ApiResource { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace Sukt.Core.Shared.Extensions
                 return entity;
             }
             ICreatedAudited<TUserKey> entity1 = (ICreatedAudited<TUserKey>)entity;
-            entity1.CreatedId = httpContextAccessor.HttpContext?.User?.Identity.GetUesrId<TUserKey>();
+            entity1.CreatedId = httpContextAccessor.HttpContext.User.Identity.GetUesrId<TUserKey>();
             entity1.CreatedAt = DateTime.Now;
             return (TEntity)entity1;
         }

@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,30 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// 身份资源声明
     /// </summary>
     [DisplayName("身份资源声明")]
-    public class IdentityResourceClaim : IdentityResourceClaimBase, IFullAuditedEntity<Guid>
+    public class IdentityResourceClaim : /*IdentityResourceClaimBase*/EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public IdentityResourceClaim(string type)
+        {
+            Type = type;
+        }
+
+        /// <summary>
+        /// 身份资源
+        /// </summary>
+        [DisplayName("身份资源")]
+        public IdentityResource IdentityResource { get; set; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        [DisplayName("类型")]
+        public string Type { get; private set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -44,11 +58,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         public bool IsDeleted { get; set; }
 
         #endregion 公共字段
-
-        /// <summary>
-        /// 身份资源
-        /// </summary>
-        [DisplayName("身份资源")]
-        public IdentityResource IdentityResource { get; set; }
     }
 }

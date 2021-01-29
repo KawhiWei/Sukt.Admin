@@ -48,16 +48,5 @@ namespace Sukt.Core.IdentityServerFour
     [DisplayName("客户端密钥")]
     public abstract class ClientSecretBase : Secret
     {
-        /// <summary>
-        /// 客户端id
-        /// </summary>
-        [DisplayName("客户端id")]
-        public Guid ClientId { get; set; }
-
-        ///// <summary>
-        ///// 所属客户端
-        ///// </summary>
-        //[DisplayName("所属客户端")]
-        //public Client Client { get; set; }
     }
 }

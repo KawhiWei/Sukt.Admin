@@ -11,6 +11,7 @@ using Sukt.Core.Shared.SuktReflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,6 +27,7 @@ namespace Sukt.Core.Shared
         private readonly IGetChangeTracker _changeTracker;
         protected readonly ILogger _logger = null;
         protected readonly AuditEntryDictionaryScoped _auditEntryDictionaryScoped;
+        private readonly IPrincipal _principal;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -38,6 +40,7 @@ namespace Sukt.Core.Shared
             this._logger = serviceProvider.GetLogger(GetType());
             _auditEntryDictionaryScoped = serviceProvider.GetService<AuditEntryDictionaryScoped>();
             _changeTracker = _serviceProvider.GetService<IGetChangeTracker>();
+            _principal = serviceProvider.GetService<IPrincipal>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,6 +62,7 @@ namespace Sukt.Core.Shared
         /// <returns></returns>
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            ApplyConcepts();
             var result = OnBeforeSaveChanges();
             var count = await base.SaveChangesAsync(cancellationToken);
             OnCompleted(count, result);
@@ -71,6 +75,7 @@ namespace Sukt.Core.Shared
         /// <returns></returns>
         public override int SaveChanges()
         {
+            ApplyConcepts();
             var result = OnBeforeSaveChanges();
             var count = base.SaveChanges();
             OnCompleted(count, result);
@@ -111,6 +116,28 @@ namespace Sukt.Core.Shared
         protected virtual IEnumerable<EntityEntry> FindChangedEntries()
         {
             return this.ChangeTracker.Entries().Where(x => x.State == EntityState.Added || x.State == EntityState.Deleted || x.State == EntityState.Modified).ToList();
+        }
+        /// <summary>
+        /// 在上下文内写入创建人创建时间等等
+        /// </summary>
+        protected virtual void ApplyConcepts()
+        {
+            var entries = this.FindChangedEntries().ToList();
+            foreach (var entity in entries)
+            {
+                if (entity.Entity is ICreatedAudited<Guid> createdTime && entity.State == EntityState.Added)
+                {
+                    createdTime.CreatedAt = DateTime.Now;
+                    if (_principal != null && _principal.Identity != null)
+                        createdTime.CreatedId = _principal.Identity.GetUesrId<Guid>();
+                }
+                if (entity.Entity is IModifyAudited<Guid> ModificationAuditedUserId && entity.State == EntityState.Modified)
+                {
+                    ModificationAuditedUserId.LastModifedAt = DateTime.Now;
+                    if (_principal != null && _principal.Identity != null)
+                        ModificationAuditedUserId.LastModifyId = _principal.Identity.GetUesrId<Guid>();
+                }
+            }
         }
     }
 }

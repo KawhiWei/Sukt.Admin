@@ -118,7 +118,7 @@ namespace Sukt.Core.Test
         }
 
         public string Name { get; set; }
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid? LastModifyId { get; set; }
         public DateTime LastModifedAt { get; set; }

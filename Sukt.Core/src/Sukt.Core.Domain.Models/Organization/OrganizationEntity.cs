@@ -55,7 +55,7 @@ namespace Sukt.Core.Domain.Models.Organization
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

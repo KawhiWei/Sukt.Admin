@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared;
+using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -8,7 +9,7 @@ namespace Sukt.Core.IdentityServerFour
     /// 客户端实体
     /// </summary>
     [DisplayName("客户端")]
-    public abstract class ClientBase : IEntity<Guid>
+    public abstract class ClientBase : IAggregateRoot<Guid>
     {
         /// <summary>
         /// 主键

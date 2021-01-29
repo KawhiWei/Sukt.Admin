@@ -17,17 +17,5 @@ namespace Sukt.Core.IdentityServerFour
         /// </summary>
         [Description("授权范围")]
         public string Scope { get; set; }
-
-        /// <summary>
-        /// api资源id
-        /// </summary>
-        [Description("api资源id")]
-        public Guid ApiResourceId { get; set; }
-
-        ///// <summary>
-        ///// api资源
-        ///// </summary>
-        //[Description("api资源")]
-        //public ApiResourceBase ApiResource { get; set; }
     }
 }

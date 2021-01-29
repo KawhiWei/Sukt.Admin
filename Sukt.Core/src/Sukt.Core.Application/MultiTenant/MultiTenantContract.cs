@@ -14,6 +14,12 @@ namespace Sukt.Core.Application.MultiTenant
     public class MultiTenantContract : IMultiTenantContract
     {
         private readonly IEFCoreRepository<MultiTenantEntity, Guid> _multiTenantRepository;
+
+        public MultiTenantContract(IEFCoreRepository<MultiTenantEntity, Guid> multiTenantRepository)
+        {
+            _multiTenantRepository = multiTenantRepository;
+        }
+
         public async Task<OperationResponse> CreatAsync(MultiTenantInputDto input)
         {
             input.NotNull(nameof(input));

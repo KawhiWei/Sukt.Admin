@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,30 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// api授权范围声明
     /// </summary>
     [DisplayName("api授权范围声明")]
-    public class ApiScopeClaim : ApiScopeClaimBase, IFullAuditedEntity<Guid>
+    public class ApiScopeClaim : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public ApiScopeClaim(string type)
+        {
+            Type = type;
+        }
+
+        /// <summary>
+        /// 范围
+        /// </summary>
+        [DisplayName("范围")]
+        public ApiScope Scope { get; set; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        [DisplayName("类型")]
+        public string Type { get; private set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -45,10 +59,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
 
         #endregion 公共字段
 
-        /// <summary>
-        /// 范围
-        /// </summary>
-        [DisplayName("范围")]
-        public ApiScope Scope { get; set; }
     }
 }

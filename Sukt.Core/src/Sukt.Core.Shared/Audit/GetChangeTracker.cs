@@ -77,12 +77,12 @@ namespace Sukt.Core.Shared.Audit
         {
             List<AuditPropertysEntryInputDto> propertyDtos = new List<AuditPropertysEntryInputDto>();
 
-            foreach (var propertie in entityEntry.CurrentValues.Properties.Where(p => !p.IsConcurrencyToken && p.PropertyInfo.GetCustomAttribute<DisableAuditingAttribute>() == null))
+            foreach (var propertie in entityEntry.CurrentValues.Properties.Where(p => !p.IsConcurrencyToken && p.PropertyInfo?.GetCustomAttribute<DisableAuditingAttribute>() == null))
             {
                 var propertyEntry = entityEntry.Property(propertie.Name);//获取字段名
                 AuditPropertysEntryInputDto propertyDto = new AuditPropertysEntryInputDto();
                 propertyDto.Properties = propertie.Name;
-                propertyDto.PropertieDisplayName = propertyEntry.Metadata.PropertyInfo.ToDescription();
+                propertyDto.PropertieDisplayName = propertyEntry.Metadata.PropertyInfo?.ToDescription();
                 propertyDto.PropertiesType = propertie.ClrType.FullName;
                 if (propertie.IsPrimaryKey())
                 {

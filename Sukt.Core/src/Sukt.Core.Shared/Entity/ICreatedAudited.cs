@@ -11,7 +11,7 @@ namespace Sukt.Core.Shared.Entity
         /// <summary>
         /// 创建人Ｉｄ
         /// </summary>
-        TUserKey? CreatedId { get; set; }
+        TUserKey CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间

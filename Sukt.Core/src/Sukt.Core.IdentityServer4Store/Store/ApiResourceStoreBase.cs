@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Domain.Models.IdentityServerFour;
+using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using System;
@@ -13,12 +14,12 @@ namespace Sukt.Core.IdentityServer4Store.Store
 {
     public class ApiResourceStoreBase : IResourceStore
     {
-        private readonly IEFCoreRepository<ApiResource, Guid> _apiResourceRepository;
-        private readonly IEFCoreRepository<IdentityResource, Guid> _identityResourceRepository;
-        private readonly IEFCoreRepository<ApiScope, Guid> _apiScopeRepository;
+        private readonly IAggregateRootRepository<ApiResource, Guid> _apiResourceRepository;
+        private readonly IAggregateRootRepository<IdentityResource, Guid> _identityResourceRepository;
+        private readonly IAggregateRootRepository<ApiScope, Guid> _apiScopeRepository;
         private readonly ILogger<ApiResourceStoreBase> _logger;
 
-        public ApiResourceStoreBase(IEFCoreRepository<ApiResource, Guid> apiResourceRepository, IEFCoreRepository<IdentityResource, Guid> identityResourceRepository, IEFCoreRepository<ApiScope, Guid> apiScopeRepository, ILogger<ApiResourceStoreBase> logger)
+        public ApiResourceStoreBase(IAggregateRootRepository<ApiResource, Guid> apiResourceRepository, IAggregateRootRepository<IdentityResource, Guid> identityResourceRepository, IAggregateRootRepository<ApiScope, Guid> apiScopeRepository, ILogger<ApiResourceStoreBase> logger)
         {
             _apiResourceRepository = apiResourceRepository;
             _identityResourceRepository = identityResourceRepository;

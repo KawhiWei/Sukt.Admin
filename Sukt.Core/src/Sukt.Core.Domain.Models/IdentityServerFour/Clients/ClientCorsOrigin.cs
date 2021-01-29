@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,29 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// 客户端跨域配置
     /// </summary>
     [DisplayName("客户端跨域配置")]
-    public class ClientCorsOrigin : ClientCorsOriginBase, IFullAuditedEntity<Guid>
+    public class ClientCorsOrigin : EntityBase<Guid>,/*ClientCorsOriginBase,*/ IFullAuditedEntity<Guid>, IEntity<Guid>
     {
+        public ClientCorsOrigin(string origin)
+        {
+            Origin = origin;
+        }
+        /// <summary>
+        /// 域名
+        /// </summary>
+        [DisplayName("域名")]
+        public string Origin { get; private set; }
+        /// <summary>
+        /// 所属客户端
+        /// </summary>
+        [DisplayName("所属客户端")]
+        public Client Client { get; set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -44,11 +57,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         public bool IsDeleted { get; set; }
 
         #endregion 公共字段
-
-        /// <summary>
-        /// 所属客户端
-        /// </summary>
-        [DisplayName("所属客户端")]
-        public Client Client { get; set; }
     }
 }

@@ -113,6 +113,55 @@
             <param name="loginDto"></param>
             <returns></returns>
         </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreateAsync(Sukt.Core.Dtos.IdentityServer4Dto.ClientInputDto)">
+            <summary>
+            添加客户端
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.GetLoadAsync(System.Nullable{System.Guid})">
+            <summary>
+            获取一个客户端
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreateSecretAsync(Sukt.Core.Dtos.IdentityServer4Dto.Client.ClientSecretInputDto)">
+            <summary>
+            添加客户端密钥
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreateClientScopeAsync(Sukt.Core.Dtos.IdentityServer4Dto.Client.ClientCommonInputDto)">
+            <summary>
+            添加客户端允许访问范围
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreatePostLogoutRedirectUriAsync(Sukt.Core.Dtos.IdentityServer4Dto.Client.ClientCommonInputDto)">
+            <summary>
+            添加客户端退出登录Uri
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreateRedirectUriAsync(Sukt.Core.Dtos.IdentityServer4Dto.Client.ClientCommonInputDto)">
+            <summary>
+            添加登录回调Uri
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.IdentityServer4.ClientsController.CreateCorsOriginAsync(Sukt.Core.Dtos.IdentityServer4Dto.Client.ClientCommonInputDto)">
+            <summary>
+            添加允许跨域
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.MenuController">
             <summary>
             菜单管理

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Domain.Models.IdentityServerFour;
+using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using System;
@@ -15,9 +16,9 @@ namespace Sukt.Core.IdentityServer4Store.Store
     {
         private readonly ILogger<ClientStoreBase> _logger;
 
-        private readonly IEFCoreRepository<Client, Guid> _clientRepository;
+        private readonly IAggregateRootRepository<Client, Guid> _clientRepository;
 
-        public ClientStoreBase(ILogger<ClientStoreBase> logger, IEFCoreRepository<Client, Guid> clientRepository)
+        public ClientStoreBase(ILogger<ClientStoreBase> logger, IAggregateRootRepository<Client, Guid> clientRepository)
         {
             _logger = logger;
             _clientRepository = clientRepository;

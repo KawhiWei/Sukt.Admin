@@ -1,5 +1,4 @@
-﻿using Sukt.Core.IdentityServerFour;
-using Sukt.Core.Shared.Entity;
+﻿using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
 
@@ -9,15 +8,30 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     /// 客户端允许的重定向uri
     /// </summary>
     [DisplayName("客户端允许的重定向uri")]
-    public class ClientRedirectUri : ClientRedirectUriBase, IFullAuditedEntity<Guid>
+    public class ClientRedirectUri : EntityBase<Guid>/*ClientRedirectUriBase*/, IFullAuditedEntity<Guid>
     {
+        public ClientRedirectUri(string redirectUri)
+        {
+            RedirectUri = redirectUri;
+        }
+
+        /// <summary>
+        /// 重定向uri
+        /// </summary>
+        [DisplayName("重定向uri")]
+        public string RedirectUri { get; private set; }
+        /// <summary>
+        /// 所属客户端
+        /// </summary>
+        [DisplayName("所属客户端")]
+        public Client Client { get; set; }
         #region 公共字段
 
         /// <summary>
         /// 创建人Id
         /// </summary>
         [DisplayName("创建人Id")]
-        public Guid? CreatedId { get; set; }
+        public Guid CreatedId { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -44,11 +58,5 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         public bool IsDeleted { get; set; }
 
         #endregion 公共字段
-
-        /// <summary>
-        /// 所属客户端
-        /// </summary>
-        [DisplayName("所属客户端")]
-        public Client Client { get; set; }
     }
 }

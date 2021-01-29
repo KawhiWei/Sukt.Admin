@@ -6,7 +6,7 @@ using System;
 
 namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
 {
-    public class ApiResourceConfiguration : EntityMappingConfiguration<ApiResource, Guid>
+    public class ApiResourceConfiguration : AggregateRootMappingConfiguration<ApiResource, Guid>
     {
         public override void Map(EntityTypeBuilder<ApiResource> b)
         {

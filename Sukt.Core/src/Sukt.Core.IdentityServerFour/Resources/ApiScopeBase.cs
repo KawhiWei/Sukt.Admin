@@ -1,4 +1,5 @@
 ﻿using Sukt.Core.IdentityServerFour.Resources;
+using Sukt.Core.Shared;
 using Sukt.Core.Shared.Entity;
 using System;
 using System.ComponentModel;
@@ -9,8 +10,10 @@ namespace Sukt.Core.IdentityServerFour
     /// api授权范围
     /// </summary>
     [DisplayName("api授权范围")]
-    public abstract class ApiScopeBase : ResourceBase, IEntity<Guid>
+    public abstract class ApiScopeBase : ResourceBase, IAggregateRoot<Guid>
     {
+        public Guid Id { get; set; }
+    
         /// <summary>
         /// 是否必须
         /// </summary>
@@ -22,15 +25,5 @@ namespace Sukt.Core.IdentityServerFour
         /// </summary>
         [Description("是否强调显示")]
         public bool Emphasize { get; set; }
-
-        ///// <summary>
-        ///// 用户声明
-        ///// </summary>
-        //public List<ApiScopeClaimBase> UserClaims { get; set; }
-
-        ///// <summary>
-        ///// 属性
-        ///// </summary>
-        //public List<ApiScopePropertyBase> Properties { get; set; }
     }
 }
