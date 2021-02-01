@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Shared;
-using Sukt.Core.Shared.Entity;
 using Sukt.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -46,18 +45,18 @@ namespace Sukt.Core.IdentityServer4Store.Store
                 .Include(x => x.Scopes)
                 .Include(x => x.UserClaims)
                 .Include(x => x.Properties).ToListAsync();
-            var results = apis.Where(api => api.Scopes.Any(x => scopeNames.Contains(x.Scope)));
-            return results.Select(x => x.MapTo<IdentityServer4.Models.ApiResource>());
+            //var results = apis.Where(api => api.Scopes.Any(x => scopeNames.Contains(x.Scope)));
+            return apis.Select(x => x.MapTo<IdentityServer4.Models.ApiResource>());
         }
 
         public async Task<IEnumerable<IdentityServer4.Models.ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames)
         {
-            return (await _apiScopeRepository.NoTrackEntities.Where(x => scopeNames.Contains(x.Name)).Include(x => x.UserClaims).Include(x => x.Properties).ToListAsync()).Where(x => scopeNames.Contains(x.Name)).Select(x => x.MapTo<IdentityServer4.Models.ApiScope>());
+            return (await _apiScopeRepository.NoTrackEntities.Where(x => scopeNames.Contains(x.Name)).Include(x => x.UserClaims).Include(x => x.Properties).ToListAsync()).Select(x => x.MapTo<IdentityServer4.Models.ApiScope>());
         }
 
         public async Task<IEnumerable<IdentityServer4.Models.IdentityResource>> FindIdentityResourcesByScopeNameAsync(IEnumerable<string> scopeNames)
         {
-            return (await _identityResourceRepository.NoTrackEntities.Where(x => scopeNames.Contains(x.Name)).Include(x => x.UserClaims).Include(x => x.Properties).ToListAsync()).Where(x => scopeNames.Contains(x.Name)).Select(x => x.MapTo<IdentityServer4.Models.IdentityResource>());
+            return (await _identityResourceRepository.NoTrackEntities.Where(x => scopeNames.Contains(x.Name)).Include(x => x.UserClaims).Include(x => x.Properties).ToListAsync()).Select(x => x.MapTo<IdentityServer4.Models.IdentityResource>());
         }
 
         public async Task<IdentityServer4.Models.Resources> GetAllResourcesAsync()

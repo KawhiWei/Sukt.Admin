@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Sukt.Core.AutoMapper;
@@ -11,6 +12,7 @@ using Sukt.Core.Shared.Modules;
 using Sukt.Core.Shared.SuktDependencyAppModule;
 using System;
 using System.Linq;
+using System.Security.Principal;
 
 namespace Sukt.Core.AuthenticationCenter.Startups
 {
@@ -54,6 +56,11 @@ namespace Sukt.Core.AuthenticationCenter.Startups
         {
             var service = context.Services;
             service.AddMvc();
+            context.Services.AddTransient<IPrincipal>(provider =>
+            {
+                IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();
+                return accessor?.HttpContext?.User;
+            });
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             var configuration = service.GetConfiguration();
@@ -73,11 +80,6 @@ namespace Sukt.Core.AuthenticationCenter.Startups
                     });
                 });
             }
-            //context.Services.AddTransient<IPrincipal>(provider =>
-            //{
-            //    IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();
-            //    return accessor?.HttpContext?.User;
-            //});
         }
     }
 }

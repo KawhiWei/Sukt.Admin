@@ -130,12 +130,16 @@ namespace Sukt.Core.Shared
                     createdTime.CreatedAt = DateTime.Now;
                     if (_principal != null && _principal.Identity != null)
                         createdTime.CreatedId = _principal.Identity.GetUesrId<Guid>();
+                    else
+                        createdTime.CreatedId = Guid.Parse("c5604f31-f14c-e8be-0833-9c69b2a8eba2");
                 }
                 if (entity.Entity is IModifyAudited<Guid> ModificationAuditedUserId && entity.State == EntityState.Modified)
                 {
                     ModificationAuditedUserId.LastModifedAt = DateTime.Now;
                     if (_principal != null && _principal.Identity != null)
                         ModificationAuditedUserId.LastModifyId = _principal.Identity.GetUesrId<Guid>();
+                    else
+                        ModificationAuditedUserId.LastModifyId = Guid.Parse("c5604f31-f14c-e8be-0833-9c69b2a8eba2");
                 }
             }
         }

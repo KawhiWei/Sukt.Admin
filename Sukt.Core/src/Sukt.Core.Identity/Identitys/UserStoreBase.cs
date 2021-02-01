@@ -247,8 +247,8 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
-            return Task.FromResult(_userRepository.TrackEntities.FirstOrDefault(m => m.NormalizedUserName == normalizedUserName));
+            var name = _userRepository.NoTrackEntities.FirstOrDefault(m => m.NormalizedUserName == normalizedUserName);
+            return Task.FromResult(name);
         }
 
         #endregion Implementation of IUserStore<TUser>
@@ -424,9 +424,9 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TUserKey[] userIds = _userClaimRepository.TrackEntities.Where(m => m.ClaimType == claim.Type && m.ClaimValue == claim.Value)
+            TUserKey[] userIds = _userClaimRepository.NoTrackEntities.Where(m => m.ClaimType == claim.Type && m.ClaimValue == claim.Value)
                 .Select(m => m.UserId).ToArray();
-            IList<TUser> users = _userRepository.TrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
+            IList<TUser> users = _userRepository.NoTrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
             return Task.FromResult(users);
         }
 
@@ -597,7 +597,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TUser user = _userRepository.TrackEntities.FirstOrDefault(m => m.NormalizeEmail == normalizedEmail);
+            TUser user = _userRepository.NoTrackEntities.FirstOrDefault(m => m.NormalizeEmail == normalizedEmail);
             return Task.FromResult(user);
         }
 
@@ -907,7 +907,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            string value = _userTokenRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.Name == name)
+            string value = _userTokenRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id) && m.LoginProvider == loginProvider && m.Name == name)
                 .Select(m => m.Value).FirstOrDefault();
             return Task.FromResult(value);
         }
@@ -1019,7 +1019,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == normalizedRoleName).Select(m => m.Id).FirstOrDefault();
+            TRoleKey roleId = _roleRepository.NoTrackEntities.Where(m => m.NormalizedName == normalizedRoleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
             {
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");
@@ -1040,7 +1040,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TRole role = _roleRepository.TrackEntities.FirstOrDefault(m => m.NormalizedName == normalizedRoleName);
+            TRole role = _roleRepository.NoTrackEntities.FirstOrDefault(m => m.NormalizedName == normalizedRoleName);
             if (role == null)
             {
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");
@@ -1064,12 +1064,12 @@ namespace Sukt.Core.Identity
             //var roleIds = _userRoleRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId); //为什么不这样写。。。。。。
 
             //list = _roleRepository.TrackEntities.Where(m => roleIds.Contains(m.Id)).Select(m => m.Name).ToList();
-            List<TRoleKey> roleIds = _userRoleRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId).ToList();
+            List<TRoleKey> roleIds = _userRoleRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId).ToList();
             if (roleIds.Count == 0)
             {
                 return Task.FromResult(list);
             }
-            list = _roleRepository.TrackEntities.Where(m => roleIds.Contains(m.Id)).Select(m => m.Name).ToList();
+            list = _roleRepository.NoTrackEntities.Where(m => roleIds.Contains(m.Id)).Select(m => m.Name).ToList();
             return Task.FromResult(list);
         }
 
@@ -1088,12 +1088,12 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
+            TRoleKey roleId = _roleRepository.NoTrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
             {
                 throw new InvalidOperationException($"名称为“{roleName}”的角色信息不存在");
             }
-            bool exist = _userRoleRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(roleId)).Any();
+            bool exist = _userRoleRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(roleId)).Any();
             return Task.FromResult(exist);
         }
 
@@ -1110,13 +1110,13 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TRoleKey roleId = _roleRepository.TrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
+            TRoleKey roleId = _roleRepository.NoTrackEntities.Where(m => m.NormalizedName == roleName).Select(m => m.Id).FirstOrDefault();
             if (Equals(roleId, default(TRoleKey)))
             {
                 throw new InvalidOperationException($"名称为“{roleName}”的角色信息不存在");
             }
-            List<TUserKey> userIds = _userRoleRepository.TrackEntities.Where(m => m.RoleId.Equals(roleId)).Select(m => m.UserId).ToList();
-            IList<TUser> users = _userRepository.TrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
+            List<TUserKey> userIds = _userRoleRepository.NoTrackEntities.Where(m => m.RoleId.Equals(roleId)).Select(m => m.UserId).ToList();
+            IList<TUser> users = _userRepository.NoTrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
             return Task.FromResult(users);
         }
 

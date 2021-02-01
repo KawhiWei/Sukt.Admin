@@ -10,9 +10,8 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
     [DisplayName("api资源")]
     public class ApiResourceSecret : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public ApiResourceSecret(string description, string value, string type, DateTime? expiration)
+        public ApiResourceSecret(string value, string type, DateTime? expiration)
         {
-            Description = description;
             Value = value;
             Type = type;
             Expiration = expiration;

@@ -3,17 +3,27 @@ using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Repository;
 using Sukt.Core.Identity;
+using Sukt.Core.IdentityServer4Store.Validation;
+using Sukt.Core.Shared.Modules;
 using System;
 
 namespace Sukt.Core.AuthenticationCenter.Startups
 {
-    public class IdentityModule : IdentityModuleBase<UserStore, RoleStore, UserEntity, UserRoleEntity, RoleEntity, Guid, Guid>
+    public class IdentityModule : SuktAppModule /*IdentityModuleBase<UserStore, RoleStore, UserEntity, UserRoleEntity, RoleEntity, Guid, Guid>*/
     {
-        protected override void AddAuthentication(IServiceCollection services)
+        public override void ConfigureServices(ConfigureServicesContext context)
         {
-        }
+            context.Services.AddScoped<IUserStore<UserEntity>, UserStore>();
 
-        protected override Action<IdentityOptions> IdentityOption()
+            context.Services.AddScoped<IRoleStore<RoleEntity>, RoleStore>();
+            Action<IdentityOptions> identityOption = IdentityOption();
+            var identityBuilder = context.Services.AddIdentity<UserEntity, RoleEntity>(identityOption).AddClaimsPrincipalFactory<SuktClaimsPrincipalFactory>();
+            context.Services.AddSingleton<IdentityErrorDescriber>(new IdentityErrorDescriberZhHans());
+            UseIdentityBuilder(identityBuilder);
+            AddAuthentication(context.Services);
+        }
+        protected void AddAuthentication(IServiceCollection services) { }
+        protected Action<IdentityOptions> IdentityOption()
         {
             return options =>
             {
@@ -31,7 +41,7 @@ namespace Sukt.Core.AuthenticationCenter.Startups
             };
         }
 
-        protected override IdentityBuilder UseIdentityBuilder(IdentityBuilder identityBuilder)
+        protected IdentityBuilder UseIdentityBuilder(IdentityBuilder identityBuilder)
         {
             return identityBuilder;/*.AddEntityFrameworkStores<DefaultDbContext>().AddDefaultTokenProviders();*/
         }

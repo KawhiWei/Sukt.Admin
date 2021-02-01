@@ -1,23 +1,23 @@
 ﻿using Sukt.Core.Shared.Entity;
 using System;
 
-namespace Sukt.Core.Dtos.IdentityServer4Dto.Client
+namespace Sukt.Core.Dtos.IdentityServer4Dto
 {
     /// <summary>
     /// 客户端授权令牌
     /// </summary>
-    public class ClientSecretInputDto : InputDto<Guid>
+    public class SecretInputDto : InputDto<Guid>
     {
-        public ClientSecretInputDto()
+        public SecretInputDto()
         {
             Type = "SharedSecret";
         }
-        public ClientSecretInputDto(string value, DateTimeOffset? expiration) : this()
+        public SecretInputDto(string value, DateTimeOffset? expiration) : this()
         {
             Value = value;
             Expiration = expiration;
         }
-        public ClientSecretInputDto(string description, string value, DateTimeOffset? expiration)
+        public SecretInputDto(string description, string value, DateTimeOffset? expiration)
         {
             Description = description;
             Value = value;
@@ -38,7 +38,7 @@ namespace Sukt.Core.Dtos.IdentityServer4Dto.Client
                 return false;
             }
 
-            ClientSecretInputDto secret = obj as ClientSecretInputDto;
+            SecretInputDto secret = obj as SecretInputDto;
             if (secret == null)
             {
                 return false;

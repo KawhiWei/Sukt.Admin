@@ -1,5 +1,4 @@
 ﻿using Sukt.Core.Dtos.IdentityServer4Dto;
-using Sukt.Core.Dtos.IdentityServer4Dto.Client;
 using Sukt.Core.Shared;
 using Sukt.Core.Shared.OperationResult;
 using System;
@@ -26,30 +25,30 @@ namespace Sukt.Core.Application.IdentityServer4Contract
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreateSecretAsync(ClientSecretInputDto input);
+        Task<OperationResponse> CreateSecretAsync(SecretInputDto input);
         /// <summary>
         /// 添加客户端允许访问范围
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreateClientScopeAsync(ClientCommonInputDto input);
+        Task<OperationResponse> CreateClientScopeAsync(CommonInputDto input);
         /// <summary>
         /// 添加客户端退出登录Uri
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreatePostLogoutRedirectUriAsync(ClientCommonInputDto input);
+        Task<OperationResponse> CreatePostLogoutRedirectUriAsync(CommonInputDto input);
         /// <summary>
         /// 添加登录回调Uri
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreateRedirectUriAsync(ClientCommonInputDto input);
+        Task<OperationResponse> CreateRedirectUriAsync(CommonInputDto input);
         /// <summary>
         /// 添加允许跨域
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreateCorsOriginAsync(ClientCommonInputDto input);
+        Task<OperationResponse> CreateCorsOriginAsync(CommonInputDto input);
     }
 }

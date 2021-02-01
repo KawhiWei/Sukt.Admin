@@ -112,7 +112,7 @@ namespace Sukt.Core.Shared
         public virtual OperationResponse Insert(params TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor);// CheckInsert(entitys);
+            //entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor);// CheckInsert(entitys);
             _dbSet.AddRange(entitys);
             var count = _dbContext.SaveChanges();
             return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -127,7 +127,7 @@ namespace Sukt.Core.Shared
         {
             entity.NotNull(nameof(entity));
             //entity = CheckInsert(entity);
-            entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);
+            //entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);
             await _dbSet.AddAsync(entity);
             int count = await _dbContext.SaveChangesAsync();
             return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -141,7 +141,7 @@ namespace Sukt.Core.Shared
         public virtual async Task<OperationResponse> InsertAsync(TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor); //CheckInsert(entitys);
+            //entitys = entitys.CheckInsert<TEntity, Tkey>(_httpContextAccessor); //CheckInsert(entitys);
             await _dbSet.AddRangeAsync(entitys);
             int count = await _dbContext.SaveChangesAsync();
             return new OperationResponse(count > 0 ? ResultMessage.InsertSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -164,7 +164,7 @@ namespace Sukt.Core.Shared
                 {
                     entity = await insertFunc(entity, entity);
                 }
-                entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
+                //entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
                 await _dbSet.AddAsync(entity);
 
                 if (completeFunc.IsNotNull())
@@ -211,7 +211,7 @@ namespace Sukt.Core.Shared
                 {
                     entity = await insertFunc(dto, entity);
                 }
-                entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
+                //entity = entity.CheckInsert<TEntity, Tkey>(_httpContextAccessor);//CheckInsert(entity);
                 await _dbSet.AddAsync(entity);
 
                 if (completeFunc.IsNotNull())
@@ -243,7 +243,7 @@ namespace Sukt.Core.Shared
         public virtual OperationResponse Update(TEntity entity)
         {
             entity.NotNull(nameof(entity));
-            entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);// CheckUpdate(entity);
+            //entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);// CheckUpdate(entity);
             _dbSet.Update(entity);
             int count = _dbContext.SaveChanges();
             return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -257,7 +257,7 @@ namespace Sukt.Core.Shared
         public virtual async Task<OperationResponse> UpdateAsync(TEntity entity)
         {
             entity.NotNull(nameof(entity));
-            entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entity);
+            //entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entity);
             _dbSet.Update(entity);
             int count = await _dbContext.SaveChangesAsync();
             return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -271,7 +271,7 @@ namespace Sukt.Core.Shared
         public virtual async Task<OperationResponse> UpdateAsync(TEntity[] entitys)
         {
             entitys.NotNull(nameof(entitys));
-            entitys = entitys.CheckModification<TEntity, Tkey>(_httpContextAccessor);//.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entitys);
+            //entitys = entitys.CheckModification<TEntity, Tkey>(_httpContextAccessor);//.CheckModification<TEntity, Tkey>(_httpContextAccessor);//CheckUpdate(entitys);
             _dbSet.UpdateRange(entitys);
             int count = await _dbContext.SaveChangesAsync();
             return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);
@@ -305,7 +305,7 @@ namespace Sukt.Core.Shared
                 {
                     entity = await updateFunc(dto, entity);
                 }
-                entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor); //CheckUpdate(entity);
+                //entity = entity.CheckModification<TEntity, Tkey>(_httpContextAccessor); //CheckUpdate(entity);
                 _dbSet.Update(entity);
                 int count = await _dbContext.SaveChangesAsync();
                 return new OperationResponse(count > 0 ? ResultMessage.UpdateSuccess : ResultMessage.NoChangeInOperation, count > 0 ? OperationEnumType.Success : OperationEnumType.NoChanged);

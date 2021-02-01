@@ -1,7 +1,6 @@
 ﻿using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Domain.Services.IdentityServer4Domain.ClientDomainServices;
 using Sukt.Core.Dtos.IdentityServer4Dto;
-using Sukt.Core.Dtos.IdentityServer4Dto.Client;
 using Sukt.Core.Dtos.IdentityServer4Dto.Enums;
 using Sukt.Core.Shared;
 using Sukt.Core.Shared.Enums;
@@ -29,7 +28,8 @@ namespace Sukt.Core.Application.IdentityServer4Contract
         {
             input.NotNull(nameof(input));
             PrepareClientTypeForNewClient(input);
-            var cliententity = new Client(input.ClientId, input.ClientName);
+            var cliententity = new Client(input.ClientId, input.ClientName, input.AllowAccessTokensViaBrowser, input.AllowOfflineAccess);
+            //var cliententity = new Client();
             cliententity.AddGrantTypes(input.AllowedGrantTypes);
             return await _clientDomainService.CreateAsync(cliententity);
         }
@@ -48,22 +48,22 @@ namespace Sukt.Core.Application.IdentityServer4Contract
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<OperationResponse> CreateSecretAsync(ClientSecretInputDto input)
+        public async Task<OperationResponse> CreateSecretAsync(SecretInputDto input)
         {
             input.NotNull(nameof(input));
             var cliententity = await _clientDomainService.GetLoadByIdAsync(input.Id);
-            cliententity.AddClientSecrets(new ClientSecret("", input.Value.Sha256(), input.Type, null));
+            //cliententity.AddClientSecrets(new ClientSecret("", input.Value.Sha256(), input.Type, null));
             return await _clientDomainService.UpdateAsync(cliententity);
         }
         /// <summary>
         /// 添加客户端允许访问范围
         /// </summary>
         /// <returns></returns>
-        public async Task<OperationResponse> CreateClientScopeAsync(ClientCommonInputDto input)
+        public async Task<OperationResponse> CreateClientScopeAsync(CommonInputDto input)
         {
             input.NotNull(nameof(input));
             var cliententity = await _clientDomainService.GetLoadByIdAsync(input.Id);
-            cliententity.AddClientScopes(input.Allowed);
+            //cliententity.AddClientScopes(input.Allowed);
             return await _clientDomainService.UpdateAsync(cliententity);
         }
         /// <summary>
@@ -71,25 +71,25 @@ namespace Sukt.Core.Application.IdentityServer4Contract
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<OperationResponse> CreatePostLogoutRedirectUriAsync(ClientCommonInputDto input)
+        public async Task<OperationResponse> CreatePostLogoutRedirectUriAsync(CommonInputDto input)
         {
             input.NotNull(nameof(input));
             var cliententity = await _clientDomainService.GetLoadByIdAsync(input.Id);
-            cliententity.AddPostLogoutRedirectUris(input.Allowed);
+            //cliententity.AddPostLogoutRedirectUris(input.Allowed);
             return await _clientDomainService.UpdateAsync(cliententity);
         }
-        public async Task<OperationResponse> CreateRedirectUriAsync(ClientCommonInputDto input)
+        public async Task<OperationResponse> CreateRedirectUriAsync(CommonInputDto input)
         {
             input.NotNull(nameof(input));
             var cliententity = await _clientDomainService.GetLoadByIdAsync(input.Id);
-            cliententity.AddRedirectUris(input.Allowed);
+            //cliententity.AddRedirectUris(input.Allowed);
             return await _clientDomainService.UpdateAsync(cliententity);
         }
-        public async Task<OperationResponse> CreateCorsOriginAsync(ClientCommonInputDto input)
+        public async Task<OperationResponse> CreateCorsOriginAsync(CommonInputDto input)
         {
             input.NotNull(nameof(input));
             var cliententity = await _clientDomainService.GetLoadByIdAsync(input.Id);
-            cliententity.AddCorsOrigins(input.Allowed);
+            //cliententity.AddCorsOrigins(input.Allowed);
             return await _clientDomainService.UpdateAsync(cliententity);
         }
         /// <summary>

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sukt.Core.Dtos.IdentityServer4Dto.Client
+namespace Sukt.Core.Dtos.IdentityServer4Dto
 {
-    public class ClientCommonInputDto : InputDto<Guid>
+    public class CommonInputDto : InputDto<Guid>
     {
         public List<string> Allowed { get; set; }
     }

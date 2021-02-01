@@ -3,6 +3,7 @@ using Sukt.Core.Shared.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Sukt.Core.Domain.Models.IdentityServerFour
 {
@@ -17,47 +18,74 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
             Name = name;
             DisplayName = displayName;
         }
+
+        /// <summary>
+        /// 添加用户声明
+        /// </summary>
+        /// <param name="userClaims"></param>
+        public void AddUserClaims(List<string> userClaims)
+        {
+            if (UserClaims == null)
+                UserClaims = new List<ApiResourceClaim>();
+            UserClaims.AddRange(userClaims.Select(x => new ApiResourceClaim(x)));
+        }
+        public void AddSecrets(ApiResourceSecret apiResourceSecret)
+        {
+            if (Secrets == null)
+                Secrets = new List<ApiResourceSecret>();
+            Secrets.Add(apiResourceSecret);
+        }
+        /// <summary>
+        /// 添加授权范围
+        /// </summary>
+        /// <param name="scopes"></param>
+        public void AddScopes(List<string> scopes)
+        {
+            if (Scopes == null)
+                Scopes = new List<ApiResourceScope>();
+            Scopes.AddRange(scopes.Select(x => new ApiResourceScope(x)));
+        }
         #region IdentityServer4 资源对象属性
         /// <summary>
         /// 是否启用
         /// </summary>
         [DisplayName("是否启用")]
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; set; }
         /// <summary>
         /// 名称
         /// </summary>
         [DisplayName("名称")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
         /// <summary>
         /// 显示名称
         /// </summary>
         [DisplayName("显示名称")]
-        public string DisplayName { get; private set; }
+        public string DisplayName { get; set; }
         /// <summary>
         /// 描述
         /// </summary>
         [DisplayName("描述")]
-        public string Description { get; private set; }
+        public string Description { get; set; }
         /// <summary>
         /// 是否显示在发现文档中
         /// </summary>
         [DisplayName("是否显示在发现文档中")]
-        public bool ShowInDiscoveryDocument { get; private set; }
+        public bool ShowInDiscoveryDocument { get; set; }
         /// <summary>
         /// 允许的访问令牌登录算法
         /// </summary>
         [DisplayName("允许的访问令牌登录算法")]
-        public string AllowedAccessTokenSigningAlgorithms { get; private set; }
+        public string AllowedAccessTokenSigningAlgorithms { get; set; }
         /// <summary>
         /// 是否不可编辑
         /// </summary>
         [DisplayName("是否不可编辑")]
-        public bool NonEditable { get; private set; }
+        public bool NonEditable { get; set; }
         /// <summary>
         /// 最后访问时间
         /// </summary>
         [DisplayName("最后访问时间")]
-        public DateTime? LastAccessed { get; private set; }
+        public DateTime? LastAccessed { get; set; }
         #endregion
         #region 导航属性
         /// <summary>

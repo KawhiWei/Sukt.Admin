@@ -27,6 +27,10 @@ namespace Sukt.Core.Dtos.IdentityServer4Dto
         /// </summary>
         [DisplayName("是否允许通过浏览器访问令牌")]
         public bool AllowAccessTokensViaBrowser { get; set; }
+        /// <summary>
+        /// 是否返回刷新Token
+        /// </summary>
+        public bool AllowOfflineAccess { get; set; }
         ///// <summary>
         ///// 客户端令牌
         ///// </summary>

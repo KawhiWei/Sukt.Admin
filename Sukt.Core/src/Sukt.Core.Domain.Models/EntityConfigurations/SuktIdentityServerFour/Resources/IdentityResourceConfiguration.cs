@@ -11,6 +11,7 @@ namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
         public override void Map(EntityTypeBuilder<IdentityResource> b)
         {
             b.HasKey(o => o.Id);
+            b.Property(o => o.Enabled).HasDefaultValue(true);
             b.ToTable("IdentityResource");
         }
     }

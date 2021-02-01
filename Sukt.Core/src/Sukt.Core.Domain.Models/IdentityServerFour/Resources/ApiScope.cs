@@ -22,37 +22,37 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 是否必须
         /// </summary>
         [Description("是否必须")]
-        public bool Required { get; private set; }
+        public bool Required { get; set; }
         /// <summary>
         /// 是否启用
         /// </summary>
         [DisplayName("是否启用")]
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; set; }
         /// <summary>
         /// 名称
         /// </summary>
         [DisplayName("名称")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
         /// <summary>
         /// 显示名称
         /// </summary>
         [DisplayName("显示名称")]
-        public string DisplayName { get; private set; }
+        public string DisplayName { get; set; }
         /// <summary>
         /// 描述
         /// </summary>
         [DisplayName("描述")]
-        public string Description { get; private set; }
+        public string Description { get; set; }
         /// <summary>
         /// 是否显示在发现文档中
         /// </summary>
         [DisplayName("是否显示在发现文档中")]
-        public bool ShowInDiscoveryDocument { get; private set; }
+        public bool ShowInDiscoveryDocument { get; set; }
         /// <summary>
         /// 是否强调显示
         /// </summary>
         [Description("是否强调显示")]
-        public bool Emphasize { get; private set; }
+        public bool Emphasize { get; set; }
         /// <summary>
         /// 用户声明
         /// </summary>

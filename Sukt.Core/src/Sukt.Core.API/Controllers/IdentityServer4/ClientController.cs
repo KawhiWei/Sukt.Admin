@@ -2,7 +2,6 @@
 using Sukt.Core.Application.IdentityServer4Contract;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.IdentityServer4Dto;
-using Sukt.Core.Dtos.IdentityServer4Dto.Client;
 using Sukt.Core.Shared.Audit;
 using Sukt.Core.Shared.OperationResult;
 using System;
@@ -12,11 +11,11 @@ using System.Threading.Tasks;
 namespace Sukt.Core.API.Controllers.IdentityServer4
 {
     [Description("客户端管理")]
-    public class ClientsController : ApiControllerBase
+    public class ClientController : ApiControllerBase
     {
         private readonly IClientContract _clientContract;
 
-        public ClientsController(IClientContract clientContract)
+        public ClientController(IClientContract clientContract)
         {
             _clientContract = clientContract;
         }
@@ -53,7 +52,7 @@ namespace Sukt.Core.API.Controllers.IdentityServer4
         [HttpPost]
         [Description("添加客户端密钥")]
         [AuditLog]
-        public async Task<AjaxResult> CreateSecretAsync([FromBody] ClientSecretInputDto input)
+        public async Task<AjaxResult> CreateSecretAsync([FromBody] SecretInputDto input)
         {
             return (await _clientContract.CreateSecretAsync(input)).ToAjaxResult();
         }
@@ -65,7 +64,7 @@ namespace Sukt.Core.API.Controllers.IdentityServer4
         [HttpPost]
         [Description("添加客户端允许访问范围")]
         [AuditLog]
-        public async Task<AjaxResult> CreateClientScopeAsync([FromBody] ClientCommonInputDto input)
+        public async Task<AjaxResult> CreateClientScopeAsync([FromBody] CommonInputDto input)
         {
             return (await _clientContract.CreateClientScopeAsync(input)).ToAjaxResult();
         }
@@ -77,7 +76,7 @@ namespace Sukt.Core.API.Controllers.IdentityServer4
         [HttpPost]
         [Description("添加客户端退出登录Uri")]
         [AuditLog]
-        public async Task<AjaxResult> CreatePostLogoutRedirectUriAsync([FromBody] ClientCommonInputDto input)
+        public async Task<AjaxResult> CreatePostLogoutRedirectUriAsync([FromBody] CommonInputDto input)
         {
             return (await _clientContract.CreatePostLogoutRedirectUriAsync(input)).ToAjaxResult();
         }
@@ -89,7 +88,7 @@ namespace Sukt.Core.API.Controllers.IdentityServer4
         [HttpPost]
         [Description("添加登录回调Uri")]
         [AuditLog]
-        public async Task<AjaxResult> CreateRedirectUriAsync([FromBody] ClientCommonInputDto input)
+        public async Task<AjaxResult> CreateRedirectUriAsync([FromBody] CommonInputDto input)
         {
             return (await _clientContract.CreateRedirectUriAsync(input)).ToAjaxResult();
         }
@@ -101,7 +100,7 @@ namespace Sukt.Core.API.Controllers.IdentityServer4
         [HttpPost]
         [Description("添加允许跨域")]
         [AuditLog]
-        public async Task<AjaxResult> CreateCorsOriginAsync([FromBody] ClientCommonInputDto input)
+        public async Task<AjaxResult> CreateCorsOriginAsync([FromBody] CommonInputDto input)
         {
             return (await _clientContract.CreateCorsOriginAsync(input)).ToAjaxResult();
         }

@@ -20,13 +20,13 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 键
         /// </summary>
         [DisplayName("键")]
-        public string Key { get; private set; }
+        public string Key { get; set; }
 
         /// <summary>
         /// 值
         /// </summary>
         [DisplayName("值")]
-        public string Value { get; private set; }
+        public string Value { get; set; }
         /// <summary>
         /// api资源
         /// </summary>
