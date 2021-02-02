@@ -1,78 +1,70 @@
-## 项目代号：Sukt.Core  苏克
-[Asp.NetCore 手册
-<----基础学习请参考
-https://windsting.github.io/little-aspnetcore-book/book/                   
-https://www.cnblogs.com/laozhang-is-phi/
----->]
+# Sukt 文档指南
+## 亮点与优势
 
-###主要技术栈
-+仓储层/服务层/接口
+Sukt.Core 是一个开箱即用的企业级权限管理应用框架。采用最新的前后端完全分离技术【 ASP.NET Core Api 3.1 】。
+内部实现了 `IdentityServer4`后台管理端 ，可快速解决多客户端和多资源服务的统一认证与鉴权的问题。
 
-+CRUD
-	+EntityFrameworkCore ORM框架
-+DI
-	+.Net Core官方DI
-+缓存
-	+ Redis缓存技术
+### 系统架构图
 
+![](https://wangzewei.oss-cn-beijing.aliyuncs.com/imges/系统架构图图.jpg)
 
-## 功能目录及阶段目标
+### 框架功能点
 
-### 阶段一
--[x]001 实现Sukt.Core的分层搭建
--[x]002 实现.NetCore 官方DI批量注入、AOP切面等一些功能
--[x]003 实现AutoMapper模块化,不需要再Startup中进行配置
--[x]004 实现Swagger模块化,不需要再Startup中进行配置
--[x]005 实现应用服务层注入不需要手动注入,在应用服务层中配置特性进行实现
--[x]006 实现仓储层/调通数据库/工作单元
--[x]007 实现用户、角色、菜单、组织架构等功能
+> 1、丰富完整的接口文档，在查看的基础上，可以模拟前端调用，更方便。
+> 2、采用多层开发，隔离性更好，封装更完善。
+> 3、使用SuktCoreWebApi.Templates或SuktCoreBusinessWebApi.Templates，可以一键创建自己的Admin和其他服务项目。[IdentityServer4Admin模板]("https://www.nuget.org/packages/SuktCoreBusinessWebApi.Templates")    [基础框架模板]("https://www.nuget.org/packages/SuktCoreBusinessWebApi.Templates")
+> 4、搭配代码生成器，实现快速开发，节省成本。
+> 6、集成统一认证平台 `IdentityServer4` ，实现多个项目的统一认证管理，解决了之前一个项目， 一套用户的弊端，更适用微服务的开发。
+> 7、丰富的接口审计日志和数据审计处理，方便线上项目快速定位异常点和数据操作问题。
+> 8、支持自由切换两种数据库，SqlServer、MySql；
+> 9、支持 `Docker` 容器化部署，可以搭配 k8s 更好的实现微服务。
+>
+> 
 
+### 功能进度
 
+框架模块：  
 
+- [x] 采用`仓储+领域服务+应用+Api接口`的形式封装框架；
+- [x] 异步 async/await 开发；
+- [x] 支持自由切换多种数据库，MySql、SqlServer；
+- [x] 实现项目启动，自动生成种子数据 ✨； 
+- [x] 五种日志记录，审计/异常/请求响应/服务操作/Sql记录等； 
+- [x] 支持项目事务处理（若要分布式，用cap即可）✨；
+- [x] 支持服务层 AOP 切面编程 ✨；
+- [x] 支持 RazorEngine.NetCore 代码模板，自动生成每层代码；
+- [x] 封装SuktCoreWebApi.Templates和SuktCoreBusinessWebApi.Templates项目模板，一键重建自己的项目 ✨；
+- [x] 统一集成 IdentityServer4 认证和IdentityServer4管理端 ✨;
 
+组件模块：
 
+- [x] 提供 Redis 做缓存处理；
+- [x] 使用 Swagger 做api文档；
+- [x] 使用 Automapper 处理对象映射；  
+- [x] 使用MSDI做依赖注入容器，并封装服务注入 ✨；
+- [x] 支持 CORS 跨域；
+- [x] 使用 SeriLog 日志框架，集成原生 ILogger 接口做日志记录；
+- [x] 支持 EventBus 进程内事件总线；
+- [x] 支持 Redis 缓存 ✨;
+- [x] 支持 MongoDB 数据层审计日志 ✨;
 
+微服务模块：
 
-＃Uwl.Admin.Core
-本项目是基于.Net Core3.x开发的一个开源后台管理框架
+- [x] 可配合 Docker 实现容器化；
+- [x] 可配合 Jenkins 实现CI / CD；
+- [x] 可配合 Consul 实现服务发现；
+- [x] 可配合 Ocelot 实现网关处理；
+- [x] 可配合 Nginx  实现负载均衡；
+- [x] 内置 Ids4   实现认证中心和IdentityServer4Admin；
 
-特别感谢老张\ DX \ 大黄瓜 \残云等给帮助
+&nbsp;
 
-再次特推一下老张的博客（https://www.cnblogs.com/laozhang-is-phi/）
+### 项目使用
 
-感谢各位的支持Uwl.Admin.Core只是一个基础的权限角色管理项目
-
-Uwl.Admin.Core 框架是基于.Net Core2.2开发的一个开源后台管理框架目前有以下模块
-组织机构、菜单管理、按钮管理、用户管理、部门管理、角色管理、用户角色、角色权限、任务计划调度。
-
-希望广大码友提出更多功能我来完善。
-
-很多地方可能设计的不够好我的想法也比较简单希望各位朋友能一起加入维护的行列（特别@老张，我要拖你下水）
-
-项目结构：
- Uwl.Attribute               自定义特性存放
- Uwl.Cache                   缓存
- Uwl.Common                  公共接口定义
- Uwl.Data.EntityFramework    仓储实现层
- Uwl.Data.Model              实体模型
- Uwl.Data.Server             业务逻辑服务层
- Uwl.Domain                  仓储接口定义
- Uwl.Extends                 自定义扩展
- Uwl.QuartzNet.JobCenter     基于Quartz.Net的任务计划调度中心
- UwlAPI.Tools                API接口开放
-
-使用技术：
-  .Net Core 3.x API（因为想单纯建造前替换分离，因此就选择的API）
-  Swagger前瞻性文档说明，基于RESTful风格编写接口
-  仓库+服务仓储模式编程
-  异步和等待初步编程
-  核心微软官方自带DI依赖注入框架
-  JWT权限验证
-数据库技术
-  Entity Framework Core3.x
-  AutoMapper自动对象映射
-分布式缓存技术
-  Redis轻量级分布式缓存(暂未完成)
-
-本项目开源也是为.Net社区做一份贡献，希望大家多多为社区做贡献.
-
+>1、下载项目或使用项目模板生成项目
+>2、生成项目，修改appsettings.Development.json中的配置
+>3、项目默认使用MySql数据库如果需要修改为SqlServer修改为【"DatabaseType":"SqlServer"】
+>4、修改数据库连接字符串，这里默认使用text文本，将【ConnectionString】的文本名称修改为您对应的数据库连接字符串就可，如果报错文本文件未找到请到*****.EntityFrameworkCore中的AddSuktDbContext方法内寻找代码，
+>5、MongoDB如上，如果没有MongoDB在SuktAppWebModule的特性上将MongoDB模块注释即可，
+>6、以上修改完成在程序包窗口内选中Models层使用ef core迁移命令生成迁移文件，然后启动项目即可，
+>7、启动项目时会判断是否需要迁移数据库、以及写入种子数据，在appsettings.Development.json中配置【"Migrations"】,默认是开启状态
