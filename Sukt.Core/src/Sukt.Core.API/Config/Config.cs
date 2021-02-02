@@ -65,6 +65,7 @@ namespace Sukt.Core.API.Config
                         IdentityServerConstants.StandardScopes.Profile,
                         "SuktCore.API.Admin"
                     },
+
                 },
             };
         }

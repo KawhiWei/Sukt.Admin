@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Repository;
 using Sukt.Core.Identity;
-using Sukt.Core.Shared.AppOption;
 using Sukt.Core.Shared.Extensions;
 using System;
 using System.Threading.Tasks;
@@ -14,9 +13,10 @@ namespace Sukt.Core.API
 {
     public class IdentityModule : IdentityModuleBase<UserStore, RoleStore, UserEntity, UserRoleEntity, RoleEntity, Guid, Guid>
     {
+
         protected override void AddAuthentication(IServiceCollection services)
         {
-            AppOptionSettings settings = services.GetAppSettings();
+            var settings = services.GetAppSettings();
             var jwt = settings.Jwt;
             services.AddAuthorization();
             services.AddAuthentication(x =>
@@ -26,8 +26,9 @@ namespace Sukt.Core.API
             }).AddJwtBearer(jwt =>
             {
                 jwt.Authority = "http://localhost:9860";
-                jwt.Audience = "SuktCore.API.Admin";
+                jwt.Audience = "Sukt.Core.API.Agile.Admin";
                 jwt.RequireHttpsMetadata = false;
+                //jwt.TokenValidationParameters = new TokenValidationParameters() { ValidateAudience = false };
                 jwt.Events = new JwtBearerEvents /*jwt自带事件*/
                 {
                     OnAuthenticationFailed = context =>

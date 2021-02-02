@@ -19,12 +19,12 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 类型
         /// </summary>
         [DisplayName("类型")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
         /// <summary>
         /// api资源
         /// </summary>
         [Description("api资源")]
-        public ApiResource ApiResource { get; set; }
+        public ApiResource ApiResource { get; private set; }
         #region 公共字段
 
         /// <summary>

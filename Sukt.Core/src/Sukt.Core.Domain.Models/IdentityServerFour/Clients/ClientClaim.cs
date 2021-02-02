@@ -19,18 +19,18 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 类型
         /// </summary>
         [DisplayName("类型")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// 值
         /// </summary>
         [DisplayName("值")]
-        public string Value { get; set; }
+        public string Value { get; private set; }
         /// <summary>
         /// 所属客户端
         /// </summary>
         [DisplayName("所属客户端")]
-        public Client Client { get; set; }
+        public Client Client { get; private set; }
         #region 公共字段
 
         /// <summary>

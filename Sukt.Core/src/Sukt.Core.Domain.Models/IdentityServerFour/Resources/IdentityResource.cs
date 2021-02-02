@@ -34,53 +34,53 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 是否必须
         /// </summary>
         [Description("是否必须")]
-        public bool Required { get; set; }
+        public bool Required { get; private set; }
 
         /// <summary>
         /// 是否强调显示
         /// </summary>
         [Description("是否强调显示")]
-        public bool Emphasize { get; set; }
+        public bool Emphasize { get; private set; }
         /// <summary>
         /// 是否不可编辑
         /// </summary>
         [Description("是否不可编辑")]
-        public bool NonEditable { get; set; }
+        public bool NonEditable { get; private set; }
         /// <summary>
         /// 是否启用
         /// </summary>
         [DisplayName("是否启用")]
-        public bool Enabled { get; set; }
+        public bool Enabled { get; private set; }
         /// <summary>
         /// 名称
         /// </summary>
         [DisplayName("名称")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 显示名称
         /// </summary>
         [DisplayName("显示名称")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
         /// <summary>
         /// 描述
         /// </summary>
         [DisplayName("描述")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
         /// <summary>
         /// 是否显示在发现文档中
         /// </summary>
         [DisplayName("是否显示在发现文档中")]
-        public bool ShowInDiscoveryDocument { get; set; }
+        public bool ShowInDiscoveryDocument { get; private set; }
         /// <summary>
         /// 用户声明
         /// </summary>
         [Description("用户声明")]
-        public List<IdentityResourceClaim> UserClaims { get; set; }
+        public List<IdentityResourceClaim> UserClaims { get; private set; }
         /// <summary>
         /// 属性
         /// </summary>
         [Description("属性")]
-        public List<IdentityResourceProperty> Properties { get; set; }
+        public List<IdentityResourceProperty> Properties { get; private set; }
         #region 公共字段
 
         /// <summary>

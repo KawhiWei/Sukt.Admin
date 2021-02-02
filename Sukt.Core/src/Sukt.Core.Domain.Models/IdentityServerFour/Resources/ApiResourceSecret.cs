@@ -47,7 +47,7 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// api资源
         /// </summary>
         [Description("api资源")]
-        public ApiResource ApiResource { get; set; }
+        public ApiResource ApiResource { get; private set; }
         #region 公共字段
 
         /// <summary>

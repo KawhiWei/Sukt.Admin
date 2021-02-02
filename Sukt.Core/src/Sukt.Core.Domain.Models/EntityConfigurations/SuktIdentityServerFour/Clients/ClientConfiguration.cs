@@ -18,6 +18,7 @@ namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
             b.Property(x => x.RequirePkce).HasDefaultValue(true);
             b.Property(x => x.FrontChannelLogoutSessionRequired).HasDefaultValue(true);
             b.Property(x => x.BackChannelLogoutSessionRequired).HasDefaultValue(true);
+            b.Property(x => x.IncludeJwtId).HasDefaultValue(true);
             b.Property(x => x.IdentityTokenLifetime).HasDefaultValue(300);
             b.Property(x => x.AccessTokenLifetime).HasDefaultValue(3600);
             b.Property(x => x.AuthorizationCodeLifetime).HasDefaultValue(300);

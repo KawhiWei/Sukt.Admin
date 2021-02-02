@@ -21,6 +21,7 @@ namespace Sukt.Core.Domain.Models.SeedDatas
 
         protected override ApiResource[] SetSeedData()
         {
+            //Api资源Name是在资源服务器上验证的配置
             var adminentity = new ApiResource("Sukt.Core.API.Agile.Admin", "通用后台管理Admin敏捷开发框架");//Api资源名称添加
             adminentity.AddSecrets(new ApiResourceSecret("SuktCore.API.Admin_secret", "SharedSecret", null));//APi资源密钥
             //此处的ApiResource.Scopes必须和ApiScope内的Name相同

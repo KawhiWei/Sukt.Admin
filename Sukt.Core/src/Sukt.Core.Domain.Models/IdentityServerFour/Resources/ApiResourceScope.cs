@@ -18,12 +18,12 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 授权范围
         /// </summary>
         [Description("授权范围")]
-        public string Scope { get; set; }
+        public string Scope { get; private set; }
         /// <summary>
         /// api资源
         /// </summary>
         [Description("api资源")]
-        public ApiResource ApiResource { get; set; }
+        public ApiResource ApiResource { get; private set; }
         #region 公共字段
 
         /// <summary>

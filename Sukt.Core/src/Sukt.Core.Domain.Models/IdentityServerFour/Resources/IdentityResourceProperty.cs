@@ -19,17 +19,17 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 键
         /// </summary>
         [DisplayName("键")]
-        public string Key { get; set; }
+        public string Key { get; private set; }
         /// <summary>
         /// 值
         /// </summary>
         [DisplayName("值")]
-        public string Value { get; set; }
+        public string Value { get; private set; }
         /// <summary>
         /// 身份资源
         /// </summary>
         [DisplayName("身份资源")]
-        public IdentityResource IdentityResource { get; set; }
+        public IdentityResource IdentityResource { get; private set; }
         #region 公共字段
 
         /// <summary>

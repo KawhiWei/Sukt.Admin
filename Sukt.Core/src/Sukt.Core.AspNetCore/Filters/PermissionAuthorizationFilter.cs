@@ -29,7 +29,6 @@ namespace Sukt.Core.AspNetCore.Filters
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             await Task.CompletedTask;
-
             var action = context.ActionDescriptor as ControllerActionDescriptor;
             var isAllowAnonymous = action.ControllerTypeInfo.GetCustomAttribute<AllowAnonymousAttribute>();//获取Action中的特性
             var linkurl = context.HttpContext.Request.Path.Value.Replace("/api/", "");

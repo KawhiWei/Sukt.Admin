@@ -30,7 +30,7 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 所属客户端
         /// </summary>
         [DisplayName("所属客户端")]
-        public Client Client { get; set; }
+        public Client Client { get; private set; }
         #region 公共字段
 
         /// <summary>

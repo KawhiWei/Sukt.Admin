@@ -12,6 +12,7 @@ namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
         {
             b.HasKey(o => o.Id);
             b.Property(o => o.Enabled).HasDefaultValue(true);
+            b.Property(o => o.ShowInDiscoveryDocument).HasDefaultValue(true);
             b.ToTable("IdentityResource");
         }
     }

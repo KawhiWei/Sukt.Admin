@@ -50,22 +50,22 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 是否启用
         /// </summary>
         [DisplayName("是否启用")]
-        public bool Enabled { get; set; }
+        public bool Enabled { get; private set; }
         /// <summary>
         /// 名称
         /// </summary>
         [DisplayName("名称")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
         /// <summary>
         /// 显示名称
         /// </summary>
         [DisplayName("显示名称")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
         /// <summary>
         /// 描述
         /// </summary>
         [DisplayName("描述")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
         /// <summary>
         /// 是否显示在发现文档中
         /// </summary>
@@ -75,42 +75,42 @@ namespace Sukt.Core.Domain.Models.IdentityServerFour
         /// 允许的访问令牌登录算法
         /// </summary>
         [DisplayName("允许的访问令牌登录算法")]
-        public string AllowedAccessTokenSigningAlgorithms { get; set; }
+        public string AllowedAccessTokenSigningAlgorithms { get; private set; }
         /// <summary>
         /// 是否不可编辑
         /// </summary>
         [DisplayName("是否不可编辑")]
-        public bool NonEditable { get; set; }
+        public bool NonEditable { get; private set; }
         /// <summary>
         /// 最后访问时间
         /// </summary>
         [DisplayName("最后访问时间")]
-        public DateTime? LastAccessed { get; set; }
+        public DateTime? LastAccessed { get; private set; }
         #endregion
         #region 导航属性
         /// <summary>
         /// 密钥
         /// </summary>
         [DisplayName("密钥")]
-        public List<ApiResourceSecret> Secrets { get; set; }
+        public List<ApiResourceSecret> Secrets { get; private set; }
 
         /// <summary>
         /// 授权范围
         /// </summary>
         [DisplayName("授权范围")]
-        public List<ApiResourceScope> Scopes { get; set; }
+        public List<ApiResourceScope> Scopes { get; private set; }
 
         /// <summary>
         /// 用户声明
         /// </summary>
         [DisplayName("用户声明")]
-        public List<ApiResourceClaim> UserClaims { get; set; }
+        public List<ApiResourceClaim> UserClaims { get; private set; }
 
         /// <summary>
         /// 属性
         /// </summary>
         [DisplayName("属性")]
-        public List<ApiResourceProperty> Properties { get; set; }
+        public List<ApiResourceProperty> Properties { get; private set; }
         #endregion
 
         #region 公共字段
