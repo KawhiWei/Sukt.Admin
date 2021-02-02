@@ -68,3 +68,7 @@ Sukt.Core 是一个开箱即用的企业级权限管理应用框架。采用最�
 >5、MongoDB如上，如果没有MongoDB在SuktAppWebModule的特性上将MongoDB模块注释即可，
 >6、以上修改完成在程序包窗口内选中Models层使用ef core迁移命令生成迁移文件，然后启动项目即可，
 >7、启动项目时会判断是否需要迁移数据库、以及写入种子数据，在appsettings.Development.json中配置【"Migrations"】,默认是开启状态
+## 售后服务与支持  
+
+鼓励作者，推广框架，入QQ群：980386066，随时随地解答我框架中（NetCore、Vue、DDD、IdentityServer4等）的疑难杂症。     
+注意主要是帮忙解决bug和思路，不会远程授课，但是可以适当发我代码，我帮忙调试，         
