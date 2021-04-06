@@ -32,7 +32,7 @@ namespace Sukt.Core.API.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        [Description("添加租户")]
+        [Description("创建菜单")]
         [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] MultiTenantInputDto input)
         {

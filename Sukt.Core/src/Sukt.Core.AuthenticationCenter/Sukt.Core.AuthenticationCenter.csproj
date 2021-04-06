@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>0a03eb02-23b5-4147-8cf1-b319d806e1f9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ProjectExtensions>
-    <VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/appsettings" /></VisualStudio>
+    <VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings" appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="https://json.schemastore.org/appsettings" /></VisualStudio>
   </ProjectExtensions>
 
 </Project>
