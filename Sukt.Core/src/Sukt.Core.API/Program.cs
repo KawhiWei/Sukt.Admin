@@ -38,27 +38,27 @@ namespace Sukt.Core.API
                     //    opt.ListenLocalhost(9852, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
                     //});
                     webBuilder.UseStartup<Startup>()
-                    .ConfigureKestrel(options =>
-                    {
+//                    .ConfigureKestrel(options =>
+//                    {
 
-#if DEBUG
+//#if DEBUG
 
-                        options.ListenLocalhost(8361, o => o.Protocols =
-                            HttpProtocols.Http2);
+//                        options.ListenLocalhost(8361, o => o.Protocols =
+//                            HttpProtocols.Http2);
 
-                        // ADDED THIS LINE to fix the problem
-                        options.ListenLocalhost(8001, o => o.Protocols =
-                            HttpProtocols.Http1);
-#else
+//                        // ADDED THIS LINE to fix the problem
+//                        options.ListenLocalhost(8001, o => o.Protocols =
+//                            HttpProtocols.Http1);
+//#else
 
-                        // ADDED THIS LINE to fix the problem
-                        options.ListenAnyIP(80, o => o.Protocols =
-                            HttpProtocols.Http1);
-                        options.ListenAnyIP(8331, o => o.Protocols =
-                                                    HttpProtocols.Http2);
+//                        // ADDED THIS LINE to fix the problem
+//                        options.ListenAnyIP(80, o => o.Protocols =
+//                            HttpProtocols.Http1);
+//                        options.ListenAnyIP(8331, o => o.Protocols =
+//                                                    HttpProtocols.Http2);
 
-#endif
-                    })
+//#endif
+//                    })
                     .UseSerilog((webHost, configuration) =>
                     {
 

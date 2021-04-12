@@ -17,5 +17,10 @@ namespace Sukt.Core.Shared.Events.EventBus
         {
             return _mediator.Publish(@event);
         }
+
+        public Task<OutT> SendAsync<OutT>(IRequest<OutT> @event, CancellationToken cancellationToken = default)
+        {
+            return _mediator.Send(@event);
+        }
     }
 }

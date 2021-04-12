@@ -8,7 +8,7 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "SkyAPM.Agent.AspNetCore",
         "SKYWALKING__SERVICENAME": "suktcore"
       },
-      "applicationUrl": "http://localhost:8001"
+      "applicationUrl": "http://localhost:8002"
     }
   }
 }
