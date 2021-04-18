@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sukt-core-admin-pod
+  namespace: sukt-core
+spec:
+  selector:
+    matchLabels:
+      app: sukt-core-admin-pod
+  template:
+    metadata:
+      labels:
+        app: sukt-core-admin-pod
+    spec:
+      nodeName: k8sworknode1
+      containers:
+        - name: sukt-core-admin-server-api
+          image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.0
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+          - containerPort: 80
+          volumeMounts:
+            - mountPath: /app/appsettings.json
+              name: test
+              readOnly: true
+              subPath: appsettings.json
+      imagePullSecrets:
+        - name: aliyun-iamge-secret
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name:  sukt-core-admin-appsettings
+          name: test

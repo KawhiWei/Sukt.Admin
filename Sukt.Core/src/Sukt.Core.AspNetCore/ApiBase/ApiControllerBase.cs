@@ -2,7 +2,7 @@
 
 namespace Sukt.Core.AspNetCore.ApiBase
 {
-    [Route("api/[controller]/[action]")]
+    [Route("admin/[controller]/[action]")]
     [ApiController]
     public abstract class ApiControllerBase : ControllerBase
     {

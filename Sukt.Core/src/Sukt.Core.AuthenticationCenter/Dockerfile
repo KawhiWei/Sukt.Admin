@@ -18,7 +18,7 @@ EXPOSE 80
 #COPY ["src/Sukt.Core.IdentityServer4Store/Sukt.Core.IdentityServer4Store.csproj", "src/Sukt.Core.IdentityServer4Store/"]
 #COPY ["src/Sukt.Core.MultiTenancy/Sukt.Core.MultiTenancy.csproj", "src/Sukt.Core.MultiTenancy/"]
 #RUN dotnet restore "src/Sukt.Core.AuthenticationCenter/Sukt.Core.AuthenticationCenter.csproj"
-#COPY . .
+COPY . .
 #WORKDIR "/src/src/Sukt.Core.AuthenticationCenter"
 #RUN dotnet build "Sukt.Core.AuthenticationCenter.csproj" -c Release -o /app/build
 #
@@ -26,6 +26,6 @@ EXPOSE 80
 #RUN dotnet publish "Sukt.Core.AuthenticationCenter.csproj" -c Release -o /app/publish
 #
 #FROM base AS final
-WORKDIR /app
+#WORKDIR /app
 #COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Sukt.Core.AuthenticationCenter.dll"]

@@ -15,13 +15,22 @@ spec:
       nodeName: k8sworknode1
       containers:
         - name: sukt-core-auth-server
-          image: registry.cn-hangzhou.aliyuncs.com/suktcore/authenticationcenter:v1.0
+          image: registry.cn-hangzhou.aliyuncs.com/suktcore/authenticationcenter:v1.3
           resources:
             limits:
               memory: "500Mi"
               cpu: "500m"
           ports:
           - containerPort: 80
+          volumeMounts:
+            - mountPath: /app/appsettings.json
+              name: test
+              readOnly: true
+              subPath: appsettings.json
       imagePullSecrets:
         - name: aliyun-iamge-secret
-
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name:  sukt-core-auth-appsettings 
+          name: test
