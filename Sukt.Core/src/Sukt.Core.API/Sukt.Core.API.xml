@@ -368,6 +368,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Sukt.Core.API.Controllers.UpLoadController">
+            <summary>
+            文件上传
+            </summary>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.UpLoadController.Upload(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            文件分片上传接口
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.UserController">
             <summary>
             用户管理

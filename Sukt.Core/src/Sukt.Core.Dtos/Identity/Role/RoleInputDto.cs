@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Domain.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Sukt.Core.Domain.Models;
 using Sukt.Core.Shared.Attributes.AutoMapper;
 using Sukt.Core.Shared.Entity;
 using System;

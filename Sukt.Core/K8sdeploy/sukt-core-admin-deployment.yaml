@@ -18,8 +18,8 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.0
           resources:
             limits:
-              memory: "500Mi"
-              cpu: "500m"
+              memory: "500Mi" #内存资源 
+              cpu: "150m" #CPU资源 1H=1000
           ports:
           - containerPort: 80
           volumeMounts:
