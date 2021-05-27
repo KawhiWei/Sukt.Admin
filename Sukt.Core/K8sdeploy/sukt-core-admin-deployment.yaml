@@ -15,7 +15,7 @@ spec:
       nodeName: k8sworknode1
       containers:
         - name: sukt-core-admin-server-api
-          image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.0
+          image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.2
           resources:
             limits:
               memory: "500Mi" #内存资源 
@@ -27,6 +27,20 @@ spec:
               name: test
               readOnly: true
               subPath: appsettings.json
+          readinessProbe:
+            httpGet: 
+              path: /api/healthchecks/readiness
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60 
+          livenessProbe:
+            httpGet:
+              path: /api/healthchecks/liveness
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 120
+            periodSeconds: 60 
       imagePullSecrets:
         - name: aliyun-iamge-secret
       volumes:

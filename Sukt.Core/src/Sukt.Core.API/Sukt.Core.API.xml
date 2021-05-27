@@ -133,9 +133,15 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.HealthController.Get">
+        <member name="M:Sukt.Core.API.Controllers.HealthController.GetLiveness">
             <summary>
-            健康监测
+            健康监测通过liveness来探测微服务的存活性
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.HealthController.GetReadiness">
+            <summary>
+            健康监测通过readiness来探测微服务
             </summary>
             <returns></returns>
         </member>
