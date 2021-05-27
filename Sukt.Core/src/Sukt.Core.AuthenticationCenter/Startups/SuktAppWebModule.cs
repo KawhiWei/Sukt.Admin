@@ -55,7 +55,11 @@ namespace Sukt.Core.AuthenticationCenter.Startups
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             var service = context.Services;
-            service.AddMvc();
+#if DEBUG
+            service.AddRazorPages().AddRazorRuntimeCompilation();//判断是否是开发环境
+#else
+service.AddMvc();
+#endif
             context.Services.AddTransient<IPrincipal>(provider =>
             {
                 IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();

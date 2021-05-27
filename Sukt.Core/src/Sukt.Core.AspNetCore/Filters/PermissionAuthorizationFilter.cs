@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Shared.OperationResult;
 using Sukt.Core.Shared.Permission;
 using Sukt.Core.Shared.ResultMessageConst;
@@ -33,7 +34,7 @@ namespace Sukt.Core.AspNetCore.Filters
             var isAllowAnonymous = action.ControllerTypeInfo.GetCustomAttribute<AllowAnonymousAttribute>();//获取Action中的特性
             var linkurl = context.HttpContext.Request.Path.Value.Replace("/api/", "");
             var result = new AjaxResult(ResultMessage.Unauthorized, Shared.Enums.AjaxResultType.Unauthorized);
-            if (!action.EndpointMetadata.Any(x => x is AllowAnonymousAttribute))
+            if (!action.EndpointMetadata.Any(x => x is AllowAnonymousAttribute) && action.ControllerTypeInfo.GetType().IsAssignableFrom(typeof(ApiControllerBase)))
             {
                 if (!(bool)_httpContextAccessor.HttpContext?.User.Identity.IsAuthenticated)
                 {

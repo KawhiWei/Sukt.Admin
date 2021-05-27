@@ -25,6 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var stest = services.GetAppSettings();
             var type1 = typeof(TDbContext);
             DestinyContextOptions contextOptions = stest.DbContexts?.Values.FirstOrDefault(o => o.DbContextType == type1);
+            services.AddHealthChecks().AddDbContextCheck<TDbContext>();
             services.AddDbContext<TDbContext>((provider, builder) =>
             {
 
