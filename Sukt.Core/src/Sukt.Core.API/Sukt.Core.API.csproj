@@ -49,7 +49,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
-    <ProjectReference Include="..\Sukt.Core.IdentityServer4Store\Sukt.Core.IdentityServer4Store.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,44 +4,6 @@
         <name>Sukt.Core.API</name>
     </assembly>
     <members>
-        <member name="M:Sukt.Core.API.Config.Config.GetIdentityResources">
-            <summary>
-            资源授权类型
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Config.Config.GetApiResources">
-            <summary>
-            API资源名称
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Config.IdentityServerProfile.ApiScopeMapperProfile.#ctor">
-            <summary>
-            <see cref="T:Sukt.Core.API.Config.IdentityServerProfile.ApiScopeMapperProfile"/>
-            </summary>
-        </member>
-        <member name="T:Sukt.Core.API.Config.IdentityServerProfile.ClientMapperProfile">
-            <summary>
-            IdentityServer4客户端实体模型转Dto
-            </summary>
-        </member>
-        <member name="M:Sukt.Core.API.Config.IdentityServerProfile.ClientMapperProfile.#ctor">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="T:Sukt.Core.API.Config.IdentityServerProfile.IdentityResourceMapperProfile">
-            <summary>
-            AutoMapper configuration for identity resource
-            Between model and entity
-            </summary>
-        </member>
-        <member name="M:Sukt.Core.API.Config.IdentityServerProfile.IdentityResourceMapperProfile.#ctor">
-            <summary>
-            <see cref="T:Sukt.Core.API.Config.IdentityServerProfile.IdentityResourceMapperProfile"/>
-            </summary>
-        </member>
         <member name="T:Sukt.Core.API.Controllers.AuditLogController">
             <summary>
             功能管理

@@ -29,7 +29,8 @@ namespace Sukt.Core.API.Controllers
         [Description("文件分片上传")]
         public async Task<string> Upload([FromForm] IFormCollection input)
         {
-            
+
+            await Task.CompletedTask;
             return "";
         }
     }

@@ -40,6 +40,7 @@
     <PackageReference Include="Sukt.Core.CodeGenerator" Version="1.0.1" />
     <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
     <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+    <PackageReference Include="Sukt.Core.TestBase" Version="1.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -49,10 +50,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj" />
   </ItemGroup>
 
 </Project>
