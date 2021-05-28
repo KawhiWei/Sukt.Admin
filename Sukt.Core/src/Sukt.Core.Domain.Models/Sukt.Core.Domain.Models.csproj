@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Sukt.Core.IdentityServerFour\Sukt.Core.IdentityServerFour.csproj" />
+    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

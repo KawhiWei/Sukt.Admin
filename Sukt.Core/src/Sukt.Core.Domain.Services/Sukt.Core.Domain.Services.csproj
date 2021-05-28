@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Domain.Repository\Sukt.Core.Domain.Repository.csproj" />
   </ItemGroup>
 
 </Project>

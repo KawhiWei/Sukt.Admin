@@ -1,14 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Sukt.Core.Aop" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.AspNetCore" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.AutoMapper" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.Caching" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.CodeGenerator" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+    <PackageReference Include="Sukt.Core.Swagger" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
-    <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -37,6 +37,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Sukt.Core.CodeGenerator" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
+    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -49,10 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
-    <ProjectReference Include="..\src\Sukt.Core.CodeGenerator\Sukt.Core.CodeGenerator.csproj" />
-    <ProjectReference Include="..\src\Sukt.Core.MongoDB\Sukt.Core.MongoDB.csproj" />
-    <ProjectReference Include="..\src\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
     <ProjectReference Include="..\src\Sukt.Core.TestBase\Sukt.Core.TestBase.csproj" />
   </ItemGroup>
 

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sukt.Core.API.Startups;
 using Sukt.Core.AspNetCore.Middleware;
-using Sukt.Core.MultiTenancy;
+//using Sukt.Core.MultiTenancy;
 using Sukt.Core.Shared.Modules;
 
 namespace Sukt.Core.API
@@ -34,7 +34,7 @@ namespace Sukt.Core.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMultiTenancy();
+            //app.UseMultiTenancy();
             app.UseErrorHandling();
             app.InitializeApplication();
         }

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
-using Sukt.Core.SeriLog;
 using System;
 using System.IO;
 
@@ -38,27 +37,27 @@ namespace Sukt.Core.API
                     //    opt.ListenLocalhost(9852, o => o.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2);
                     //});
                     webBuilder.UseStartup<Startup>()
-//                    .ConfigureKestrel(options =>
-//                    {
+                    //                    .ConfigureKestrel(options =>
+                    //                    {
 
-//#if DEBUG
+                    //#if DEBUG
 
-//                        options.ListenLocalhost(8361, o => o.Protocols =
-//                            HttpProtocols.Http2);
+                    //                        options.ListenLocalhost(8361, o => o.Protocols =
+                    //                            HttpProtocols.Http2);
 
-//                        // ADDED THIS LINE to fix the problem
-//                        options.ListenLocalhost(8001, o => o.Protocols =
-//                            HttpProtocols.Http1);
-//#else
+                    //                        // ADDED THIS LINE to fix the problem
+                    //                        options.ListenLocalhost(8001, o => o.Protocols =
+                    //                            HttpProtocols.Http1);
+                    //#else
 
-//                        // ADDED THIS LINE to fix the problem
-//                        options.ListenAnyIP(80, o => o.Protocols =
-//                            HttpProtocols.Http1);
-//                        options.ListenAnyIP(8331, o => o.Protocols =
-//                                                    HttpProtocols.Http2);
+                    //                        // ADDED THIS LINE to fix the problem
+                    //                        options.ListenAnyIP(80, o => o.Protocols =
+                    //                            HttpProtocols.Http1);
+                    //                        options.ListenAnyIP(8331, o => o.Protocols =
+                    //                                                    HttpProtocols.Http2);
 
-//#endif
-//                    })
+                    //#endif
+                    //                    })
                     .UseSerilog((webHost, configuration) =>
                     {
 
@@ -73,8 +72,7 @@ namespace Sukt.Core.API
                         configuration.ReadFrom.
                         Configuration(webHost.Configuration.GetSection("Serilog")).Enrich.FromLogContext().WriteTo.Console(logEventLevel);
                         configuration.WriteTo.Map(le => MapData(le),
-                (key, log) =>
-                 log.Async(o => o.File(Path.Combine("Logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
+                (key, log) => log.Async(o => o.File(Path.Combine("Logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
 
                         (DateTime time, LogEventLevel level) MapData(LogEvent logEvent)
                         {

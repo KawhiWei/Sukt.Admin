@@ -10,16 +10,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
     <ProjectReference Include="..\Sukt.Core.Domain.Repository\Sukt.Core.Domain.Repository.csproj" />
     <ProjectReference Include="..\Sukt.Core.IdentityServer4Store\Sukt.Core.IdentityServer4Store.csproj" />
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
-    <ProjectReference Include="..\Sukt.Core.MongoDB\Sukt.Core.MongoDB.csproj" />
-    <ProjectReference Include="..\Sukt.Core.MultiTenancy\Sukt.Core.MultiTenancy.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

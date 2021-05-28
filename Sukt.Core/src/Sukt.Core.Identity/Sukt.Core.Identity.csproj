@@ -7,10 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
+    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

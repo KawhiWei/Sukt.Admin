@@ -38,22 +38,18 @@
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
     <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="Sukt.Core.MultiTenancy" Version="1.0.0" />
+    <PackageReference Include="Sukt.Core.SeriLog" Version="1.0.0" />
+    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.Aop\Sukt.Core.Aop.csproj" />
     <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
-    <ProjectReference Include="..\Sukt.Core.AspNetCore\Sukt.Core.AspNetCore.csproj" />
-    <ProjectReference Include="..\Sukt.Core.AutoMapper\Sukt.Core.AutoMapper.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Consul\Sukt.Core.Consul.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.IdentityServer4Store\Sukt.Core.IdentityServer4Store.csproj" />
-    <ProjectReference Include="..\Sukt.Core.MultiTenancy\Sukt.Core.MultiTenancy.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Redis\Sukt.Core.Redis.csproj" />
-    <ProjectReference Include="..\Sukt.Core.SeriLog\Sukt.Core.SeriLog.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Swagger\Sukt.Core.Swagger.csproj" />
   </ItemGroup>
 
   <ItemGroup>
