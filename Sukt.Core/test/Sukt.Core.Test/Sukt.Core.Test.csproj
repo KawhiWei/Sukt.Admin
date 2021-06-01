@@ -37,10 +37,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="Sukt.Core.CodeGenerator" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
-    <PackageReference Include="Sukt.Core.TestBase" Version="1.0.0" />
+    <PackageReference Include="SuktCore.CodeGenerator" Version="1.0.1" />
+    <PackageReference Include="SuktCore.MongoDB" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Shared" Version="1.0.3" />
+    <PackageReference Include="SuktCore.TestBase" Version="1.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>

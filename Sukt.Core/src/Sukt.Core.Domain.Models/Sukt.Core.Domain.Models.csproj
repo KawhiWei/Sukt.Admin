@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+    <PackageReference Include="SuktCore.EntityFrameworkCore" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Shared" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

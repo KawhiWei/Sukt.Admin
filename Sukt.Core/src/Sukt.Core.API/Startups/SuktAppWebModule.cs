@@ -16,6 +16,7 @@ using Sukt.Core.Swagger;
 using System;
 using System.Linq;
 using System.Security.Principal;
+using Sukt.Core.AliyunOSS;
 
 namespace Sukt.Core.API.Startups
 {
@@ -52,6 +53,7 @@ namespace Sukt.Core.API.Startups
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
             var settings = service.GetAppSettings();
+            service.AddOSSOption();
             service.AddTransient<IPrincipal>(provider =>
             {
                 IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();

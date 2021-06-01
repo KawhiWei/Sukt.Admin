@@ -341,7 +341,7 @@
             文件上传
             </summary>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UpLoadController.Upload(Microsoft.AspNetCore.Http.IFormCollection)">
+        <member name="M:Sukt.Core.API.Controllers.UpLoadController.Upload(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             文件分片上传接口
             </summary>

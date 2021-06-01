@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sukt.Core.Application.UPLoad;
 using Sukt.Core.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Identity.Role;
 using Sukt.Core.Shared.Entity;
@@ -20,6 +21,15 @@ namespace Sukt.Core.API.Controllers
     [AllowAnonymous]
     public class UpLoadController : ApiControllerBase
     {
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IAliyunOSS _aliyunOSS;
+
+        public UpLoadController(IWebHostEnvironment hostEnvironment, IAliyunOSS aliyunOSS)
+        {
+            _hostEnvironment = hostEnvironment;
+            _aliyunOSS = aliyunOSS;
+        }
+
         /// <summary>
         /// 文件分片上传接口
         /// </summary>
@@ -27,9 +37,8 @@ namespace Sukt.Core.API.Controllers
         [HttpPost]
         [DisableRequestSizeLimit]
         [Description("文件分片上传")]
-        public async Task<string> Upload([FromForm] IFormCollection input)
+        public async Task<string> Upload(IFormFile input)
         {
-
             await Task.CompletedTask;
             return "";
         }

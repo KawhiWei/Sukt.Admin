@@ -7,9 +7,9 @@
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
     <PackageReference Include="IdentityServer4.Storage" Version="4.1.2" />
-    <PackageReference Include="Sukt.Core.AutoMapper" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+    <PackageReference Include="SuktCore.AutoMapper" Version="1.0.1" />
+    <PackageReference Include="SuktCore.EntityFrameworkCore" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Shared" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>

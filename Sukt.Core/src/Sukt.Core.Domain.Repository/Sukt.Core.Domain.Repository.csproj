@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sukt.Core.Aop" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.AspNetCore" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.AutoMapper" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.Caching" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.CodeGenerator" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.EntityFrameworkCore" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
-    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
-    <PackageReference Include="Sukt.Core.Swagger" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Aop" Version="1.0.1" />
+    <PackageReference Include="SuktCore.AspNetCore" Version="1.0.1" />
+    <PackageReference Include="SuktCore.AutoMapper" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Caching" Version="1.0.1" />
+    <PackageReference Include="SuktCore.CodeGenerator" Version="1.0.1" />
+    <PackageReference Include="SuktCore.EntityFrameworkCore" Version="1.0.1" />
+    <PackageReference Include="SuktCore.MongoDB" Version="1.0.1" />
+    <PackageReference Include="SuktCore.Shared" Version="1.0.3" />
+    <PackageReference Include="SuktCore.Swagger" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
