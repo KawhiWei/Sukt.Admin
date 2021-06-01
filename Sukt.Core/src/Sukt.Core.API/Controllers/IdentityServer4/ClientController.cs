@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.IdentityServer4Contract;
-using Sukt.Core.AspNetCore.ApiBase;
+using SuktCore.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.IdentityServer4Dto;
-using Sukt.Core.Shared.Audit;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared.Audit;
+using SuktCore.Shared.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;

@@ -1,8 +1,8 @@
 ﻿using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Domain.Services.IdentityServer4Domain.ApiScopeDomainServices;
 using Sukt.Core.Dtos.IdentityServer4Dto.ApiScope;
-using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared.Extensions;
+using SuktCore.Shared.OperationResult;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

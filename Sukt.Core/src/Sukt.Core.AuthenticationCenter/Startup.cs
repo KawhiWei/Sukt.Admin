@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sukt.Core.AuthenticationCenter.Startups;
-using Sukt.Core.Shared.Modules;
+using SuktCore.Shared.Modules;
 
 namespace Sukt.Core.AuthenticationCenter
 {

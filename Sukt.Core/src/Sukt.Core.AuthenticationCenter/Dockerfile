@@ -7,8 +7,8 @@ EXPOSE 80
 #FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 #WORKDIR /src
 #COPY ["src/Sukt.Core.AuthenticationCenter/Sukt.Core.AuthenticationCenter.csproj", "src/Sukt.Core.AuthenticationCenter/"]
-#COPY ["src/Sukt.Core.MongoDB/Sukt.Core.MongoDB.csproj", "src/Sukt.Core.MongoDB/"]
-#COPY ["src/Sukt.Core.Shared/Sukt.Core.Shared.csproj", "src/Sukt.Core.Shared/"]
+#COPY ["src/Sukt.Core.MongoDB/SuktCore.MongoDB.csproj", "src/Sukt.Core.MongoDB/"]
+#COPY ["src/SuktCore.Shared/SuktCore.Shared.csproj", "src/SuktCore.Shared/"]
 #COPY ["src/Sukt.Core.Domain.Repository/Sukt.Core.Domain.Repository.csproj", "src/Sukt.Core.Domain.Repository/"]
 #COPY ["src/Sukt.Core.Identity/Sukt.Core.Identity.csproj", "src/Sukt.Core.Identity/"]
 #COPY ["src/Sukt.Core.EntityFrameworkCore/Sukt.Core.EntityFrameworkCore.csproj", "src/Sukt.Core.EntityFrameworkCore/"]

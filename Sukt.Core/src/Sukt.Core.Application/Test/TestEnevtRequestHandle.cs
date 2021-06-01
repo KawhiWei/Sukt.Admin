@@ -1,5 +1,5 @@
 ﻿using Sukt.Core.Dtos.Menu;
-using Sukt.Core.Shared.Events;
+using SuktCore.Shared.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;

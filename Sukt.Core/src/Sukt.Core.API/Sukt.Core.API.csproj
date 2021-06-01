@@ -40,9 +40,10 @@
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
     <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="1.2.0" />
-    <PackageReference Include="Sukt.Core.MultiTenancy" Version="1.0.0" />
-    <PackageReference Include="Sukt.Core.SeriLog" Version="1.0.0" />
-    <PackageReference Include="Sukt.Core.Shared" Version="1.0.3" />
+    <PackageReference Include="SuktCore.AliyunOSS" Version="1.0.2" />
+    <PackageReference Include="SuktCore.MultiTenancy" Version="1.0.2" />
+    <PackageReference Include="SuktCore.SeriLog" Version="1.0.2" />
+    <PackageReference Include="SuktCore.Shared" Version="1.0.4" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 

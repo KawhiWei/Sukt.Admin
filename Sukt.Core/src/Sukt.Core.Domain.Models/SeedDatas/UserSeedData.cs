@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Shared.Attributes.Dependency;
+using SuktCore.Shared.Attributes.Dependency;
 using System;
 using System.Linq.Expressions;
 

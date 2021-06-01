@@ -1,5 +1,5 @@
 ﻿//using IdentityServer4.Models;
-//using Sukt.Core.Shared;
+//using SuktCore.Shared;
 //using System.Collections.Generic;
 
 //namespace Sukt.Core.API.Config

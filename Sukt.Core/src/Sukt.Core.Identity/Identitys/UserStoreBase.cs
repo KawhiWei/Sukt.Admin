@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Extensions;
+using SuktCore.Shared.Entity;
+using SuktCore.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

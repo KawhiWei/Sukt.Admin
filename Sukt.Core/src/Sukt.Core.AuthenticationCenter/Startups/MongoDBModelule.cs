@@ -1,7 +1,7 @@
 ﻿//using Microsoft.Extensions.DependencyInjection;
-//using Sukt.Core.MongoDB;
-//using Sukt.Core.MongoDB.DbContexts;
-//using Sukt.Core.Shared.Extensions;
+//using SuktCore.MongoDB;
+//using SuktCore.MongoDB.DbContexts;
+//using SuktCore.Shared.Extensions;
 //using System.IO;
 
 //namespace Sukt.Core.AuthenticationCenter.Startups

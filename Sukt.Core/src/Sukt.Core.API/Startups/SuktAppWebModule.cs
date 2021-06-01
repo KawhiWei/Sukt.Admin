@@ -2,20 +2,21 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Sukt.Core.Aop;
-using Sukt.Core.AspNetCore.Filters;
-using Sukt.Core.AutoMapper;
+using SuktCore.Aop;
+using SuktCore.AspNetCore.Filters;
+using SuktCore.AutoMapper;
 using Sukt.Core.Domain.Models;
-using Sukt.Core.Shared;
-using Sukt.Core.Shared.AppOption;
-using Sukt.Core.Shared.Events;
-using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.Modules;
-using Sukt.Core.Shared.SuktDependencyAppModule;
-using Sukt.Core.Swagger;
+using SuktCore.Shared;
+using SuktCore.Shared.AppOption;
+using SuktCore.Shared.Events;
+using SuktCore.Shared.Extensions;
+using SuktCore.Shared.Modules;
+using SuktCore.Shared.SuktDependencyAppModule;
+using SuktCore.Swagger;
 using System;
 using System.Linq;
 using System.Security.Principal;
+using SuktCore.AliyunOSS;
 
 namespace Sukt.Core.API.Startups
 {
@@ -52,6 +53,7 @@ namespace Sukt.Core.API.Startups
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
             var settings = service.GetAppSettings();
+            service.AddOSSOption();
             service.AddTransient<IPrincipal>(provider =>
             {
                 IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();

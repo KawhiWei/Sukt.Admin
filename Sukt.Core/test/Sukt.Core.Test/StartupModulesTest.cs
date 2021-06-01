@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Shared.Modules;
-using Sukt.Core.TestBase;
+using SuktCore.Shared.Modules;
+using SuktCore.TestBase;
 using Xunit;
 
 namespace Sukt.Core.Test

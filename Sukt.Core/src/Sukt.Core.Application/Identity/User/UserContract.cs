@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Dtos;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Enums;
-using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.OperationResult;
-using Sukt.Core.Shared.ResultMessageConst;
+using SuktCore.Shared.Entity;
+using SuktCore.Shared.Enums;
+using SuktCore.Shared.Extensions;
+using SuktCore.Shared.OperationResult;
+using SuktCore.Shared.ResultMessageConst;
 using System;
 using System.Threading.Tasks;
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
-using Sukt.Core.Shared;
-using Sukt.Core.Shared.Attributes.Dependency;
-using Sukt.Core.Shared.Entity;
+using SuktCore.Shared;
+using SuktCore.Shared.Attributes.Dependency;
+using SuktCore.Shared.Entity;
 using System;
 
 namespace Sukt.Core.Domain.Repository.DomainRepository

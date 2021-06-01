@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.MenuFunction;
-using Sukt.Core.AspNetCore.ApiBase;
+using SuktCore.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.MenuFunction;
-using Sukt.Core.Shared.Audit;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared.Audit;
+using SuktCore.Shared.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;

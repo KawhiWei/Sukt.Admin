@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Repository;
 using Sukt.Core.Identity;
-using Sukt.Core.Shared.Extensions;
+using SuktCore.Shared.Extensions;
 using System;
 using System.Threading.Tasks;
 

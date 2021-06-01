@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using Sukt.Core.AspNetCore.ApiBase;
-using Sukt.Core.Shared.AjaxResult;
-using Sukt.Core.Shared.Audit;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Extensions;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.AspNetCore.ApiBase;
+using SuktCore.Shared.AjaxResult;
+using SuktCore.Shared.Audit;
+using SuktCore.Shared.Entity;
+using SuktCore.Shared.Extensions;
+using SuktCore.Shared.OperationResult;
 
 namespace Sukt.Core.API.Controllers
 {

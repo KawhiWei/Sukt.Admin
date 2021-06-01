@@ -1,5 +1,5 @@
-﻿using Sukt.Core.Shared;
-using Sukt.Core.Shared.Entity;
+﻿using SuktCore.Shared;
+using SuktCore.Shared.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

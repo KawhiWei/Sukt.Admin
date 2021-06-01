@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Domain.Models;
 using Sukt.Core.Identity;
-using Sukt.Core.Shared.Entity;
+using SuktCore.Shared.Entity;
 using System;
 
 namespace Sukt.Core.Domain.Repository

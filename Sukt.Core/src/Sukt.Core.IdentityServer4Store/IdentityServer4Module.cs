@@ -3,7 +3,7 @@ using IdentityServer4.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.IdentityServer4Store.Store;
 using Sukt.Core.IdentityServer4Store.Validation;
-using Sukt.Core.Shared.Modules;
+using SuktCore.Shared.Modules;
 
 namespace Sukt.Core.IdentityServerFourStore
 {

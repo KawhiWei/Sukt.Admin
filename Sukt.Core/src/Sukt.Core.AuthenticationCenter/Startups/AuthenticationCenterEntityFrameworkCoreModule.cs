@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sukt.Core.Shared;
+using SuktCore.Shared;
 
 namespace Sukt.Core.AuthenticationCenter.Startups
 {

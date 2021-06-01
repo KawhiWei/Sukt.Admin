@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver.Linq;
-using Sukt.Core.MongoDB;
-using Sukt.Core.MongoDB.DbContexts;
-using Sukt.Core.MongoDB.Repositorys;
-using Sukt.Core.Shared;
-using Sukt.Core.Shared.Audit;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.ExpressionUtil;
-using Sukt.Core.Shared.Extensions.OrderExtensions;
-using Sukt.Core.Shared.Filter;
-using Sukt.Core.TestBase;
+using SuktCore.MongoDB;
+using SuktCore.MongoDB.DbContexts;
+using SuktCore.MongoDB.Repositorys;
+using SuktCore.Shared;
+using SuktCore.Shared.Audit;
+using SuktCore.Shared.Entity;
+using SuktCore.Shared.ExpressionUtil;
+using SuktCore.Shared.Extensions.OrderExtensions;
+using SuktCore.Shared.Filter;
+using SuktCore.TestBase;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -49,7 +49,7 @@ namespace Sukt.Core.Test
             //filter.Conditions.Add(condition);
             var exp = FilterHelp.GetExpression<TestDB>(filter);
             OrderCondition[] orderConditions = new OrderCondition[] {
-                new OrderCondition("Name",Sukt.Core.Shared.Enums.SortDirectionEnum.Descending),
+                new OrderCondition("Name",SuktCore.Shared.Enums.SortDirectionEnum.Descending),
                 new OrderCondition("CreatedTime")
                };
             PagedRequest pagedRequest = new PagedRequest();

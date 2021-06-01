@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
-using Sukt.Core.AspNetCore.ApiBase;
+using SuktCore.AspNetCore.ApiBase;
 using Sukt.Core.Dtos.Menu;
-using Sukt.Core.Shared.Audit;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared.Audit;
+using SuktCore.Shared.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;

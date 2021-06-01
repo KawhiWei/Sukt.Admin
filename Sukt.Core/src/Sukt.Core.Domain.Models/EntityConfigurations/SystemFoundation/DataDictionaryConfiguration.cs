@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Domain.Models.SystemFoundation.DataDictionary;
-using Sukt.Core.Shared;
+using SuktCore.Shared;
 using System;
 
 namespace Sukt.Core.Domain.Models.EntityConfigurations.SystemFoundation

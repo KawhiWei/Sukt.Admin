@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Dtos.LoginIdentity;
-using Sukt.Core.Shared;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared;
+using SuktCore.Shared.OperationResult;
 using System.Security.Claims;
 using System.Threading.Tasks;
 

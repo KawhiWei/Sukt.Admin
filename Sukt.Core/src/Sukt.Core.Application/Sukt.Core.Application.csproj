@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-    <PackageReference Include="Sukt.Core.MongoDB" Version="1.0.1" />
+    <PackageReference Include="SuktCore.AliyunOSS" Version="1.0.2" />
+    <PackageReference Include="SuktCore.MongoDB" Version="1.0.2" />
   </ItemGroup>
 
 <ItemGroup>

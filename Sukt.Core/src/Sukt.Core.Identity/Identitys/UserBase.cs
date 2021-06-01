@@ -1,4 +1,4 @@
-﻿using Sukt.Core.Shared.Entity;
+﻿using SuktCore.Shared.Entity;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,4 @@
-﻿using Sukt.Core.Shared.Permission;
+﻿using SuktCore.Shared.Permission;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application.Permission

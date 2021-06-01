@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Sukt.Core.Dtos.Function;
-using Sukt.Core.Shared;
-using Sukt.Core.Shared.Entity;
-using Sukt.Core.Shared.Extensions.ResultExtensions;
-using Sukt.Core.Shared.OperationResult;
+using SuktCore.Shared;
+using SuktCore.Shared.Entity;
+using SuktCore.Shared.Extensions.ResultExtensions;
+using SuktCore.Shared.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
