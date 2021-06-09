@@ -1,13 +1,13 @@
 ﻿using Sukt.Core.Domain.Models.MultiTenant;
 using Sukt.Core.Dtos.MultiTenant;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Extensions.OrderExtensions;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Threading.Tasks;
+using Sukt.Module.Core.Extensions.OrderExtensions;
+using Sukt.Module.Core.Extensions.ResultExtensions;
 
 namespace Sukt.Core.Application.MultiTenant
 {

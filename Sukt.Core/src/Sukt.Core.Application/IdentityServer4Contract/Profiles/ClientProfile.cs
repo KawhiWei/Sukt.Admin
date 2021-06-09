@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Dtos.IdentityServer4Dto;
-using SuktCore.Shared.IdentityServer4;
+using Sukt.Module.Core.IdentityServer4;
 using System;
 using System.Collections.Generic;
 

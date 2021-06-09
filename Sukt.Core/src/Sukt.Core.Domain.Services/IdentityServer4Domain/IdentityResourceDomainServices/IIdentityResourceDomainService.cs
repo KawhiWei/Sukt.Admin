@@ -1,4 +1,4 @@
-﻿using SuktCore.Shared;
+﻿using Sukt.Module.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;

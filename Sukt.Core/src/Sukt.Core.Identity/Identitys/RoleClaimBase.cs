@@ -1,4 +1,4 @@
-﻿using SuktCore.Shared.Entity;
+﻿using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 using System.Security.Claims;

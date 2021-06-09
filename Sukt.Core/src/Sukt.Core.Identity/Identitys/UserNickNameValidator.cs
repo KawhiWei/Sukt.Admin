@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

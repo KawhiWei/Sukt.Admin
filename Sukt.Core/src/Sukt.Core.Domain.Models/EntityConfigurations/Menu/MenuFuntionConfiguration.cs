@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SuktCore.Shared;
+using Sukt.EntityFrameworkCore.MappingConfiguration;
+using Sukt.Module.Core;
 using System;
 
 namespace Sukt.Core.Domain.Models.Menu

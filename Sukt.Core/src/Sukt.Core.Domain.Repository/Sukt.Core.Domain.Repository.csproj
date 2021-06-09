@@ -1,23 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SuktCore.Aop" Version="1.0.2" />
-    <PackageReference Include="SuktCore.AspNetCore" Version="1.0.2" />
-    <PackageReference Include="SuktCore.AutoMapper" Version="1.0.2" />
-    <PackageReference Include="SuktCore.Caching" Version="1.0.2" />
-    <PackageReference Include="SuktCore.CodeGenerator" Version="1.0.2" />
-    <PackageReference Include="SuktCore.EntityFrameworkCore" Version="1.0.2" />
-    <PackageReference Include="SuktCore.MongoDB" Version="1.0.2" />
-    <PackageReference Include="SuktCore.Shared" Version="1.0.4" />
-    <PackageReference Include="SuktCore.Swagger" Version="1.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Sukt.MongoDB" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
+    <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
   </ItemGroup>
 

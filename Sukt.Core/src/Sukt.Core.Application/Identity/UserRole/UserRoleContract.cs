@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Dtos.Identity.UserRole;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
+using Sukt.Module.Core.ResultMessageConst;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

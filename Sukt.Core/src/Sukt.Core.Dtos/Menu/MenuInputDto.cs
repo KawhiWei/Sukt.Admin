@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Domain.Models.Menu;
-using SuktCore.Shared.Attributes.AutoMapper;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Attributes.AutoMapper;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 

@@ -1,4 +1,4 @@
-﻿using SuktCore.Shared.Entity;
+﻿using Sukt.Module.Core.Entity;
 using System;
 
 namespace Sukt.Core.Dtos.IdentityServer4Dto

@@ -2,11 +2,11 @@
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Models.Menu;
 using Sukt.Core.Dtos.Menu;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
+using Sukt.Module.Core.ResultMessageConst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace Sukt.Core.Application
             var list = await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, MenuTableOutputDto>(
                  (p, c) =>
                  {
-                     return c.ParentId == null || c.ParentId == Guid.Empty;
+                     return c.ParentId == Guid.Empty;
                  },
                  (p, c) =>
                  {
@@ -110,7 +110,7 @@ namespace Sukt.Core.Application
             var list = await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, RouterMenuOutput>(
                 (p, c) =>
                 {
-                    return c.ParentId == null || c.ParentId == Guid.Empty;
+                    return c.ParentId == Guid.Empty;
                 },
                 (p, c) =>
                 {

@@ -9,7 +9,7 @@
             功能管理
             </summary>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.AuditLogController.GetAuditLogPageAsync(SuktCore.Shared.Entity.PageRequest)">
+        <member name="M:Sukt.Core.API.Controllers.AuditLogController.GetAuditLogPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             分页获取审计日志
             </summary>
@@ -26,34 +26,6 @@
             <summary>
             获取实体属性列表
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.CreateAsync(Sukt.Core.Dtos.DataDictionaryDto.DataDictionaryInputDto)">
-            <summary>
-            添加一个数据字典
-            </summary>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.UpdateAsync(Sukt.Core.Dtos.DataDictionaryDto.DataDictionaryInputDto)">
-            <summary>
-            修改一个数据字典
-            </summary>
-            <param name="input"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.GetPageAsync(SuktCore.Shared.Entity.PageRequest)">
-            <summary>
-            分页查询
-            </summary>
-            <param name="query"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Sukt.Core.API.Controllers.DataDictionary.DataDictionaryController.DeleteAsyc(System.Nullable{System.Guid})">
-            <summary>
-            删除一个数据字典
-            </summary>
-            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:Sukt.Core.API.Controllers.FunctionController">
@@ -82,7 +54,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.FunctionController.GetFunctionPageAsync(SuktCore.Shared.Entity.PageRequest)">
+        <member name="M:Sukt.Core.API.Controllers.FunctionController.GetFunctionPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             异步得到功能分页
             </summary>
@@ -285,7 +257,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.GetLoadPageAsync(SuktCore.Shared.Entity.PageRequest)">
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.GetLoadPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             分页获获取租户
             </summary>
@@ -323,7 +295,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.RoleController.GetPageAsync(SuktCore.Shared.Entity.PageRequest)">
+        <member name="M:Sukt.Core.API.Controllers.RoleController.GetPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             分页获取角色
             </summary>
@@ -341,7 +313,7 @@
             文件上传
             </summary>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UpLoadController.Upload(Microsoft.AspNetCore.Http.IFormFile)">
+        <member name="M:Sukt.Core.API.Controllers.UpLoadController.Upload(Microsoft.AspNetCore.Http.IFormCollection)">
             <summary>
             文件分片上传接口
             </summary>

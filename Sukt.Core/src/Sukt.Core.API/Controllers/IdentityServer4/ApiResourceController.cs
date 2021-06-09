@@ -2,8 +2,8 @@
 using Sukt.Core.Application.IdentityServer4Contract;
 using Sukt.Core.Dtos.IdentityServer4Dto;
 using Sukt.Core.Dtos.IdentityServer4Dto.ApiResource;
-using SuktCore.Shared.Audit;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core.Audit;
+using Sukt.Module.Core.OperationResult;
 using System.ComponentModel;
 using System.Threading.Tasks;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuktCore.CodeGenerator;
-using SuktCore.TestBase;
+using Sukt.CodeGenerator;
+using Sukt.TestBase;
 using System.Collections.Generic;
 using Xunit;
 

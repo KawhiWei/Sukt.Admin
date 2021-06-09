@@ -1,5 +1,5 @@
-﻿using SuktCore.Shared;
-using SuktCore.Shared.OperationResult;
+﻿using Sukt.Module.Core;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sukt.AspNetCore;
 using Sukt.Core.API.Startups;
-using SuktCore.AspNetCore.Middleware;
-//using Sukt.Core.MultiTenancy;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.Modules;
 
 namespace Sukt.Core.API
 {

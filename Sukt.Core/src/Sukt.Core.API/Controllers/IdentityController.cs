@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.LoginIdentity;
-using SuktCore.AspNetCore.ApiBase;
+using Sukt.AspNetCore;
 using Sukt.Core.Dtos.LoginIdentity;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core.OperationResult;
 using System.ComponentModel;
 using System.Security.Claims;
 using System.Threading.Tasks;

@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="SuktCore.EntityFrameworkCore" Version="1.0.2" />
-    <PackageReference Include="SuktCore.Shared" Version="1.0.4" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.4" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.2" />
+    <PackageReference Include="Sukt.AutoMapper" Version="1.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
   </ItemGroup>

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
+using Sukt.EntityFrameworkCore.MappingConfiguration;
+using Sukt.Module.Core;
 using System;
 
 namespace Sukt.Core.Domain.Models.SuktIdentityServerFour

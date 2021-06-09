@@ -1,4 +1,4 @@
-﻿//using SuktCore.Shared;
+﻿//using Sukt.Module.Core;
 //using System.Threading.Tasks;
 
 //namespace Sukt.Core.IdentityServer4Store

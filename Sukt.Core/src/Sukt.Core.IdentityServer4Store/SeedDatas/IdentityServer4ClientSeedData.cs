@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Domain.Models.SeedDatas;
-using SuktCore.Shared.Attributes.Dependency;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core.Attributes.Dependency;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

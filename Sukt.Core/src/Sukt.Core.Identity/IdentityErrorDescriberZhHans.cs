@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core.Extensions;
 
 namespace Sukt.Core.Identity
 {

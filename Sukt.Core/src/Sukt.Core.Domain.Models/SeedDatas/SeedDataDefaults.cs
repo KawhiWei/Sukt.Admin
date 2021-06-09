@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuktCore.Shared;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Linq;
 

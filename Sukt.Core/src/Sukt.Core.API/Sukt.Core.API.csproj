@@ -25,10 +25,10 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -39,17 +39,17 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
-    <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="1.2.0" />
-    <PackageReference Include="SuktCore.AliyunOSS" Version="1.0.2" />
-    <PackageReference Include="SuktCore.MultiTenancy" Version="1.0.2" />
-    <PackageReference Include="SuktCore.SeriLog" Version="1.0.2" />
-    <PackageReference Include="SuktCore.Shared" Version="1.0.4" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Sukt.Swagger" Version="1.0.1" />
+    <PackageReference Include="Sukt.SeriLog" Version="1.0.1" />
+    <PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
+    <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore.DbMigrations\Sukt.Core.EntityFrameworkCore.DbMigrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

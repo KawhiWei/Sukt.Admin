@@ -2,10 +2,10 @@
 using Sukt.Core.Domain.Services.IdentityServer4Domain.ClientDomainServices;
 using Sukt.Core.Dtos.IdentityServer4Dto;
 using Sukt.Core.Dtos.IdentityServer4Dto.Enums;
-using SuktCore.Shared;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Threading.Tasks;
 

@@ -1,9 +1,9 @@
-﻿using SuktCore.Shared;
-using SuktCore.Shared.Entity;
+﻿using Sukt.Module.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Sukt.Module.Core;
 
 namespace Sukt.Core.Domain.Models.IdentityServerFour
 {

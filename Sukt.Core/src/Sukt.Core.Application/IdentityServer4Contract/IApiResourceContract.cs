@@ -1,7 +1,7 @@
 ﻿using Sukt.Core.Dtos.IdentityServer4Dto;
 using Sukt.Core.Dtos.IdentityServer4Dto.ApiResource;
-using SuktCore.Shared;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.OperationResult;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application.IdentityServer4Contract

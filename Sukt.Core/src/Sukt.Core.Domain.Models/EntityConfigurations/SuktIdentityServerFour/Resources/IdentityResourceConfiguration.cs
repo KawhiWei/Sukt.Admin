@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
 using System;
-
+using Sukt.EntityFrameworkCore.MappingConfiguration;
 namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
 {
     public class IdentityResourceConfiguration : AggregateRootMappingConfiguration<IdentityResource, Guid>

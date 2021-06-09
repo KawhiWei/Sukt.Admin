@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Modules;
 using System.Linq;
 
 namespace Sukt.Core.Domain.Models

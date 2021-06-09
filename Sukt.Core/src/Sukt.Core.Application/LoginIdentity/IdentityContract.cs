@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Dtos.LoginIdentity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
-using SuktCore.Shared.Security.Jwt;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Sukt.Module.Core.ResultMessageConst;
+using Sukt.Module.Core.Security.Jwt;
 
 namespace Sukt.Core.Application.LoginIdentity
 {

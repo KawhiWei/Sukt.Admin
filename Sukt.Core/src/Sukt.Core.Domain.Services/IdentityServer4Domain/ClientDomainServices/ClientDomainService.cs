@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Sukt.Core.Domain.Services.IdentityServer4Domain.ClientDomainServices
 {
     public class ClientDomainService : IClientDomainService

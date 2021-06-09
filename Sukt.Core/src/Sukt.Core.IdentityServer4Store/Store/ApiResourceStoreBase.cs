@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace Sukt.Core.IdentityServer4Store.Store
 {
     public class ApiResourceStoreBase : IResourceStore

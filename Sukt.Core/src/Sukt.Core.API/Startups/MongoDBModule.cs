@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SuktCore.MongoDB;
-using SuktCore.MongoDB.DbContexts;
-using SuktCore.Shared.Extensions;
+using Sukt.MongoDB;
+using Sukt.MongoDB.DbContexts;
+using Sukt.Module.Core.Extensions;
 using System.IO;
 
 namespace Sukt.Core.API.Startups

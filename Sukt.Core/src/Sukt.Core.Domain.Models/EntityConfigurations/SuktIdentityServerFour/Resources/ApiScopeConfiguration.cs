@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
+using Sukt.Module.Core;
 using System;
-
+using Sukt.EntityFrameworkCore.MappingConfiguration;
 namespace Sukt.Core.Domain.Models.SuktIdentityServerFour
 {
     public class ApiScopeConfiguration : AggregateRootMappingConfiguration<ApiScope, Guid>

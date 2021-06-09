@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
-using SuktCore.Shared.Attributes.Dependency;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Attributes.Dependency;
 using System;
 using System.Collections.Generic;
 using System.Linq;

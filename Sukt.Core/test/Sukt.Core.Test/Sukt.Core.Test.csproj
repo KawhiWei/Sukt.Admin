@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,7 +15,13 @@
     <Compile Remove="SuktWebApplicationFactory.cs" />
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.4" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.2" />
+    <PackageReference Include="Sukt.TestBase" Version="1.0.0" />
+    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.0" />
+    <PackageReference Include="Sukt.MongoDB" Version="1.0.1" />
+  </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
@@ -36,20 +42,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.7" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="SuktCore.CodeGenerator" Version="1.0.2" />
-    <PackageReference Include="SuktCore.MongoDB" Version="1.0.2" />
-    <PackageReference Include="SuktCore.Shared" Version="1.0.4" />
-    <PackageReference Include="SuktCore.TestBase" Version="1.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="1.3.0">
+    <PackageReference Include="coverlet.collector" Version="3.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
 </Project>

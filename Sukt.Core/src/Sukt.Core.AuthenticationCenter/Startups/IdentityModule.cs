@@ -4,7 +4,7 @@ using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Repository;
 using Sukt.Core.Identity;
 using Sukt.Core.IdentityServer4Store.Validation;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.Modules;
 using System;
 
 namespace Sukt.Core.AuthenticationCenter.Startups

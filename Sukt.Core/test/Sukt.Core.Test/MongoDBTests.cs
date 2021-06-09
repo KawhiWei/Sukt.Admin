@@ -1,20 +1,19 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver.Linq;
-using SuktCore.MongoDB;
-using SuktCore.MongoDB.DbContexts;
-using SuktCore.MongoDB.Repositorys;
-using SuktCore.Shared;
-using SuktCore.Shared.Audit;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.ExpressionUtil;
-using SuktCore.Shared.Extensions.OrderExtensions;
-using SuktCore.Shared.Filter;
-using SuktCore.TestBase;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Xunit;
+using Sukt.Module.Core.Attributes;
+using Sukt.Module.Core.Entity;
+using Sukt.TestBase;
+using Sukt.MongoDB.Repositorys;
+using Sukt.Module.Core.Filter;
+using Sukt.Module.Core.ExpressionUtil;
+using Sukt.Module.Core.Extensions.OrderExtensions;
+using Sukt.MongoDB;
+using Sukt.MongoDB.DbContexts;
 
 namespace Sukt.Core.Test
 {
@@ -49,7 +48,7 @@ namespace Sukt.Core.Test
             //filter.Conditions.Add(condition);
             var exp = FilterHelp.GetExpression<TestDB>(filter);
             OrderCondition[] orderConditions = new OrderCondition[] {
-                new OrderCondition("Name",SuktCore.Shared.Enums.SortDirectionEnum.Descending),
+                new OrderCondition("Name",Sukt.Module.Core.Enums.SortDirectionEnum.Descending),
                 new OrderCondition("CreatedTime")
                };
             PagedRequest pagedRequest = new PagedRequest();

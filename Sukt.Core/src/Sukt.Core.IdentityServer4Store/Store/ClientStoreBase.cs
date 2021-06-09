@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

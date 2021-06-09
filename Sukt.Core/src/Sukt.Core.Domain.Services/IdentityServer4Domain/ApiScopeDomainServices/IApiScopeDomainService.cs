@@ -1,7 +1,8 @@
 ﻿using Sukt.Core.Domain.Models.IdentityServerFour;
-using SuktCore.Shared;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core.OperationResult;
 using System.Threading.Tasks;
+using Sukt.Module.Core;
+using System.Collections.Generic;
 
 namespace Sukt.Core.Domain.Services.IdentityServer4Domain.ApiScopeDomainServices
 {
@@ -12,6 +13,6 @@ namespace Sukt.Core.Domain.Services.IdentityServer4Domain.ApiScopeDomainServices
         /// </summary>
         /// <param name="apiScopes"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreateAsync(ApiScope[] apiScopes);
+        Task<OperationResponse> CreateAsync(List<ApiScope> apiScopes);
     }
 }

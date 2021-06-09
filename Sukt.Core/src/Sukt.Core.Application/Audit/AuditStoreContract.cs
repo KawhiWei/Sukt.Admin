@@ -1,19 +1,18 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using SuktCore.MongoDB.Repositorys;
-using SuktCore.Shared;
-using SuktCore.Shared.Audit;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.ExpressionUtil;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
+using Sukt.Module.Core.Audit;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.OperationResult;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Sukt.MongoDB.Repositorys;
+using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.ExpressionUtil;
+using Sukt.MongoDB;
+using Sukt.Module.Core.ResultMessageConst;
+using Sukt.Module.Core.Enums;
 namespace Sukt.Core.Application.Audit
 {
     /// <summary>

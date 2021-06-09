@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Domain.Models;
-using SuktCore.Shared.Attributes.AutoMapper;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Attributes.AutoMapper;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

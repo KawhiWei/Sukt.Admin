@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Dtos.IdentityServer4Dto;
-using SuktCore.Shared;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Threading.Tasks;
 

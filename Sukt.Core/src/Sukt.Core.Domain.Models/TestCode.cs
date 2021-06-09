@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Entity;
 
 namespace Sukt.Core.Domain.Models.Entities
 {

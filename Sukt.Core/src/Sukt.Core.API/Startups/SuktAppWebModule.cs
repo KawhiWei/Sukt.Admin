@@ -2,21 +2,22 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using SuktCore.Aop;
-using SuktCore.AspNetCore.Filters;
-using SuktCore.AutoMapper;
 using Sukt.Core.Domain.Models;
-using SuktCore.Shared;
-using SuktCore.Shared.AppOption;
-using SuktCore.Shared.Events;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Modules;
-using SuktCore.Shared.SuktDependencyAppModule;
-using SuktCore.Swagger;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Linq;
 using System.Security.Principal;
-using SuktCore.AliyunOSS;
+using Sukt.Core.EntityFrameworkCore;
+using Sukt.Module.Core.Modules;
+using Sukt.AspNetCore;
+using Sukt.Module.Core.AppOption;
+using Sukt.Module.Core.SuktDependencyAppModule;
+using Sukt.Module.Core.Events;
+using Sukt.Swagger;
+using Sukt.AutoMapper;
+using SuktCore.Aop;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Sukt.Core.API.Startups
 {
@@ -48,12 +49,37 @@ namespace Sukt.Core.API.Startups
             {
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
+            context.Services.AddFileProvider();
+
+
             var configuration = service.GetConfiguration();
+            if (configuration == null)
+            {
+                IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+                configuration = configurationBuilder.Build();
+                context.Services.AddSingleton<IConfiguration>(configuration);
+            }
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
+            AppOptionSettings option = new AppOptionSettings();
+            if (configuration != null)
+            {
+
+                configuration.Bind("SuktCore", option);
+                context.Services.AddObjectAccessor(option);
+                context.Services.Configure<AppOptionSettings>(o => {
+                    o.AuditEnabled = option.AuditEnabled;
+                    o.Auth = option.Auth;
+                    o.Cors = option.Cors;
+                    o.DbContexts = option.DbContexts;
+                    o.Jwt = option.Jwt;
+                });
+            }
             var settings = service.GetAppSettings();
-            service.AddOSSOption();
             service.AddTransient<IPrincipal>(provider =>
             {
                 IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();

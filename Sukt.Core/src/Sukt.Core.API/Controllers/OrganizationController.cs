@@ -1,4 +1,4 @@
-﻿using SuktCore.AspNetCore.ApiBase;
+﻿using Sukt.AspNetCore;
 using System.ComponentModel;
 
 namespace Sukt.Core.API.Controllers

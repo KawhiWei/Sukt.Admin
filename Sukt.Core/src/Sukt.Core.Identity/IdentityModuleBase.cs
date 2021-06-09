@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.Modules;
 using System;
 
 namespace Sukt.Core.Identity

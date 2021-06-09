@@ -3,12 +3,12 @@ using Sukt.Core.Domain.Models.IdentityServerFour;
 using Sukt.Core.Domain.Services.IdentityServer4Domain.ApiResourceDomainServices;
 using Sukt.Core.Dtos.IdentityServer4Dto;
 using Sukt.Core.Dtos.IdentityServer4Dto.ApiResource;
-using SuktCore.Shared;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core.OperationResult;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core;
 
 namespace Sukt.Core.Application.IdentityServer4Contract
 {

@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Models.Authority;
 using Sukt.Core.Dtos.Identity.Role;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Sukt.Module.Core.ResultMessageConst;
+using Sukt.Module.Core.Enums;
 
 namespace Sukt.Core.Application.Identity.Role
 {

@@ -1,6 +1,6 @@
 ﻿using Sukt.Core.Domain.Models.Identity.Enum;
 using Sukt.Core.Identity;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 
