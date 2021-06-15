@@ -30,7 +30,7 @@ namespace Sukt.Core.API.Startups
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
         typeof(EntityFrameworkCoreModule),
-        typeof(MongoDBModule),
+        //typeof(MongoDBModule),
         //typeof(MultiTenancyModule),
         typeof(MigrationModuleBase)
         )]
