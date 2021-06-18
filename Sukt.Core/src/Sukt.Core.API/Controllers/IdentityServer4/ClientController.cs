@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.IdentityServer4Contract;
-using Sukt.AspNetCore;
 using Sukt.Core.Dtos.IdentityServer4Dto;
+using Sukt.Core.Shared;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.OperationResult;
 using System;

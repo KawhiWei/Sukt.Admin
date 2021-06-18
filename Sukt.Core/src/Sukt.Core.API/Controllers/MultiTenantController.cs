@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.MultiTenant;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Core.Dtos.MultiTenant;
 using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Audit;

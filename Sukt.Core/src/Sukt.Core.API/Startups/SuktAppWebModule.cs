@@ -43,7 +43,7 @@ namespace Sukt.Core.API.Startups
             service.AddControllers(x =>
             {
                 x.SuppressAsyncSuffixInActionNames = false;
-                x.Filters.Add<PermissionAuthorizationFilter>();
+                //x.Filters.Add<PermissionAuthorizationFilter>();
                 x.Filters.Add<AuditLogFilter>();
             }).AddNewtonsoftJson(options =>
             {

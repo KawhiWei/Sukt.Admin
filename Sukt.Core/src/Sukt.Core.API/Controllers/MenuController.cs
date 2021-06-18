@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Core.Dtos.Menu;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.OperationResult;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.MenuFunction;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Core.Dtos.MenuFunction;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.OperationResult;

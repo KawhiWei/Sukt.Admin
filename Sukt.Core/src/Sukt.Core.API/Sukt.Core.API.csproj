@@ -25,10 +25,10 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.7" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -41,15 +41,16 @@
     <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Sukt.Swagger" Version="1.0.1" />
-    <PackageReference Include="Sukt.SeriLog" Version="1.0.1" />
-    <PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Sukt.Swagger" Version="1.0.10" />
+    <PackageReference Include="Sukt.SeriLog" Version="1.0.10" />
+    <PackageReference Include="Sukt.AspNetCore" Version="1.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore.DbMigrations\Sukt.Core.EntityFrameworkCore.DbMigrations.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

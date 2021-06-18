@@ -3,7 +3,7 @@ using System;
 
 namespace Sukt.Core.Shared
 {
-    [Route("api/[controller]/[action]")]
+    [Route("admin/[controller]/[action]")]
     [ApiController]
     public abstract class ApiControllerBase
     {

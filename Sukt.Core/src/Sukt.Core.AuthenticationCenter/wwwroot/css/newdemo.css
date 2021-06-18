@@ -30,6 +30,13 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
+    color:white;
+}
+.welcome-page {
+    z-index:1200;
+}
+.nav-page {
+    z-index: 1200;
 }
 #content {
     position: absolute;

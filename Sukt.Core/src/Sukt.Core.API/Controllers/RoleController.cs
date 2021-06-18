@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.Core.Application.Identity.Role;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Core.Dtos.Identity.Role;
 using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Audit;

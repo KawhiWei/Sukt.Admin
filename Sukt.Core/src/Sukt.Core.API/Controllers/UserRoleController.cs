@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.Core.Application.Identity.UserRole;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Core.Dtos.Identity.UserRole;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.OperationResult;

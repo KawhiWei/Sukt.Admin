@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using Sukt.AspNetCore;
+using Sukt.Core.Shared;
 using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.Entity;
