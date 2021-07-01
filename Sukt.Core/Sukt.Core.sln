@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29920.165
+VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Dtos", "src\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj", "{A7F7FD0E-2E1D-4BCD-91F9-68047A6C7823}"
 EndProject
@@ -35,7 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.EntityFrameworkCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.EntityFrameworkCore.DbMigrations", "src\Sukt.Core.EntityFrameworkCore.DbMigrations\Sukt.Core.EntityFrameworkCore.DbMigrations.csproj", "{7D570BD8-33EA-49E6-B35A-6A67043C2865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.Core.Shared", "src\Sukt.Core.Shared\Sukt.Core.Shared.csproj", "{21D778F2-ED3F-4586-991C-050797105D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.Core.Shared", "src\Sukt.Core.Shared\Sukt.Core.Shared.csproj", "{21D778F2-ED3F-4586-991C-050797105D0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthServer", "AuthServer", "{81DFABDA-6C8A-475B-82FD-8A4A3F651292}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.AuthServer", "src\Sukt.AuthServer\Sukt.AuthServer.csproj", "{74573C64-AA01-49EC-9F48-DFD85DCDB3A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.AuthServerHost", "src\Sukt.AuthServerHost\Sukt.AuthServerHost.csproj", "{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.AuthServer.Domain", "src\Sukt.AuthServer.Domain\Sukt.AuthServer.Domain.csproj", "{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +103,18 @@ Global
 		{21D778F2-ED3F-4586-991C-050797105D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21D778F2-ED3F-4586-991C-050797105D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21D778F2-ED3F-4586-991C-050797105D0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +132,9 @@ Global
 		{0852A545-4E83-4516-A9D6-21C01AC28E9E} = {4A750E7C-B356-4C74-9BFC-F29D0D475E19}
 		{7D570BD8-33EA-49E6-B35A-6A67043C2865} = {4A750E7C-B356-4C74-9BFC-F29D0D475E19}
 		{21D778F2-ED3F-4586-991C-050797105D0D} = {4A750E7C-B356-4C74-9BFC-F29D0D475E19}
+		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
+		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
+		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05B139D9-1492-4454-AF04-522949DE00D3}
