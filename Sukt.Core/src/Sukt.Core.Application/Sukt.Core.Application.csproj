@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Sukt.Redis" Version="1.0.10" />
   </ItemGroup>
 
 <ItemGroup>

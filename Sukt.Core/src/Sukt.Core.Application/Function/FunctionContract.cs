@@ -10,6 +10,7 @@ using Sukt.Module.Core.Extensions.OrderExtensions;
 using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.OperationResult;
 using Sukt.Module.Core.ResultMessageConst;
+using Sukt.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,11 @@ namespace Sukt.Core.Application
     public class FunctionContract : IFunctionContract
     {
         private readonly IEFCoreRepository<FunctionEntity, Guid> _functionRepository;
-
-        public FunctionContract(IEFCoreRepository<FunctionEntity, Guid> functionRepository)
+        private readonly IRedisRepository _redisRepository;
+        public FunctionContract(IEFCoreRepository<FunctionEntity, Guid> functionRepository, IRedisRepository redisRepository)
         {
             _functionRepository = functionRepository;
+            _redisRepository = redisRepository;
         }
 
         public async Task<OperationResponse> DeleteAsync(Guid id)
@@ -72,6 +74,25 @@ namespace Sukt.Core.Application
         /// <returns></returns>
         public async Task<OperationResponse<IEnumerable<SelectListItem>>> GetFunctionSelectListItemAsync()
         {
+            //var key = "Order002";
+            //var lockerkey = await _redisRepository.LockAsync(key, TimeSpan.FromSeconds(20));
+            //try
+            //{
+            //    if (!lockerkey)
+            //    {
+            //        Console.WriteLine("获取锁失败了");
+            //    }
+            //    Console.WriteLine("获取到了锁");
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    await _redisRepository.UnLockAsync(key);
+            //}
+
             var functions = await _functionRepository.NoTrackEntities.OrderBy(o => o.Name).Select(x => new SelectListItem
             {
                 Value = x.Id.ToString().ToLower(),

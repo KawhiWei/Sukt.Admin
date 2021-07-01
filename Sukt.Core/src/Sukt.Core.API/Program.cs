@@ -73,7 +73,7 @@ namespace Sukt.Core.API
                         configuration.ReadFrom.
                         Configuration(webHost.Configuration.GetSection("Serilog")).Enrich.FromLogContext().WriteTo.Console(logEventLevel);
                         configuration.WriteTo.Map(le => MapData(le),
-                (key, log) => log.Async(o => o.File(Path.Combine("Logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
+                (key, log) => log.Async(o => o.File(Path.Combine("logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
 
                         (DateTime time, LogEventLevel level) MapData(LogEvent logEvent)
                         {

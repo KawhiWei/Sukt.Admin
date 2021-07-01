@@ -32,7 +32,8 @@ namespace Sukt.Core.API.Startups
         typeof(EntityFrameworkCoreModule),
         //typeof(MongoDBModule),
         //typeof(MultiTenancyModule),
-        typeof(MigrationModuleBase)
+        typeof(MigrationModuleBase),
+        typeof(RedisModule)
         )]
     public class SuktAppWebModule : SuktAppModule
     {
@@ -50,8 +51,6 @@ namespace Sukt.Core.API.Startups
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
             });
             context.Services.AddFileProvider();
-
-
             var configuration = service.GetConfiguration();
             if (configuration == null)
             {
@@ -68,10 +67,10 @@ namespace Sukt.Core.API.Startups
             AppOptionSettings option = new AppOptionSettings();
             if (configuration != null)
             {
-
                 configuration.Bind("SuktCore", option);
                 context.Services.AddObjectAccessor(option);
-                context.Services.Configure<AppOptionSettings>(o => {
+                context.Services.Configure<AppOptionSettings>(o =>
+                {
                     o.AuditEnabled = option.AuditEnabled;
                     o.Auth = option.Auth;
                     o.Cors = option.Cors;
