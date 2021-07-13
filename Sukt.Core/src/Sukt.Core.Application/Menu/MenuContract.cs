@@ -10,6 +10,7 @@ using Sukt.Module.Core.ResultMessageConst;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application
@@ -27,6 +28,9 @@ namespace Sukt.Core.Application
 
         public async Task<OperationResponse> GetMenuTableAsync()
         {
+
+            Console.WriteLine($"--------服务层当前线程ID{ Thread.CurrentThread.ManagedThreadId}");
+
             var list = await _menu.NoTrackEntities.ToTreeResultAsync<MenuEntity, MenuTableOutputDto>(
                  (p, c) =>
                  {

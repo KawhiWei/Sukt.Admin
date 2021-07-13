@@ -1,0 +1,2 @@
+2021-07-01 20:32:28.666 +08:00 [INF] User profile is available. Using 'C:\Users\vivi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2021-07-01 20:32:28.998 +08:00 [INF] Now listening on: https://localhost:5001

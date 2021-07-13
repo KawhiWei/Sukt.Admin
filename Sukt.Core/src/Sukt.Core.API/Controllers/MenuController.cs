@@ -8,6 +8,7 @@ using Sukt.Module.Core.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -73,6 +74,7 @@ namespace Sukt.Core.API.Controllers
         [Description("获取表格菜单列表")]
         public async Task<AjaxResult> GetMenuTableAsync()
         {
+            Console.WriteLine($"--------控制器当前线程ID{ Thread.CurrentThread.ManagedThreadId}");
             return (await _menu.GetMenuTableAsync()).ToAjaxResult();
         }
 
