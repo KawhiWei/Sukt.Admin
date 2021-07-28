@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Sukt.AuthServer.Validation.ValidationResult
 {
     /// <summary>
-    /// Client
+    /// Client 客户端验证返回类
     /// </summary>
     public class ClientSecretValidationResult: ValidationResultBase
     {

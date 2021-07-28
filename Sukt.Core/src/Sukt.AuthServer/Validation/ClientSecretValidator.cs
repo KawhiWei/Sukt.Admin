@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Sukt.AuthServer.Constants;
 using Sukt.AuthServer.Domain.Models;
 using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
+using Sukt.AuthServer.Validation.SecretValidates;
 using Sukt.AuthServer.Validation.ValidationResult;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace Sukt.AuthServer.Validation
         private readonly ILogger _logger;
         private readonly ISuktApplicationStore _suktApplicationStore;
         private readonly IEnumerable<ISecretParser> _parsers;
-        public ClientSecretValidator(ILogger<ClientSecretValidator> logger, ISuktApplicationStore suktApplicationStore, IEnumerable<ISecretParser> parsers)
+        private readonly IEnumerable<ISecretValidator> _secretValidators;
+        public ClientSecretValidator(ILogger<ClientSecretValidator> logger, ISuktApplicationStore suktApplicationStore, IEnumerable<ISecretParser> parsers, IEnumerable<ISecretValidator> secretValidators)
         {
             _logger = logger;
             _suktApplicationStore = suktApplicationStore;
             _parsers = parsers;
+            _secretValidators = secretValidators;
         }
         /// <summary>
         /// 客户端验证处理器
@@ -56,13 +59,34 @@ namespace Sukt.AuthServer.Validation
                 _logger.LogError("未找到客户端应用 '{clientId}'", parsedSecret.Id);
                 return resultfail;
             }
+            //if (!client.RequireClientSecret || client.IsImplicitOnly()) //判断是否是公共密钥
+            //{
+            //    _logger.LogDebug("Public Client - skipping secret validation success");
+            //}
+            SecretValidationResult secretValidationResult = null;
+            foreach (var secretValidator in _secretValidators)
+            {
+                secretValidationResult = await secretValidator.ValidateAsync(client, parsedSecret);
+                if(secretValidationResult.Success)
+                {
+                    break;
+                }
+            }
+            if(!secretValidationResult.Success)
+            {
+                //to do 失败事件等等 未写
+                _logger.LogError("");
+            }
+
+
             var success = new ClientSecretValidationResult
             {
                 IsError = false,
-                ClientApplication = new SuktApplicationModel(),
+                ClientApplication = client,
                 Secret = parsedSecret,
-                //Confirmation = secretValidationResult?.Confirmation
+                Confirmation = secretValidationResult?.Confirmation
             };
+            // to do  成功事件未写
             return success;
         }
     }

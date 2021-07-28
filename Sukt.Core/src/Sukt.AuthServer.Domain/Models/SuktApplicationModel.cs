@@ -26,6 +26,11 @@ namespace Sukt.AuthServer.Domain.Models
         [DisplayName("客户端密钥")]
         public string ClientSecret { get; set; }
         /// <summary>
+        /// 密钥类型
+        /// </summary>
+        [DisplayName("密钥类型")]
+        public string SecretType { get; private set; }
+        /// <summary>
         /// 客户端显示名称
         /// </summary>
         [DisplayName("客户端显示名称")]
@@ -60,5 +65,10 @@ namespace Sukt.AuthServer.Domain.Models
         /// </summary>
         [DisplayName("客户端访问作用域")]
         public string ClientScopes { get; set; }
+        /// <summary>
+        /// 协议类型
+        /// </summary>
+        [DisplayName("协议类型")]
+        public string ProtocolType { get; set; }
     }
 }

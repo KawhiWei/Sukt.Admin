@@ -11,15 +11,19 @@ using System.Threading.Tasks;
 
 namespace Sukt.AuthServer
 {
-    public class SuktAuthBaseModule: SuktAppModule
+    public class SuktAuthBaseModule : SuktAppModule
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
-            context.Services.AddDefaultEndpoints().AddClientStore<SuktApplicationStore>();
+            context.Services.AddDefaultEndpoints()
+                            .AddValidationServices()
+                            .AddResponseGenerators()
+                            .AddDefaultSecretParsers()
+                            .AddClientStore<SuktApplicationStore>();
         }
         public override void ApplicationInitialization(ApplicationContext context)
         {
-            var app=context.GetApplicationBuilder();
+            var app = context.GetApplicationBuilder();
             app.UseMiddleware<SuktAuthServerMiddleware>();
         }
 

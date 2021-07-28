@@ -331,3 +331,4 @@ __pycache__/
 /Sukt.Core/src/Sukt.Core.AuthenticationCenter/SuktCoreMongoDb.txt
 /Sukt.Core/src/Sukt.Core.AuthenticationCenter/SuktCoreRedis.txt
 /Sukt.Core/src/Sukt.Core.AuthenticationCenter/SuktCoreDB.txt
+/Sukt.Core/src/Sukt.AuthServerHost/logs

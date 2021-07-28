@@ -4,6 +4,7 @@ using Sukt.AuthServer.Constants;
 using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
 using Sukt.AuthServer.EndpointHandler;
 using Sukt.AuthServer.EndpointRouterHandler;
+using Sukt.AuthServer.Generator;
 using Sukt.AuthServer.Validation;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,11 @@ namespace Sukt.AuthServer.Extensions
         public static IServiceCollection AddValidationServices(this IServiceCollection service)
         {
             service.AddTransient<IClientSecretValidator, ClientSecretValidator>();
+            return service;
+        }
+        public static IServiceCollection AddResponseGenerators(this IServiceCollection service)
+        {
+            service.AddTransient<ITokenResponseGenerator, TokenResponseGenerator>();
             return service;
         }
         public static IServiceCollection AddDefaultSecretParsers(this IServiceCollection service)

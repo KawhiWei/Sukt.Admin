@@ -16,6 +16,7 @@ namespace Sukt.Core.API
         public static void Main(string[] args)
         {
             //Log.Logger = new LoggerConfiguration()
+
             //    .MinimumLevel.Information()
             //    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             //    .Enrich.FromLogContext()

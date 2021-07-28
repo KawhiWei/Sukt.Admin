@@ -48,6 +48,11 @@ namespace Sukt.Core.Domain.Models
         [DisplayName("客户端类型")]
         public string ClientGrantType { get; private set; }
         /// <summary>
+        /// 密钥类型
+        /// </summary>
+        [DisplayName("密钥类型")]
+        public string SecretType { get; private set; }
+        /// <summary>
         /// 退出登录回调地址
         /// </summary>
         [DisplayName("退出登录回调地址")]
@@ -72,6 +77,11 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("客户端访问作用域")]
         public string ClientScopes { get; private set; }
+        /// <summary>
+        /// 协议类型
+        /// </summary>
+        [DisplayName("协议类型")]
+        public string ProtocolType { get; set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id
