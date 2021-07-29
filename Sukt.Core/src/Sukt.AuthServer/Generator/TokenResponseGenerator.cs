@@ -85,8 +85,8 @@ namespace Sukt.AuthServer.Generator
                 //ValidatedResources = request.ValidatedResources,
                 ValidatedRequest = request
             };
-            var at = await TokenService.CreateAccessTokenAsync(tokenRequest);
-            var accessToken = await TokenService.CreateSecurityTokenAsync(at);
+            var at = "";//await TokenService.CreateAccessTokenAsync(tokenRequest);
+            var accessToken = "";//await TokenService.CreateSecurityTokenAsync(at);
 
             if (createRefreshToken)
             {
