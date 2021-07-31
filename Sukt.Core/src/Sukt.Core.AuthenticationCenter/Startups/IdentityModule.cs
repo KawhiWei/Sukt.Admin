@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.Core.Domain.Models;
-using Sukt.Core.Domain.Repository;
+using Sukt.Core.EntityFrameworkCore.Repositories;
 using Sukt.Core.Identity;
 using Sukt.Core.IdentityServer4Store.Validation;
 using Sukt.Module.Core.Modules;

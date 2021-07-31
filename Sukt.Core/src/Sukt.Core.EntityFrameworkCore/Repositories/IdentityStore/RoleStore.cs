@@ -3,7 +3,7 @@ using Sukt.Core.Identity;
 using Sukt.Module.Core.Entity;
 using System;
 
-namespace Sukt.Core.Domain.Repository
+namespace Sukt.Core.EntityFrameworkCore.Repositories
 {
     public class RoleStore : RoleStoreBase<RoleEntity, Guid, RoleClaimEntity>
     {

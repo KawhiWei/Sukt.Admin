@@ -11,7 +11,6 @@
 
 <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Domain.Repository\Sukt.Core.Domain.Repository.csproj" />
     <ProjectReference Include="..\Sukt.Core.Domain.Services\Sukt.Core.Domain.Services.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
   </ItemGroup></Project>

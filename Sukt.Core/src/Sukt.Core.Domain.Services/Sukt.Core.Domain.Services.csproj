@@ -4,11 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Sukt.Aop" Version="1.0.10" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Domain.Models\Sukt.Core.Domain.Models.csproj" />
-    <ProjectReference Include="..\Sukt.Core.Domain.Repository\Sukt.Core.Domain.Repository.csproj" />
+    <ProjectReference Include="..\Sukt.Core.EntityFrameworkCore\Sukt.Core.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

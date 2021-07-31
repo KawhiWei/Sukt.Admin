@@ -4,12 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.10" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.10" />
-    <PackageReference Include="Sukt.AutoMapper" Version="1.0.10" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
+    <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

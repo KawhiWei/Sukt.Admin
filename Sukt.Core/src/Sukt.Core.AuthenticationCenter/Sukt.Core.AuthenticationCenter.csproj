@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sukt.Core.Domain.Repository\Sukt.Core.Domain.Repository.csproj" />
     <ProjectReference Include="..\Sukt.Core.IdentityServer4Store\Sukt.Core.IdentityServer4Store.csproj" />
     <ProjectReference Include="..\Sukt.Core.Identity\Sukt.Core.Identity.csproj" />
   </ItemGroup>
