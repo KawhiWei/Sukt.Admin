@@ -19,10 +19,11 @@ namespace Sukt.AuthServer.Generator
     public class TokenResponseGenerator : ITokenResponseGenerator
     {
         private readonly ILogger _logger;
-
-        public TokenResponseGenerator(ILogger<TokenResponseGenerator> logger)
+        private readonly ITokenService _tokenService;
+        public TokenResponseGenerator(ILogger<TokenResponseGenerator> logger, ITokenService tokenService)
         {
             _logger = logger;
+            _tokenService = tokenService;
         }
 
         public virtual async Task<TokenResponse> ProcessAsync(TokenRequestValidationResult request)
@@ -61,7 +62,7 @@ namespace Sukt.AuthServer.Generator
             var response = new TokenResponse
             {
                 AccessToken = accessToken,
-                //AccessTokenLifetime = validationResult.ValidatedRequest.AccessTokenLifetime,
+                AccessTokenLifetime = validationResult.ValidatedRequest.AccessTokenExpire,
                 Custom = validationResult.CustomResponse,
                 //Scope = validationResult.ValidatedRequest.ValidatedResources.RawScopeValues.ToSpaceSeparatedString()
             };
@@ -82,10 +83,10 @@ namespace Sukt.AuthServer.Generator
             tokenRequest = new TokenCreationRequest
             {
                 Subject = request.Subject,
-                //ValidatedResources = request.ValidatedResources,
+                //ValidatedResources = request.ValidatedResources.,
                 ValidatedRequest = request
             };
-            var at = "";//await TokenService.CreateAccessTokenAsync(tokenRequest);
+            var at = "";await _tokenService.CreateAccessTokenAsync(tokenRequest);
             var accessToken = "";//await TokenService.CreateSecurityTokenAsync(at);
 
             if (createRefreshToken)

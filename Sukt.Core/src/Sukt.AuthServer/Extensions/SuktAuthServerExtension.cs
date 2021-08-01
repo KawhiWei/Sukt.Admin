@@ -63,6 +63,7 @@ namespace Sukt.AuthServer.Extensions
         public static IServiceCollection AddResponseGenerators(this IServiceCollection service)
         {
             service.AddTransient<ITokenResponseGenerator, TokenResponseGenerator>();
+            service.AddTransient<ITokenService, TokenService>();
             return service;
         }
         public static IServiceCollection AddDefaultSecretParsers(this IServiceCollection service)

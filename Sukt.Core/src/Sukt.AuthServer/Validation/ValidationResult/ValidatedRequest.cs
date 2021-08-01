@@ -32,6 +32,7 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// 是否创建刷新AccessToken的RefreshToken
         /// </summary>
         public bool IsRefreshToken { get; set; }
+        public string SessionId { get; set; }
         public void SetClient(SuktApplicationModel suktApplication)
         {
             ClientApplication = suktApplication;
