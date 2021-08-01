@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Sukt.Core.Domain.Models.Function;
+using Sukt.Core.Domain.Models.Menu;
 using Sukt.Core.Dtos.Function;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Enums;

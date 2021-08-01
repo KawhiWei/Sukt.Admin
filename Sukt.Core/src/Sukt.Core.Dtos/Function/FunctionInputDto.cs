@@ -1,4 +1,4 @@
-﻿using Sukt.Core.Domain.Models.Function;
+﻿using Sukt.Core.Domain.Models.Menu;
 using Sukt.Module.Core.Attributes.AutoMapper;
 using Sukt.Module.Core.Entity;
 using System;

@@ -86,14 +86,14 @@ namespace Sukt.Core.Application
         {
             id.NotNull(nameof(id));
             var user = await _userManager.FindByIdAsync(id.ToString());
-            return await _unitOfWork.UseTranAsync(async () =>
-            {
-                var result = await _userManager.DeleteAsync(user);
-                if (!result.Succeeded)
-                    return result.ToOperationResponse();
-                await _userRoleRepository.DeleteBatchAsync(x => x.UserId == id);
+            //return await _unitOfWork.UseTranAsync(async () =>
+            //{
+            //    var result = await _userManager.DeleteAsync(user);
+            //    if (!result.Succeeded)
+            //        return result.ToOperationResponse();
+            //    await _userRoleRepository.DeleteBatchAsync(x => x.UserId == id);
                 return new OperationResponse(ResultMessage.DeleteSuccess, OperationEnumType.Success);
-            });
+            //});
         }
     }
 }

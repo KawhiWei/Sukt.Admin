@@ -1,6 +1,7 @@
 ﻿using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models.Menu
@@ -84,6 +85,10 @@ namespace Sukt.Core.Domain.Models.Menu
         /// </summary>
         [DisplayName("菜单对应子应用")]
         public string MicroName { get; set; }
+        /// <summary>
+        /// 功能集合
+        /// </summary>
+        public ICollection<MenuFunctionEntity> MenuEntities { get; private set; }
 
         #region 公共字段
 

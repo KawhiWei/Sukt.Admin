@@ -1,5 +1,6 @@
 ﻿using Sukt.Module.Core.Entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models.Organization
@@ -50,6 +51,10 @@ namespace Sukt.Core.Domain.Models.Organization
         /// </summary>
         [DisplayName("租户Id")]
         public Guid TenantId { get; set; }
+        /// <summary>
+        /// 组织架构集合
+        /// </summary>
+        public ICollection<OrganizationUserEntity> OrganizationEntities { get; private set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

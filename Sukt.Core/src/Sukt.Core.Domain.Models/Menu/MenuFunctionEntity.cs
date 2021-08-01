@@ -1,6 +1,10 @@
-﻿using Sukt.Module.Core.Entity;
+﻿
+using Sukt.Core.Domain.Models.Menu;
+using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models
@@ -15,21 +19,15 @@ namespace Sukt.Core.Domain.Models
         {
             Id = SuktGuid.NewSuktGuid();
         }
-
         /// <summary>
-        /// 菜单ID
+        /// 菜单集合
         /// </summary>
-        [DisplayName("菜单ID")]
-        public Guid MenuId { get; set; }
-
+        public ICollection<MenuEntity> MenuEntities { get; private set; }
         /// <summary>
-        /// 功能ID
+        /// 功能集合
         /// </summary>
-        [DisplayName("功能ID")]
-        public Guid FunctionId { get; set; }
-
+        public ICollection<FunctionEntity> FunctionEntities { get; set; }
         #region 公共字段
-
         /// <summary>
         /// 创建人Id
         /// </summary>

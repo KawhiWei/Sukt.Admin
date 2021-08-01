@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sukt.Core.Domain.Models.Function;
+using Sukt.Core.Domain.Models.Menu;
 using Sukt.Module.Core;
 using System;
 using Sukt.EntityFrameworkCore.MappingConfiguration;

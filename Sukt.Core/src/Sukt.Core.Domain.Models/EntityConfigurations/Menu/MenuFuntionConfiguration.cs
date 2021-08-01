@@ -14,8 +14,6 @@ namespace Sukt.Core.Domain.Models.Menu
         public override void Map(EntityTypeBuilder<MenuFunctionEntity> b)
         {
             b.HasKey(o => o.Id);
-            b.Property(o => o.MenuId);
-            b.Property(o => o.FunctionId);
             b.ToTable("MenuFunction");
         }
     }

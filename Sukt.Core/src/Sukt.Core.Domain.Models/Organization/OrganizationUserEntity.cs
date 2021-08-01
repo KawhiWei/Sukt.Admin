@@ -1,5 +1,6 @@
 ﻿using Sukt.Module.Core.Entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models.Organization
@@ -10,16 +11,6 @@ namespace Sukt.Core.Domain.Models.Organization
     [DisplayName("组织架构人员管理")]
     public class OrganizationUserEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
-        /// <summary>
-        /// 用户Id
-        /// </summary>
-        [DisplayName("用户Id")]
-        public Guid UserId { get; set; }
-        /// <summary>
-        /// 组织架构Id
-        /// </summary>
-        [DisplayName("组织架构Id")]
-        public Guid OrganizationId { get; set; }
         /// <summary>
         /// 组织架构所有父级Id
         /// </summary>
@@ -35,6 +26,14 @@ namespace Sukt.Core.Domain.Models.Organization
         /// </summary>
         [DisplayName("租户Id")]
         public Guid TenantId { get; set; }
+        /// <summary>
+        /// 组织架构集合
+        /// </summary>
+        public ICollection<OrganizationEntity> OrganizationEntities { get; private set; }
+        /// <summary>
+        /// 用户集合
+        /// </summary>
+        public ICollection<UserEntity> UserEntities { get; private set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

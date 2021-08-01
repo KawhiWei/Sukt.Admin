@@ -1,9 +1,10 @@
 ﻿using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Sukt.Core.Domain.Models.Function
+namespace Sukt.Core.Domain.Models.Menu
 {
     [DisplayName("功能模块")]
     public class FunctionEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>
@@ -36,6 +37,10 @@ namespace Sukt.Core.Domain.Models.Function
         /// </summary>
         [DisplayName("链接Url")]
         public string LinkUrl { get; set; }
+        /// <summary>
+        /// 菜单功能集合
+        /// </summary>
+        public ICollection<MenuFunctionEntity> MenuFunctionEntities { get; private set; }
 
         #region 公共字段
 

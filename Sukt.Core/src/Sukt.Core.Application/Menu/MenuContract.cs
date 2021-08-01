@@ -105,8 +105,8 @@ namespace Sukt.Core.Application
             id.NotNull(nameof(id));
             var menu = await _menu.GetByIdAsync(id);
             var menudto = menu.MapTo<MenuLoadOutputDto>();
-            menudto.FuncIds = await _menuFunction.NoTrackEntities.Where(x => x.MenuId == id).Select(x => x.FunctionId).ToListAsync();
-            return new OperationResponse(ResultMessage.DataSuccess, menudto, OperationEnumType.Success);
+            //menudto.FuncIds = await _menuFunction.NoTrackEntities.Where(x => x.MenuId == id).Select(x => x.FunctionId).ToListAsync();
+            return new OperationResponse(ResultMessage.DataSuccess, OperationEnumType.Success);
         }
 
         public async Task<OperationResponse> GetUserMenuTreeAsync()

@@ -8,10 +8,5 @@ namespace Sukt.Core.Identity
           where TUserKey : IEquatable<TUserKey>
           where TRoleKey : IEquatable<TRoleKey>
     {
-        [DisplayName("用户编号")]
-        public TUserKey UserId { get; set; }
-
-        [DisplayName("角色编号")]
-        public TRoleKey RoleId { get; set; }
     }
 }

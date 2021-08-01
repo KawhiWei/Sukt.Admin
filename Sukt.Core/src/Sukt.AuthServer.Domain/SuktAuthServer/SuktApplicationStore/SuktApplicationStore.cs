@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sukt.AuthServer.Domain.Models;
 using Sukt.Core.Domain.Models;
-using Sukt.Core.Domain.Models.Function;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;

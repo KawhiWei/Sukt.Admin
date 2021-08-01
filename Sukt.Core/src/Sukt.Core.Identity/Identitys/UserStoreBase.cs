@@ -1024,8 +1024,8 @@ namespace Sukt.Core.Identity
             {
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");
             }
-            TUserRole userRole = new TUserRole() { RoleId = roleId, UserId = user.Id };
-            await _userRoleRepository.InsertAsync(userRole);
+            //TUserRole userRole = new TUserRole() { RoleId = roleId, UserId = user.Id };
+            //await _userRoleRepository.InsertAsync(user);
         }
 
         /// <summary>
@@ -1046,7 +1046,7 @@ namespace Sukt.Core.Identity
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");
             }
 
-            await _userRoleRepository.DeleteBatchAsync(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(role.Id));
+            //await _userRoleRepository.DeleteBatchAsync(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(role.Id));
         }
 
         /// <summary>
@@ -1064,12 +1064,12 @@ namespace Sukt.Core.Identity
             //var roleIds = _userRoleRepository.TrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId); //为什么不这样写。。。。。。
 
             //list = _roleRepository.TrackEntities.Where(m => roleIds.Contains(m.Id)).Select(m => m.Name).ToList();
-            List<TRoleKey> roleIds = _userRoleRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId).ToList();
-            if (roleIds.Count == 0)
-            {
-                return Task.FromResult(list);
-            }
-            list = _roleRepository.NoTrackEntities.Where(m => roleIds.Contains(m.Id)).Select(m => m.Name).ToList();
+            //List<TRoleKey> roleIds = _userRoleRepository.NoTrackEntities/*.Where(m => m.UserId.Equals(user.Id)).Select(m => m.RoleId)*/.ToList();
+            //if (roleIds.Count == 0)
+            //{
+            //    return Task.FromResult(list);
+            //}
+            list = _roleRepository.NoTrackEntities/*.Where(m => roleIds.Contains(m.Id))*/.Select(m => m.Name).ToList();
             return Task.FromResult(list);
         }
 
@@ -1093,8 +1093,9 @@ namespace Sukt.Core.Identity
             {
                 throw new InvalidOperationException($"名称为“{roleName}”的角色信息不存在");
             }
-            bool exist = _userRoleRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(roleId)).Any();
-            return Task.FromResult(exist);
+            //bool exist = _userRoleRepository.NoTrackEntities.Where(m => m.UserId.Equals(user.Id) && m.RoleId.Equals(roleId)).Any();
+            //return Task.FromResult(exist);
+            return Task.FromResult(true);
         }
 
         /// <summary>
@@ -1115,8 +1116,8 @@ namespace Sukt.Core.Identity
             {
                 throw new InvalidOperationException($"名称为“{roleName}”的角色信息不存在");
             }
-            List<TUserKey> userIds = _userRoleRepository.NoTrackEntities.Where(m => m.RoleId.Equals(roleId)).Select(m => m.UserId).ToList();
-            IList<TUser> users = _userRepository.NoTrackEntities.Where(m => userIds.Contains(m.Id)).ToList();
+            //List<TUserKey> userIds = _userRoleRepository.NoTrackEntities.Where(m => m.RoleId.Equals(roleId)).Select(m => m.UserId).ToList();
+            IList<TUser> users = _userRepository.NoTrackEntities/*.Where(m => userIds.Contains(m.Id))*/.ToList();
             return Task.FromResult(users);
         }
 

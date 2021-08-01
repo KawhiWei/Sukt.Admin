@@ -1,6 +1,7 @@
 ﻿using Sukt.Core.Identity;
 using Sukt.Module.Core.Entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Sukt.Core.Domain.Models
@@ -9,8 +10,16 @@ namespace Sukt.Core.Domain.Models
     ///
     /// </summary>
     [DisplayName("用户角色")]
-    public class UserRoleEntity : UserRoleBase<Guid, Guid>, IFullAuditedEntity<Guid>
+    public class UserRoleEntity : UserRoleBase<Guid, Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public ICollection<RoleEntity> RoleEntities { get; private set; }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public ICollection<UserEntity> UserEntities { get; private set; }
         #region 公共字段
 
         /// <summary>
@@ -42,7 +51,11 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("是否删除")]
         public bool IsDeleted { get; set; }
-
+        /// <summary>
+        /// 租户ID
+        /// </summary>
+        [DisplayName("租户")]
+        public Guid TenantId { get; set; }
         #endregion 公共字段
     }
 }
