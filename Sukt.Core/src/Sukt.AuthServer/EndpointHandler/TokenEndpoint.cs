@@ -4,6 +4,7 @@ using Sukt.AuthServer.Constants;
 using Sukt.AuthServer.EndpointHandler.EndpointHandlerResult;
 using Sukt.AuthServer.EndpointHandler.TokenError;
 using Sukt.AuthServer.Extensions;
+using Sukt.AuthServer.Generator;
 using Sukt.AuthServer.Validation;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,13 +16,17 @@ namespace Sukt.AuthServer.EndpointHandler
     {
         private readonly IClientSecretValidator _clientSecretValidator;
         private readonly ITokenRequestValidator _tokenRequestValidator;
+        private readonly ITokenResponseGenerator _tokenResponseGenerator;
         private readonly ILogger _logger;
 
-        public TokenEndpoint(IClientSecretValidator clientSecretValidator, ILogger<TokenEndpoint> logger, ITokenRequestValidator tokenRequestValidator)
+        public TokenEndpoint(IClientSecretValidator clientSecretValidator, ILogger<TokenEndpoint> logger,
+            ITokenRequestValidator tokenRequestValidator,
+            ITokenResponseGenerator tokenResponseGenerator)
         {
             _clientSecretValidator = clientSecretValidator;
             _logger = logger;
             _tokenRequestValidator = tokenRequestValidator;
+            _tokenResponseGenerator = tokenResponseGenerator;
         }
 
         public async Task<IEndpointResult> HandlerProcessAsync(HttpContext context)
@@ -43,7 +48,6 @@ namespace Sukt.AuthServer.EndpointHandler
         {
             _logger.LogDebug("开始处理Token请求");
             var clientResult = await _clientSecretValidator.ValidateAsync(context);
-
             if (clientResult.ClientApplication == null)
             {
                 return Error(TokenErrors.InvalidClient);
@@ -54,7 +58,7 @@ namespace Sukt.AuthServer.EndpointHandler
             {
                 return Error(requestResult.Error, requestResult.ErrorDescription, requestResult.CustomResponse);
             }
-            //var tokenResponse =await 
+            var tokenResponse = await _tokenResponseGenerator.ProcessAsync(requestResult);
 
             return new TokenErrorResult(new TokenErrorResponse());
             //await Task.CompletedTask;

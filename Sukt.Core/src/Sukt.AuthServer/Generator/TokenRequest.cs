@@ -9,6 +9,11 @@ namespace Sukt.AuthServer.Generator
 {
     public class TokenRequest
     {
+        public TokenRequest(string type)
+        {
+            Type = type;
+        }
+
         /// <summary>
         /// 用户信息主体
         /// </summary>
@@ -36,7 +41,7 @@ namespace Sukt.AuthServer.Generator
         /// <summary>
         /// 
         /// </summary>
-        public string Audiences { get; set; }
+        public List<string> Audiences { get; set; }
         /// <summary>
         /// 类型
         /// </summary>

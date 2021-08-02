@@ -149,7 +149,12 @@ namespace Sukt.AuthServer.Validation
                 return false;
             }
             //To Do 暂时为判断请求的Scope先统一返回为true
+
+
+
+
             return true;
+
         }
 
         public TokenRequestValidationResult InvalidError(string error, string errorDescription = null, Dictionary<string, object> customResponse = null)

@@ -20,6 +20,19 @@ namespace Sukt.AuthServer.Extensions
     /// </summary>
     public static class SuktAuthServerExtension
     {
+        public static IServiceCollection AddSuktAuthServer(this IServiceCollection service)
+        {
+
+            service.AddDefaultEndpoints()
+                .AddValidationServices()
+                .AddResponseGenerators()
+                .AddDefaultSecretParsers()
+                .AddDefaultService()
+                .AddClientStore<SuktApplicationStore>()
+                ;
+
+            return service;
+        }
         /// <summary>
         /// 默认断点路由器注册
         /// </summary>
@@ -63,8 +76,13 @@ namespace Sukt.AuthServer.Extensions
         public static IServiceCollection AddResponseGenerators(this IServiceCollection service)
         {
             service.AddTransient<ITokenResponseGenerator, TokenResponseGenerator>();
-            service.AddTransient<ITokenService, TokenService>();
             return service;
+        }
+        public static IServiceCollection AddDefaultService(this IServiceCollection services)
+        {
+            services.AddTransient<IClaimsService, DefaultClaimsService>();
+            services.AddTransient<ITokenService, TokenService>();
+            return services;
         }
         public static IServiceCollection AddDefaultSecretParsers(this IServiceCollection service)
         {

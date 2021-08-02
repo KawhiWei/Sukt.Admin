@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 using Sukt.AuthServer.Extensions;
 using Sukt.Module.Core;
 using Sukt.Module.Core.Extensions;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static Sukt.Module.Core.IdentityServerConstants;
 
 namespace Sukt.AuthServer.Generator
 {
@@ -17,10 +19,11 @@ namespace Sukt.AuthServer.Generator
     public class TokenService: ITokenService
     {
         protected readonly ILogger _logger;
-
-        public TokenService(ILogger<TokenService> logger)
+        protected readonly ISystemClock _systemClock;
+        public TokenService(ILogger<TokenService> logger,ISystemClock systemClock)
         {
             _logger = logger;
+            _systemClock = systemClock;
         }
 
         public virtual async Task<TokenRequest> CreateAccessTokenAsync(TokenCreationRequest request)
@@ -33,7 +36,18 @@ namespace Sukt.AuthServer.Generator
             {
                 claims.Add(new Claim(JwtClaimTypes.SessionId, request.ValidatedRequest.SessionId));
             }
-            return new TokenRequest();
+            claims.Add(new Claim(JwtClaimTypes.IssuedAt, _systemClock.UtcNow.ToUnixTimeMilliseconds().ToString(), System.Security.Claims.ClaimValueTypes.Integer64));
+            var issuer = "";
+            var token = new TokenRequest(TokenTypes.AccessToken)
+            {
+                CreationTime = _systemClock.UtcNow.UtcDateTime,
+                Issuer = issuer,
+                Lifetime = request.ValidatedRequest.AccessTokenExpire,
+                Claims = claims.Distinct().ToList(),
+                SuktApplicationClientId=request.ValidatedRequest.ClientApplication.ClientId,
+                TokenType=request.ValidatedRequest.TokenType,
+            };
+            return token;
         }
     }
 }

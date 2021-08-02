@@ -21,5 +21,9 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// 认证类型
         /// </summary>
         public string GrantType { get; set; }
+        /// <summary>
+        /// 资源作用域
+        /// </summary>
+        public IEnumerable<string> RequestedScopes { get; set; }
     }
 }

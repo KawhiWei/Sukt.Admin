@@ -1,4 +1,5 @@
 ﻿using Sukt.AuthServer.Domain.Models;
+using Sukt.AuthServer.Generator;
 using Sukt.Core.Domain.Models.IdentityServerFour;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,14 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// </summary>
         public bool IsRefreshToken { get; set; }
         public string SessionId { get; set; }
+        /// <summary>
+        /// 客户端Id
+        /// </summary>
+        public string ClientId { get; set; }
+        /// <summary>
+        /// Token 类型
+        /// </summary>
+        public TokenType TokenType { get; set; }
         public void SetClient(SuktApplicationModel suktApplication)
         {
             ClientApplication = suktApplication;
