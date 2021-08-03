@@ -42,6 +42,10 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// Token 类型
         /// </summary>
         public TokenType TokenType { get; set; }
+        /// <summary>
+        /// 资源返回结果
+        /// </summary>
+        public ResourceValidationResult ResourceValidation { get; set; } = new ResourceValidationResult();
         public void SetClient(SuktApplicationModel suktApplication)
         {
             ClientApplication = suktApplication;

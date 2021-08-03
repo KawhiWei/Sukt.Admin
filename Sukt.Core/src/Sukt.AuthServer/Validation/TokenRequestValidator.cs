@@ -22,10 +22,12 @@ namespace Sukt.AuthServer.Validation
     {
         private ValidatedTokenRequest _validatedRequest;
         private readonly ILogger _logger;
+        private readonly IResourceValidator _resourceValidator;
 
-        public TokenRequestValidator(ILogger<TokenRequestValidator> logger)
+        public TokenRequestValidator(ILogger<TokenRequestValidator> logger, IResourceValidator resourceValidator)
         {
             _logger = logger;
+            _resourceValidator = resourceValidator;
         }
 
         public async Task<TokenRequestValidationResult> ValidateRequestAsync(NameValueCollection parameters, ClientSecretValidationResult clientValidationResult)
@@ -148,11 +150,26 @@ namespace Sukt.AuthServer.Validation
                 _logger.LogError("请求中未找到Scope!");
                 return false;
             }
-            //To Do 暂时为判断请求的Scope先统一返回为true
-
-
-
-
+            //判断资源请求
+            var resourceValidationResult=await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest
+            {
+                ClientApplication = _validatedRequest.ClientApplication,
+                Scopes = requestScopesList
+            });
+            if(!resourceValidationResult.Succeeded)
+            {
+                if(resourceValidationResult.InvalidScopes.Any())
+                {
+                    _logger.LogError("无效的范围配置！");
+                }
+                else
+                {
+                    _logger.LogError("客户端请求范围配置无效！");
+                }
+                return false;
+            }
+            _validatedRequest.RequestedScopes = requestScopesList;
+            _validatedRequest.ResourceValidation = resourceValidationResult;
             return true;
 
         }

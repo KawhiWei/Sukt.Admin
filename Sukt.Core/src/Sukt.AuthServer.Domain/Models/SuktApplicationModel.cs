@@ -12,7 +12,6 @@ namespace Sukt.AuthServer.Domain.Models
     /// <summary>
     /// 客户端验证模型
     /// </summary>
-    [AutoMap(typeof(SuktApplication))]
     public class SuktApplicationModel
     {
         /// <summary>
@@ -44,12 +43,12 @@ namespace Sukt.AuthServer.Domain.Models
         /// 退出登录回调地址
         /// </summary>
         [DisplayName("退出登录回调地址")]
-        public string PostLogoutRedirectUris { get; set; }
+        public ICollection<string> PostLogoutRedirectUris { get; set; }
         /// <summary>
         /// 登录重定向地址
         /// </summary>
         [DisplayName("登录重定向地址")]
-        public string RedirectUris { get; set; }
+        public ICollection<string> RedirectUris { get; set; }
         /// <summary>
         /// 属性配置
         /// </summary>
@@ -64,7 +63,7 @@ namespace Sukt.AuthServer.Domain.Models
         /// 客户端访问作用域
         /// </summary>
         [DisplayName("客户端访问作用域")]
-        public string ClientScopes { get; set; }
+        public ICollection<string> ClientScopes { get; set; }
         /// <summary>
         /// 协议类型
         /// </summary>

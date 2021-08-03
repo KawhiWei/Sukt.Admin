@@ -32,7 +32,7 @@ namespace Sukt.AuthServer.Domain.Models
         /// 资源域
         /// </summary>
         [DisplayName("资源域")]
-        public string Resources { get; set; }
+        public ICollection<string> Resources { get; set; }
         /// <summary>
         /// 获取、设置并发标记
         /// </summary>

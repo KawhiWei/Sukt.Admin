@@ -5,7 +5,6 @@ namespace Sukt.Core.Dtos.TreeDto
 {
     public class CurrencyTreeProfile : Profile
     {
-
         public CurrencyTreeProfile()
         {
             CreateMap<MenuEntity, CurrencyTreeDto>()

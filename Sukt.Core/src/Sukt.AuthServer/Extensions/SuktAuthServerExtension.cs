@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Sukt.AuthServer.Constants;
+using Sukt.AuthServer.Domain.SuktAuthServer;
 using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
 using Sukt.AuthServer.EndpointHandler;
 using Sukt.AuthServer.EndpointRouterHandler;
@@ -29,9 +30,15 @@ namespace Sukt.AuthServer.Extensions
                 .AddDefaultSecretParsers()
                 .AddDefaultService()
                 .AddClientStore<SuktApplicationStore>()
+                .AddResourceStore<SuktResourceScopeStore>()
                 ;
 
             return service;
+        }
+        public static IServiceCollection AddResourceStore<T>(this IServiceCollection services) where T : class, ISuktResourceScopeStore
+        {
+            services.AddTransient<ISuktResourceScopeStore, T>();
+            return services;
         }
         /// <summary>
         /// 默认断点路由器注册
@@ -71,6 +78,8 @@ namespace Sukt.AuthServer.Extensions
         public static IServiceCollection AddValidationServices(this IServiceCollection service)
         {
             service.AddTransient<IClientSecretValidator, ClientSecretValidator>();
+            service.AddTransient<IResourceValidator, DefaultResourceValidator>();
+            service.AddTransient<ITokenRequestValidator, TokenRequestValidator>();
             return service;
         }
         public static IServiceCollection AddResponseGenerators(this IServiceCollection service)

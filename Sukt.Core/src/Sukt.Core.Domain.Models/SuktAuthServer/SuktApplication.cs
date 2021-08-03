@@ -68,7 +68,7 @@ namespace Sukt.Core.Domain.Models
         [DisplayName("属性配置")]
         public string Properties { get; private set; }
         /// <summary>
-        /// 
+        /// 备注
         /// </summary>
         [DisplayName("备注")]
         public string Description { get; private set; }
