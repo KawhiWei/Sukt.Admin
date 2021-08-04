@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sukt.AuthServer.EndpointRouterHandler
 {
     /// <summary>
-    /// 断点路由配置类
+    /// 端点路由配置类
     /// </summary>
     public class Endpoint
     {

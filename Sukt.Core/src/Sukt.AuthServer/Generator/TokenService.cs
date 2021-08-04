@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Newtonsoft.Json.Linq;
 using Sukt.AuthServer.Extensions;
 using Sukt.Module.Core;
 using Sukt.Module.Core.Extensions;
@@ -8,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using static Sukt.Module.Core.IdentityServerConstants;
 
@@ -16,17 +19,17 @@ namespace Sukt.AuthServer.Generator
     /// <summary>
     /// Token生成服务实现
     /// </summary>
-    public class TokenService: ITokenService
+    public class TokenService : ITokenService
     {
         protected readonly ILogger _logger;
         protected readonly ISystemClock _systemClock;
-        public TokenService(ILogger<TokenService> logger,ISystemClock systemClock)
+        public TokenService(ILogger<TokenService> logger, ISystemClock systemClock)
         {
             _logger = logger;
             _systemClock = systemClock;
         }
 
-        public virtual async Task<TokenRequest> CreateAccessTokenAsync(TokenCreationRequest request)
+        public virtual async Task<TokenRequest> CreateTokenRequestAsync(TokenCreationRequest request)
         {
             await Task.CompletedTask;
             _logger.LogTrace("创建 access token");
@@ -44,10 +47,71 @@ namespace Sukt.AuthServer.Generator
                 Issuer = issuer,
                 Lifetime = request.ValidatedRequest.AccessTokenExpire,
                 Claims = claims.Distinct().ToList(),
-                SuktApplicationClientId=request.ValidatedRequest.ClientApplication.ClientId,
-                TokenType=request.ValidatedRequest.TokenType,
+                SuktApplicationClientId = request.ValidatedRequest.ClientApplication.ClientId,
+                TokenType = request.ValidatedRequest.TokenType,
             };
             return token;
         }
+
+        public async Task<string> CreateAccessTokenAsync(TokenRequest request)
+        {
+            var payload = await CreatePayloadAsync(request);
+            //TODO: 设置credentials
+            var handler = new JsonWebTokenHandler { SetDefaultTimesOnTokenCreation = false };
+            return handler.CreateToken(payload /*, credential*/);
+        }
+
+        public Task<string> CreatePayloadAsync(TokenRequest token)
+        {
+            try
+            {
+                var payload = new Dictionary<string, object>
+                {
+                    { JwtClaimTypes.Issuer, token.Issuer }
+                };
+
+                var now = _systemClock.UtcNow.ToUnixTimeSeconds();
+                payload.Add(JwtClaimTypes.IssuedAt, now);
+                payload.Add(JwtClaimTypes.NotBefore, now);
+                payload.Add(JwtClaimTypes.Expiration, now + token.Lifetime);
+
+                if (token.Audiences.Any())
+                {
+                    payload.Add(JwtClaimTypes.Audience,
+                        token.Audiences.Count == 1 ?
+                        token.Audiences[0] :
+                        token.Audiences);
+                }
+
+                var scopeClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
+                if (scopeClaims.Any())
+                {
+                    payload.Add(JwtClaimTypes.Scope, scopeClaims.Select(c => c.Value).Distinct().ToArray());
+                }
+
+                var amrClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
+                if (amrClaims.Any())
+                {
+                    payload.Add(JwtClaimTypes.AuthenticationMethod,
+                        amrClaims.Select(c => c.Value).Distinct().ToArray());
+                }
+
+                var otherClaimsTypes = token.Claims.Where(c => c.Type != JwtClaimTypes.Scope && c.Type != JwtClaimTypes.AuthenticationMethod)
+                    .Select(c => c.Type).Distinct();
+                foreach (var claimType in otherClaimsTypes)
+                {
+                    var claims = token.Claims.Where(c => c.Type == claimType).ToArray();
+                    payload.Add(claimType, claims.Length == 1 ? claims[0] : claims);
+                }
+
+                return Task.FromResult(JsonSerializer.Serialize(payload));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "创建时JWT payload发生错误");
+                throw;
+            }
+        }
+
     }
 }

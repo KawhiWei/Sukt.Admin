@@ -48,6 +48,7 @@ namespace Sukt.AuthServer.Validation
                     }
                 }
             }
+            resultfail.Secret = parsedSecret;
             if (parsedSecret == null)
             {
                 _logger.LogDebug("未找到客户端标识符: {id}！", parsedSecret.Id);

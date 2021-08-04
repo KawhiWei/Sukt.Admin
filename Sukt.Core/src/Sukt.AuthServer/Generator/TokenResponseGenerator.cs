@@ -29,13 +29,11 @@ namespace Sukt.AuthServer.Generator
         public virtual async Task<TokenResponse> ProcessAsync(TokenRequestValidationResult request)
         {
             _logger.LogTrace("Processing token request——处理获取token请求.");
-            switch (request.ValidatedRequest.GrantType)
+            return request.ValidatedRequest.GrantType switch
             {
-                case GrantType.ResourceOwnerPassword:
-                    return await ProcessPasswordRequestAsync(request);
-                default:
-                    return await ProcessExtensionGrantRequestAsync(request);
-            }
+                GrantType.ResourceOwnerPassword => await ProcessPasswordRequestAsync(request),
+                _ => await ProcessExtensionGrantRequestAsync(request),
+            };
         }
         private TokenErrorResult Error(string error, string errorDescription = null, Dictionary<string, object> custom = null)
         {
@@ -76,18 +74,19 @@ namespace Sukt.AuthServer.Generator
         }
         protected virtual async Task<(string accessToken, string refreshToken)> CreateAccessTokenAsync(ValidatedTokenRequest request)
         {
-            TokenCreationRequest tokenRequest;
+            TokenCreationRequest tokenCreationRequest;
             bool createRefreshToken;
             //To do  判断是否是授权码 AuthorizationCode 或 DeviceCode 模式
             createRefreshToken = request.IsRefreshToken;
-            tokenRequest = new TokenCreationRequest
+            tokenCreationRequest = new TokenCreationRequest
             {
                 Subject = request.Subject,
                 //ValidatedResources = request.ValidatedResources.,
                 ValidatedRequest = request
             };
-            var at = "";await _tokenService.CreateAccessTokenAsync(tokenRequest);
-            var accessToken = "";//await TokenService.CreateSecurityTokenAsync(at);
+            var at = "";
+            var tokenRequest = await _tokenService.CreateTokenRequestAsync(tokenCreationRequest);
+            var accessToken = await _tokenService.CreateAccessTokenAsync(tokenRequest);//await TokenService.CreateSecurityTokenAsync(at);
 
             if (createRefreshToken)
             {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Sukt.AuthServer.Domain.Models
 {
@@ -13,13 +9,17 @@ namespace Sukt.AuthServer.Domain.Models
         /// </summary>
         public string Id { get; set; }
         /// <summary>
-        /// 传入的Secret
+        /// 凭据  即传入的Secret
         /// </summary>
         public object Credential { get; set; }
         /// <summary>
         /// 密钥类型
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// 额外属性
+        /// </summary>
         public Dictionary<string, string> Properties { get; set; } = new Dictionary<string, string>();
     }
 }

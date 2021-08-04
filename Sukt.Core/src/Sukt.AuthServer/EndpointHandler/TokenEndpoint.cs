@@ -50,7 +50,7 @@ namespace Sukt.AuthServer.EndpointHandler
             var clientResult = await _clientSecretValidator.ValidateAsync(context);
             if (clientResult.ClientApplication == null)
             {
-                return Error(TokenErrors.InvalidClient);
+                return Error(TokenErrors.InvalidClient, $"client_id: {clientResult.Secret?.Id}");
             }
             var form = (await context.Request.ReadFormAsync()).AsNameValueCollection();
             var requestResult = await _tokenRequestValidator.ValidateRequestAsync(form, clientResult);//验证传入进来的参数

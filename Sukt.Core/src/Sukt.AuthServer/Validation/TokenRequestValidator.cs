@@ -49,15 +49,18 @@ namespace Sukt.AuthServer.Validation
                 return InvalidError(TokenErrors.InvalidGrant);
             }
             _validatedRequest.GrantType = grantType;
-            switch (grantType)
+            return grantType switch
             {
-                case GrantType.ResourceOwnerPassword:
-                    return await RunValidationAsync(RunValidateResourceOwnerCredentialRequestAsync, parameters);
-                default:
-                    return new TokenRequestValidationResult(null);
-            }
-
+                GrantType.ResourceOwnerPassword => await RunValidationAsync(ValidateResourceOwnerCredentialRequestAsync, parameters),
+                GrantType.AuthorizationCode =>     await RunValidationAsync(ValidateResourceAuthorizationCodeRequestAsync, parameters),
+                GrantType.ClientCredentials =>     await RunValidationAsync(ValidateResourceClientCredentialsRequestAsync, parameters),
+                GrantType.DeviceFlow =>            await RunValidationAsync(ValidateResourceDeviceFlowRequestAsync, parameters),
+                GrantType.Hybrid =>                await RunValidationAsync(ValidateResourceHybridRequestAsync, parameters),
+                GrantType.Implicit =>              await RunValidationAsync(ValidateResourceImplicitRequestAsync, parameters),
+                _ =>                               new (null),
+            };
         }
+
         /// <summary>
         /// 委托运行对应的处理方法
         /// </summary>
@@ -76,12 +79,24 @@ namespace Sukt.AuthServer.Validation
             var customTokenValidationContext = new CustomTokenRequestValidationContext { Result = result };
             return customTokenValidationContext.Result;
         }
+
+        /// <summary>
+        /// 客户端凭据授权方式验证
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private async Task<TokenRequestValidationResult> ValidateResourceClientCredentialsRequestAsync(NameValueCollection parameters)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 密码授权方式验证
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private async Task<TokenRequestValidationResult> RunValidateResourceOwnerCredentialRequestAsync(NameValueCollection parameters)
+        private async Task<TokenRequestValidationResult> ValidateResourceOwnerCredentialRequestAsync(NameValueCollection parameters)
         {
             _logger.LogInformation("开始检验密码授权方式传入参数!");
             if (!_validatedRequest.ClientApplication.ClientGrantType.Equals(GrantType.ResourceOwnerPassword))
@@ -95,16 +110,12 @@ namespace Sukt.AuthServer.Validation
             }
             var userName = parameters.Get(TokenRequest.UserName);
             var passWord = parameters.Get(TokenRequest.Password);
-            if(userName.IsNullOrEmpty())
+            if (userName.IsNullOrEmpty())
             {
                 return InvalidError(TokenErrors.InvalidGrant);
             }
-            if(passWord.IsNullOrEmpty())
-            {
-                passWord = "";
-            }
+            passWord ??= string.Empty;
             _validatedRequest.UserName = userName;
-
             var resourceOwnerContext = new ResourceOwnerPasswordValidationContext
             {
                 UserName = userName,
@@ -112,21 +123,21 @@ namespace Sukt.AuthServer.Validation
                 Request = _validatedRequest
             };
             // 用户名密码暂未验证，后补
-            { 
+            {
             }
             // To Do 暂时不做任何校验，后补
-            if(resourceOwnerContext.Result.IsError)
+            if (resourceOwnerContext.Result.IsError)
             {
 
             }
-            if(resourceOwnerContext.Result.Subject==null)
+            if (resourceOwnerContext.Result.Subject == null)
             {
 
             }
 
-            var isActiveContext = new IsActiveContext(resourceOwnerContext.Result.Subject,_validatedRequest.ClientApplication, ProfileIsActiveCallers.ResourceOwnerValidation);
+            var isActiveContext = new IsActiveContext(resourceOwnerContext.Result.Subject, _validatedRequest.ClientApplication, ProfileIsActiveCallers.ResourceOwnerValidation);
             //Todo 少了一个方法判断
-            if(isActiveContext.IsActive)
+            if (isActiveContext.IsActive)
             {
                 return InvalidError(TokenErrors.InvalidGrant);
             }
@@ -134,6 +145,50 @@ namespace Sukt.AuthServer.Validation
             _validatedRequest.UserName = userName;
             _validatedRequest.Subject = resourceOwnerContext.Result.Subject;
             return SuccessValid(resourceOwnerContext.Result.CustomResponse);
+        }
+
+        /// <summary>
+        /// 验证码授权方式验证
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private async Task<TokenRequestValidationResult> ValidateResourceAuthorizationCodeRequestAsync(NameValueCollection parameters)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 隐式授权方式验证
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private async Task<TokenRequestValidationResult> ValidateResourceImplicitRequestAsync(NameValueCollection parameters)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 混合授权方式验证
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private async Task<TokenRequestValidationResult> ValidateResourceHybridRequestAsync(NameValueCollection parameters)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 设备码授权方式验证
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private async Task<TokenRequestValidationResult> ValidateResourceDeviceFlowRequestAsync(NameValueCollection parameters)
+        {
+            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
 
         private async Task<bool> ValidateRequestedScopesAsync(NameValueCollection parameters)

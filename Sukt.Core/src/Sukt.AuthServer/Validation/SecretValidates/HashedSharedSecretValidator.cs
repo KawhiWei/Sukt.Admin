@@ -5,12 +5,6 @@ using Sukt.AuthServer.Extensions;
 using Sukt.AuthServer.Validation.ValidationResult;
 using Sukt.Module.Core.Extensions;
 using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sukt.AuthServer.Validation.SecretValidates
@@ -47,10 +41,7 @@ namespace Sukt.AuthServer.Validation.SecretValidates
             {
                 throw new ArgumentException("客户端Id或密钥为空");
             }
-            var currentSecret256 = currentSecret.Sha256();//将密钥转换成256加密
-            var currentSecret512 = currentSecret.Sha512();//将密钥转换成512加密
             var secretDescription = suktApplication.Description.IsNullOrEmpty() ? "没有描述" : suktApplication.Description;
-            bool isValid = false;
             byte[] secretBytes;
             try
             {
@@ -68,23 +59,20 @@ namespace Sukt.AuthServer.Validation.SecretValidates
                 _logger.LogInformation("密钥：{description} is null", secretDescription);
                 return result;
             }
-            if (secretBytes.Length ==SHA256_FIXED_LEN)
+
+            bool isValid = secretBytes.Length switch
             {
-                isValid = SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret256);
-            }
-            else if(secretBytes.Length== SHA512_FIXED_LEN)
-            {
-                isValid = SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret512);
-            }
-            else
-            {
-                return result;
-            }
-            if(isValid)
+                SHA256_FIXED_LEN => SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret.Sha256()),
+                SHA512_FIXED_LEN => SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret.Sha512()),
+                _ => false,
+            };
+
+            if (isValid == true)
             {
                 result.Success = true;
                 return result;
             }
+
             _logger.LogDebug("没有找到对应的hash密钥");
             return result;
         }

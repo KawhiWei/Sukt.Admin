@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Sukt.AuthServer.Extensions
 {
@@ -76,6 +74,11 @@ namespace Sukt.AuthServer.Extensions
             return false;
         }
 
+        /// <summary>
+        /// 字符串是否有值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [DebuggerStepThrough]
         public static bool IsPresent(this string value)
         {

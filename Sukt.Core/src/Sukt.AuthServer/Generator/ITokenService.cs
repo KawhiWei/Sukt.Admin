@@ -11,6 +11,8 @@ namespace Sukt.AuthServer.Generator
     /// </summary>
     public interface ITokenService
     {
-        Task<TokenRequest> CreateAccessTokenAsync(TokenCreationRequest request);
+        Task<TokenRequest> CreateTokenRequestAsync(TokenCreationRequest request);
+
+        Task<string> CreateAccessTokenAsync(TokenRequest request);
     }
 }
