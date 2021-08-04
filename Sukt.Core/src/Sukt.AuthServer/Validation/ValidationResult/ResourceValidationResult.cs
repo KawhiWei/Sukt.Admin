@@ -12,7 +12,7 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// <summary>
         /// 资源名称
         /// </summary>
-        public SuktResourceScopeModel SuktResourceScopeModel { get; set; } = new SuktResourceScopeModel();
+        public SuktResource SuktResources { get; set; } = new SuktResource();
         /// <summary>
         /// 作用域
         /// </summary>

@@ -14,8 +14,8 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         /// </summary>
         public SuktApplicationModel ClientApplication { get; set; }
         /// <summary>
-        /// 请求作用域
+        /// 允许的请求作用域
         /// </summary>
-        public IEnumerable<string> Scopes { get; set; }
+        public ICollection<string> Scopes { get; set; } = new HashSet<string>();
     }
 }

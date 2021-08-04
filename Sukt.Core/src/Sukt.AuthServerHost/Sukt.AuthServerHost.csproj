@@ -16,4 +16,16 @@
     <ProjectReference Include="..\Sukt.AuthServer\Sukt.AuthServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SuktCoreDB.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SuktCoreMongoDb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SuktCoreRedis.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

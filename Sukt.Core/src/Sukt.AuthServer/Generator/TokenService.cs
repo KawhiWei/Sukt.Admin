@@ -40,7 +40,7 @@ namespace Sukt.AuthServer.Generator
             var issuer = "";
             var token = new TokenRequest(TokenTypes.AccessToken)
             {
-                CreationTime = _systemClock.UtcNow.UtcDateTime,
+                CreationTime = DateTime.UtcNow,
                 Issuer = issuer,
                 Lifetime = request.ValidatedRequest.AccessTokenExpire,
                 Claims = claims.Distinct().ToList(),

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Sukt.AuthServer.Constants;
 using Sukt.AuthServer.Domain.SuktAuthServer;
 using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
@@ -7,6 +9,7 @@ using Sukt.AuthServer.EndpointHandler;
 using Sukt.AuthServer.EndpointRouterHandler;
 using Sukt.AuthServer.Generator;
 using Sukt.AuthServer.Validation;
+using Sukt.AuthServer.Validation.SecretValidates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +52,7 @@ namespace Sukt.AuthServer.Extensions
         {
             service.AddTransient<IEndpointRouter, EndpointRouter>();
             service.AddEndPoint<AuthorizeEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Authorize.EnsureLeadingSlash());
+            service.AddEndPoint<TokenEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Token.EnsureLeadingSlash());
             return service;
         }
         /// <summary>
@@ -80,6 +84,7 @@ namespace Sukt.AuthServer.Extensions
             service.AddTransient<IClientSecretValidator, ClientSecretValidator>();
             service.AddTransient<IResourceValidator, DefaultResourceValidator>();
             service.AddTransient<ITokenRequestValidator, TokenRequestValidator>();
+            service.AddTransient<ISecretValidator, HashedSharedSecretValidator>();
             return service;
         }
         public static IServiceCollection AddResponseGenerators(this IServiceCollection service)
@@ -91,6 +96,7 @@ namespace Sukt.AuthServer.Extensions
         {
             services.AddTransient<IClaimsService, DefaultClaimsService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.TryAddSingleton<ISystemClock, SystemClock>();
             return services;
         }
         public static IServiceCollection AddDefaultSecretParsers(this IServiceCollection service)
