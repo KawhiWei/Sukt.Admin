@@ -37,6 +37,14 @@ namespace Sukt.AuthServer.Validation
                 Raw=parameters,
             };
             await Task.CompletedTask;
+
+            if(clientValidationResult==null)
+            {
+                throw new ArgumentNullException(nameof(clientValidationResult));
+            }
+
+            _validatedRequest.SetClient(clientValidationResult.ClientApplication/*, clientValidationResult.Secret, clientValidationResult.Confirmation*/);
+
             if (clientValidationResult.ClientApplication.ProtocolType != ProtocolTypes.OpenIdConnect)
             {
                 _logger.LogError($"无效的客户端协议类型——clientId:{clientValidationResult.ClientApplication.ClientId},expectedProtocolType{clientValidationResult.ClientApplication.ProtocolType},");

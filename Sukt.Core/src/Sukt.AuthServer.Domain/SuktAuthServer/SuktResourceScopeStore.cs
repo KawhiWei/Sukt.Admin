@@ -22,7 +22,11 @@ namespace Sukt.AuthServer.Domain.SuktAuthServer
 
         public virtual async Task<SuktResource> FindResourcesByScopeAsync(IEnumerable<string> scopeNames)
         {
-            var resources = await _suktResourceScopeRepository.NoTrackEntities.Where(x => scopeNames.Contains(x.Resources)).ToListAsync();
+            var resources = new  List<SuktResourceScope>();
+            foreach(var scope in scopeNames)
+            {
+                resources.AddRange(await _suktResourceScopeRepository.NoTrackEntities.Where(x => x.Resources.Contains(scope)).ToListAsync());
+            }
             return new SuktResource { SuktResources = resources.MapTo<ICollection<SuktResourceScopeModel>>() };
         }
     }

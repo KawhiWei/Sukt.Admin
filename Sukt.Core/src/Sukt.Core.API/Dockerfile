@@ -38,4 +38,6 @@ COPY . .
 #FROM base AS final
 #WORKDIR /app
 #COPY --from=publish /app/publish .
+ENV TZ=Asia/Shanghai
+Run ln-snf /usr/share/zoneinfo$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENTRYPOINT ["dotnet", "Sukt.Core.API.dll"]

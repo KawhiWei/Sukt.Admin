@@ -75,6 +75,7 @@ namespace Sukt.AuthServer.Validation
                     if (await IsClientAllowedIdentityResourceAsync(suktApplication, scope))
                     {
                         result.ParsedScopes.Add(scope);
+                        result.SuktResources.SuktResources.Add(resourcescope);
                     }
                     else
                     {
