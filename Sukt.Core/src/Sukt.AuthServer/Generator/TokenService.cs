@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json.Linq;
@@ -23,10 +24,12 @@ namespace Sukt.AuthServer.Generator
     {
         protected readonly ILogger _logger;
         protected readonly ISystemClock _systemClock;
-        public TokenService(ILogger<TokenService> logger, ISystemClock systemClock)
+        protected readonly IHttpContextAccessor ContextAccessor;
+        public TokenService(ILogger<TokenService> logger, ISystemClock systemClock, IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
             _systemClock = systemClock;
+            ContextAccessor = contextAccessor;
         }
 
         public virtual async Task<TokenRequest> CreateTokenRequestAsync(TokenCreationRequest request)
@@ -40,7 +43,7 @@ namespace Sukt.AuthServer.Generator
                 claims.Add(new Claim(JwtClaimTypes.SessionId, request.ValidatedRequest.SessionId));
             }
             claims.Add(new Claim(JwtClaimTypes.IssuedAt, _systemClock.UtcNow.ToUnixTimeMilliseconds().ToString(), System.Security.Claims.ClaimValueTypes.Integer64));
-            var issuer = "";
+            var issuer =$"{ ContextAccessor.HttpContext.Request.Scheme }://{ContextAccessor.HttpContext.Request.Host.Value}";
             var token = new TokenRequest(TokenTypes.AccessToken)
             {
                 CreationTime = DateTime.UtcNow,
@@ -50,18 +53,23 @@ namespace Sukt.AuthServer.Generator
                 SuktApplicationClientId = request.ValidatedRequest.ClientApplication.ClientId,
                 TokenType = request.ValidatedRequest.TokenType,
             };
+            foreach (var aud in request.ResourceValidation.SuktResources.SuktResources.Select(x => x.Name).Distinct())
+            {
+                token.Audiences.Add(aud);
+            }
             return token;
         }
 
         public async Task<string> CreateAccessTokenAsync(TokenRequest request)
         {
-            var payload = await CreatePayloadAsync(request);
+            var payload = await CreateJwtPayloadAsync(request);
             //TODO: 设置credentials
             var handler = new JsonWebTokenHandler { SetDefaultTimesOnTokenCreation = false };
-            return handler.CreateToken(payload /*, credential*/);
+            var stre=handler.CreateToken(payload /*, credential*/);
+            return stre /*handler.CreateToken(payload , credential)*/;
         }
 
-        public Task<string> CreatePayloadAsync(TokenRequest token)
+        public Task<string> CreateJwtPayloadAsync(TokenRequest token)
         {
             try
             {
@@ -79,7 +87,7 @@ namespace Sukt.AuthServer.Generator
                 {
                     payload.Add(JwtClaimTypes.Audience,
                         token.Audiences.Count == 1 ?
-                        token.Audiences[0] :
+                        token.Audiences.ToList()[0] :
                         token.Audiences);
                 }
 
@@ -101,6 +109,7 @@ namespace Sukt.AuthServer.Generator
                 foreach (var claimType in otherClaimsTypes)
                 {
                     var claims = token.Claims.Where(c => c.Type == claimType).ToArray();
+                    payload.Remove(claimType);
                     payload.Add(claimType, claims.Length == 1 ? claims[0] : claims);
                 }
 

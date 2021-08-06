@@ -2,6 +2,7 @@
 using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
 using Sukt.AuthServer.Extensions;
 using Sukt.AuthServer.Middleware;
+using Sukt.AuthServer.Validation.ResourceOwnerPassword;
 using Sukt.Module.Core.Modules;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace Sukt.AuthServer
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
-            context.Services.AddSuktAuthServer();
+            context.Services.AddSuktAuthServer()
+                .AddResourceOwnerValidator<DefaultResourceOwnerPasswordValidator>();
                 //AddDefaultEndpoints()
                 //            .AddValidationServices()
                 //            .AddResponseGenerators()

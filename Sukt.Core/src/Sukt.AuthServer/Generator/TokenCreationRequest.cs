@@ -18,5 +18,9 @@ namespace Sukt.AuthServer.Generator
         /// 验证请求信息
         /// </summary>
         public ValidatedRequest ValidatedRequest { get; set; }
+        /// <summary>
+        /// 资源验证返回结构
+        /// </summary>
+        public ResourceValidationResult ResourceValidation { get; set; } = new ResourceValidationResult();
     }
 }

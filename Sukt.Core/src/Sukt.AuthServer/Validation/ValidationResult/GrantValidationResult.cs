@@ -57,5 +57,34 @@ namespace Sukt.AuthServer.Validation.ValidationResult
                 _ => throw new InvalidOperationException("invalid token error")
             };
         }
+        public GrantValidationResult(
+            string subject,
+            string authenticationMethod,
+            DateTime authTime,
+            IEnumerable<Claim> claims = null,
+            string identityProvider = IdentityServerConstants.LocalIdentityProvider,
+            Dictionary<string, object> customResponse = null)
+        {
+            IsError = false;
+
+            var resultClaims = new List<Claim>
+            {
+                new Claim(JwtClaimTypes.Subject, subject),
+                new Claim(JwtClaimTypes.AuthenticationMethod, authenticationMethod),
+                new Claim(JwtClaimTypes.IdentityProvider, identityProvider),
+                new Claim(JwtClaimTypes.AuthenticationTime, new DateTimeOffset(authTime).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            };
+
+            if (claims!=null)
+            {
+                resultClaims.AddRange(claims);
+            }
+
+            var id = new ClaimsIdentity(authenticationMethod);
+            id.AddClaims(resultClaims.Distinct());
+
+            Subject = new ClaimsPrincipal(id);
+            CustomResponse = customResponse;
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace Sukt.AuthServer.Generator
         }
         protected virtual async Task<TokenResponse> ProcessPasswordRequestAsync(TokenRequestValidationResult request)
         {
+            _logger.LogDebug($"为密码请求方式创建返回响应");
             return await ProcessTokenRequestAsync(request);
         }
         /// <summary>
@@ -81,7 +82,7 @@ namespace Sukt.AuthServer.Generator
             tokenCreationRequest = new TokenCreationRequest
             {
                 Subject = request.Subject,
-                //ValidatedResources = request.ValidatedResources.,
+                ResourceValidation = request.ResourceValidation,
                 ValidatedRequest = request
             };
             var at = "";

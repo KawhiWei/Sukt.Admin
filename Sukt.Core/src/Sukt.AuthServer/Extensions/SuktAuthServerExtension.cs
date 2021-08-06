@@ -34,7 +34,8 @@ namespace Sukt.AuthServer.Extensions
                 .AddDefaultService()
                 .AddClientStore<SuktApplicationStore>()
                 .AddResourceStore<SuktResourceScopeStore>()
-                ;
+                .TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            ;
 
             return service;
         }
@@ -74,6 +75,11 @@ namespace Sukt.AuthServer.Extensions
             service.AddTransient<ISuktApplicationStore, T>();
             return service;
         }
+        public static IServiceCollection AddResourceOwnerValidator<T>(this IServiceCollection service) where T : class, IResourceOwnerPasswordValidator
+        {
+            service.AddTransient<IResourceOwnerPasswordValidator, T>();
+            return service;
+        }
         /// <summary>
         /// 注入验证服务
         /// </summary>
@@ -85,6 +91,7 @@ namespace Sukt.AuthServer.Extensions
             service.AddTransient<IResourceValidator, DefaultResourceValidator>();
             service.AddTransient<ITokenRequestValidator, TokenRequestValidator>();
             service.AddTransient<ISecretValidator, HashedSharedSecretValidator>();
+            service.TryAddTransient<IResourceOwnerPasswordValidator, NotSupportedResourceOwnerPasswordValidator>();
             return service;
         }
         public static IServiceCollection AddResponseGenerators(this IServiceCollection service)

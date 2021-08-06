@@ -23,11 +23,13 @@ namespace Sukt.AuthServer.Validation
         private ValidatedTokenRequest _validatedRequest;
         private readonly ILogger _logger;
         private readonly IResourceValidator _resourceValidator;
+        private readonly IResourceOwnerPasswordValidator _resourceOwnerPasswordValidator;
 
-        public TokenRequestValidator(ILogger<TokenRequestValidator> logger, IResourceValidator resourceValidator)
+        public TokenRequestValidator(ILogger<TokenRequestValidator> logger, IResourceValidator resourceValidator, IResourceOwnerPasswordValidator resourceOwnerPasswordValidator)
         {
             _logger = logger;
             _resourceValidator = resourceValidator;
+            _resourceOwnerPasswordValidator = resourceOwnerPasswordValidator;
         }
 
         public async Task<TokenRequestValidationResult> ValidateRequestAsync(NameValueCollection parameters, ClientSecretValidationResult clientValidationResult)
@@ -131,8 +133,7 @@ namespace Sukt.AuthServer.Validation
                 Request = _validatedRequest
             };
             // 用户名密码暂未验证，后补
-            {
-            }
+            await _resourceOwnerPasswordValidator.ValidateAsync(resourceOwnerContext);
             // To Do 暂时不做任何校验，后补
             if (resourceOwnerContext.Result.IsError)
             {

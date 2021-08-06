@@ -19,7 +19,7 @@ namespace Sukt.AuthServer.Generator
         /// </summary>
         public ICollection<Claim> Claims { get; set; }
         /// <summary>
-        /// 创建时间
+        /// 创建时间 
         /// </summary>
         public DateTime CreationTime { get; set; }
         /// <summary>
@@ -41,7 +41,7 @@ namespace Sukt.AuthServer.Generator
         /// <summary>
         /// 
         /// </summary>
-        public List<string> Audiences { get; set; }
+        public ICollection<string> Audiences { get; set; } = new HashSet<string>();
         /// <summary>
         /// 类型
         /// </summary>
