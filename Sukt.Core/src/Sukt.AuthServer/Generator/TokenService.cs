@@ -87,7 +87,7 @@ namespace Sukt.AuthServer.Generator
                 {
                     payload.Add(JwtClaimTypes.Audience,
                         token.Audiences.Count == 1 ?
-                        token.Audiences.ToList()[0] :
+                        token.Audiences.First() :
                         token.Audiences);
                 }
 
