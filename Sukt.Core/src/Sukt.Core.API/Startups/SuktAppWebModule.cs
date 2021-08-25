@@ -106,6 +106,13 @@ namespace Sukt.Core.API.Startups
             {
                 applicationBuilder.UseCors(_corePolicyName); //添加跨域中间件
             }
+            #region WebSocket
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),//服务的主动向客户端发起心跳检测时间
+            };
+            applicationBuilder.UseWebSockets(webSocketOptions);
+            #endregion
             applicationBuilder.UseRouting();
             applicationBuilder.UseAuthentication();//授权
             applicationBuilder.UseAuthorization();//认证
