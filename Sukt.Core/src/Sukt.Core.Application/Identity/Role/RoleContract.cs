@@ -64,12 +64,12 @@ namespace Sukt.Core.Application.Identity.Role
             dto.NotNull(nameof(dto));
             return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
             {
-                await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == dto.Id);
-                await _roleMenuRepository.InsertAsync(dto.MenuIds.Select(x => new RoleMenuEntity
-                {
-                    RoleId = dto.Id,
-                    MenuId = x,
-                }).ToArray());
+                //await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == dto.Id);
+                //await _roleMenuRepository.InsertAsync(dto.MenuIds.Select(x => new RoleMenuEntity
+                //{
+                //    RoleId = dto.Id,
+                //    MenuId = x,
+                //}).ToArray());
                 return new OperationResponse(ResultMessage.AllocationSucces, OperationEnumType.Success);
             });
         }

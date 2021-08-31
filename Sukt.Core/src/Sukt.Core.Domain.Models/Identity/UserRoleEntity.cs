@@ -15,11 +15,11 @@ namespace Sukt.Core.Domain.Models
         /// <summary>
         /// 角色
         /// </summary>
-        public ICollection<RoleEntity> RoleEntities { get; private set; }
+        public RoleEntity Role { get; private set; }
         /// <summary>
         /// 角色
         /// </summary>
-        public ICollection<UserEntity> UserEntities { get; private set; }
+        public UserEntity User { get; private set; }
         #region 公共字段
 
         /// <summary>

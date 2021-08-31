@@ -15,67 +15,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.8");
-
-            modelBuilder.Entity("FunctionEntityMenuFunctionEntity", b =>
-                {
-                    b.Property<Guid>("FunctionEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MenuFunctionEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("FunctionEntitiesId", "MenuFunctionEntitiesId");
-
-                    b.HasIndex("MenuFunctionEntitiesId");
-
-                    b.ToTable("FunctionEntityMenuFunctionEntity");
-                });
-
-            modelBuilder.Entity("MenuEntityMenuFunctionEntity", b =>
-                {
-                    b.Property<Guid>("MenuEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MenuEntitiesId1")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("MenuEntitiesId", "MenuEntitiesId1");
-
-                    b.HasIndex("MenuEntitiesId1");
-
-                    b.ToTable("MenuEntityMenuFunctionEntity");
-                });
-
-            modelBuilder.Entity("OrganizationEntityOrganizationUserEntity", b =>
-                {
-                    b.Property<Guid>("OrganizationEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("OrganizationEntitiesId1")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("OrganizationEntitiesId", "OrganizationEntitiesId1");
-
-                    b.HasIndex("OrganizationEntitiesId1");
-
-                    b.ToTable("OrganizationEntityOrganizationUserEntity");
-                });
-
-            modelBuilder.Entity("RoleEntityUserRoleEntity", b =>
-                {
-                    b.Property<Guid>("RoleEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserRoleEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("RoleEntitiesId", "UserRoleEntitiesId");
-
-                    b.HasIndex("UserRoleEntitiesId");
-
-                    b.ToTable("RoleEntityUserRoleEntity");
-                });
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Authority.RoleMenuEntity", b =>
                 {
@@ -98,16 +38,20 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("MenuId")
+                    b.Property<Guid?>("MenuId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("RoleMenu");
                 });
@@ -1312,6 +1256,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("CreatedId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("FunctionItemsId")
+                        .HasColumnType("char(36)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
@@ -1321,7 +1268,14 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("MenuItemId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FunctionItemsId");
+
+                    b.HasIndex("MenuItemId");
 
                     b.ToTable("MenuFunction");
                 });
@@ -1443,6 +1397,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("OrganizationId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("OrganizationNumber")
                         .HasColumnType("char(36)");
 
@@ -1452,7 +1409,14 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("OrganizationUser");
                 });
@@ -1816,9 +1780,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid?>("OrganizationUserId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
 
@@ -1855,8 +1816,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationUserId");
-
                     b.ToTable("User");
                 });
 
@@ -1883,10 +1842,20 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("RoleId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRole");
                 });
@@ -1933,79 +1902,19 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.ToTable("UserToken");
                 });
 
-            modelBuilder.Entity("UserEntityUserRoleEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Authority.RoleMenuEntity", b =>
                 {
-                    b.Property<Guid>("UserEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserRoleEntitiesId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("UserEntitiesId", "UserRoleEntitiesId");
-
-                    b.HasIndex("UserRoleEntitiesId");
-
-                    b.ToTable("UserEntityUserRoleEntity");
-                });
-
-            modelBuilder.Entity("FunctionEntityMenuFunctionEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.Menu.FunctionEntity", null)
+                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", "Menu")
                         .WithMany()
-                        .HasForeignKey("FunctionEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MenuId");
 
-                    b.HasOne("Sukt.Core.Domain.Models.MenuFunctionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("MenuFunctionEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.HasOne("Sukt.Core.Domain.Models.RoleEntity", "Role")
+                        .WithMany("RoleMenuItems")
+                        .HasForeignKey("RoleId");
 
-            modelBuilder.Entity("MenuEntityMenuFunctionEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", null)
-                        .WithMany()
-                        .HasForeignKey("MenuEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Menu");
 
-                    b.HasOne("Sukt.Core.Domain.Models.MenuFunctionEntity", null)
-                        .WithMany()
-                        .HasForeignKey("MenuEntitiesId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("OrganizationEntityOrganizationUserEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationEntity", null)
-                        .WithMany()
-                        .HasForeignKey("OrganizationEntitiesId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RoleEntityUserRoleEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.RoleEntity", null)
-                        .WithMany()
-                        .HasForeignKey("RoleEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sukt.Core.Domain.Models.UserRoleEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserRoleEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceClaim", b =>
@@ -2161,28 +2070,49 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("IdentityResource");
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.MenuFunctionEntity", b =>
                 {
-                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", "OrganizationUser")
-                        .WithMany("UserEntities")
-                        .HasForeignKey("OrganizationUserId");
+                    b.HasOne("Sukt.Core.Domain.Models.Menu.FunctionEntity", "FunctionItems")
+                        .WithMany("MenuFunctionItems")
+                        .HasForeignKey("FunctionItemsId");
 
-                    b.Navigation("OrganizationUser");
+                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", "MenuItem")
+                        .WithMany("MenuFunctionItems")
+                        .HasForeignKey("MenuItemId");
+
+                    b.Navigation("FunctionItems");
+
+                    b.Navigation("MenuItem");
                 });
 
-            modelBuilder.Entity("UserEntityUserRoleEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", b =>
                 {
-                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationEntity", "Organization")
+                        .WithMany("OrganizationItems")
+                        .HasForeignKey("OrganizationId");
 
-                    b.HasOne("Sukt.Core.Domain.Models.UserRoleEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserRoleEntitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", "User")
+                        .WithMany("OrganizationUser")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.UserRoleEntity", b =>
+                {
+                    b.HasOne("Sukt.Core.Domain.Models.RoleEntity", "Role")
+                        .WithMany("UserRoleItems")
+                        .HasForeignKey("RoleId");
+
+                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", "User")
+                        .WithMany("UserRoleItems")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>
@@ -2231,9 +2161,33 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("UserClaims");
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.FunctionEntity", b =>
                 {
-                    b.Navigation("UserEntities");
+                    b.Navigation("MenuFunctionItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.MenuEntity", b =>
+                {
+                    b.Navigation("MenuFunctionItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationEntity", b =>
+                {
+                    b.Navigation("OrganizationItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.RoleEntity", b =>
+                {
+                    b.Navigation("RoleMenuItems");
+
+                    b.Navigation("UserRoleItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>
+                {
+                    b.Navigation("OrganizationUser");
+
+                    b.Navigation("UserRoleItems");
                 });
 #pragma warning restore 612, 618
         }

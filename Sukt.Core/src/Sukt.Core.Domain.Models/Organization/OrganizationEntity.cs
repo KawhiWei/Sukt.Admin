@@ -54,7 +54,7 @@ namespace Sukt.Core.Domain.Models.Organization
         /// <summary>
         /// 组织架构集合
         /// </summary>
-        public ICollection<OrganizationUserEntity> OrganizationEntities { get; private set; }
+        public ICollection<OrganizationUserEntity> OrganizationItems { get; private set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

@@ -1,4 +1,5 @@
-﻿using Sukt.Core.Identity;
+﻿using Sukt.Core.Domain.Models.Authority;
+using Sukt.Core.Identity;
 using Sukt.Module.Core.Entity;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,11 @@ namespace Sukt.Core.Domain.Models
         /// <summary>
         /// 用户角色集合
         /// </summary>
-        public ICollection<UserRoleEntity> UserRoleEntities { get; private set; }
+        public ICollection<UserRoleEntity> UserRoleItems { get; private set; }
+        /// <summary>
+        /// 角色菜单集合
+        /// </summary>
+        public ICollection<RoleMenuEntity> RoleMenuItems { get; private set; }
         #region 公共字段
 
         /// <summary>

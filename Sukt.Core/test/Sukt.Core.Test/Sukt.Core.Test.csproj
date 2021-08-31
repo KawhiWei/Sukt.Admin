@@ -16,11 +16,11 @@
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.10" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.10" />
-    <PackageReference Include="Sukt.TestBase" Version="1.0.10" />
-    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.10" />
-    <PackageReference Include="Sukt.MongoDB" Version="1.0.10" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.13" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.13" />
+    <PackageReference Include="Sukt.TestBase" Version="1.0.13" />
+    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.13" />
+    <PackageReference Include="Sukt.MongoDB" Version="1.0.13" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
@@ -42,13 +42,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.7" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.0.3">
+    <PackageReference Include="coverlet.collector" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -85,10 +85,11 @@ namespace Sukt.Core.Domain.Models.Menu
         /// </summary>
         [DisplayName("菜单对应子应用")]
         public string MicroName { get; set; }
+
         /// <summary>
         /// 功能集合
         /// </summary>
-        public ICollection<MenuFunctionEntity> MenuEntities { get; private set; }
+        public ICollection<MenuFunctionEntity> MenuFunctionItems { get; private set; }
 
         #region 公共字段
 

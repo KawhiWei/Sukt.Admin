@@ -1,4 +1,5 @@
-﻿using Sukt.Module.Core.Entity;
+﻿using Sukt.Core.Domain.Models.Menu;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 
@@ -11,13 +12,13 @@ namespace Sukt.Core.Domain.Models.Authority
         /// 角色
         /// </summary>
         [DisplayName("角色")]
-        public Guid RoleId { get; set; }
+        public RoleEntity Role { get; set; }
 
         /// <summary>
         /// 菜单
         /// </summary>
         [DisplayName("菜单")]
-        public Guid MenuId { get; set; }
+        public MenuEntity Menu { get; set; }
 
         /// <summary>
         /// 租户ID

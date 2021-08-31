@@ -40,7 +40,7 @@ namespace Sukt.Core.Domain.Models.Menu
         /// <summary>
         /// 菜单功能集合
         /// </summary>
-        public ICollection<MenuFunctionEntity> MenuFunctionEntities { get; private set; }
+        public ICollection<MenuFunctionEntity> MenuFunctionItems { get; private set; }
 
         #region 公共字段
 

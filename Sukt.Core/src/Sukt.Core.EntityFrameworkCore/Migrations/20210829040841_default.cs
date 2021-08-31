@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
-    public partial class test : Migration
+    public partial class @default : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -286,23 +286,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MenuFunction",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuFunction", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "MultiTenants",
                 columns: table => new
                 {
@@ -354,26 +337,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "OrganizationUser",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    OrganizationNumber = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    PositionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrganizationUser", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -458,26 +421,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "RoleMenu",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    MenuId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "SuktApplications",
                 columns: table => new
                 {
@@ -546,6 +489,66 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Birthday = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Education = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TechnicalLevel = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IdCard = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsEnable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Duties = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Department = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserType = table.Column<int>(type: "int", nullable: false),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedUserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NickName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizeEmail = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    HeadImg = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
+                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    IsSystem = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Sex = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "UserClaim",
                 columns: table => new
                 {
@@ -564,24 +567,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserClaim", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "UserRole",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRole", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1074,194 +1059,131 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "FunctionEntityMenuFunctionEntity",
-                columns: table => new
-                {
-                    FunctionEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    MenuFunctionEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FunctionEntityMenuFunctionEntity", x => new { x.FunctionEntitiesId, x.MenuFunctionEntitiesId });
-                    table.ForeignKey(
-                        name: "FK_FunctionEntityMenuFunctionEntity_Function_FunctionEntitiesId",
-                        column: x => x.FunctionEntitiesId,
-                        principalTable: "Function",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FunctionEntityMenuFunctionEntity_MenuFunction_MenuFunctionEn~",
-                        column: x => x.MenuFunctionEntitiesId,
-                        principalTable: "MenuFunction",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "MenuEntityMenuFunctionEntity",
-                columns: table => new
-                {
-                    MenuEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    MenuEntitiesId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuEntityMenuFunctionEntity", x => new { x.MenuEntitiesId, x.MenuEntitiesId1 });
-                    table.ForeignKey(
-                        name: "FK_MenuEntityMenuFunctionEntity_Menu_MenuEntitiesId",
-                        column: x => x.MenuEntitiesId,
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MenuEntityMenuFunctionEntity_MenuFunction_MenuEntitiesId1",
-                        column: x => x.MenuEntitiesId1,
-                        principalTable: "MenuFunction",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "OrganizationEntityOrganizationUserEntity",
-                columns: table => new
-                {
-                    OrganizationEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    OrganizationEntitiesId1 = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrganizationEntityOrganizationUserEntity", x => new { x.OrganizationEntitiesId, x.OrganizationEntitiesId1 });
-                    table.ForeignKey(
-                        name: "FK_OrganizationEntityOrganizationUserEntity_Organization_Organi~",
-                        column: x => x.OrganizationEntitiesId1,
-                        principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrganizationEntityOrganizationUserEntity_OrganizationUser_Or~",
-                        column: x => x.OrganizationEntitiesId,
-                        principalTable: "OrganizationUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "User",
+                name: "MenuFunction",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Birthday = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Education = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TechnicalLevel = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdCard = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsEnable = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Duties = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Department = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserType = table.Column<int>(type: "int", nullable: false),
-                    OrganizationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    MenuItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    FunctionItemsId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NickName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizeEmail = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    HeadImg = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    IsSystem = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Sex = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_MenuFunction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_OrganizationUser_OrganizationUserId",
-                        column: x => x.OrganizationUserId,
-                        principalTable: "OrganizationUser",
+                        name: "FK_MenuFunction_Function_FunctionItemsId",
+                        column: x => x.FunctionItemsId,
+                        principalTable: "Function",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MenuFunction_Menu_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalTable: "Menu",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "RoleEntityUserRoleEntity",
+                name: "RoleMenu",
                 columns: table => new
                 {
-                    RoleEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserRoleEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    MenuId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleEntityUserRoleEntity", x => new { x.RoleEntitiesId, x.UserRoleEntitiesId });
+                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleEntityUserRoleEntity_Role_RoleEntitiesId",
-                        column: x => x.RoleEntitiesId,
+                        name: "FK_RoleMenu_Menu_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menu",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RoleMenu_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleEntityUserRoleEntity_UserRole_UserRoleEntitiesId",
-                        column: x => x.UserRoleEntitiesId,
-                        principalTable: "UserRole",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "UserEntityUserRoleEntity",
+                name: "OrganizationUser",
                 columns: table => new
                 {
-                    UserEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserRoleEntitiesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrganizationNumber = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PositionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrganizationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEntityUserRoleEntity", x => new { x.UserEntitiesId, x.UserRoleEntitiesId });
+                    table.PrimaryKey("PK_OrganizationUser", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserEntityUserRoleEntity_User_UserEntitiesId",
-                        column: x => x.UserEntitiesId,
+                        name: "FK_OrganizationUser_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrganizationUser_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserEntityUserRoleEntity_UserRole_UserRoleEntitiesId",
-                        column: x => x.UserRoleEntitiesId,
-                        principalTable: "UserRole",
+                        name: "FK_UserRole_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserRole_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1341,11 +1263,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FunctionEntityMenuFunctionEntity_MenuFunctionEntitiesId",
-                table: "FunctionEntityMenuFunctionEntity",
-                column: "MenuFunctionEntitiesId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_IdentityResourceClaim_IdentityResourceId",
                 table: "IdentityResourceClaim",
                 column: "IdentityResourceId");
@@ -1356,29 +1273,44 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 column: "IdentityResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuEntityMenuFunctionEntity_MenuEntitiesId1",
-                table: "MenuEntityMenuFunctionEntity",
-                column: "MenuEntitiesId1");
+                name: "IX_MenuFunction_FunctionItemsId",
+                table: "MenuFunction",
+                column: "FunctionItemsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrganizationEntityOrganizationUserEntity_OrganizationEntitie~",
-                table: "OrganizationEntityOrganizationUserEntity",
-                column: "OrganizationEntitiesId1");
+                name: "IX_MenuFunction_MenuItemId",
+                table: "MenuFunction",
+                column: "MenuItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleEntityUserRoleEntity_UserRoleEntitiesId",
-                table: "RoleEntityUserRoleEntity",
-                column: "UserRoleEntitiesId");
+                name: "IX_OrganizationUser_OrganizationId",
+                table: "OrganizationUser",
+                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_OrganizationUserId",
-                table: "User",
-                column: "OrganizationUserId");
+                name: "IX_OrganizationUser_UserId",
+                table: "OrganizationUser",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserEntityUserRoleEntity_UserRoleEntitiesId",
-                table: "UserEntityUserRoleEntity",
-                column: "UserRoleEntitiesId");
+                name: "IX_RoleMenu_MenuId",
+                table: "RoleMenu",
+                column: "MenuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleMenu_RoleId",
+                table: "RoleMenu",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_RoleId",
+                table: "UserRole",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_UserId",
+                table: "UserRole",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1435,31 +1367,25 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 name: "DeviceFlowCodes");
 
             migrationBuilder.DropTable(
-                name: "FunctionEntityMenuFunctionEntity");
-
-            migrationBuilder.DropTable(
                 name: "IdentityResourceClaim");
 
             migrationBuilder.DropTable(
                 name: "IdentityResourceProperty");
 
             migrationBuilder.DropTable(
-                name: "MenuEntityMenuFunctionEntity");
+                name: "MenuFunction");
 
             migrationBuilder.DropTable(
                 name: "MultiTenants");
 
             migrationBuilder.DropTable(
-                name: "OrganizationEntityOrganizationUserEntity");
+                name: "OrganizationUser");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrant");
 
             migrationBuilder.DropTable(
                 name: "RoleClaim");
-
-            migrationBuilder.DropTable(
-                name: "RoleEntityUserRoleEntity");
 
             migrationBuilder.DropTable(
                 name: "RoleMenu");
@@ -1474,7 +1400,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 name: "UserClaim");
 
             migrationBuilder.DropTable(
-                name: "UserEntityUserRoleEntity");
+                name: "UserRole");
 
             migrationBuilder.DropTable(
                 name: "UserToken");
@@ -1489,31 +1415,22 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 name: "Client");
 
             migrationBuilder.DropTable(
-                name: "Function");
-
-            migrationBuilder.DropTable(
                 name: "IdentityResource");
 
             migrationBuilder.DropTable(
-                name: "Menu");
-
-            migrationBuilder.DropTable(
-                name: "MenuFunction");
+                name: "Function");
 
             migrationBuilder.DropTable(
                 name: "Organization");
+
+            migrationBuilder.DropTable(
+                name: "Menu");
 
             migrationBuilder.DropTable(
                 name: "Role");
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "UserRole");
-
-            migrationBuilder.DropTable(
-                name: "OrganizationUser");
         }
     }
 }

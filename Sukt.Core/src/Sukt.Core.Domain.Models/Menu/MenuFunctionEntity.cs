@@ -22,11 +22,11 @@ namespace Sukt.Core.Domain.Models
         /// <summary>
         /// 菜单集合
         /// </summary>
-        public ICollection<MenuEntity> MenuEntities { get; private set; }
+        public MenuEntity MenuItem { get; private set; }
         /// <summary>
         /// 功能集合
         /// </summary>
-        public ICollection<FunctionEntity> FunctionEntities { get; set; }
+        public FunctionEntity FunctionItems { get; set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

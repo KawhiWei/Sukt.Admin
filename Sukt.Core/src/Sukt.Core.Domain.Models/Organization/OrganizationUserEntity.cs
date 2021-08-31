@@ -27,13 +27,13 @@ namespace Sukt.Core.Domain.Models.Organization
         [DisplayName("租户Id")]
         public Guid TenantId { get; set; }
         /// <summary>
-        /// 组织架构集合
+        /// 组织架构
         /// </summary>
-        public ICollection<OrganizationEntity> OrganizationEntities { get; private set; }
+        public OrganizationEntity Organization { get; private set; }
         /// <summary>
         /// 用户集合
         /// </summary>
-        public ICollection<UserEntity> UserEntities { get; private set; }
+        public UserEntity User { get; private set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

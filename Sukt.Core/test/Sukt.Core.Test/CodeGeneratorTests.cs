@@ -62,7 +62,7 @@ namespace Sukt.Core.Test
             };
             var savePath = @"E:\TestCodeGenerator";
             ICodeGenerator codeGenerator = ServiceProvider.GetService<ICodeGenerator>();
-            codeGenerator.GenerateCode(projectMetadata, savePath);
+            codeGenerator.GenerateCode(projectMetadata);
         }
     }
 }
