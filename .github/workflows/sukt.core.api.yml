@@ -1,0 +1,25 @@
+name: Sukt.Core.API
+on:
+  push:
+    branches: [dev/suktauthserver]
+  pull_request:
+    branches: [dev/suktauthserver]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dependencies
+      run: dotnet restore Sukt.Core/src/Sukt.Core.API
+    - name: Build Docker Image
+      run: |
+        docker version
+        # 登录到阿里云镜像仓库
+        sudo docker login --username=${{secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME}} --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+        docker build  Sukt.Core/src/Sukt.Core.API  --tag  registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6

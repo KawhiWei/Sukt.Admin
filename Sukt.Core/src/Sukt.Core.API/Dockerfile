@@ -3,20 +3,20 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
-
+RUN ls 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["src/Sukt.Core.API/Sukt.Core.API.csproj", "src/Sukt.Core.API/"]
-COPY ["src/Sukt.Core.Dtos/Sukt.Core.Dtos.csproj", "src/Sukt.Core.Dtos/"]
-COPY ["src/Sukt.Core.Domain.Models/Sukt.Core.Domain.Models.csproj", "src/Sukt.Core.Domain.Models/"]
-COPY ["src/Sukt.Core.Identity/Sukt.Core.Identity.csproj", "src/Sukt.Core.Identity/"]
-COPY ["src/Sukt.Core.Shared/Sukt.Core.Shared.csproj", "src/Sukt.Core.Shared/"]
-COPY ["src/Sukt.Core.Application/Sukt.Core.Application.csproj", "src/Sukt.Core.Application/"]
-COPY ["src/Sukt.Core.Domain.Services/Sukt.Core.Domain.Services.csproj", "src/Sukt.Core.Domain.Services/"]
-COPY ["src/Sukt.Core.EntityFrameworkCore/Sukt.Core.EntityFrameworkCore.csproj", "src/Sukt.Core.EntityFrameworkCore/"]
+COPY ["Sukt.Core/src/Sukt.Core.API/Sukt.Core.API.csproj", "src/Sukt.Core.API/"]
+COPY ["Sukt.Core/src/Sukt.Core.Dtos/Sukt.Core.Dtos.csproj", "src/Sukt.Core.Dtos/"]
+COPY ["Sukt.Core/src/Sukt.Core.Domain.Models/Sukt.Core.Domain.Models.csproj", "src/Sukt.Core.Domain.Models/"]
+COPY ["Sukt.Core/src/Sukt.Core.Identity/Sukt.Core.Identity.csproj", "src/Sukt.Core.Identity/"]
+COPY ["Sukt.Core/src/Sukt.Core.Shared/Sukt.Core.Shared.csproj", "src/Sukt.Core.Shared/"]
+COPY ["Sukt.Core/src/Sukt.Core.Application/Sukt.Core.Application.csproj", "src/Sukt.Core.Application/"]
+COPY ["Sukt.Core/src/Sukt.Core.Domain.Services/Sukt.Core.Domain.Services.csproj", "src/Sukt.Core.Domain.Services/"]
+COPY ["Sukt.Core/src/Sukt.Core.EntityFrameworkCore/Sukt.Core.EntityFrameworkCore.csproj", "src/Sukt.Core.EntityFrameworkCore/"]
 RUN dotnet restore "src/Sukt.Core.API/Sukt.Core.API.csproj"
 COPY . .
-WORKDIR "/src/src/Sukt.Core.API"
+WORKDIR "/Sukt.Core/src/Sukt.Core.API"
 RUN dotnet build "Sukt.Core.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
