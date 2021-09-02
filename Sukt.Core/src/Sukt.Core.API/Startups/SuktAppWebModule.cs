@@ -18,6 +18,9 @@ using Sukt.AutoMapper;
 using SuktCore.Aop;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Collections.Generic;
+using Sukt.WebSocketServer;
+using Sukt.WebSocketServer.MvcHandler;
 
 namespace Sukt.Core.API.Startups
 {
@@ -84,6 +87,16 @@ namespace Sukt.Core.API.Startups
                 IHttpContextAccessor accessor = provider.GetService<IHttpContextAccessor>();
                 return accessor?.HttpContext?.User;
             });
+            service.AddSuktWebSocketConfigRouterEndpoint(x =>
+            {
+
+                x.WebSocketChannels = new Dictionary<string, WebSocketRouteOption.WebSocketChannelHandler>()
+                {
+                    { "/im",new MvcChannelHandler(4*1024).ConnectionEntry}
+                };
+                x.ApplicationServiceCollection = service;
+            });
+
             if (!settings.Cors.PolicyName.IsNullOrEmpty() && !settings.Cors.Url.IsNullOrEmpty()) //添加跨域
             {
                 _corePolicyName = settings.Cors.PolicyName;
@@ -109,9 +122,11 @@ namespace Sukt.Core.API.Startups
             #region WebSocket
             var webSocketOptions = new WebSocketOptions()
             {
-                KeepAliveInterval = TimeSpan.FromSeconds(120),//服务的主动向客户端发起心跳检测时间
+                KeepAliveInterval = TimeSpan.FromSeconds(15),//服务的主动向客户端发起心跳检测时间
+                ReceiveBufferSize = 4 * 1024//数据缓冲区
             };
             applicationBuilder.UseWebSockets(webSocketOptions);
+            applicationBuilder.UseSuktWebSocketServer(applicationBuilder.ApplicationServices);
             #endregion
             applicationBuilder.UseRouting();
             applicationBuilder.UseAuthentication();//授权
