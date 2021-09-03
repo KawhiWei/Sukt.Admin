@@ -4,9 +4,11 @@ on:
     branches: [dev/suktauthserver]
   pull_request:
     branches: [dev/suktauthserver]
+
 env:
-   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api
-   IMAGE_TAG: $(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
+   IMAGE_TAG: latest
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,25 +22,45 @@ jobs:
       run: dotnet restore src/Sukt.Core.API
     - name: dotnet publish #发布项目
       run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
+    # 拷贝dockerfile
+    - name: Run Crrpath
+      run: ls 
+    - name: Copy Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
+      run: cp Dockerfile /home/runner/work/Sukt.Core/Sukt.Core/app
+    #第一种方式推送镜像，无法设置动态版本
     - name: Login To Docker #登录到镜像仓库
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}
         password: ${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}
         registry: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #镜像仓库地址
-    - name: Run Crrpath
-      run: ls 
-    - name: Copy Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
-      run: cp Dockerfile /home/runner/work/Sukt.Core/Sukt.Core/app
-    - name: Run path
-      run: ls /home/runner/work/Sukt.Core/Sukt.Core/app
     - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
       uses: docker/build-push-action@v2
       with:
-        tags: $IMAGE_NAME:$IMAGE_TAG  #动态变量镜像名称和版本  #registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6 
+        tags: ${{IMAGE_NAME}}:v${{IMAGE_TAG}} #动态变量镜像名称和版本  $VERSION #registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6 
         context: /home/runner/work/Sukt.Core/Sukt.Core/app
         file: /home/runner/work/Sukt.Core/Sukt.Core/app/Dockerfile # 指定Dockerfile
         push: true
+
+
+
+    # 第二种方式推送镜像，动态版本号
+    # - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
+    #   run: docker build /home/runner/work/Sukt.Core/Sukt.Core/app -t $IMAGE_NAME
+    # - name: Docker Image list
+    #   run: docker images
+    # - name: Login Docker registry  # 登录到镜像仓库
+    #   run: sudo docker login --username=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}  --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}  registry.cn-hangzhou.aliyuncs.com
+    # - name: Push Docker Image To registry  # 推送镜像到镜像仓库
+    #   run: |
+    #     sudo docker login --username=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}  --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}  registry.cn-hangzhou.aliyuncs.com
+    #     VERSION=$($RANDOM|md5sum|cut -c 5-15) 
+    #     echo VERSION=$VERSION
+    #     docker build /home/runner/work/Sukt.Core/Sukt.Core/app -t $IMAGE_NAME:$VERSION
+    #     docker push $IMAGE_NAME:$VERSION
+
+      
+    
       # run: |
       #   docker version
       #   # 登录到阿里云镜像仓库
