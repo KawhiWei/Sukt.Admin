@@ -18,9 +18,9 @@ COPY ["src/Sukt.Core.Domain.Services/Sukt.Core.Domain.Services.csproj", "src/Suk
 COPY ["src/Sukt.Core.EntityFrameworkCore/Sukt.Core.EntityFrameworkCore.csproj", "src/Sukt.Core.EntityFrameworkCore/"]
 RUN dotnet restore "src/Sukt.Core.API/Sukt.Core.API.csproj"
 RUN ls
-#COPY . .
-#WORKDIR "/src/src/Sukt.Core.API"
-#RUN dotnet build "Sukt.Core.API.csproj" -c Release -o /app/build
+COPY . .
+WORKDIR "/src/src/Sukt.Core.API"
+RUN dotnet build "Sukt.Core.API.csproj" -c Release -o /app/build
 
 #FROM build AS publish
 #RUN dotnet publish "Sukt.Core.API.csproj" -c Release -o /app/publish
