@@ -18,7 +18,7 @@ namespace Sukt.Core.Application
         /// 修改用户
         /// </summary>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(UserUpdateInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id, UserInputDto input);
 
         /// <summary>
         /// 删除用户及对应权限

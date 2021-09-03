@@ -45,23 +45,24 @@ namespace Sukt.Core.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Description("加载表单用户")]
-        [HttpGet]
-        public async Task<AjaxResult> LoadUserFormAsync(Guid? id)
+        [HttpGet("id")]
+        public async Task<AjaxResult> LoadUserFormAsync(Guid id)
         {
-            return (await _userContract.LoadUserFormAsync(id.Value)).ToAjaxResult();
+            return (await _userContract.LoadUserFormAsync(id)).ToAjaxResult();
         }
 
         /// <summary>
         /// 修改用户
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Description("修改用户")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync([FromBody] UserUpdateInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id,[FromBody] UserInputDto input)
         {
-            return (await _userContract.UpdateAsync(input)).ToAjaxResult();
+            return (await _userContract.UpdateAsync(id,input)).ToAjaxResult();
         }
 
         /// <summary>
@@ -69,12 +70,12 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Description("删除用户")]
         [AuditLog]
-        public async Task<AjaxResult> DeleteAsync(Guid? id)
+        public async Task<AjaxResult> DeleteAsync(Guid id)
         {
-            return (await _userContract.DeleteAsync(id.Value)).ToAjaxResult();
+            return (await _userContract.DeleteAsync(id)).ToAjaxResult();
         }
     }
 }

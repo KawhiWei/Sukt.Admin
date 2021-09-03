@@ -289,11 +289,12 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.RoleController.UpdateAsync(Sukt.Core.Dtos.Identity.Role.RoleInputDto)">
+        <member name="M:Sukt.Core.API.Controllers.RoleController.UpdateAsync(System.Guid,Sukt.Core.Dtos.Identity.Role.RoleInputDto)">
             <summary>
             修改角色
             </summary>
             <param name="input"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Sukt.Core.API.Controllers.RoleController.DeleteAsync(System.Guid)">
@@ -339,21 +340,22 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserController.LoadUserFormAsync(System.Nullable{System.Guid})">
+        <member name="M:Sukt.Core.API.Controllers.UserController.LoadUserFormAsync(System.Guid)">
             <summary>
             根据Id加载表单用户
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserController.UpdateAsync(Sukt.Core.Dtos.UserUpdateInputDto)">
+        <member name="M:Sukt.Core.API.Controllers.UserController.UpdateAsync(System.Guid,Sukt.Core.Dtos.UserInputDto)">
             <summary>
             修改用户
             </summary>
             <param name="input"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserController.DeleteAsync(System.Nullable{System.Guid})">
+        <member name="M:Sukt.Core.API.Controllers.UserController.DeleteAsync(System.Guid)">
             <summary>
             删除用户
             </summary>

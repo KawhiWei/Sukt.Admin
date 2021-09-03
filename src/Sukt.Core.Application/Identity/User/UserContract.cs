@@ -57,10 +57,10 @@ namespace Sukt.Core.Application
             return new OperationResponse(ResultMessage.LoadSucces, userdto, OperationEnumType.Success);
         }
 
-        public async Task<OperationResponse> UpdateAsync(UserUpdateInputDto input)
+        public async Task<OperationResponse> UpdateAsync(Guid id, UserInputDto input)
         {
             input.NotNull(nameof(input));
-            var user = await _userManager.FindByIdAsync(input.Id.ToString());
+            var user = await _userManager.FindByIdAsync(id.ToString());
             user = input.MapTo(user);
             return (await _userManager.UpdateAsync(user)).ToOperationResponse();
             //return result;

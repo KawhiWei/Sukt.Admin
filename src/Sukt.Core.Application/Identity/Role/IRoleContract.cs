@@ -22,7 +22,7 @@ namespace Sukt.Core.Application.Identity.Role
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(RoleInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id,RoleInputDto input);
 
         /// <summary>
         /// 删除角色

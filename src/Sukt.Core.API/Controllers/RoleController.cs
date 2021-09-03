@@ -46,13 +46,14 @@ namespace Sukt.Core.API.Controllers
         /// 修改角色
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Description("修改角色")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync([FromBody] RoleInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id,[FromBody] RoleInputDto input)
         {
-            return (await _roleContract.UpdateAsync(input)).ToAjaxResult();
+            return (await _roleContract.UpdateAsync(id, input)).ToAjaxResult();
         }
 
         /// <summary>

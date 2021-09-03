@@ -29,7 +29,7 @@ namespace Sukt.Core.API.Startups
         typeof(SuktAutoMapperModuleBase),
         //typeof(CSRedisModuleBase),
         typeof(IdentityModule),
-        typeof(SwaggerModule),
+        typeof(SuktSwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
         typeof(EntityFrameworkCoreModule),

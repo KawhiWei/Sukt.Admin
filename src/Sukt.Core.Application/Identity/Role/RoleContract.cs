@@ -79,10 +79,10 @@ namespace Sukt.Core.Application.Identity.Role
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<OperationResponse> UpdateAsync(RoleInputDto input)
+        public async Task<OperationResponse> UpdateAsync(Guid id, RoleInputDto input)
         {
             input.NotNull(nameof(input));
-            var role = await _roleManager.FindByIdAsync(input.Id.ToString());
+            var role = await _roleManager.FindByIdAsync(id.ToString());
             role = input.MapTo(role);
             return (await _roleManager.UpdateAsync(role)).ToOperationResponse();
 

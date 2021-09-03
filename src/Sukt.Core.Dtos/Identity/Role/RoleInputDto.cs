@@ -10,7 +10,7 @@ namespace Sukt.Core.Dtos.Identity.Role
 {
     [DisplayName("角色管理新增/修改Dto")]
     [SuktAutoMapper(typeof(RoleEntity))]
-    public class RoleInputDto : InputDto<Guid>
+    public class RoleInputDto 
     {
         /// <summary>
         /// 角色名称
