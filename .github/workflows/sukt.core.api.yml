@@ -22,6 +22,8 @@ jobs:
       run: dotnet restore src/Sukt.Core.API
     - name: dotnet publish #发布项目
       run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
+    - name: Set TAG Version #发布项目
+      run: env.IMAGE_TAG=$($RANDOM|md5sum|cut -c 5-15)  
     # 拷贝dockerfile
     - name: Run Crrpath
       run: ls 
