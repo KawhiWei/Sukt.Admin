@@ -1,9 +1,9 @@
 name: Sukt.Core.API
 on:
   push:
-    branches: [dev/main]
+    branches: [dev/suktauthserver]
   pull_request:
-    branches: [dev/main]
+    branches: [dev/suktauthserver]
 
 env:
    IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
@@ -18,16 +18,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: dotnet restore #还原包
-      run: dotnet restore src/Sukt.Core.API
-    - name: dotnet publish #发布项目
-      run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
+    # - name: dotnet restore #还原包
+    #   run: dotnet restore src/Sukt.Core.API
+    # - name: dotnet publish #发布项目
+    #   run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
 
     # 拷贝dockerfile
-    - name: Run Crrpath
-      run: ls 
-    - name: Copy Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
-      run: cp Dockerfile /home/runner/work/Sukt.Core/Sukt.Core/app
+    # - name: Run Crrpath
+    #   run: ls 
+    # - name: Copy Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
+    #   run: cp Dockerfile /home/runner/work/Sukt.Core/Sukt.Core/app
     #第一种方式推送镜像，无法设置动态版本
     - name: Login To Docker #登录到镜像仓库
       uses: docker/login-action@v1
@@ -39,9 +39,9 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}.${{ github.run_id }}.${{ github.run_number }} #动态变量镜像TAG 使用github运行job和jobid设置tag
-        context: /home/runner/work/Sukt.Core/Sukt.Core/app
-        file: /home/runner/work/Sukt.Core/Sukt.Core/app/Dockerfile # 指定Dockerfile
-        push: true
+        context: /home/runner/work/Sukt.Core/Sukt.Core
+        file: /home/runner/work/Sukt.Core/Sukt.Core/Dockerfilepublish # 指定Dockerfile
+        push: false
 
 
 
