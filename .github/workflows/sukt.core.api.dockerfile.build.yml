@@ -7,7 +7,7 @@ on:
 
 env:
    IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
-   IMAGE_TAG: dev
+   IMAGE_TAG: dockerfilebuild
 
 jobs:
   build:
@@ -42,7 +42,8 @@ jobs:
         context: /home/runner/work/Sukt.Core/Sukt.Core
         file: /home/runner/work/Sukt.Core/Sukt.Core/Dockerfilepublish # 指定Dockerfile
         push: false
-
+    - name: Docker Images Lst # 列出所有镜像
+      run: docker images
 
 
     # 第二种方式推送镜像，动态版本号
