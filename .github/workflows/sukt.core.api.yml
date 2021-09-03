@@ -7,7 +7,7 @@ on:
 
 env:
    IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
-   IMAGE_TAG: latest
+   IMAGE_TAG: dev
 
 jobs:
   build:
@@ -22,8 +22,7 @@ jobs:
       run: dotnet restore src/Sukt.Core.API
     - name: dotnet publish #发布项目
       run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
-    - name: Set TAG Version #发布项目
-      run: env.IMAGE_TAG=$($RANDOM|md5sum|cut -c 5-15)  
+
     # 拷贝dockerfile
     - name: Run Crrpath
       run: ls 
@@ -39,7 +38,7 @@ jobs:
     - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
       uses: docker/build-push-action@v2
       with:
-        tags: ${{env.IMAGE_NAME}}:v${{env.IMAGE_TAG}} #动态变量镜像名称和版本  $VERSION #registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6 
+        tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}.${{ github.run_number }} #动态变量镜像名称和版本  $VERSION #registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6 
         context: /home/runner/work/Sukt.Core/Sukt.Core/app
         file: /home/runner/work/Sukt.Core/Sukt.Core/app/Dockerfile # 指定Dockerfile
         push: true
