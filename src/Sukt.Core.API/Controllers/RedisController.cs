@@ -27,25 +27,22 @@ namespace Sukt.Core.API.Controllers
         [Description("测试redis锁")]
         public async Task<AjaxResult> TestSetRedisLookAsync()
         {
-            //Console.WriteLine($"--------控制器当前线程ID{ Thread.CurrentThread.ManagedThreadId}");
-            var result = new OperationResponse();
             var lookkey = "miaoshakoujiankucun";
             try
             {
-                result.Success = await _redisRepository.LockAsync(lookkey, TimeSpan.FromSeconds(5));
-                if (result.Success)
+                var lockkeyExist = await _redisRepository.LockAsync(lookkey, TimeSpan.FromSeconds(5));
+                if (lockkeyExist)
                 {
-                    result.Message = "成功获取到锁";
-                    Console.WriteLine("成功获取到锁");
+                    Console.WriteLine($"成功获取到锁{DateTime.Now.ToLongTimeString()}");
                     await Task.Delay(4000);
                     await _redisRepository.UnLockAsync(lookkey);
+                    return new OperationResponse("成功获取到锁",Module.Core.Enums.OperationEnumType.Success).ToAjaxResult();
                 }
                 else
                 {
-                    result.Message = "获取锁失败";
-                    Console.WriteLine("获取锁失败");
+                    Console.WriteLine($"获取锁失败{DateTime.Now.ToLongTimeString()}");
+                    return new OperationResponse("获取锁失败", Module.Core.Enums.OperationEnumType.Error).ToAjaxResult();
                 }
-                return result.ToAjaxResult();
             }
             catch (Exception)
             {
@@ -54,9 +51,7 @@ namespace Sukt.Core.API.Controllers
             finally
             {
                 await _redisRepository.UnLockAsync(lookkey);
-                
             }
-            return result.ToAjaxResult();
         }
     }
 }
