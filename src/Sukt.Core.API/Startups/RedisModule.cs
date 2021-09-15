@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Sukt.Module.Core.Extensions;
 using Sukt.Redis;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,9 @@ namespace Sukt.Core.API.Startups
     {
         public override void AddRedis(IServiceCollection service)
         {
-            service.AddRedis("192.168.0.166:6379,password = redis123,defaultDatabase=5,prefix = test_");
+            IConfiguration configuration = service.GetConfiguration();
+            string connectionstr = configuration["SuktCore:Redis:ConnectionString"];
+            service.AddRedis(connectionstr);
         }
     }
 }

@@ -75,5 +75,5 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    component: sukt-core-admin
+    app: sukt-core-admin
   type: ClusterIP

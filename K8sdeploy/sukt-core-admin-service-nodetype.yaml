@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: sukt-core-admin
-  name: sukt-core-admin
+    app: sukt-core-admin-nodetype
+  name: sukt-core-admin-nodetype
   namespace: sukt-core
 spec:
   type: NodePort

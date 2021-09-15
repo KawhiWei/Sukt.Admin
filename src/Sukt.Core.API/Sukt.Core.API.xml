@@ -277,6 +277,12 @@
             功能管理
             </summary>
         </member>
+        <member name="M:Sukt.Core.API.Controllers.RedisController.TestSetRedisLookAsync">
+            <summary>
+            测试redis锁
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.RoleController">
             <summary>
             角色管理
