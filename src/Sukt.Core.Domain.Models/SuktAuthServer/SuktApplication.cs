@@ -15,7 +15,7 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("客户端应用")]
     public class SuktApplication : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public SuktApplication(string clientId, string clientSecret, string clientName, string clientGrantType, string postLogoutRedirectUris, string redirectUris, string properties, string description, string clientScopes)
+        public SuktApplication(string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, string postLogoutRedirectUris=null, string redirectUris = null, string properties = null, string description = null)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;

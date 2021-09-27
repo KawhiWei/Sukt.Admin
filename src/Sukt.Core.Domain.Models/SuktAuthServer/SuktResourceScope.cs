@@ -14,6 +14,15 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("访问资源配置")]
     public class SuktResourceScope :EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public SuktResourceScope(string name, string displayName, string resources, string concurrencyToken=null, string description=null)
+        {
+            Name = name;
+            DisplayName = displayName;
+            Resources = resources;
+            ConcurrencyToken = concurrencyToken;
+            Description = description;
+        }
+
         /// <summary>
         /// 资源名称
         /// </summary>
