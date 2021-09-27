@@ -17,12 +17,12 @@ namespace Sukt.AuthServer
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             context.Services.AddSuktAuthServer()
-                .AddResourceOwnerValidator<DefaultResourceOwnerPasswordValidator>();
-                //AddDefaultEndpoints()
-                //            .AddValidationServices()
-                //            .AddResponseGenerators()
-                //            .AddDefaultSecretParsers()
-                //            .AddClientStore<SuktApplicationStore>();
+                .AddResourceOwnerValidator<DefaultResourceOwnerPasswordValidator>().
+            AddDefaultEndpoints()
+                        .AddValidationServices()
+                        .AddResponseGenerators()
+                        .AddDefaultSecretParsers()
+                        .AddClientStore<SuktApplicationStore>();
         }
         public override void ApplicationInitialization(ApplicationContext context)
         {
