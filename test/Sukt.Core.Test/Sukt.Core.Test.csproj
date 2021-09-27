@@ -16,11 +16,11 @@
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.16" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.16" />
-    <PackageReference Include="Sukt.TestBase" Version="1.0.16" />
-    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.16" />
-    <PackageReference Include="Sukt.MongoDB" Version="1.0.16" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.17" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.17" />
+    <PackageReference Include="Sukt.TestBase" Version="1.0.17" />
+    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.17" />
+    <PackageReference Include="Sukt.MongoDB" Version="1.0.17" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
