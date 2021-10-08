@@ -26,7 +26,7 @@ namespace Sukt.Core.Application.Test
 
         public async Task<OperationResponse> SenderOrder(MenuInputDto dto, int isrent = 2)
         {
-            await _transactionPublisher.PublishAsync("sukt.mqtransaction.order", "mqtransaction.keys.order", dto, 1);
+            await _transactionPublisher.PublishAsync("sukt.mqtransaction.order", "mqtransaction.keys.order", dto, isrent);
             return new OperationResponse();
         }
         [SuktMQSubscribe(exchange: "sukt.mqtransaction.order", topicOrRoutingKeyName: "mqtransaction.keys.order")]
