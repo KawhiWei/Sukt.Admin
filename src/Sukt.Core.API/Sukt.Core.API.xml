@@ -323,6 +323,27 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Sukt.Core.API.Controllers.TestMQController">
+            <summary>
+            压测消息总线
+            </summary>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.TestMQController.CreateOrder(Sukt.Core.Dtos.Menu.MenuInputDto)">
+            <summary>
+            TestMQ Rent
+            租用的方式发送消息
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.TestMQController.CreateOrderA(Sukt.Core.Dtos.Menu.MenuInputDto)">
+            <summary>
+            TestMQ No Rent
+            不租用的方式发送消息
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="T:Sukt.Core.API.Controllers.UpLoadController">
             <summary>
             文件上传

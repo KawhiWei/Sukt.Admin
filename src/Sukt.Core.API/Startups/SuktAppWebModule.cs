@@ -96,7 +96,17 @@ namespace Sukt.Core.API.Startups
                 };
                 x.ApplicationServiceCollection = service;
             });
-
+            service.AddSuktMQTransaction(x =>
+            {
+                x.ProducerThreadCount = 30;
+                x.AddRabbitMQ(a =>
+                {
+                    a.Host = "192.168.31.174";
+                    a.Port = 5672;
+                    a.UserName = "root";
+                    a.Password = "P@ssW0rd";
+                });
+            });
             if (!settings.Cors.PolicyName.IsNullOrEmpty() && !settings.Cors.Url.IsNullOrEmpty()) //添加跨域
             {
                 _corePolicyName = settings.Cors.PolicyName;
