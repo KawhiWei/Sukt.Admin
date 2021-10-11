@@ -16,7 +16,8 @@ namespace Sukt.AuthServer.Domain.Models
             CreateMap<SuktApplication, SuktApplicationModel>()
                 .ForMember(x=>x.ClientScopes,opt=>opt.MapFrom(x=>JsonConvert.DeserializeObject<ICollection<string>>(x.ClientScopes)))
                 .ForMember(x => x.RedirectUris, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<ICollection<string>>(x.RedirectUris)))
-                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<ICollection<string>>(x.PostLogoutRedirectUris)));
+                .ForMember(x => x.PostLogoutRedirectUris, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<ICollection<string>>(x.PostLogoutRedirectUris)))
+                .ForMember(x=>x.ClientSecret,opt=>opt.MapFrom(x=>JsonConvert.DeserializeObject<ICollection<string>>(x.ClientSecret)));
         }
     }
 }

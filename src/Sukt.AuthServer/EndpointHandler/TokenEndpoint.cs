@@ -47,12 +47,12 @@ namespace Sukt.AuthServer.EndpointHandler
         private async Task<IEndpointResult> ProcessTokenRequestAsync(HttpContext context)
         {
             _logger.LogDebug("开始处理Token请求");
+            var form = (await context.Request.ReadFormAsync()).AsNameValueCollection();
             var clientResult = await _clientSecretValidator.ValidateAsync(context);
             if (clientResult.ClientApplication == null)
             {
                 return Error(TokenErrors.InvalidClient, $"client_id: {clientResult.Secret?.Id}");
             }
-            var form = (await context.Request.ReadFormAsync()).AsNameValueCollection();
             var requestResult = await _tokenRequestValidator.ValidateRequestAsync(form, clientResult);//验证传入进来的参数
             if (requestResult.IsError)
             {

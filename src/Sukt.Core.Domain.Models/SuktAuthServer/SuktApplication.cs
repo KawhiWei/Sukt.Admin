@@ -15,7 +15,7 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("客户端应用")]
     public class SuktApplication : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public SuktApplication(string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, string postLogoutRedirectUris=null, string redirectUris = null, string properties = null, string description = null)
+        public SuktApplication(string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, string postLogoutRedirectUris=null,string secretType=null, string redirectUris = null, string properties = null, string description = null)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -26,6 +26,7 @@ namespace Sukt.Core.Domain.Models
             Properties = properties;
             Description = description;
             ClientScopes = clientScopes;
+            SecretType = secretType;
         }
         /// <summary>
         /// 客户端唯一Id
@@ -51,7 +52,7 @@ namespace Sukt.Core.Domain.Models
         /// 密钥类型
         /// </summary>
         [DisplayName("密钥类型")]
-        public string SecretType { get; private set; }
+        public string SecretType { get; private set; } = "SharedSecret";
         /// <summary>
         /// 退出登录回调地址
         /// </summary>

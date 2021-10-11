@@ -23,7 +23,7 @@ namespace Sukt.AuthServer.Domain.Models
         /// 客户端密钥
         /// </summary>
         [DisplayName("客户端密钥")]
-        public string ClientSecret { get; set; }
+        public ICollection<string> ClientSecret { get; set; }
         /// <summary>
         /// 密钥类型
         /// </summary>

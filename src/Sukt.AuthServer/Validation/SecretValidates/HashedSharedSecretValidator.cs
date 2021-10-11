@@ -5,6 +5,7 @@ using Sukt.AuthServer.Extensions;
 using Sukt.AuthServer.Validation.ValidationResult;
 using Sukt.Module.Core.Extensions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sukt.AuthServer.Validation.SecretValidates
@@ -43,36 +44,37 @@ namespace Sukt.AuthServer.Validation.SecretValidates
             }
             var secretDescription = suktApplication.Description.IsNullOrEmpty() ? "没有描述" : suktApplication.Description;
             byte[] secretBytes;
-            try
+            foreach (var item in suktApplication.ClientSecret)
             {
-                secretBytes = Convert.FromBase64String(suktApplication.ClientSecret);
-            }
-            catch (FormatException)
-            {
-                //to do 异常日志打印
-                _logger.LogInformation("密钥：{description} 使用了无效的hash算法", secretDescription);
-                return result;
-            }
-            catch (ArgumentNullException)
-            {
-                //to do 异常日志打印
-                _logger.LogInformation("密钥：{description} is null", secretDescription);
-                return result;
-            }
+                try
+                {
+                    secretBytes = Convert.FromBase64String(item);
+                }
+                catch (FormatException)
+                {
+                    //to do 异常日志打印
+                    _logger.LogInformation("密钥：{description} 使用了无效的hash算法", secretDescription);
+                    return result;
+                }
+                catch (ArgumentNullException)
+                {
+                    //to do 异常日志打印
+                    _logger.LogInformation("密钥：{description} is null", secretDescription);
+                    return result;
+                }
 
-            bool isValid = secretBytes.Length switch
-            {
-                SHA256_FIXED_LEN => SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret.Sha256()),
-                SHA512_FIXED_LEN => SecretConstantComparer.IsEqual(suktApplication.ClientSecret, currentSecret.Sha512()),
-                _ => false,
-            };
-
-            if (isValid == true)
-            {
-                result.Success = true;
-                return result;
+                bool isValid = secretBytes.Length switch
+                {
+                    SHA256_FIXED_LEN => SecretConstantComparer.IsEqual(item, currentSecret.Sha256()),
+                    SHA512_FIXED_LEN => SecretConstantComparer.IsEqual(item, currentSecret.Sha512()),
+                    _ => false,
+                };
+                if (isValid == true)
+                {
+                    result.Success = true;
+                    return result;
+                }
             }
-
             _logger.LogDebug("没有找到对应的hash密钥");
             return result;
         }
