@@ -8,6 +8,7 @@ using Serilog;
 using Serilog.Events;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Sukt.Core.API
 {
@@ -15,6 +16,9 @@ namespace Sukt.Core.API
     {
         public static void Main(string[] args)
         {
+            ThreadPool.GetMaxThreads(out var workerThreads, out var completionPortThreads);
+            Console.WriteLine($"{workerThreads}, {completionPortThreads}");
+            ThreadPool.SetMinThreads(60,60);
             //Log.Logger = new LoggerConfiguration()
 
             //    .MinimumLevel.Information()
