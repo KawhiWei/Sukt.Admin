@@ -24,26 +24,32 @@ namespace Sukt.AuthServer.Generator
     {
         protected readonly ILogger _logger;
         protected readonly ISystemClock _systemClock;
-        protected readonly IHttpContextAccessor ContextAccessor;
+        protected readonly IHttpContextAccessor HttpContextAccessor;
         public TokenService(ILogger<TokenService> logger, ISystemClock systemClock, IHttpContextAccessor contextAccessor)
         {
             _logger = logger;
             _systemClock = systemClock;
-            ContextAccessor = contextAccessor;
+            HttpContextAccessor = contextAccessor;
         }
 
         public virtual async Task<TokenRequest> CreateTokenRequestAsync(TokenCreationRequest request)
         {
             await Task.CompletedTask;
-            _logger.LogTrace("创建 access token");
+            _logger.LogTrace("开始创建 access token");
+            request.Validate();
             var claims = new List<Claim>();
             claims.Add(new Claim(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)));
+            if(request.ValidatedRequest.ClientApplication.IncludeJwtId)
+            {
+
+            }
+
             if (!request.ValidatedRequest.SessionId.IsNullOrWhiteSpace())
             {
                 claims.Add(new Claim(JwtClaimTypes.SessionId, request.ValidatedRequest.SessionId));
             }
             claims.Add(new Claim(JwtClaimTypes.IssuedAt, _systemClock.UtcNow.ToUnixTimeMilliseconds().ToString(), System.Security.Claims.ClaimValueTypes.Integer64));
-            var issuer =$"{ ContextAccessor.HttpContext.Request.Scheme }://{ContextAccessor.HttpContext.Request.Host.Value}";
+            var issuer =$"{ HttpContextAccessor.HttpContext.Request.Scheme }://{HttpContextAccessor.HttpContext.Request.Host.Value}";
             var token = new TokenRequest(TokenTypes.AccessToken)
             {
                 CreationTime = DateTime.UtcNow,

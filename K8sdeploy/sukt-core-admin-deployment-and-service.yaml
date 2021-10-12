@@ -21,38 +21,38 @@ spec:
         app: sukt-core-admin
     spec:
       containers:
-        - name: sukt-core-admin
-          image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1198392948.8
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
+      - name: sukt-core-admin
+        image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1236503594.16
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
             httpGet:
               path: /api/healthchecks/liveness
               port: 80
               scheme: HTTP
-              initialDelaySeconds: 120
-              periodSeconds: 30 
+            initialDelaySeconds: 120
+            periodSeconds: 30 
               # timeoutSeconds: 60
-          readinessProbe:
-            httpGet: 
-              path: /api/healthchecks/readiness
-              port: 80
-              scheme: HTTP
-              initialDelaySeconds: 30
-              periodSeconds: 60 
-              # timeoutSeconds: 60
-          resources:
-            limits:
-              memory: "500Mi" #内存资源 
-              cpu: "400m" #CPU资源 1H=1000
-          ports:
-          - containerPort: 80
-            protocol: TCP
-          volumeMounts:
+        readinessProbe:
+          httpGet: 
+            path: /api/healthchecks/readiness
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 60 
+            # timeoutSeconds: 60
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
             - mountPath: /app/appsettings.json
               name: appsettings
               readOnly: true
               subPath: appsettings.json
-      restartPolicy: Always    
+      restartPolicy: Always
       imagePullSecrets:
         - name: aliyun-iamge-secret
       volumes:
@@ -69,11 +69,9 @@ metadata:
   name: sukt-core-admin
   namespace: sukt-core
 spec:
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 80
   selector:
     app: sukt-core-admin
+  ports:
+  - port: 80
+    targetPort: 80
   type: ClusterIP

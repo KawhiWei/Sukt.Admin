@@ -69,5 +69,9 @@ namespace Sukt.AuthServer.Domain.Models
         /// </summary>
         [DisplayName("协议类型")]
         public string ProtocolType { get; set; }
+        /// <summary>
+        /// 获取或设置一个值，该值指示JWT访问令牌是否应包含标识符。默认值为true。
+        /// </summary>
+        public bool IncludeJwtId { get; set; } = true;
     }
 }

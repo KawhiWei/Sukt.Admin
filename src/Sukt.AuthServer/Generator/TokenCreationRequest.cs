@@ -22,5 +22,10 @@ namespace Sukt.AuthServer.Generator
         /// 资源验证返回结构
         /// </summary>
         public ResourceValidationResult ResourceValidation { get; set; } = new ResourceValidationResult();
+        public void Validate()
+        {
+            if (ResourceValidation == null) throw new ArgumentNullException(nameof(ResourceValidation));
+            if (ValidatedRequest == null) throw new ArgumentNullException(nameof(ValidatedRequest));
+        }
     }
 }
