@@ -102,6 +102,7 @@ namespace Sukt.AuthServer.Extensions
         public static IServiceCollection AddDefaultService(this IServiceCollection services)
         {
             services.AddTransient<IClaimsService, DefaultClaimsService>();
+            services.TryAddTransient<ISuktProfileService, SuktDefaultProfileService>();
             services.AddTransient<ITokenService, TokenService>();
             services.TryAddSingleton<ISystemClock, SystemClock>();
             return services;

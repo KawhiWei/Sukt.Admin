@@ -114,6 +114,7 @@ namespace Sukt.AuthServer.Validation
                 _logger.LogError($"未找到对应的客户端授权类型，请检查客户端授权类型;client_id:{_validatedRequest.ClientApplication.ClientId}");
                 return InvalidError(TokenErrors.UnauthorizedClient);
             }
+            //将传入的scope作用域和api资源配置表中的数据进行对比
             if (!(await ValidateRequestedScopesAsync(parameters)))
             {
                 return InvalidError(TokenErrors.InvalidScope);
@@ -208,6 +209,7 @@ namespace Sukt.AuthServer.Validation
             {
 
             }
+            //将传入的scope转成list列表
             var requestScopesList = scopes.ParseScopesStringToList();
             if(requestScopesList is null)
             {

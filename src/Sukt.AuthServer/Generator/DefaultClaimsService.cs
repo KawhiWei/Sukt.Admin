@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Sukt.AuthServer.Contexts;
 using Sukt.AuthServer.Extensions;
 using Sukt.AuthServer.Validation.ValidationResult;
 using Sukt.Module.Core;
@@ -14,15 +15,15 @@ namespace Sukt.AuthServer.Generator
     public class DefaultClaimsService : IClaimsService
     {
         protected readonly ILogger Logger;
-
-        public DefaultClaimsService(ILogger<DefaultClaimsService> logger)
+        protected readonly ISuktProfileService SuktProfileService;
+        public DefaultClaimsService(ILogger<DefaultClaimsService> logger, ISuktProfileService suktProfileService)
         {
             Logger = logger;
+            this.SuktProfileService = suktProfileService;
         }
 
-        public virtual async Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject,/* ResourceValidationResult resources,*/  ValidatedRequest request)
+        public virtual async Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resources, ValidatedRequest request)
         {
-            await Task.CompletedTask;
             var outputClaims = new List<Claim>
             {
                 new Claim(JwtClaimTypes.ClientId, request.ClientId)
@@ -48,22 +49,31 @@ namespace Sukt.AuthServer.Generator
             //        }
             //    }
             //}
-
-            if(subject!=null)
+            if (!request.ClientId.Equals(request.ClientApplication.ClientId))
             {
-                Logger.LogDebug("获取主体访问令牌的声明 for subject: {subject}", subject.GetSubjectId());
+                Logger.LogDebug("客户端Id: {clientId} 模仿的客户端Id: {impersonatedClientId}", request.ClientApplication.ClientId, request.ClientId);
+            }
+            foreach (var scope in resources.ParsedScopes)
+            {
+                outputClaims.Add(new Claim(JwtClaimTypes.Scope, scope));
+            }
+            var additionalClaimTypes = new List<string>();
+            if (subject != null)
+            {
+                Logger.LogDebug("获取主体访问令牌的声明 for subject: {subject}", subject.GetSuktSubjectId());
                 outputClaims.AddRange(GetStandardSubjectClaims(subject));
                 outputClaims.AddRange(GetOptionalClaims(subject));
             }
-            
-
+            var context = new SuktProfileDataRequestContext(subject, request.ClientApplication, "SuktClaimsProviderAccessToken", additionalClaimTypes);
+            await SuktProfileService.GetProfileDataAsync(context);
+            //Todo 晚上继续
             return outputClaims;
         }
         protected virtual IEnumerable<Claim> GetStandardSubjectClaims(ClaimsPrincipal subject)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtClaimTypes.Subject, subject.GetSubjectId()),
+                new Claim(JwtClaimTypes.Subject, subject.GetSuktSubjectId()),
                 new Claim(JwtClaimTypes.AuthenticationTime, subject.GetAuthenticationTimeEpoch().ToString(), ClaimValueTypes.Integer64),
                 new Claim(JwtClaimTypes.IdentityProvider, subject.GetIdentityProvider())
             };

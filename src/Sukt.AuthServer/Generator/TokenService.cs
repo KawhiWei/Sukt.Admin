@@ -38,12 +38,9 @@ namespace Sukt.AuthServer.Generator
             _logger.LogTrace("开始创建 access token");
             request.Validate();
             var claims = new List<Claim>();
+
+
             claims.Add(new Claim(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)));
-            if(request.ValidatedRequest.ClientApplication.IncludeJwtId)
-            {
-
-            }
-
             if (!request.ValidatedRequest.SessionId.IsNullOrWhiteSpace())
             {
                 claims.Add(new Claim(JwtClaimTypes.SessionId, request.ValidatedRequest.SessionId));

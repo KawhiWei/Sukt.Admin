@@ -27,6 +27,7 @@ namespace Sukt.AuthServer.Validation
         }
         /// <summary>
         /// 验证配置的资源作用域
+        /// 将客户端传入的作用域与资源配置表中的进行对比是否存在
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -41,8 +42,8 @@ namespace Sukt.AuthServer.Validation
                 throw new ArgumentNullException(nameof(request.Scopes));
             }
             var result = new ResourceValidationResult();
+            //根据scope获取api资源配置表中的资源配置
             var ResouceStoreResult = await _suktResourceScopeStore.FindResourcesByScopeAsync(request.Scopes);
-
             foreach (var scope in request.Scopes)
             {
                 await ValidateScopeAsync(request.ClientApplication, ResouceStoreResult, scope, result);
@@ -55,7 +56,7 @@ namespace Sukt.AuthServer.Validation
             return result;
         }
         /// <summary>
-        /// 验证客户端请求过来的作用域
+        /// 验证客户端请求过来的scope是否在资源配置表中存在
         /// </summary>
         /// <param name="suktApplication"></param>
         /// <param name="suktResource"></param>
@@ -72,6 +73,7 @@ namespace Sukt.AuthServer.Validation
                 var scope = resourcescope.Resources.FirstOrDefault(x => x.Equals(scopeName));
                 if(!scope.IsNullOrEmpty())
                 {
+                    //如果包含在资源配置表中，添加到ParsedScopes属性中，证明验证通过
                     if (await IsClientAllowedIdentityResourceAsync(suktApplication, scope))
                     {
                         result.ParsedScopes.Add(scope);
@@ -84,6 +86,12 @@ namespace Sukt.AuthServer.Validation
                 }
             }
         }
+        /// <summary>
+        /// 判断客户端传入的作用域是否包含在客户端的ClientScopes属性中
+        /// </summary>
+        /// <param name="suktApplication"></param>
+        /// <param name="scope"></param>
+        /// <returns></returns>
         protected virtual Task<bool> IsClientAllowedIdentityResourceAsync(SuktApplicationModel suktApplication, string scope)
         {
             var allowed = suktApplication.ClientScopes.Contains(scope);

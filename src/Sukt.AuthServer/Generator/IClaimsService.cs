@@ -16,6 +16,6 @@ namespace Sukt.AuthServer.Generator
         /// <param name="subject"></param>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, /*ResourceValidationResult resources,*/ ValidatedRequest request);
+        Task<IEnumerable<Claim>> GetAccessTokenClaimsAsync(ClaimsPrincipal subject, ResourceValidationResult resources, ValidatedRequest request);
     }
 }

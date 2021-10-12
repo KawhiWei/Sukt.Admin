@@ -13,12 +13,12 @@ namespace Sukt.AuthServer.Extensions
     public static class PrincipalExtensions
     {
         [DebuggerStepThrough]
-        public static string GetSubjectId(this IPrincipal principal)
+        public static string GetSuktSubjectId(this IPrincipal principal)
         {
-            return principal.Identity.GetSubjectId();
+            return principal.Identity.GetSuktSubjectId();
         }
         [DebuggerStepThrough]
-        public static string GetSubjectId(this IIdentity identity)
+        public static string GetSuktSubjectId(this IIdentity identity)
         {
             var id = identity as ClaimsIdentity;
             var claim = id.FindFirst(JwtClaimTypes.Subject);
