@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-core-admin
-        image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1236503594.16
+        image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1331870363.25
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
