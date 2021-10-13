@@ -17,7 +17,7 @@ namespace Sukt.AuthServer.Generator
         /// <summary>
         /// 用户信息主体
         /// </summary>
-        public ICollection<Claim> Claims { get; set; }
+        public ICollection<Claim> Subject { get; set; }
         /// <summary>
         /// 创建时间 
         /// </summary>

@@ -52,7 +52,7 @@ namespace Sukt.AuthServer.Generator
                 CreationTime = DateTime.UtcNow,
                 Issuer = issuer,
                 Lifetime = request.ValidatedRequest.AccessTokenExpire,
-                Claims = claims.Distinct().ToList(),
+                Subject = claims.Distinct().ToList(),
                 SuktApplicationClientId = request.ValidatedRequest.ClientApplication.ClientId,
                 TokenType = request.ValidatedRequest.TokenType,
             };
@@ -94,24 +94,24 @@ namespace Sukt.AuthServer.Generator
                         token.Audiences);
                 }
 
-                var scopeClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
+                var scopeClaims = token.Subject.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
                 if (scopeClaims.Any())
                 {
                     payload.Add(JwtClaimTypes.Scope, scopeClaims.Select(c => c.Value).Distinct().ToArray());
                 }
 
-                var amrClaims = token.Claims.Where(c => c.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
+                var amrClaims = token.Subject.Where(c => c.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
                 if (amrClaims.Any())
                 {
                     payload.Add(JwtClaimTypes.AuthenticationMethod,
                         amrClaims.Select(c => c.Value).Distinct().ToArray());
                 }
 
-                var otherClaimsTypes = token.Claims.Where(c => c.Type != JwtClaimTypes.Scope && c.Type != JwtClaimTypes.AuthenticationMethod)
+                var otherClaimsTypes = token.Subject.Where(c => c.Type != JwtClaimTypes.Scope && c.Type != JwtClaimTypes.AuthenticationMethod)
                     .Select(c => c.Type).Distinct();
                 foreach (var claimType in otherClaimsTypes)
                 {
-                    var claims = token.Claims.Where(c => c.Type == claimType).ToArray();
+                    var claims = token.Subject.Where(c => c.Type == claimType).ToArray();
                     payload.Remove(claimType);
                     payload.Add(claimType, claims.Length == 1 ? claims[0] : claims);
                 }

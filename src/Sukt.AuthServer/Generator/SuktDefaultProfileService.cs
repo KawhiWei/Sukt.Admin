@@ -12,7 +12,7 @@ namespace Sukt.AuthServer.Generator
     {
         protected readonly ILogger logger;
 
-        public SuktDefaultProfileService(ILogger logger)
+        public SuktDefaultProfileService(ILogger<SuktDefaultProfileService> logger)
         {
             this.logger = logger;
         }

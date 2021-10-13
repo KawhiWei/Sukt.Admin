@@ -66,6 +66,7 @@ namespace Sukt.AuthServer.Generator
             }
             var context = new SuktProfileDataRequestContext(subject, request.ClientApplication, "SuktClaimsProviderAccessToken", additionalClaimTypes);
             await SuktProfileService.GetProfileDataAsync(context);
+            outputClaims.AddRange(context.IssuedClaims);
             //Todo 晚上继续
             return outputClaims;
         }
