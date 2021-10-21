@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -23,25 +24,35 @@ namespace Sukt.Core.API
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwt =>
+            }).AddSuktAuthServerAuthentication(x =>
             {
-                jwt.Authority = "http://localhost:9860";
-                jwt.Audience = "Sukt.Core.API.Agile.Admin";
-                jwt.RequireHttpsMetadata = false;
-                //jwt.TokenValidationParameters = new TokenValidationParameters() { ValidateAudience = false };
-                jwt.Events = new JwtBearerEvents /*jwt自带事件*/
-                {
-                    OnAuthenticationFailed = context =>
-                    {
-                        // 如果过期，则把<是否过期>添加到，返回头信息中
-                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
-                        {
-                            context.Response.Headers.Add("Token-Expired", "true");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
+                x.Authority = "https://localhost:5007";
+                x.RequireHttpsMetadata = false;
+                x.ApiName = "sukt.admin.react";
+                //x.Authority = "https://localhost:5001";
+                //x.RequireHttpsMetadata = false;
+                //x.ApiName = "resource1";
             });
+
+            //    .AddJwtBearer(jwt =>
+            //{
+            //    jwt.Authority = "https://localhost:5007";
+            //    jwt.Audience = "sukt.admin.react";
+            //    jwt.RequireHttpsMetadata = false;
+            //    //jwt.TokenValidationParameters = new TokenValidationParameters() { ValidateAudience = false };
+            //    jwt.Events = new JwtBearerEvents /*jwt自带事件*/
+            //    {
+            //        OnAuthenticationFailed = context =>
+            //        {
+            //            // 如果过期，则把<是否过期>添加到，返回头信息中
+            //            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            //            {
+            //                context.Response.Headers.Add("Token-Expired", "true");
+            //            }
+            //            return Task.CompletedTask;
+            //        }
+            //    };
+            //});
         }
         protected override Action<IdentityOptions> IdentityOption()
         {

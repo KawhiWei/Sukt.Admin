@@ -9,6 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -16,6 +17,7 @@ namespace Sukt.Core.API.Controllers
     /// 菜单管理
     /// </summary>
     [Description("菜单管理")]
+    [Authorize]
     public class MenuController : ApiControllerBase
     {
         private readonly IMenuContract _menu;

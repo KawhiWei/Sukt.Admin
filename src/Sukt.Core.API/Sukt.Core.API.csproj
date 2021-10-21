@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
@@ -51,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sukt.AuthServer.AccessTokenValidation\Sukt.AuthServer.AccessTokenValidation.csproj" />
     <ProjectReference Include="..\Sukt.Core.Application\Sukt.Core.Application.csproj" />
     <ProjectReference Include="..\Sukt.Core.Dtos\Sukt.Core.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.Core.Shared\Sukt.Core.Shared.csproj" />

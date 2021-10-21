@@ -23,12 +23,13 @@ namespace Sukt.AuthServer.EndpointHandler
 
         public async Task<IEndpointResult> HandlerProcessAsync(HttpContext context)
         {
-            _logger.LogInformation("开始处理获取Jwk~");
+            _logger.LogInformation("开始处理获取Jwk私钥!");
             if (!HttpMethods.IsGet(context.Request.Method))
             {
                 return new StatusCodeResult(System.Net.HttpStatusCode.MethodNotAllowed);
             }
             var responese=await _discoveryDocument.GetJwkDocumentAsync();
+            _logger.LogInformation("私钥获取成功，正在返回给资源Api!");
             return new JsonWebKeysResult(responese);
         }
     }

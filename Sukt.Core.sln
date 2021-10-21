@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.AuthServerHost", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.AuthServer.Domain", "src\Sukt.AuthServer.Domain\Sukt.AuthServer.Domain.csproj", "{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.AuthServer.AccessTokenValidation", "src\Sukt.AuthServer.AccessTokenValidation\Sukt.AuthServer.AccessTokenValidation.csproj", "{6052D63E-8D76-4319-BB0E-6F960142D1CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6052D63E-8D76-4319-BB0E-6F960142D1CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6052D63E-8D76-4319-BB0E-6F960142D1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6052D63E-8D76-4319-BB0E-6F960142D1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6052D63E-8D76-4319-BB0E-6F960142D1CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +127,7 @@ Global
 		{74573C64-AA01-49EC-9F48-DFD85DCDB3A8} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
 		{B7B1EB88-7CD7-4389-9F69-C1337DBEC06A} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
 		{D8CDB4C5-2988-4E30-9AE9-8B354CFB93EE} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
+		{6052D63E-8D76-4319-BB0E-6F960142D1CA} = {81DFABDA-6C8A-475B-82FD-8A4A3F651292}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05B139D9-1492-4454-AF04-522949DE00D3}
