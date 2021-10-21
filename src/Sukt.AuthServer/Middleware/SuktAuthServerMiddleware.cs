@@ -64,8 +64,6 @@ namespace Sukt.AuthServer.Middleware
                 throw;
             }
             await _next(context);
-
-
         }
     }
 }

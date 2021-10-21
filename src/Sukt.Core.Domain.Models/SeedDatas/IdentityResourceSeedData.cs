@@ -24,11 +24,11 @@ namespace Sukt.Core.Domain.Models.SeedDatas
         protected override IdentityResource[] SetSeedData()
         {
             ///使用方式参考IdentityServer4中的IdentityResources源码，这个不需要改动太多可做添加修改页面也可不做
-            var openIdentity = new IdentityResource(IdentityServerConstants.StandardScopes.OpenId, "Your user identifier", true);
+            var openIdentity = new IdentityResource(SuktAuthServerConstants.StandardScopes.OpenId, "Your user identifier", true);
             openIdentity.AddUserClaims(new List<string> { JwtClaimTypes.Subject });
             ////
-            var profileentity = new IdentityResource(IdentityServerConstants.StandardScopes.Profile, "User profile", false);
-            profileentity.AddUserClaims(Constants.ScopeToClaimsMapping[IdentityServerConstants.StandardScopes.Profile].ToList());
+            var profileentity = new IdentityResource(SuktAuthServerConstants.StandardScopes.Profile, "User profile", false);
+            profileentity.AddUserClaims(Constants.ScopeToClaimsMapping[SuktAuthServerConstants.StandardScopes.Profile].ToList());
             profileentity.SetEmphasize(true);
             return new IdentityResource[]
             {

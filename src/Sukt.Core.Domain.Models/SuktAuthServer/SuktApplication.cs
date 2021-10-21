@@ -15,7 +15,10 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("客户端应用")]
     public class SuktApplication : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public SuktApplication(string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, string postLogoutRedirectUris=null,string secretType=null, string redirectUris = null, string properties = null, string description = null)
+        public SuktApplication(
+            string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, 
+            string postLogoutRedirectUris=null,string secretType=null, string redirectUris = null, string properties = null, 
+            string description = null,int accessTokenExpire=3600)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -27,6 +30,7 @@ namespace Sukt.Core.Domain.Models
             Description = description;
             ClientScopes = clientScopes;
             SecretType = secretType;
+            AccessTokenExpire = accessTokenExpire;
         }
         /// <summary>
         /// 客户端唯一Id
@@ -83,6 +87,10 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("协议类型")]
         public string ProtocolType { get; set; }
+        /// <summary>
+        /// AccessToken过期时间
+        /// </summary>
+        public int AccessTokenExpire { get; set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

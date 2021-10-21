@@ -62,7 +62,7 @@ namespace Sukt.AuthServer.Validation.ValidationResult
             string authenticationMethod,
             DateTime authTime,
             IEnumerable<Claim> claims = null,
-            string identityProvider = IdentityServerConstants.LocalIdentityProvider,
+            string identityProvider = SuktAuthServerConstants.LocalIdentityProvider,
             Dictionary<string, object> customResponse = null)
         {
             IsError = false;

@@ -48,7 +48,10 @@ namespace Sukt.AuthServer.Validation.ValidationResult
         public ResourceValidationResult ResourceValidation { get; set; } = new ResourceValidationResult();
         public void SetClient(SuktApplicationModel suktApplication)
         {
+            ClientApplication = suktApplication ?? throw new ArgumentNullException(nameof(suktApplication));
             ClientApplication = suktApplication;
+            ClientId = suktApplication.ClientId;
+            AccessTokenExpire = suktApplication.AccessTokenExpire;
         }
     }
 }

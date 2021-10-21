@@ -22,7 +22,6 @@ namespace Sukt.Core.API.Controllers
         /// Login
         /// </summary>
         /// <param name="uid"></param>
-        /// <param name="pwd"></param>
         /// <returns></returns>
         [WebSocket]
         [HttpPost]

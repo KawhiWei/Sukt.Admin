@@ -58,6 +58,21 @@ namespace Sukt.AuthServer.Extensions
         {
             return string.IsNullOrWhiteSpace(value);
         }
+        [DebuggerStepThrough]
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
+        {
+            if (list == null)
+            {
+                return true;
+            }
+
+            if (!list.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         [DebuggerStepThrough]
         public static bool IsMissingOrTooLong(this string value, int maxLength)

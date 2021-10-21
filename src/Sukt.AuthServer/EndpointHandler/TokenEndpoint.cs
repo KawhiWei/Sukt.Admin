@@ -59,9 +59,7 @@ namespace Sukt.AuthServer.EndpointHandler
                 return Error(requestResult.Error, requestResult.ErrorDescription, requestResult.CustomResponse);
             }
             var tokenResponse = await _tokenResponseGenerator.ProcessAsync(requestResult);
-
-            return new TokenErrorResult(new TokenErrorResponse());
-            //await Task.CompletedTask;
+            return new TokenSuccessResult(tokenResponse);
         }
         private TokenErrorResult Error(string error, string errorDescription = null, Dictionary<string, object> custom = null)
         {

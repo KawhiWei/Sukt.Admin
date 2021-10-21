@@ -25,7 +25,7 @@ namespace Sukt.AuthServer.Generator
         /// <summary>
         /// 时长  
         /// </summary>
-        public int Lifetime { get; set; } = 300;
+        public int Lifetime { get; set; } = 3000;
         /// <summary>
         /// 颁发人
         /// </summary>

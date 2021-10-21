@@ -26,7 +26,7 @@ namespace Sukt.Core.Domain.Models.SeedDatas
         protected override Client[] SetSeedData()
         {
             var entity = new Client("Sukt.Core.ReactAdmin.Spa", "Sukt.Core、React的单页面敏捷开发框架", true, true);
-            entity.AddClientScopes(new List<string>() { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, "SuktCore.API.Admin", });//添加授权范围
+            entity.AddClientScopes(new List<string>() { SuktAuthServerConstants.StandardScopes.OpenId, SuktAuthServerConstants.StandardScopes.Profile, "SuktCore.API.Admin", });//添加授权范围
             entity.AddClientSecrets(new ClientSecret("", "Sukt.Core.ReactAdmin.Spa.Secret", "SharedSecret", null));//添加令牌
             entity.AddCorsOrigins(new List<string>() { "http://localhost:6017" });//添加IdentityServer4客户端跨域 //上线版本 "https://suktadmin.destinycore.club" 
             entity.AddPostLogoutRedirectUris(new List<string>() { "http://localhost:6017" });//添加IdentityServer4客户端退出登录跳转Url

@@ -8,6 +8,7 @@ using Sukt.AuthServer.Domain.SuktAuthServer.SuktApplicationStore;
 using Sukt.AuthServer.EndpointHandler;
 using Sukt.AuthServer.EndpointRouterHandler;
 using Sukt.AuthServer.Generator;
+using Sukt.AuthServer.Generator.DiscoveryDocument;
 using Sukt.AuthServer.Validation;
 using Sukt.AuthServer.Validation.SecretValidates;
 using System;
@@ -15,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Sukt.Module.Core.Constants;
 using Endpoint = Sukt.AuthServer.EndpointRouterHandler.Endpoint;
 
 namespace Sukt.AuthServer.Extensions
@@ -54,6 +56,9 @@ namespace Sukt.AuthServer.Extensions
             service.AddTransient<IEndpointRouter, EndpointRouter>();
             service.AddEndPoint<AuthorizeEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Authorize.EnsureLeadingSlash());
             service.AddEndPoint<TokenEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Token.EnsureLeadingSlash());
+            service.AddEndPoint<TokenEndpoint>(EndpointNames.Authorize, ProtocolRoutePaths.Token.EnsureLeadingSlash());
+            service.AddEndPoint<DiscoveryEndpoint>(EndpointNames.Discovery, ProtocolRoutePaths.DiscoveryConfiguration.EnsureLeadingSlash());
+            service.AddEndPoint<DiscoveryKeyEndpoint>(EndpointNames.Discovery, ProtocolRoutePaths.DiscoveryWebKeys.EnsureLeadingSlash());
             return service;
         }
         /// <summary>
@@ -101,9 +106,11 @@ namespace Sukt.AuthServer.Extensions
         }
         public static IServiceCollection AddDefaultService(this IServiceCollection services)
         {
-            services.AddTransient<IClaimsService, DefaultClaimsService>();
+            services.TryAddTransient<IClaimsService, DefaultClaimsService>();
             services.TryAddTransient<ISuktProfileService, SuktDefaultProfileService>();
-            services.AddTransient<ITokenService, TokenService>();
+            services.TryAddTransient<ITokenService, TokenService>();
+            services.TryAddTransient<IDiscoveryDocument, DiscoveryDocumentServices>();
+            services.TryAddTransient<ITokenCreationService, DefaultTokenCreationService>();
             services.TryAddSingleton<ISystemClock, SystemClock>();
             return services;
         }

@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using static Sukt.Module.Core.IdentityServerConstants;
+using static Sukt.Module.Core.SuktAuthServerConstants;
 
 namespace Sukt.AuthServer.Generator
 {
@@ -25,11 +25,15 @@ namespace Sukt.AuthServer.Generator
         protected readonly ILogger _logger;
         protected readonly ISystemClock _systemClock;
         protected readonly IHttpContextAccessor HttpContextAccessor;
-        public TokenService(ILogger<TokenService> logger, ISystemClock systemClock, IHttpContextAccessor contextAccessor)
+        protected readonly IClaimsService ClaimsService;
+        protected readonly ITokenCreationService TokenCreationService;
+        public TokenService(ILogger<TokenService> logger, ISystemClock systemClock, IHttpContextAccessor contextAccessor, IClaimsService claimsService, ITokenCreationService tokenCreationService)
         {
             _logger = logger;
             _systemClock = systemClock;
             HttpContextAccessor = contextAccessor;
+            ClaimsService = claimsService;
+            TokenCreationService = tokenCreationService;
         }
 
         public virtual async Task<TokenRequest> CreateTokenRequestAsync(TokenCreationRequest request)
@@ -38,8 +42,7 @@ namespace Sukt.AuthServer.Generator
             _logger.LogTrace("开始创建 access token");
             request.Validate();
             var claims = new List<Claim>();
-
-
+            claims.AddRange(await ClaimsService.GetAccessTokenClaimsAsync(request.Subject, request.ResourceValidation, request.ValidatedRequest));
             claims.Add(new Claim(JwtClaimTypes.JwtId, CryptoRandom.CreateUniqueId(16, CryptoRandom.OutputFormat.Hex)));
             if (!request.ValidatedRequest.SessionId.IsNullOrWhiteSpace())
             {
@@ -62,68 +65,23 @@ namespace Sukt.AuthServer.Generator
             }
             return token;
         }
-
+        /// <summary>
+        /// 创建受保护的安全的AccessToken
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<string> CreateAccessTokenAsync(TokenRequest request)
         {
-            var payload = await CreateJwtPayloadAsync(request);
-            //TODO: 设置credentials
-            var handler = new JsonWebTokenHandler { SetDefaultTimesOnTokenCreation = false };
-            var stre=handler.CreateToken(payload /*, credential*/);
-            return stre /*handler.CreateToken(payload , credential)*/;
-        }
-
-        public Task<string> CreateJwtPayloadAsync(TokenRequest token)
-        {
-            try
+            //判断创建token的类型
+            if(request.Type== OidcConstants.TokenTypes.AccessToken)
             {
-                var payload = new Dictionary<string, object>
+                if(request.TokenType== TokenType.Jwt)
                 {
-                    { JwtClaimTypes.Issuer, token.Issuer }
-                };
 
-                var now = _systemClock.UtcNow.ToUnixTimeSeconds();
-                payload.Add(JwtClaimTypes.IssuedAt, now);
-                payload.Add(JwtClaimTypes.NotBefore, now);
-                payload.Add(JwtClaimTypes.Expiration, now + token.Lifetime);
-
-                if (token.Audiences.Any())
-                {
-                    payload.Add(JwtClaimTypes.Audience,
-                        token.Audiences.Count == 1 ?
-                        token.Audiences.First() :
-                        token.Audiences);
                 }
-
-                var scopeClaims = token.Subject.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
-                if (scopeClaims.Any())
-                {
-                    payload.Add(JwtClaimTypes.Scope, scopeClaims.Select(c => c.Value).Distinct().ToArray());
-                }
-
-                var amrClaims = token.Subject.Where(c => c.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
-                if (amrClaims.Any())
-                {
-                    payload.Add(JwtClaimTypes.AuthenticationMethod,
-                        amrClaims.Select(c => c.Value).Distinct().ToArray());
-                }
-
-                var otherClaimsTypes = token.Subject.Where(c => c.Type != JwtClaimTypes.Scope && c.Type != JwtClaimTypes.AuthenticationMethod)
-                    .Select(c => c.Type).Distinct();
-                foreach (var claimType in otherClaimsTypes)
-                {
-                    var claims = token.Subject.Where(c => c.Type == claimType).ToArray();
-                    payload.Remove(claimType);
-                    payload.Add(claimType, claims.Length == 1 ? claims[0] : claims);
-                }
-
-                return Task.FromResult(JsonSerializer.Serialize(payload));
             }
-            catch (Exception ex)
-            {
-                _logger.LogCritical(ex, "创建时JWT payload发生错误");
-                throw;
-            }
+            var stre=await  TokenCreationService.CreateTokenAsync(request);
+            return stre;
         }
-
     }
 }

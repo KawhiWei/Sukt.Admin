@@ -179,7 +179,6 @@
             Login
             </summary>
             <param name="uid"></param>
-            <param name="pwd"></param>
             <returns></returns>
         </member>
         <member name="T:Sukt.Core.API.Controllers.MenuController">

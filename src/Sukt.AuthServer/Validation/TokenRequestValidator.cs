@@ -13,8 +13,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Sukt.Module.Core.IdentityServerConstants;
 using static Sukt.Module.Core.OidcConstants;
+using static Sukt.Module.Core.SuktAuthServerConstants;
 
 namespace Sukt.AuthServer.Validation
 {

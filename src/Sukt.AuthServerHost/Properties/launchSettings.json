@@ -6,8 +6,9 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "applicationUrl": "http://localhost:5006;https://localhost:5007",
       "dotnetRunMessages": "true",
-      "applicationUrl": "http://localhost:5006;https://localhost:5007"
+      "nativeDebugging": true
     }
   }
 }

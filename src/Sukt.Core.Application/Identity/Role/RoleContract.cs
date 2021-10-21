@@ -64,6 +64,7 @@ namespace Sukt.Core.Application.Identity.Role
             dto.NotNull(nameof(dto));
             return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
             {
+                await Task.CompletedTask;
                 //await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == dto.Id);
                 //await _roleMenuRepository.InsertAsync(dto.MenuIds.Select(x => new RoleMenuEntity
                 //{
