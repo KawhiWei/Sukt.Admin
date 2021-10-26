@@ -1845,20 +1845,21 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid?>("UserEntityId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserEntityId");
 
                     b.ToTable("UserRole");
                 });
@@ -1912,7 +1913,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasForeignKey("MenuId");
 
                     b.HasOne("Sukt.Core.Domain.Models.RoleEntity", "Role")
-                        .WithMany("RoleMenuItems")
+                        .WithMany()
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Menu");
@@ -2105,17 +2106,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.UserRoleEntity", b =>
                 {
-                    b.HasOne("Sukt.Core.Domain.Models.RoleEntity", "Role")
+                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", null)
                         .WithMany("UserRoleItems")
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", "User")
-                        .WithMany("UserRoleItems")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserEntityId");
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>
@@ -2177,13 +2170,6 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
             modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationEntity", b =>
                 {
                     b.Navigation("OrganizationItems");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.RoleEntity", b =>
-                {
-                    b.Navigation("RoleMenuItems");
-
-                    b.Navigation("UserRoleItems");
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>

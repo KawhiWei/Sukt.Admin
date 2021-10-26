@@ -13,13 +13,13 @@ namespace Sukt.Core.Domain.Models
     public class UserRoleEntity : UserRoleBase<Guid, Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
         /// <summary>
-        /// 角色
+        /// 角色Id
         /// </summary>
-        public RoleEntity Role { get; private set; }
+        public Guid RoleId { get; private set; }
         /// <summary>
-        /// 角色
+        /// 用户Id
         /// </summary>
-        public UserEntity User { get; private set; }
+        public Guid UserId { get; private set; }
         #region 公共字段
 
         /// <summary>

@@ -13,14 +13,6 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("角色信息")]
     public class RoleEntity : RoleBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
-        /// <summary>
-        /// 用户角色集合
-        /// </summary>
-        public ICollection<UserRoleEntity> UserRoleItems { get; private set; }
-        /// <summary>
-        /// 角色菜单集合
-        /// </summary>
-        public ICollection<RoleMenuEntity> RoleMenuItems { get; private set; }
         #region 公共字段
 
         /// <summary>

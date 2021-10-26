@@ -35,7 +35,7 @@ namespace Sukt.AuthServer.AccessTokenValidation
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             _logger.LogTrace("HandleAuthenticateAsync called");
-
+            
             var jwtScheme = Scheme.Name + SuktAuthServerAuthenticationDefaults.JwtAuthenticationScheme;
             var introspectionScheme = Scheme.Name + SuktAuthServerAuthenticationDefaults.IntrospectionAuthenticationScheme;
 

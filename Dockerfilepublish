@@ -28,9 +28,5 @@ RUN dotnet publish "Sukt.Core.API.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 ENV TZ=Asia/Shanghai
-ENV LC_ALL=zh_CN.utf8
-ENV LANG=zh_CN.utf8
-ENV LANGUAGE=zh_CN.utf8
-RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Sukt.Core.API.dll"]

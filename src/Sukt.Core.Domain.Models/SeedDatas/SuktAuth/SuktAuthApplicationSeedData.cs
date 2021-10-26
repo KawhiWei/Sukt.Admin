@@ -24,8 +24,10 @@ namespace Sukt.Core.Domain.Models.SeedDatas.SuktAuth
 
         protected override SuktApplication[] SetSeedData()
         {
-            var secret = new List<string>() { "Sukt.Core.Admin" };
-            var suktapplication = new SuktApplication("sukt.admin", "Sukt.Admin管理后台","password", "SharedSecret", secret.ToJson(), new List<string>() { "sukt.admin.Dashboard" }.ToJson());
+            var secret = new List<string>() { "Sukt.Core.Admin".Sha256() };
+            var suktapplication = new SuktApplication(clientId: "Sukt.Dashboard", clientName:"Sukt.Admin管理后台", clientGrantType:"password", clientSecret:secret.ToJson(),
+                clientScopes: new List<string>() { "Sukt.Admin.ApiResourceScope" }.ToJson(),postLogoutRedirectUris: null,secretType: "SharedSecret",redirectUris:null,properties:null,
+                protocolType:"oidc",description:null,accessTokenExpire:3600);
             return new SuktApplication[]
             {
                 suktapplication

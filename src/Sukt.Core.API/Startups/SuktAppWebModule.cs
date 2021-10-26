@@ -139,8 +139,8 @@ namespace Sukt.Core.API.Startups
             applicationBuilder.UseSuktWebSocketServer(applicationBuilder.ApplicationServices);
             #endregion
             applicationBuilder.UseRouting();
-            applicationBuilder.UseAuthentication();//授权
-            applicationBuilder.UseAuthorization();//认证
+            applicationBuilder.UseAuthentication();//认证
+            applicationBuilder.UseAuthorization();//授权
             applicationBuilder.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

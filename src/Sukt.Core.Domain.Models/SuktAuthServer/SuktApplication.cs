@@ -17,7 +17,7 @@ namespace Sukt.Core.Domain.Models
     {
         public SuktApplication(
             string clientId,  string clientName, string clientGrantType, string clientSecret, string clientScopes, 
-            string postLogoutRedirectUris=null,string secretType=null, string redirectUris = null, string properties = null, 
+            string postLogoutRedirectUris=null,string secretType=null, string redirectUris = null, string properties = null, string protocolType=null,
             string description = null,int accessTokenExpire=3600)
         {
             ClientId = clientId;
@@ -31,6 +31,7 @@ namespace Sukt.Core.Domain.Models
             ClientScopes = clientScopes;
             SecretType = secretType;
             AccessTokenExpire = accessTokenExpire;
+            ProtocolType = protocolType;
         }
         /// <summary>
         /// 客户端唯一Id
@@ -86,7 +87,7 @@ namespace Sukt.Core.Domain.Models
         /// 协议类型
         /// </summary>
         [DisplayName("协议类型")]
-        public string ProtocolType { get; set; }
+        public string ProtocolType { get; set; } = "oidc";
         /// <summary>
         /// AccessToken过期时间
         /// </summary>

@@ -24,8 +24,8 @@ namespace Sukt.Core.Domain.Models.SeedDatas.SuktAuth
 
         protected override SuktResourceScope[] SetSeedData()
         {
-            var scopelist = new List<string>() { "sukt.admin.Dashboard" };
-            var suktresourcescope = new SuktResourceScope("sukt.admin.react", "通用Admin后台管理", scopelist.ToJson());
+            var scopelist = new List<string>() { "Sukt.Admin.ApiResourceScope" };
+            var suktresourcescope = new SuktResourceScope("Sukt.Admin.Api", "通用Admin后台管理接口资源", scopelist.ToJson());
 
             return new SuktResourceScope[]
             {
