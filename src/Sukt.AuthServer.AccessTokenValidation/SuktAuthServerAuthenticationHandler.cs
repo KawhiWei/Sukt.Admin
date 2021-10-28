@@ -38,25 +38,19 @@ namespace Sukt.AuthServer.AccessTokenValidation
             
             var jwtScheme = Scheme.Name + SuktAuthServerAuthenticationDefaults.JwtAuthenticationScheme;
             var introspectionScheme = Scheme.Name + SuktAuthServerAuthenticationDefaults.IntrospectionAuthenticationScheme;
-
             var token = Options.TokenRetriever(Context.Request);
             bool removeToken = false;
-
             try
             {
                 if (token != null)
                 {
                     _logger.LogTrace("Token found: {token}", token);
-
                     removeToken = true;
                     Context.Items.Add(SuktAuthServerAuthenticationDefaults.TokenItemsKey, token);
-
                     // seems to be a JWT
                     if (token.Contains('.') && Options.SupportsJwt)
                     {
                         _logger.LogTrace("Token is a JWT and is supported.");
-
-
                         Context.Items.Add(SuktAuthServerAuthenticationDefaults.EffectiveSchemeKey + Scheme.Name,
                             jwtScheme);
                         return await Context.AuthenticateAsync(jwtScheme);

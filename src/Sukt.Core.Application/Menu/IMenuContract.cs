@@ -20,7 +20,7 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(MenuInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id, MenuInputDto input);
 
         /// <summary>
         /// 删除菜单

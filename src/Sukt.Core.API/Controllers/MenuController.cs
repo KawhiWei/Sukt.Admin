@@ -44,14 +44,15 @@ namespace Sukt.Core.API.Controllers
         /// <summary>
         /// 修改菜单
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Description("修改菜单")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync([FromBody] MenuInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id,[FromBody] MenuInputDto input)
         {
-            return (await _menu.UpdateAsync(input)).ToAjaxResult();
+            return (await _menu.UpdateAsync(id, input)).ToAjaxResult();
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Description("删除菜单")]
         [AuditLog]
         public async Task<AjaxResult> DeleteAsync(Guid id)
@@ -84,7 +85,7 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         [Description("加载菜单")]
         public async Task<AjaxResult> GetLoadFromMenuAsync(Guid id)
         {

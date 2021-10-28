@@ -6,7 +6,7 @@ namespace Sukt.Core.Shared
 {
     [Route("admin/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public abstract class ApiControllerBase
     {
     }

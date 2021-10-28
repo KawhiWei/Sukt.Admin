@@ -6,8 +6,8 @@ using System.ComponentModel;
 
 namespace Sukt.Core.Dtos.Menu
 {
-    [SuktAutoMapper(typeof(MenuEntity))]
-    public class MenuInputDto : InputDto<Guid>
+    //[SuktAutoMapper(typeof(MenuEntity))]
+    public class MenuInputDto
     {
         /// <summary>
         /// 菜单名称
@@ -67,7 +67,7 @@ namespace Sukt.Core.Dtos.Menu
         /// 按钮事件
         /// </summary>
         [DisplayName("按钮事件")]
-        public string ButtonClick { get; set; }
+        public string ButtonClick { get; set; } = "";
 
         /// <summary>
         /// 菜单类型（菜单/按钮）
@@ -80,5 +80,9 @@ namespace Sukt.Core.Dtos.Menu
         /// </summary>
         [DisplayName("菜单对应子应用")]
         public string MicroName { get; set; }
+        /// <summary>
+        /// API接口id
+        /// </summary>
+        public Guid[]? FunctionIds { get; set; }
     }
 }

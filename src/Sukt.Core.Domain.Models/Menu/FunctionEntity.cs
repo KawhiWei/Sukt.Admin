@@ -37,11 +37,6 @@ namespace Sukt.Core.Domain.Models.Menu
         /// </summary>
         [DisplayName("链接Url")]
         public string LinkUrl { get; set; }
-        /// <summary>
-        /// 菜单功能集合
-        /// </summary>
-        public ICollection<MenuFunctionEntity> MenuFunctionItems { get; private set; }
-
         #region 公共字段
 
         /// <summary>

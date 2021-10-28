@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.EntityFrameworkCore;
 
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(SuktContext))]
-    partial class SuktContextModelSnapshot : ModelSnapshot
+    [Migration("20211028055115_default_v2")]
+    partial class default_v2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1256,7 +1258,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("CreatedId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("FunctionId")
+                    b.Property<Guid?>("FunctionItemsId")
                         .HasColumnType("char(36)");
 
                     b.Property<bool>("IsDeleted")
@@ -1268,10 +1270,14 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("MenuId")
+                    b.Property<Guid?>("MenuItemId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FunctionItemsId");
+
+                    b.HasIndex("MenuItemId");
 
                     b.ToTable("MenuFunction");
                 });
@@ -1393,11 +1399,11 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("OrganizationId")
+                    b.Property<Guid?>("OrganizationId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("OrganizationNumber")
-                        .HasColumnType("longtext");
+                    b.Property<Guid>("OrganizationNumber")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid>("PositionId")
                         .HasColumnType("char(36)");
@@ -1405,10 +1411,14 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("OrganizationUser");
                 });
@@ -2061,6 +2071,36 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("IdentityResource");
                 });
 
+            modelBuilder.Entity("Sukt.Core.Domain.Models.MenuFunctionEntity", b =>
+                {
+                    b.HasOne("Sukt.Core.Domain.Models.Menu.FunctionEntity", "FunctionItems")
+                        .WithMany("MenuFunctionItems")
+                        .HasForeignKey("FunctionItemsId");
+
+                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", "MenuItem")
+                        .WithMany("MenuFunctionItems")
+                        .HasForeignKey("MenuItemId");
+
+                    b.Navigation("FunctionItems");
+
+                    b.Navigation("MenuItem");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", b =>
+                {
+                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationEntity", "Organization")
+                        .WithMany("OrganizationItems")
+                        .HasForeignKey("OrganizationId");
+
+                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", "User")
+                        .WithMany("OrganizationUser")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>
                 {
                     b.Navigation("Properties");
@@ -2105,6 +2145,26 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("Properties");
 
                     b.Navigation("UserClaims");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.FunctionEntity", b =>
+                {
+                    b.Navigation("MenuFunctionItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.MenuEntity", b =>
+                {
+                    b.Navigation("MenuFunctionItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationEntity", b =>
+                {
+                    b.Navigation("OrganizationItems");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>
+                {
+                    b.Navigation("OrganizationUser");
                 });
 #pragma warning restore 612, 618
         }

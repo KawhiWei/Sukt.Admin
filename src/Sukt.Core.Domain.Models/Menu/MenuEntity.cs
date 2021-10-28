@@ -3,6 +3,7 @@ using Sukt.Module.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Sukt.Core.Domain.Models.Menu
 {
@@ -13,7 +14,36 @@ namespace Sukt.Core.Domain.Models.Menu
         {
             Id = SuktGuid.NewSuktGuid();
         }
-
+        public MenuEntity(string name, string path, Guid parentId, string icon, string parentNumber, string component, string componentName, bool isShow, int sort, string buttonClick, MenuEnum type, string microName)
+        {
+            Name = name;
+            Path = path;
+            ParentId = parentId;
+            Icon = icon;
+            ParentNumber = parentNumber;
+            Component = component;
+            ComponentName = componentName;
+            IsShow = isShow;
+            Sort = sort;
+            ButtonClick = buttonClick;
+            Type = type;
+            MicroName = microName;
+        }
+        public void Update(string name, string path, Guid parentId, string icon, string parentNumber, string component, string componentName, bool isShow, int sort, string buttonClick, MenuEnum type, string microName)
+        {
+            Name = name;
+            Path = path;
+            ParentId = parentId;
+            Icon = icon;
+            ParentNumber = parentNumber;
+            Component = component;
+            ComponentName = componentName;
+            IsShow = isShow;
+            Sort = sort;
+            ButtonClick = buttonClick;
+            Type = type;
+            MicroName = microName;
+        }
         /// <summary>
         /// 菜单名称
         /// </summary>
@@ -85,12 +115,6 @@ namespace Sukt.Core.Domain.Models.Menu
         /// </summary>
         [DisplayName("菜单对应子应用")]
         public string MicroName { get; set; }
-
-        /// <summary>
-        /// 功能集合
-        /// </summary>
-        public ICollection<MenuFunctionEntity> MenuFunctionItems { get; private set; }
-
         #region 公共字段
 
         /// <summary>

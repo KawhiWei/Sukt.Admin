@@ -15,7 +15,7 @@ namespace Sukt.Core.Domain.Models.Organization
         /// 组织架构所有父级Id
         /// </summary>
         [DisplayName("组织架构所有父级Id")]
-        public Guid OrganizationNumber { get; set; }
+        public string OrganizationNumber { get; set; }
         /// <summary>
         /// 职位Id
         /// </summary>
@@ -29,11 +29,11 @@ namespace Sukt.Core.Domain.Models.Organization
         /// <summary>
         /// 组织架构
         /// </summary>
-        public OrganizationEntity Organization { get; private set; }
+        public Guid OrganizationId { get; private set; }
         /// <summary>
         /// 用户集合
         /// </summary>
-        public UserEntity User { get; private set; }
+        public Guid UserId { get; private set; }
         #region 公共字段
         /// <summary>
         /// 创建人Id

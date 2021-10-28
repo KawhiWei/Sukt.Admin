@@ -60,14 +60,6 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("用户类型")]
         public UserTypeEnum UserType { get; private set; }
-        /// <summary>
-        /// 用户角色集合
-        /// </summary>
-        public ICollection<UserRoleEntity> UserRoleItems { get; private set; }
-        /// <summary>
-        /// 组织架构关系
-        /// </summary>
-        public ICollection<OrganizationUserEntity> OrganizationUser { get; private set; }
         #region 公共字段
 
         /// <summary>

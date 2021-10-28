@@ -193,10 +193,11 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.MenuController.UpdateAsync(Sukt.Core.Dtos.Menu.MenuInputDto)">
+        <member name="M:Sukt.Core.API.Controllers.MenuController.UpdateAsync(System.Guid,Sukt.Core.Dtos.Menu.MenuInputDto)">
             <summary>
             修改菜单
             </summary>
+            <param name="id"></param>
             <param name="input"></param>
             <returns></returns>
         </member>

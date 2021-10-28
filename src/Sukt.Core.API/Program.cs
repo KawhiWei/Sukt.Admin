@@ -16,8 +16,8 @@ namespace Sukt.Core.API
     {
         public static void Main(string[] args)
         {
-            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
-            Console.WriteLine($"{workerThreads}, {completionPortThreads}");
+            //ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
+            //Console.WriteLine($"{workerThreads}, {completionPortThreads}");
             //ThreadPool.SetMinThreads(60,60);
             //Log.Logger = new LoggerConfiguration()
 
