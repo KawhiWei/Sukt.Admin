@@ -1,5 +1,7 @@
 ﻿using Sukt.Core.Dtos;
 using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.OperationResult;
 using System;
 using System.Threading.Tasks;
@@ -32,6 +34,12 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<OperationResponse> LoadUserFormAsync(Guid id);
+        Task<OperationResponse> LoadFormAsync(Guid id);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<IPageResult<UserPageOutputDto>> GetPageAsync(PageRequest request);
     }
 }

@@ -1,10 +1,14 @@
 ﻿using IDN.Services.BasicsService.Dtos.Identity.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Dtos;
+using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Enums;
 using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Extensions.OrderExtensions;
+using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.OperationResult;
 using Sukt.Module.Core.ResultMessageConst;
 using System;
@@ -16,19 +20,19 @@ namespace Sukt.Core.Application
     {
         private readonly UserManager<UserEntity> _userManager = null;
         private readonly IUnitOfWork _unitOfWork = null;
-        private readonly IEFCoreRepository<UserRoleEntity, Guid> _userRoleRepository = null;
 
-        public UserContract(UserManager<UserEntity> userManager, IUnitOfWork unitOfWork, IEFCoreRepository<UserRoleEntity, Guid> userroleRepository)
+        public UserContract(UserManager<UserEntity> userManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
-            _userRoleRepository = userroleRepository;
         }
 
         public async Task<OperationResponse> InsertAsync(UserInputDto input)
         {
             input.NotNull(nameof(input));
-            var user = input.MapTo<UserEntity>();
+            var user = new UserEntity(input.Birthday, input.Education, input.TechnicalLevel, input.IdCard, input.IsEnable, input.Duties,
+                input.Department, input.UserType,input.UserName,input.NormalizedUserName,input.NickName,input.Email,input.Email,false,input.PasswordHash,
+                "",null,Guid.NewGuid().ToString(),input.PhoneNumber,false,false,null,false,0,false,input.Sex);
             var passwordHash = input.PasswordHash;
             var result = passwordHash.IsNullOrEmpty() ? await _userManager.CreateAsync(user) : await _userManager.CreateAsync(user, passwordHash);
             return result.ToOperationResponse();
@@ -49,7 +53,7 @@ namespace Sukt.Core.Application
             //});
         }
 
-        public async Task<OperationResponse> LoadUserFormAsync(Guid id)
+        public async Task<OperationResponse> LoadFormAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             var userdto = user.MapTo<UserLoadFormOutputDto>();
@@ -86,14 +90,21 @@ namespace Sukt.Core.Application
         {
             id.NotNull(nameof(id));
             var user = await _userManager.FindByIdAsync(id.ToString());
-            //return await _unitOfWork.UseTranAsync(async () =>
-            //{
-            //    var result = await _userManager.DeleteAsync(user);
-            //    if (!result.Succeeded)
-            //        return result.ToOperationResponse();
-            //    await _userRoleRepository.DeleteBatchAsync(x => x.UserId == id);
+            return await _unitOfWork.UseTranAsync(async () =>
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                    return result.ToOperationResponse();
                 return new OperationResponse(ResultMessage.DeleteSuccess, OperationEnumType.Success);
-            //});
+            });
         }
+        public async Task<IPageResult<UserPageOutputDto>> GetPageAsync(PageRequest request)
+        {
+            request.NotNull(nameof(request));
+            OrderCondition<UserEntity>[] orderConditions = new OrderCondition<UserEntity>[] { new OrderCondition<UserEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
+            request.OrderConditions = orderConditions;
+            return await _userManager.Users.AsNoTracking().ToPageAsync<UserEntity, UserPageOutputDto>(request);
+        }
+        
     }
 }

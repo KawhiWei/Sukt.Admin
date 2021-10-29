@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;
@@ -125,7 +126,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.UserName = userName;
+            user.SetUserName(userName);
             return Task.CompletedTask;
         }
 
@@ -155,7 +156,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.NormalizedUserName = normalizedName;
+            user.SetNormalizedUserName(normalizedName);
             return Task.CompletedTask;
         }
 
@@ -188,11 +189,11 @@ namespace Sukt.Core.Identity
 
             if (string.IsNullOrEmpty(user.Email))
             {
-                user.EmailConfirmed = false;
+                user.SetEmailConfirmed(false);
             }
             if (string.IsNullOrEmpty(user.PhoneNumber))
             {
-                user.PhoneNumberConfirmed = false;
+                user.SetPhoneNumberConfirmed(false);
             }
 
             await _userRepository.UpdateAsync(user);
@@ -446,7 +447,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.PasswordHash = passwordHash;
+            user.SetPasswordHash(passwordHash);
             return Task.CompletedTask;
         }
 
@@ -497,7 +498,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.SecurityStamp = stamp;
+            user.SetSecurityStamp(stamp);
 
             return Task.CompletedTask;
         }
@@ -532,7 +533,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.Email = email;
+            user.SetEmail(email);
             return Task.CompletedTask;
         }
 
@@ -580,7 +581,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.EmailConfirmed = true;
+            user.SetEmailConfirmed(true);
             return Task.CompletedTask;
         }
 
@@ -629,7 +630,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.NormalizeEmail = normalizedEmail;
+            user.SetNormalizeEmail(normalizedEmail);
             return Task.CompletedTask;
         }
 
@@ -667,7 +668,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.LockoutEnd = lockoutEnd;
+            user.SetLockoutEnd(lockoutEnd);
             return Task.CompletedTask;
         }
 
@@ -681,8 +682,7 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
-            user.AccessFailedCount++;
+            user.SetAccessFailedCount();
             return Task.FromResult(user.AccessFailedCount);
         }
 
@@ -696,7 +696,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.AccessFailedCount = 0;
+            user.ResetAccessFailedCount(0);
             return Task.CompletedTask;
         }
 
@@ -742,7 +742,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.LockoutEnabled = enabled;
+            user.SetLockoutEnabled(enabled);
             return Task.CompletedTask;
         }
 
@@ -762,7 +762,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.PhoneNumber = phoneNumber;
+            user.SetPhoneNumber(phoneNumber);
             return Task.CompletedTask;
         }
 
@@ -809,7 +809,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.PhoneNumberConfirmed = confirmed;
+            user.SetPhoneNumberConfirmed(confirmed);
             return Task.CompletedTask;
         }
 
@@ -830,7 +830,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            user.TwoFactorEnabled = enabled;
+            user.SetTwoFactorEnabled(enabled);
             return Task.CompletedTask;
         }
 
@@ -1018,8 +1018,7 @@ namespace Sukt.Core.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
-
-            TRoleKey roleId = _roleRepository.NoTrackEntities.Where(m => m.NormalizedName == normalizedRoleName).Select(m => m.Id).FirstOrDefault();
+            TRoleKey roleId = await _roleRepository.NoTrackEntities.Where(m => m.NormalizedName == normalizedRoleName).Select(m => m.Id).FirstOrDefaultAsync();
             if (Equals(roleId, default(TRoleKey)))
             {
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");
@@ -1040,7 +1039,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            TRole role = _roleRepository.NoTrackEntities.FirstOrDefault(m => m.NormalizedName == normalizedRoleName);
+            TRole role = await _roleRepository.NoTrackEntities.FirstOrDefaultAsync(m => m.NormalizedName == normalizedRoleName);
             if (role == null)
             {
                 throw new InvalidOperationException($"名称为“{normalizedRoleName}”的角色信息不存在");

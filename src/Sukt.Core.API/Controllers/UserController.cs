@@ -8,6 +8,9 @@ using Sukt.Module.Core.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Sukt.Module.Core.AjaxResult;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
 
 namespace Sukt.Core.API.Controllers
 {
@@ -45,10 +48,10 @@ namespace Sukt.Core.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Description("加载表单用户")]
-        [HttpGet("id")]
-        public async Task<AjaxResult> LoadUserFormAsync(Guid id)
+        [HttpGet("{id}")]
+        public async Task<AjaxResult> LoadFormAsync(Guid id)
         {
-            return (await _userContract.LoadUserFormAsync(id)).ToAjaxResult();
+            return (await _userContract.LoadFormAsync(id)).ToAjaxResult();
         }
 
         /// <summary>
@@ -64,7 +67,17 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _userContract.UpdateAsync(id,input)).ToAjaxResult();
         }
-
+        /// <summary>
+        /// 用户分页接口
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Description("用户分页接口")]
+        public async Task<PageList<UserPageOutputDto>> GetPageAsync([FromBody] PageRequest request)
+        {
+            return (await _userContract.GetPageAsync(request)).PageList();
+        }
         /// <summary>
         /// 删除用户
         /// </summary>

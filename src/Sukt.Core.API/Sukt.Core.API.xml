@@ -367,7 +367,7 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserController.LoadUserFormAsync(System.Guid)">
+        <member name="M:Sukt.Core.API.Controllers.UserController.LoadFormAsync(System.Guid)">
             <summary>
             根据Id加载表单用户
             </summary>
@@ -380,6 +380,13 @@
             </summary>
             <param name="input"></param>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.UserController.GetPageAsync(Sukt.Module.Core.Entity.PageRequest)">
+            <summary>
+            用户分页接口
+            </summary>
+            <param name="request"></param>
             <returns></returns>
         </member>
         <member name="M:Sukt.Core.API.Controllers.UserController.DeleteAsync(System.Guid)">

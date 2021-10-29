@@ -15,6 +15,10 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("菜单功能")]
     public class MenuFunctionEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public MenuFunctionEntity()
+        {
+        }
+
         public MenuFunctionEntity(Guid menuId, Guid functionId)
         {
             Id = SuktGuid.NewSuktGuid();

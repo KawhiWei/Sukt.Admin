@@ -2,6 +2,7 @@
 using Sukt.Core.Domain.Models.Organization;
 using Sukt.Core.Identity;
 using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,29 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("用户信息")]
     public class UserEntity : UserBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
+        public UserEntity(
+            DateTime birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties, 
+            string department, UserTypeEnum userType,
+            string userName, string normalizedUserName, string nickName, string email, string normalizeEmail,
+            bool emailConfirmed, string passwordHash, string headImg, string securityStamp, string concurrencyStamp, 
+            string phoneNumber, bool phoneNumberConfirmed, bool twoFactorEnabled, DateTimeOffset? lockoutEnd, 
+            bool lockoutEnabled, int accessFailedCount, bool isSystem, string sex) : 
+            base(userName, normalizedUserName, nickName, email, normalizeEmail, 
+                emailConfirmed, passwordHash, headImg, securityStamp, concurrencyStamp, 
+                phoneNumber, phoneNumberConfirmed, twoFactorEnabled, lockoutEnd, lockoutEnabled, 
+                accessFailedCount, isSystem, sex)
+        {
+            Id= SuktGuid.NewSuktGuid();
+            Birthday = birthday;
+            Education = education;
+            TechnicalLevel = technicalLevel;
+            IdCard = idCard;
+            IsEnable = isEnable;
+            Duties = duties;
+            Department = department;
+            UserType = userType;
+        }
+
         /// <summary>
         /// 生日
         /// </summary>
@@ -49,7 +73,6 @@ namespace Sukt.Core.Domain.Models
         /// </summary>
         [DisplayName("职务")]
         public string Duties { get; private set; }
-
         /// <summary>
         /// 部门
         /// </summary>
