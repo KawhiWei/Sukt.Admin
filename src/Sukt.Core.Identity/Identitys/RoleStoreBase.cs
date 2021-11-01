@@ -141,7 +141,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            role.Name = roleName;
+            role.SetName(roleName);
             return Task.CompletedTask;
         }
 
@@ -171,7 +171,7 @@ namespace Sukt.Core.Identity
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            role.NormalizedName = normalizedName;
+            role.SetNormalizedName(normalizedName);
             return Task.CompletedTask;
         }
 

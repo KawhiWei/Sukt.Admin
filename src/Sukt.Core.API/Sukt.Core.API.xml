@@ -295,6 +295,13 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="M:Sukt.Core.API.Controllers.RoleController.LoadFormAsync(System.Guid)">
+            <summary>
+            加载角色
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Sukt.Core.API.Controllers.RoleController.UpdateAsync(System.Guid,Sukt.Core.Dtos.Identity.Role.RoleInputDto)">
             <summary>
             修改角色

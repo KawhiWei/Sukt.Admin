@@ -16,7 +16,7 @@ namespace Sukt.Core.Dtos
         /// <summary>
         /// 用户昵称
         /// </summary>
-        public string NickName { get; private set; }
+        public string NickName { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
@@ -84,10 +84,10 @@ namespace Sukt.Core.Dtos
         /// <summary>
         /// 性别
         /// </summary>
-        public string Sex { get; private set; }
+        public string Sex { get; set; }
         /// <summary>
         /// 用户类型
         /// </summary>
-        public UserTypeEnum UserType { get; private set; }
+        public UserTypeEnum UserType { get; set; }
     }
 }

@@ -37,6 +37,16 @@ namespace Sukt.Core.Identity
             IsSystem = isSystem;
             Sex = sex;
         }
+        public void SetBaseFunc(string userName, string normalizedUserName, string nickName, string email, string headImg, string phoneNumber, string sex)
+        {
+            UserName = userName;
+            NormalizedUserName = normalizedUserName;
+            NickName = nickName;
+            Email = email;
+            HeadImg = headImg;
+            PhoneNumber = phoneNumber;
+            Sex = sex;
+        }
 
         /// <summary>
         /// 姓名

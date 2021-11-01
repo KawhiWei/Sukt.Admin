@@ -13,6 +13,9 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("角色信息")]
     public class RoleEntity : RoleBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
+        public RoleEntity(string name, string normalizedName, bool isAdmin) : base(name, normalizedName, isAdmin)
+        {
+        }
         #region 公共字段
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sukt.Core.Domain.Models;
+using Sukt.Core.Domain.Models.Identity.Enum;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,10 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
     [AutoMap(typeof(UserEntity))]
     public class UserLoadFormOutputDto
     {
+        /// <summary>
+        /// 用户昵称
+        /// </summary>
+        public string NickName { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>
@@ -25,7 +30,6 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
         /// <summary>
         /// 电子邮箱
         /// </summary>
-        [DisplayName("电子邮箱"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         /// <summary>
@@ -81,5 +85,13 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
         /// </summary>
         [DisplayName("部门")]
         public string Department { get; set; }
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public string Sex { get; set; }
+        /// <summary>
+        /// 用户类型
+        /// </summary>
+        public UserTypeEnum UserType { get; set; }
     }
 }

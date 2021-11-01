@@ -41,6 +41,18 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _roleContract.CreateAsync(input)).ToAjaxResult();
         }
+        /// <summary>
+        /// 加载角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [Description("加载角色")]
+        [AuditLog]
+        public async Task<AjaxResult> LoadFormAsync(Guid id)
+        {
+            return (await _roleContract.LoadFormAsync(id)).ToAjaxResult();
+        }
 
         /// <summary>
         /// 修改角色
@@ -51,7 +63,7 @@ namespace Sukt.Core.API.Controllers
         [HttpPut("{id}")]
         [Description("修改角色")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync(Guid id,[FromBody] RoleInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id, [FromBody] RoleInputDto input)
         {
             return (await _roleContract.UpdateAsync(id, input)).ToAjaxResult();
         }
@@ -61,7 +73,7 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Description("删除角色")]
         [AuditLog]
         public async Task<AjaxResult> DeleteAsync(Guid id)

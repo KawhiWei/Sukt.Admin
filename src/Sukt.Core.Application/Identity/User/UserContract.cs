@@ -65,7 +65,9 @@ namespace Sukt.Core.Application
         {
             input.NotNull(nameof(input));
             var user = await _userManager.FindByIdAsync(id.ToString());
-            user = input.MapTo(user);
+            user.SetFunc(input.Birthday, input.Education, input.TechnicalLevel, input.IdCard, input.IsEnable, input.Duties,
+                input.Department, input.UserType);
+            user.SetBaseFunc(input.UserName, input.NormalizedUserName, input.NickName, input.Email, input.HeadImg, input.PhoneNumber, input.Sex);
             return (await _userManager.UpdateAsync(user)).ToOperationResponse();
             //return result;
             //return await _unitOfWork.UseTranAsync(async () =>

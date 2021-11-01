@@ -38,6 +38,19 @@ namespace Sukt.Core.Domain.Models
             UserType = userType;
         }
 
+        public void SetFunc(DateTime birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties,
+            string department, UserTypeEnum userType)
+        {
+            Birthday = birthday;
+            Education = education;
+            TechnicalLevel = technicalLevel;
+            IdCard = idCard;
+            IsEnable = isEnable;
+            Duties = duties;
+            Department = department;
+            UserType = userType;
+        }
+
         /// <summary>
         /// 生日
         /// </summary>

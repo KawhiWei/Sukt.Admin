@@ -20,12 +20,9 @@ namespace Sukt.Core.Domain.Models.SeedDatas
 
         protected override RoleEntity[] SetSeedData()
         {
-            return new RoleEntity[]{  new RoleEntity()
+            return new RoleEntity[]{  new RoleEntity("系统管理员","系统管理员",true)
             {
                 Id = Guid.Parse("81ba489a-5e52-2a49-48ec-75dc0b3f9ff2"),
-                Name = "系统管理员",
-                NormalizedName = "系统管理员",
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
                 CreatedId = Guid.Parse("c5604f31-f14c-e8be-0833-9c69b2a8eba2"),
                 CreatedAt = DateTime.Now,
                 IsDeleted = false,

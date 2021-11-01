@@ -43,5 +43,11 @@ namespace Sukt.Core.Application.Identity.Role
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto);
+        /// <summary>
+        /// 加载角色
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<OperationResponse> LoadFormAsync(Guid id);
     }
 }

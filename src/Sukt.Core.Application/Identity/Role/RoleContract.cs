@@ -34,29 +34,8 @@ namespace Sukt.Core.Application.Identity.Role
         public async Task<OperationResponse> CreateAsync(RoleInputDto input)
         {
             input.NotNull(nameof(input));
-            var role = input.MapTo<RoleEntity>();
-            return (await _roleManager.CreateAsync(role)).ToOperationResponse();
-            //return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-            // {
-            //     var result = await _roleManager.CreateAsync(role);
-            //     if (!result.Succeeded)
-            //     {
-            //         return result.ToOperationResponse();
-            //     }
-            //     if (input.MenuIds?.Any() == true)
-            //     {
-            //         ;
-            //         if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
-            //         {
-            //             MenuId = x,
-            //             RoleId = role.Id,
-            //         }).ToArray()) <= 0)
-            //         {
-            //             return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
-            //         }
-            //     }
-            //     return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-            // });
+            var entity = new RoleEntity(input.Name, input.NormalizedName, input.IsAdmin);
+            return (await _roleManager.CreateAsync(entity)).ToOperationResponse();
         }
 
         public async Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto)
@@ -83,31 +62,9 @@ namespace Sukt.Core.Application.Identity.Role
         public async Task<OperationResponse> UpdateAsync(Guid id, RoleInputDto input)
         {
             input.NotNull(nameof(input));
-            var role = await _roleManager.FindByIdAsync(id.ToString());
-            role = input.MapTo(role);
-            return (await _roleManager.UpdateAsync(role)).ToOperationResponse();
-
-            //return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-            //{
-            //    var result = await _roleManager.UpdateAsync(role);
-            //    if (!result.Succeeded)
-            //    {
-            //        return result.ToOperationResponse();
-            //    }
-            //    if (input.MenuIds?.Any() == true)
-            //    {
-            //        await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == input.Id);
-            //        if (await _roleMenuRepository.InsertAsync(input.MenuIds.Select(x => new RoleMenuEntity
-            //        {
-            //            MenuId = x,
-            //            RoleId = role.Id,
-            //        }).ToArray()) <= 0)
-            //        {
-            //            return new OperationResponse(ResultMessage.InsertFail, Shared.Enums.OperationEnumType.Error);
-            //        }
-            //    }
-            //    return new OperationResponse(ResultMessage.InsertSuccess, OperationEnumType.Success);
-            //});
+            var entity = await _roleManager.FindByIdAsync(id.ToString());
+            entity.SetFunc(input.Name, input.NormalizedName, input.IsAdmin);
+            return (await _roleManager.UpdateAsync(entity)).ToOperationResponse();
         }
 
         public async Task<OperationResponse> DeleteAsync(Guid id)
@@ -128,5 +85,16 @@ namespace Sukt.Core.Application.Identity.Role
             request.NotNull(nameof(request));
             return await _roleManager.Roles.AsNoTracking().ToPageAsync<RoleEntity, RoleOutPutPageDto>(request);
         }
+        /// <summary>
+        /// 加载角色
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<OperationResponse> LoadFormAsync(Guid id)
+        {
+            var entity = await _roleManager.FindByIdAsync(id.ToString());
+            return new OperationResponse(ResultMessage.AllocationSucces, entity.MapTo<RoleOutPutPageDto>(), OperationEnumType.Success);
+        }
+        
     }
 }

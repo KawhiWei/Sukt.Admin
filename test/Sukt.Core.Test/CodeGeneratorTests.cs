@@ -20,7 +20,8 @@ namespace Sukt.Core.Test
             projectMetadata.SiteUrl = "http://admin.destinycore.club";
             projectMetadata.Creator = "王莫某";
             projectMetadata.Copyright = "王莫某";
-            projectMetadata.Namespace = "Sukt.Core.Domain.Models";
+            projectMetadata.Namespace = "Sukt.Core";
+            projectMetadata.SaveFilePath = @"F:\Github\test\testCodeGenerator";
             List<PropertyMetadata> propertyMetadatas = new List<PropertyMetadata>();
             propertyMetadatas.Add(new PropertyMetadata()
             {
@@ -60,7 +61,7 @@ namespace Sukt.Core.Test
                 IsSoftDelete = false,
                 AuditedUserKeyType = "Guid",
             };
-            var savePath = @"E:\TestCodeGenerator";
+            //var savePath = @"E:\TestCodeGenerator";
             ICodeGenerator codeGenerator = ServiceProvider.GetService<ICodeGenerator>();
             codeGenerator.GenerateCode(projectMetadata);
         }
