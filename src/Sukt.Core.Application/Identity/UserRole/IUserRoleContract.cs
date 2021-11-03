@@ -13,7 +13,7 @@ namespace Sukt.Core.Application.Identity.UserRole
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        Task<OperationResponse> AllocationRoleAsync(UserRoleInputDto dto);
+        Task<OperationResponse> AllocationRoleAsync(Guid userId, Guid[] roleids);
         /// <summary>
         /// 获取用户角色
         /// </summary>

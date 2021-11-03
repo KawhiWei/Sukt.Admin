@@ -4,6 +4,7 @@ using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.OperationResult;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application.Identity.Role
@@ -38,16 +39,15 @@ namespace Sukt.Core.Application.Identity.Role
         /// <returns></returns>
         Task<IPageResult<RoleOutPutPageDto>> GetPageAsync(PageRequest request);
         /// <summary>
-        /// 角色分配权限
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto);
-        /// <summary>
         /// 加载角色
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         Task<OperationResponse> LoadFormAsync(Guid id);
+        /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <returns></returns>
+        Task<OperationResponse<List<RoleOutPutPageDto>>> GetSelectedListAsync();
     }
 }

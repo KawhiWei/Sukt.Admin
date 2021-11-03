@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sukt.Module.Core.ResultMessageConst;
 using Sukt.Module.Core.Enums;
+using System.Collections.Generic;
 
 namespace Sukt.Core.Application.Identity.Role
 {
@@ -37,23 +38,6 @@ namespace Sukt.Core.Application.Identity.Role
             var entity = new RoleEntity(input.Name, input.NormalizedName, input.IsAdmin);
             return (await _roleManager.CreateAsync(entity)).ToOperationResponse();
         }
-
-        public async Task<OperationResponse> AllocationRoleMenuAsync(RoleMenuInputDto dto)
-        {
-            dto.NotNull(nameof(dto));
-            return await _roleMenuRepository.UnitOfWork.UseTranAsync(async () =>
-            {
-                await Task.CompletedTask;
-                //await _roleMenuRepository.DeleteBatchAsync(x => x.RoleId == dto.Id);
-                //await _roleMenuRepository.InsertAsync(dto.MenuIds.Select(x => new RoleMenuEntity
-                //{
-                //    RoleId = dto.Id,
-                //    MenuId = x,
-                //}).ToArray());
-                return new OperationResponse(ResultMessage.AllocationSucces, OperationEnumType.Success);
-            });
-        }
-
         /// <summary>
         /// 修改角色及分配权限
         /// </summary>
@@ -66,7 +50,6 @@ namespace Sukt.Core.Application.Identity.Role
             entity.SetFunc(input.Name, input.NormalizedName, input.IsAdmin);
             return (await _roleManager.UpdateAsync(entity)).ToOperationResponse();
         }
-
         public async Task<OperationResponse> DeleteAsync(Guid id)
         {
             id.NotNull(nameof(id));
@@ -74,7 +57,6 @@ namespace Sukt.Core.Application.Identity.Role
             await _roleManager.DeleteAsync(role);
             return new OperationResponse(ResultMessage.DeleteSuccess, OperationEnumType.Success);
         }
-
         /// <summary>
         /// 分页获取角色
         /// </summary>
@@ -95,6 +77,15 @@ namespace Sukt.Core.Application.Identity.Role
             var entity = await _roleManager.FindByIdAsync(id.ToString());
             return new OperationResponse(ResultMessage.AllocationSucces, entity.MapTo<RoleOutPutPageDto>(), OperationEnumType.Success);
         }
-        
+        /// <summary>
+        /// 用户分配角色获取列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<OperationResponse<List<RoleOutPutPageDto>>> GetSelectedListAsync()
+        {
+            var dtolist = await _roleManager.Roles.Select(x => new RoleOutPutPageDto { Id = x.Id,Name=x.Name,IsAdmin=x.IsAdmin }).ToListAsync();
+            return new OperationResponse<List<RoleOutPutPageDto>>(ResultMessage.AllocationSucces, dtolist, OperationEnumType.Success);
+        }
     }
 }

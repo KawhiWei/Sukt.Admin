@@ -12,6 +12,15 @@ namespace Sukt.Core.Domain.Models
     [DisplayName("用户角色")]
     public class UserRoleEntity : UserRoleBase<Guid, Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
+        public UserRoleEntity() : base()
+        {
+        }
+        public UserRoleEntity(Guid userId,Guid roleId):base()
+        {
+            UserId = userId;
+            RoleId = roleId;
+        }
+
         /// <summary>
         /// 角色Id
         /// </summary>

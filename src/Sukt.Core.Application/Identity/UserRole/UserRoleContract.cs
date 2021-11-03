@@ -24,23 +24,17 @@ namespace Sukt.Core.Application.Identity.UserRole
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async Task<OperationResponse> AllocationRoleAsync(UserRoleInputDto dto)
+        public async Task<OperationResponse> AllocationRoleAsync(Guid userId, Guid[] roleids)
         {
-            //dto.NotNull(nameof(dto));
-            //return await _userRoleRepository.UnitOfWork.UseTranAsync(async () =>
-            //{
-            //    await _userRoleRepository.DeleteBatchAsync(x => x.UserId == dto.Id);
-            //    if (dto.RoleIds?.Any() == true)
-            //    {
-            //        await _userRoleRepository.InsertAsync(dto.RoleIds.Select(x => new UserRoleEntity
-            //        {
-            //            RoleId = x,
-            //            UserId = dto.Id
-            //        }).ToArray());
-            //    }
-            await Task.CompletedTask;
+            return await _userRoleRepository.UnitOfWork.UseTranAsync(async () =>
+            {
+                await _userRoleRepository.DeleteBatchAsync(x => x.UserId == userId);
+                if (roleids?.Any() == true)
+                {
+                    await _userRoleRepository.InsertAsync(roleids.Select(x => new UserRoleEntity(userId, x)).ToArray());
+                }
                 return new OperationResponse(ResultMessage.AllocationSucces, OperationEnumType.Success);
-            //});
+            });
         }
         /// <summary>
         /// 获取用户角色
@@ -49,8 +43,7 @@ namespace Sukt.Core.Application.Identity.UserRole
         /// <returns></returns>
         public async Task<OperationResponse> GetLoadUserRoleAsync(Guid id)
         {
-            await Task.CompletedTask;
-            return new OperationResponse(ResultMessage.LoadSucces, /*await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == id).Select(x => x.RoleId).ToListAsync(),*/ OperationEnumType.Success);
+            return new OperationResponse(ResultMessage.LoadSucces, await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == id).Select(x => x.RoleId).ToListAsync(), OperationEnumType.Success);
         }
     }
 }

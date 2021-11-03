@@ -8,5 +8,8 @@ namespace Sukt.Core.Identity
           where TUserKey : IEquatable<TUserKey>
           where TRoleKey : IEquatable<TRoleKey>
     {
+        protected UserRoleBase()
+        {
+        }
     }
 }

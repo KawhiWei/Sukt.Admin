@@ -22,23 +22,25 @@ namespace Sukt.Core.API.Controllers
         /// <summary>
         /// 用户分配角色
         /// </summary>
+        /// <param name="id"></param>
+        /// <param name="roleids"></param>
         /// <returns></returns>
         [Description("用户分配角色")]
-        [HttpPost]
+        [HttpPost("{id}")]
         [AuditLog]
-        public async Task<AjaxResult> AllocationUserRoleAsync([FromBody] UserRoleInputDto dto)
+        public async Task<AjaxResult> AllocationUserRoleAsync(Guid id, [FromBody] Guid[] roleids)
         {
-            return (await _userRoleContract.AllocationRoleAsync(dto)).ToAjaxResult();
+            return (await _userRoleContract.AllocationRoleAsync(id, roleids)).ToAjaxResult();
         }
         /// <summary>
         /// 获取用户角色
         /// </summary>
         /// <returns></returns>
         [Description("获取用户角色")]
-        [HttpGet]
-        public async Task<AjaxResult> GetLoadUserRoleAsync([FromQuery] Guid? id)
+        [HttpGet("{id}")]
+        public async Task<AjaxResult> GetLoadUserRoleAsync(Guid id)
         {
-            return (await _userRoleContract.GetLoadUserRoleAsync(id.Value)).ToAjaxResult();
+            return (await _userRoleContract.GetLoadUserRoleAsync(id)).ToAjaxResult();
         }
     }
 }

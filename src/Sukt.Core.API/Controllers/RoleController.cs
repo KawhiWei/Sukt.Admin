@@ -91,15 +91,5 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _roleContract.GetPageAsync(request)).PageList();
         }
-        /// <summary>
-        /// 角色分配权限
-        /// </summary>
-        /// <returns></returns>
-        [Description("角色分配权限")]
-        [HttpPost]
-        public async Task<AjaxResult> AllocationRoleMenuAsync([FromBody] RoleMenuInputDto dto)
-        {
-            return (await _roleContract.AllocationRoleMenuAsync(dto)).ToAjaxResult();
-        }
     }
 }

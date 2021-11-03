@@ -324,12 +324,6 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.RoleController.AllocationRoleMenuAsync(Sukt.Core.Dtos.Identity.Role.RoleMenuInputDto)">
-            <summary>
-            角色分配权限
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:Sukt.Core.API.Controllers.TestMQController">
             <summary>
             压测消息总线
@@ -403,13 +397,15 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserRoleController.AllocationUserRoleAsync(Sukt.Core.Dtos.Identity.UserRole.UserRoleInputDto)">
+        <member name="M:Sukt.Core.API.Controllers.UserRoleController.AllocationUserRoleAsync(System.Guid,System.Guid[])">
             <summary>
             用户分配角色
             </summary>
+            <param name="id"></param>
+            <param name="roleids"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.UserRoleController.GetLoadUserRoleAsync(System.Nullable{System.Guid})">
+        <member name="M:Sukt.Core.API.Controllers.UserRoleController.GetLoadUserRoleAsync(System.Guid)">
             <summary>
             获取用户角色
             </summary>
