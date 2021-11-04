@@ -8,17 +8,27 @@ namespace Sukt.Core.Domain.Models.Authority
     [DisplayName("角色权限管理")]
     public class RoleMenuEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
+        public RoleMenuEntity()
+        {
+        }
+
+        public RoleMenuEntity(Guid roleId, Guid menuId)
+        {
+            RoleId = roleId;
+            MenuId = menuId;
+        }
+
         /// <summary>
         /// 角色
         /// </summary>
         [DisplayName("角色")]
-        public RoleEntity Role { get; set; }
+        public Guid RoleId { get; set; }
 
         /// <summary>
         /// 菜单
         /// </summary>
         [DisplayName("菜单")]
-        public MenuEntity Menu { get; set; }
+        public Guid MenuId { get; set; }
 
         /// <summary>
         /// 租户ID

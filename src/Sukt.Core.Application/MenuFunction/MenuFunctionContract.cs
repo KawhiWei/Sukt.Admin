@@ -58,7 +58,7 @@ namespace Sukt.Core.Application.MenuFunction
             //    IsEnabled = x.IsEnabled,
             //    Name = x.Name,
             //}).ToListAsync(), OperationEnumType.Success);
-            return new OperationResponse(ResultMessage.LoadSucces, OperationEnumType.Success);
+            return new OperationResponse(ResultMessage.DataSuccess, OperationEnumType.Success);
 
         }
     }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.EntityFrameworkCore;
 
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(SuktContext))]
-    partial class SuktContextModelSnapshot : ModelSnapshot
+    [Migration("20211104074647_default_4")]
+    partial class default_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1210,9 +1212,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("MicroName")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("longtext")
-                        .HasDefaultValue("");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1223,9 +1223,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("ParentNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("longtext")
-                        .HasDefaultValue("");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Path")
                         .HasMaxLength(200)

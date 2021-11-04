@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sukt.Core.Domain.Models;
 using Sukt.Core.Domain.Models.Menu;
+using Sukt.Core.Dtos;
 using Sukt.Core.Dtos.Menu;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Enums;
@@ -71,7 +72,7 @@ namespace Sukt.Core.Application
             var entity = await _menu.GetByIdAsync(id);
             entity.Update(input.Name, input.Path, input.ParentId, input.Icon, input.ParentNumber, input.Component, input.ComponentName, input.IsShow, input.Sort, input.ButtonClick, input.Type, input.MicroName);
             var menuFunctionItems = new List<MenuFunctionEntity>();
-            if (input.FunctionIds!=null &&  input.FunctionIds.Any())
+            if (input.FunctionIds != null && input.FunctionIds.Any())
             {
                 menuFunctionItems.AddRange(input.FunctionIds.Select(x => new MenuFunctionEntity(entity.Id, x)));
             }
@@ -114,6 +115,31 @@ namespace Sukt.Core.Application
                     p.Tabs.AddRange(datalist.Where(a => a.Type == MenuEnum.Tab));
                 }
                 );
+            OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
+            return operationResponse;
+        }
+        public async Task<OperationResponse> GetTreeAsync()
+        {
+            var list = await _menu.NoTrackEntities.Select(x => new TreeOutputDto
+            {
+                Id = x.Id,
+                Title = x.Name,
+                ParentId = x.ParentId,
+                ParentNumbers = x.ParentNumber
+            }).ToListAsync();
+            list = list.ToTree(
+                (p, children) =>
+                {
+                    return children.ParentId == Guid.Empty;
+                },
+                (p, children) =>
+                {
+                    return p.Id == children.ParentId;
+                },
+                (p, children) =>
+                {
+                    p.Children.AddRange(children);
+                });
             OperationResponse operationResponse = new OperationResponse(ResultMessage.DataSuccess, list, OperationEnumType.Success);
             return operationResponse;
         }

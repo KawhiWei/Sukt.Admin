@@ -47,5 +47,10 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <returns></returns>
         Task<OperationResponse> GetUserMenuTreeAsync();
+        /// <summary>
+        /// 获取树形结构
+        /// </summary>
+        /// <returns></returns>
+        Task<OperationResponse> GetTreeAsync();
     }
 }

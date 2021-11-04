@@ -21,6 +21,8 @@ namespace Sukt.Core.Domain.Models.Menu
             b.Property(o => o.ButtonClick).HasMaxLength(200).IsRequired();
             b.Property(o => o.Path).HasMaxLength(200);
             b.Property(o => o.Sort).HasDefaultValue(0);
+            b.Property(o => o.ParentNumber).HasDefaultValue("");
+            b.Property(o => o.MicroName).HasDefaultValue("");
             b.ToTable("Menu");
         }
     }

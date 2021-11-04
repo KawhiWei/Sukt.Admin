@@ -43,7 +43,7 @@ namespace Sukt.Core.Application.Identity.UserRole
         /// <returns></returns>
         public async Task<OperationResponse> GetLoadUserRoleAsync(Guid id)
         {
-            return new OperationResponse(ResultMessage.LoadSucces, await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == id).Select(x => x.RoleId).ToListAsync(), OperationEnumType.Success);
+            return new OperationResponse(ResultMessage.DataSuccess, await _userRoleRepository.NoTrackEntities.Where(x => x.UserId == id).Select(x => x.RoleId).ToListAsync(), OperationEnumType.Success);
         }
     }
 }

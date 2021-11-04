@@ -18,12 +18,10 @@ namespace Sukt.Core.Application.Identity.Role
 {
     public class RoleContract : IRoleContract
     {
-        private readonly IEFCoreRepository<RoleMenuEntity, Guid> _roleMenuRepository;
         private readonly RoleManager<RoleEntity> _roleManager;
 
-        public RoleContract(IEFCoreRepository<RoleMenuEntity, Guid> roleMenuRepository, RoleManager<RoleEntity> roleManager)
+        public RoleContract(RoleManager<RoleEntity> roleManager)
         {
-            _roleMenuRepository = roleMenuRepository;
             _roleManager = roleManager;
         }
 

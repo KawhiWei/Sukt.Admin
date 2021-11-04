@@ -102,5 +102,15 @@ namespace Sukt.Core.API.Controllers
         {
             return (await _menu.GetUserMenuTreeAsync()).ToAjaxResult();
         }
+        /// <summary>
+        /// 获取树形结构
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Description("获取树形结构")]
+        public async Task<AjaxResult> GetTreeAsync()
+        {
+            return (await _menu.GetTreeAsync()).ToAjaxResult();
+        }
     }
 }

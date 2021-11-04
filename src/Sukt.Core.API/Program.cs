@@ -16,9 +16,9 @@ namespace Sukt.Core.API
     {
         public static void Main(string[] args)
         {
-            //ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
-            //Console.WriteLine($"{workerThreads}, {completionPortThreads}");
-            //ThreadPool.SetMinThreads(60,60);
+            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
+            Console.WriteLine($"{workerThreads}, {completionPortThreads}");
+            ThreadPool.SetMinThreads(workerThreads * 16, completionPortThreads * 16);
             //Log.Logger = new LoggerConfiguration()
 
             //    .MinimumLevel.Information()
@@ -33,7 +33,7 @@ namespace Sukt.Core.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            //.UseServiceContext()
+                //.UseServiceContext()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     //如果API项目需要接入GRPC服务需要配置两个Kestrel主机，分别指定两个不通端口，因为GRPC默认是使用https 
