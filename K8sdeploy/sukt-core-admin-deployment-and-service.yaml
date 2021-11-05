@@ -6,7 +6,7 @@ metadata:
   name: sukt-core-admin
   namespace: sukt-core
 spec:
-  replicas: 3
+  replicas: 9
   selector:
     matchLabels:
       app: sukt-core-admin
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-core-admin
-        image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1331870363.25
+        image: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:dockerfilebuild.1421817017.41
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
@@ -42,8 +42,8 @@ spec:
             # timeoutSeconds: 60
         resources:
           limits:
-            memory: "4Gi"
-            cpu: "2000m"
+            memory: "2Gi"
+            cpu: "1000m"
         ports:
         - containerPort: 80
           protocol: TCP

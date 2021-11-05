@@ -44,9 +44,6 @@ jobs:
         push: true
     - name: Docker Images List # 列出所有镜像
       run: docker images
-    # - name: SSH Connection K8SMaster # 列出所有镜像
-    #   run: |
-    #     apt-get install sshpass
         
 
     # 第二种方式推送镜像，动态版本号

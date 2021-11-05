@@ -1,0 +1,15 @@
+name: CD
+on:
+  - push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 触发部署到K8S
+        uses: phamquyhai/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          args: apply /home/runner/work/Sukt.Core/Sukt.Core/K8sdeploy/sukt-core-admin-deployment-and-service.yaml
