@@ -13,13 +13,13 @@ namespace Sukt.Core.Dtos.Menu
         /// 菜单名称
         /// </summary>
         [DisplayName("菜单名称")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         /// <summary>
         /// 路由地址(前端)
         /// </summary>
         [DisplayName("路由")]
-        public string Path { get; set; }
+        public string Path { get; set; } = "";
 
         /// <summary>
         /// 父级菜单ID
@@ -31,25 +31,25 @@ namespace Sukt.Core.Dtos.Menu
         /// 菜单图标
         /// </summary>
         [DisplayName("菜单图标")]
-        public string Icon { get; set; }
+        public string Icon { get; set; } = "";
 
         /// <summary>
         /// 当前菜单以上所有的父级
         /// </summary>
         [DisplayName("当前菜单以上所有的父级")]
-        public string ParentNumber { get; set; }
+        public string ParentNumber { get; set; } = "";
 
         /// <summary>
         /// 组件地址
         /// </summary>
         [DisplayName("组件地址")]
-        public string Component { get; set; }
+        public string Component { get; set; } = "";
 
         /// <summary>
         /// 组件名称
         /// </summary>
         [DisplayName("组件名称")]
-        public string ComponentName { get; set; }
+        public string ComponentName { get; set; } = "";
 
         /// <summary>
         /// 是否显示
@@ -79,7 +79,7 @@ namespace Sukt.Core.Dtos.Menu
         /// 当前菜单对应的子应用
         /// </summary>
         [DisplayName("菜单对应子应用")]
-        public string MicroName { get; set; }
+        public string MicroName { get; set; } = "";
         /// <summary>
         /// API接口id
         /// </summary>

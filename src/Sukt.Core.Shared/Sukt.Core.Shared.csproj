@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Sukt.MongoDB" Version="1.0.19" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.19" />
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.19" />
-    <PackageReference Include="Sukt.Aop" Version="1.0.19" />
-    <PackageReference Include="Sukt.AutoMapper" Version="1.0.19" />
+    <PackageReference Include="Sukt.MongoDB" Version="1.1.1" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.1.1" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Sukt.Aop" Version="1.1.1" />
+    <PackageReference Include="Sukt.AutoMapper" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

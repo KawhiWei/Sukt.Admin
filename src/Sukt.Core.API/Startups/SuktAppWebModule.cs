@@ -67,7 +67,7 @@ namespace Sukt.Core.API.Startups
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
-            AppOptionSettings option = new AppOptionSettings();
+            AppOptionSettings option = new ();
             if (configuration != null)
             {
                 configuration.Bind("SuktCore", option);

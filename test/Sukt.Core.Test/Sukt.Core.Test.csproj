@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -16,11 +16,11 @@
     <Compile Remove="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.19" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.19" />
-    <PackageReference Include="Sukt.TestBase" Version="1.0.19" />
-    <PackageReference Include="Sukt.CodeGenerator" Version="1.0.19" />
-    <PackageReference Include="Sukt.MongoDB" Version="1.0.19" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.1.1" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.1.1" />
+    <PackageReference Include="Sukt.TestBase" Version="1.1.1" />
+    <PackageReference Include="Sukt.CodeGenerator" Version="1.1.1" />
+    <PackageReference Include="Sukt.MongoDB" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.Development.json" />
@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.10" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>

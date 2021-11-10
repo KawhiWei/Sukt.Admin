@@ -7,7 +7,6 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using Sukt.AuthServer.Extensions;
 using static Sukt.Module.Core.SuktAuthServerConstants;
 using System.Text.Json;
 using Sukt.Module.Core;
@@ -53,7 +52,7 @@ namespace Sukt.AuthServer.Generator
                     Logger.LogWarning("Certificate {subjectName} has expired on {expiration}", cert.Subject, cert.NotAfter.ToString(CultureInfo.InvariantCulture));
                 }
 
-                header["x5t"] = Base64Url.Encode(cert.GetCertHash());
+                header["x5t"] = Sukt.AuthServer.Extensions.Base64Url.Encode(cert.GetCertHash());
             }
             if (request.Type == TokenTypes.AccessToken)
             {

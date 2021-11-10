@@ -33,7 +33,7 @@ namespace Sukt.AuthServer.EndpointRouterHandler
                 if (context.Request.Path.Equals(handlerpath, StringComparison.OrdinalIgnoreCase))
                 {
                     var endpointName = endpoint.Name;
-                    _logger.LogDebug("请求路由地址与端点路由匹配成功！", context.Request.Path, endpointName);
+                    _logger.LogDebug("请求路由地址与端点路由匹配成功！{}", new object[] { context.Request.Path, endpointName });
                     return GetEndpointHandler(endpoint, context);
                 }
             }
@@ -51,10 +51,10 @@ namespace Sukt.AuthServer.EndpointRouterHandler
             //获取处理器
             if (context.RequestServices.GetService(endpoint.Handler) is IEndpointHandler handler)
             {
-                _logger.LogDebug("处理器获取成功！", endpoint.Name, endpoint.Handler.FullName);
+                _logger.LogDebug("处理器获取成功！{}",new object[] { endpoint.Name, endpoint.Handler.FullName });
                 return handler;
             }
-            _logger.LogDebug("处理器获取失败！", endpoint.Name, endpoint.Handler.FullName);
+            _logger.LogDebug("处理器获取失败！{}", new object[] { endpoint.Name, endpoint.Handler.FullName });
             return null;
         }
     }
