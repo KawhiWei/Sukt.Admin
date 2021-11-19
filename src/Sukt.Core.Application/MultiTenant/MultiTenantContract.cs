@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using Sukt.Module.Core.Extensions.OrderExtensions;
 using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.ResultMessageConst;
 
 namespace Sukt.Core.Application.MultiTenant
 {
@@ -27,7 +28,7 @@ namespace Sukt.Core.Application.MultiTenant
             return await _multiTenantRepository.InsertAsync(entity);
         }
 
-        public async Task<IPageResult<MultiTenantOutPutPageDto>> GetLoadPageAsync(PageRequest request)
+        public async Task<IPageResult<MultiTenantOutPutPageDto>> GetPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
             OrderCondition<MultiTenantEntity>[] orderConditions = new OrderCondition<MultiTenantEntity>[] { new OrderCondition<MultiTenantEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
@@ -35,9 +36,11 @@ namespace Sukt.Core.Application.MultiTenant
             return await _multiTenantRepository.NoTrackEntities.ToPageAsync<MultiTenantEntity, MultiTenantOutPutPageDto>(request);
         }
 
-        public Task<OperationResponse> LoadAsync(Guid id)
+        public async Task<OperationResponse> LoadFormAsync(Guid id)
         {
-            throw new NotImplementedException();
+            MultiTenantEntity entity = await _multiTenantRepository.GetByIdAsync(id);
+            return new OperationResponse(ResultMessage.AllocationSucces, entity.MapTo<MultiTenantOutPutPageDto>(), OperationEnumType.Success);
+
         }
 
         public async Task<OperationResponse> UpdateAsync(Guid id, MultiTenantInputDto input)
@@ -46,6 +49,10 @@ namespace Sukt.Core.Application.MultiTenant
             MultiTenantEntity entity = await _multiTenantRepository.GetByIdAsync(id);
             entity.Update(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
             return await _multiTenantRepository.UpdateAsync(entity);
+        }
+        public async Task<OperationResponse> DeleteAsync(Guid id)
+        {
+            return await _multiTenantRepository.DeleteAsync(id);
         }
     }
 }

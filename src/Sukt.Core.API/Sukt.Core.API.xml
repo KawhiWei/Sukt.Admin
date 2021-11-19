@@ -267,18 +267,25 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.LoadAsync(System.Nullable{System.Guid})">
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.LoadFormAsync(System.Guid)">
             <summary>
             加载租户
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.GetLoadPageAsync(Sukt.Module.Core.Entity.PageRequest)">
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.GetPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             分页获获取租户
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sukt.Core.API.Controllers.MultiTenantController.DeleteAsync(System.Guid)">
+            <summary>
+            删除租户
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:Sukt.Core.API.Controllers.OrganizationController">

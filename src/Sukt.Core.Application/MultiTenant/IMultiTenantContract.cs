@@ -27,13 +27,19 @@ namespace Sukt.Core.Application.MultiTenant
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<OperationResponse> LoadAsync(Guid id);
+        Task<OperationResponse> LoadFormAsync(Guid id);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IPageResult<MultiTenantOutPutPageDto>> GetLoadPageAsync(PageRequest request);
+        Task<IPageResult<MultiTenantOutPutPageDto>> GetPageAsync(PageRequest request);
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<OperationResponse> DeleteAsync(Guid id);
 
     }
 }

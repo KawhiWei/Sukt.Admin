@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Sukt.Core.API.Controllers
 {
     /// <summary>
-    /// 功能管理
+    /// 租户管理
     /// </summary>
     [Description("租户管理")]
     public class MultiTenantController : ApiControllerBase
@@ -32,7 +32,7 @@ namespace Sukt.Core.API.Controllers
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        [Description("创建菜单")]
+        [Description("创建租户")]
         [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] MultiTenantInputDto input)
         {
@@ -56,11 +56,11 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         [Description("加载租户")]
-        public async Task<AjaxResult> LoadAsync(Guid? id)
+        public async Task<AjaxResult> LoadFormAsync(Guid id)
         {
-            return (await _multiTenantContract.LoadAsync(id.Value)).ToAjaxResult();
+            return (await _multiTenantContract.LoadFormAsync(id)).ToAjaxResult();
         }
         /// <summary>
         /// 分页获获取租户
@@ -69,9 +69,21 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("分页获获取租户")]
-        public async Task<PageList<MultiTenantOutPutPageDto>> GetLoadPageAsync([FromBody] PageRequest request)
+        public async Task<PageList<MultiTenantOutPutPageDto>> GetPageAsync([FromBody] PageRequest request)
         {
-            return (await _multiTenantContract.GetLoadPageAsync(request)).PageList();
+            return (await _multiTenantContract.GetPageAsync(request)).PageList();
+        }
+        /// <summary>
+        /// 删除租户
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Description("删除租户")]
+        [AuditLog]
+        public async Task<AjaxResult> DeleteAsync(Guid id)
+        {
+            return (await _multiTenantContract.DeleteAsync(id)).ToAjaxResult();
         }
     }
 }
