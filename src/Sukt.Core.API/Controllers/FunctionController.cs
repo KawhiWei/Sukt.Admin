@@ -43,13 +43,25 @@ namespace Sukt.Core.API.Controllers
         /// 修改功能
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Description("修改功能")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync([FromBody] FunctionInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id, [FromBody] FunctionInputDto input)
         {
-            return (await _function.UpdateAsync(input)).ToAjaxResult();
+            return (await _function.UpdateAsync(id,input)).ToAjaxResult();
+        }
+        /// <summary>
+        /// 根据Id加载表单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [Description("加载表单")]
+        public async Task<AjaxResult> LoadFormAsync(Guid id)
+        {
+            return (await _function.LoadFromAsync(id)).ToAjaxResult();
         }
 
         /// <summary>
@@ -57,12 +69,12 @@ namespace Sukt.Core.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Description("删除功能")]
         [AuditLog]
-        public async Task<AjaxResult> DeleteAsyc(Guid? id)
+        public async Task<AjaxResult> DeleteAsync(Guid id)
         {
-            return (await _function.DeleteAsync(id.Value)).ToAjaxResult();
+            return (await _function.DeleteAsync(id)).ToAjaxResult();
         }
 
         /// <summary>
@@ -72,20 +84,9 @@ namespace Sukt.Core.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Description("异步得到功能分页")]
-        public async Task<PageList<FunctionOutputPageDto>> GetFunctionPageAsync([FromBody] PageRequest request)
+        public async Task<PageList<FunctionOutputPageDto>> GetPageAsync([FromBody] PageRequest request)
         {
-            return (await _function.GetFunctionPageAsync(request)).PageList();
-        }
-
-        /// <summary>
-        /// 异步获取功能下拉框列表
-        /// </summary>
-        /// <returns></returns>
-        [Description("异步获取功能下拉框列表")]
-        [HttpGet]
-        public async Task<AjaxResult> GetFunctionSelectListItemAsync()
-        {
-            return (await _function.GetFunctionSelectListItemAsync()).ToAjaxResult();
+            return (await _function.GetPageAsync(request)).PageList();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Sukt.Core.Application.MultiTenant
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(MultiTenantInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id, MultiTenantInputDto input);
         /// <summary>
         /// 加载租户
         /// </summary>

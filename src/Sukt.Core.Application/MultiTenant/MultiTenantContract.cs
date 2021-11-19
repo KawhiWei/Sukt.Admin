@@ -23,7 +23,8 @@ namespace Sukt.Core.Application.MultiTenant
         public async Task<OperationResponse> CreatAsync(MultiTenantInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _multiTenantRepository.InsertAsync(input);
+            MultiTenantEntity entity = new(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
+            return await _multiTenantRepository.InsertAsync(entity);
         }
 
         public async Task<IPageResult<MultiTenantOutPutPageDto>> GetLoadPageAsync(PageRequest request)
@@ -39,10 +40,12 @@ namespace Sukt.Core.Application.MultiTenant
             throw new NotImplementedException();
         }
 
-        public async Task<OperationResponse> UpdateAsync(MultiTenantInputDto input)
+        public async Task<OperationResponse> UpdateAsync(Guid id, MultiTenantInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _multiTenantRepository.UpdateAsync(input);
+            MultiTenantEntity entity = await _multiTenantRepository.GetByIdAsync(id);
+            entity.Update(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
+            return await _multiTenantRepository.UpdateAsync(entity);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Sukt.Core.Domain.Models.Authority
         /// 创建时间
         /// </summary>
         [DisplayName("创建时间")]
-        public virtual DateTime CreatedAt { get; set; }
+        public virtual DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// 修改人ID
@@ -60,7 +60,7 @@ namespace Sukt.Core.Domain.Models.Authority
         ///修改时间
         /// </summary>
         [DisplayName("修改时间")]
-        public virtual DateTime LastModifedAt { get; set; }
+        public virtual DateTimeOffset? LastModifedAt { get; set; }
 
         /// <summary>
         /// 是否删除

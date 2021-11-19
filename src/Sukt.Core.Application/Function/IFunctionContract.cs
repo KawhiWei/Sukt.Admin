@@ -21,24 +21,11 @@ namespace Sukt.Core.Application
         /// <param name="input"></param>
         /// <returns></returns>
         Task<OperationResponse> InsertAsync(FunctionInputDto input);
-
-        ///// <summary>
-        ///// 分页获取
-        ///// </summary>
-        ///// <param name="query"></param>
-        ///// <returns></returns>
-        //Task<PageResult<DataDictionaryOutDto>> GetResultAsync();
-        ///// <summary>
-        ///// 获取树形数据
-        ///// </summary>
-        ///// <param name="query"></param>
-        ///// <returns></returns>
-        //Task<TreeData<TreeDictionaryOutDto>> GetTreeAsync();
         /// <summary>
         /// 修改一行数据
         /// </summary>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(FunctionInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id,FunctionInputDto input);
 
         /// <summary>
         /// 删除一行数据
@@ -51,12 +38,13 @@ namespace Sukt.Core.Application
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task<IPageResult<FunctionOutputPageDto>> GetFunctionPageAsync(PageRequest request);
-
+        Task<IPageResult<FunctionOutputPageDto>> GetPageAsync(PageRequest request);
         /// <summary>
-        /// 获取功能下拉框列表
+        /// 加载表单
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
-        Task<OperationResponse<IEnumerable<SelectListItem>>> GetFunctionSelectListItemAsync();
+        Task<OperationResponse> LoadFromAsync(Guid id);
+
     }
 }

@@ -6,8 +6,7 @@ using System.ComponentModel;
 
 namespace Sukt.Core.Dtos.MultiTenant
 {
-    [SuktAutoMapper(typeof(MultiTenantEntity))]
-    public class MultiTenantInputDto : InputDto<Guid>
+    public class MultiTenantInputDto
     {
         /// <summary>
         /// 公司名称

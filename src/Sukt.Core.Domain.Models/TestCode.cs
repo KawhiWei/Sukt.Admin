@@ -57,7 +57,7 @@ namespace Sukt.Core.Domain.Models.Entities
         /// 获取或设置创建时间
         /// </summary>
         [DisplayName("创建时间")]
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// 获取或设置最后修改用户
@@ -68,7 +68,7 @@ namespace Sukt.Core.Domain.Models.Entities
         /// 获取或设置最后修改时间
         /// </summary>
         [DisplayName("最后修改时间")]
-        public DateTime LastModifedAt { get; set; }
+        public DateTimeOffset? LastModifedAt { get; set; }
 
     }
 }

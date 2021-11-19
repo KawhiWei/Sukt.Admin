@@ -10,6 +10,23 @@ namespace Sukt.Core.Domain.Models.MultiTenant
     [DisplayName("租户管理")]
     public class MultiTenantEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
+        public MultiTenantEntity(string companyName, string linkMan, string phoneNumber, bool isEnable, string email)
+        {
+            CompanyName = companyName;
+            LinkMan = linkMan;
+            PhoneNumber = phoneNumber;
+            IsEnable = isEnable;
+            Email = email;
+        }
+        public void Update(string companyName, string linkMan, string phoneNumber, bool isEnable, string email)
+        {
+            CompanyName = companyName;
+            LinkMan = linkMan;
+            PhoneNumber = phoneNumber;
+            IsEnable = isEnable;
+            Email = email;
+        }
+
         /// <summary>
         /// 公司名称
         /// </summary>
@@ -47,7 +64,7 @@ namespace Sukt.Core.Domain.Models.MultiTenant
         /// 创建时间
         /// </summary>
         [DisplayName("创建时间")]
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         /// <summary>
         /// 最后修改人
         /// </summary>
@@ -57,7 +74,7 @@ namespace Sukt.Core.Domain.Models.MultiTenant
         /// 最后修改时间
         /// </summary>
         [DisplayName("最后修改时间")]
-        public DateTime LastModifedAt { get; set; }
+        public DateTimeOffset? LastModifedAt { get; set; }
         /// <summary>
         /// 是否删除
         /// </summary>

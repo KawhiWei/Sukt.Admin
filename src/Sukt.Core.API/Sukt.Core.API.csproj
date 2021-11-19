@@ -34,20 +34,20 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
     <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Sukt.WebSocketServer" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
+    <PackageReference Include="Sukt.WebSocketServer" Version="1.1.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="Sukt.Swagger" Version="1.1.0" />
-    <PackageReference Include="Sukt.SeriLog" Version="1.1.0" />
-    <PackageReference Include="Sukt.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="Sukt.Swagger" Version="1.1.3" />
+    <PackageReference Include="Sukt.SeriLog" Version="1.1.3" />
+    <PackageReference Include="Sukt.AspNetCore" Version="1.1.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,7 +70,7 @@
   </ItemGroup>
 
   <ProjectExtensions>
-    <VisualStudio><UserProperties /></VisualStudio>
+    <VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://json.schemastore.org/appsettings.json" /></VisualStudio>
   </ProjectExtensions>
 
 

@@ -27,19 +27,13 @@ namespace Sukt.Core.Application
             _functionRepository = functionRepository;
             _redisRepository = redisRepository;
         }
-
-        public async Task<OperationResponse> DeleteAsync(Guid id)
-        {
-            id.NotEmpty(nameof(id));
-            return await _functionRepository.DeleteAsync(id);
-        }
-
         private IQueryable<FunctionEntity> Entities => _functionRepository.NoTrackEntities;
 
         public async Task<OperationResponse> InsertAsync(FunctionInputDto input)
         {
             input.NotNull(nameof(input));
-            return await _functionRepository.InsertAsync(input, async f =>
+            FunctionEntity entity = new(input.Name, input.Description, input.IsEnabled, input.LinkUrl);
+            return await _functionRepository.InsertAsync(entity, async f =>
              {
                  bool isExist = await this.Entities.Where(x => x.LinkUrl.ToLower() == input.LinkUrl.ToLower()).AnyAsync();
                  if (isExist)
@@ -47,59 +41,40 @@ namespace Sukt.Core.Application
              });
         }
 
-        public async Task<IPageResult<FunctionOutputPageDto>> GetFunctionPageAsync(PageRequest request)
+        public async Task<IPageResult<FunctionOutputPageDto>> GetPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
             OrderCondition<FunctionEntity>[] orderConditions = new OrderCondition<FunctionEntity>[] { new OrderCondition<FunctionEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
             request.OrderConditions = orderConditions;
             return await _functionRepository.NoTrackEntities.ToPageAsync<FunctionEntity, FunctionOutputPageDto>(request);
         }
-
-        public async Task<OperationResponse> UpdateAsync(FunctionInputDto input)
+        /// <summary>
+        /// 加载表单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<OperationResponse> LoadFromAsync(Guid id)
         {
-            input.NotNull(nameof(input));
-            return await _functionRepository.UpdateAsync(input, async (f, e) =>
-            {
-                bool isExist = await this.Entities.Where(o => o.Id != f.Id && o.LinkUrl.ToLower() == f.LinkUrl.ToLower()).AnyAsync();
-                if (isExist)
-                {
-                    throw new SuktAppException("此功能已存在!!!");
-                }
-            });
+            FunctionEntity entity= await _functionRepository.GetByIdAsync(id);
+            return new OperationResponse(ResultMessage.DataSuccess, entity.MapTo<FunctionOutputPageDto>(), OperationEnumType.Success);
         }
 
-        /// <summary>
-        /// 获取功能下拉框列表
-        /// </summary>
-        /// <returns></returns>
-        public async Task<OperationResponse<IEnumerable<SelectListItem>>> GetFunctionSelectListItemAsync()
+        public async Task<OperationResponse> UpdateAsync(Guid id, FunctionInputDto input)
         {
-            //var key = "Order002";
-            //var lockerkey = await _redisRepository.LockAsync(key, TimeSpan.FromSeconds(20));
-            //try
-            //{
-            //    if (!lockerkey)
-            //    {
-            //        Console.WriteLine("获取锁失败了");
-            //    }
-            //    Console.WriteLine("获取到了锁");
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    await _redisRepository.UnLockAsync(key);
-            //}
-
-            var functions = await _functionRepository.NoTrackEntities.OrderBy(o => o.Name).Select(x => new SelectListItem
+            input.NotNull(nameof(input));
+            FunctionEntity entity = await _functionRepository.GetByIdAsync(id);
+            entity.SetFiled(input.Name, input.Description, input.IsEnabled, input.LinkUrl);
+            bool isExist = await this.Entities.Where(o => o.Id != id && o.LinkUrl.ToLower() == entity.LinkUrl.ToLower()).AnyAsync();
+            if (isExist)
             {
-                Value = x.Id.ToString().ToLower(),
-                Text = x.Name,
-                Selected = false
-            }).ToListAsync();
-            return new OperationResponse<IEnumerable<SelectListItem>>(ResultMessage.DataSuccess, functions, OperationEnumType.Success);
+                return new OperationResponse("此功能已存在!!!", OperationEnumType.Error);
+            }
+            return await _functionRepository.UpdateAsync(entity);
+        }
+        public async Task<OperationResponse> DeleteAsync(Guid id)
+        {
+            id.NotEmpty(nameof(id));
+            return await _functionRepository.DeleteAsync(id);
         }
     }
 }

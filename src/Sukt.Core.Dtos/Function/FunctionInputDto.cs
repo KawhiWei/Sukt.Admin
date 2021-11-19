@@ -6,8 +6,7 @@ using System.ComponentModel;
 
 namespace Sukt.Core.Dtos.Function
 {
-    [SuktAutoMapper(typeof(FunctionEntity))]
-    public class FunctionInputDto : InputDto<Guid>
+    public class FunctionInputDto
     {
         [DisplayName("功能名称")]
         /// <summary>

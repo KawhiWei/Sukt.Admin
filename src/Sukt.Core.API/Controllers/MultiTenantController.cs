@@ -41,14 +41,15 @@ namespace Sukt.Core.API.Controllers
         /// <summary>
         /// 修改租户
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         [Description("修改租户")]
         [AuditLog]
-        public async Task<AjaxResult> UpdateAsync([FromBody] MultiTenantInputDto input)
+        public async Task<AjaxResult> UpdateAsync(Guid id,[FromBody] MultiTenantInputDto input)
         {
-            return (await _multiTenantContract.UpdateAsync(input)).ToAjaxResult();
+            return (await _multiTenantContract.UpdateAsync(id,input)).ToAjaxResult();
         }
         /// <summary>
         /// 加载租户

@@ -53,7 +53,7 @@ namespace Sukt.Core.Domain.Models.SystemFoundation.DataDictionary
         /// 创建时间
         /// </summary>
         [DisplayName("创建时间")]
-        public virtual DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         /// <summary>
         /// 修改人ID
@@ -65,7 +65,7 @@ namespace Sukt.Core.Domain.Models.SystemFoundation.DataDictionary
         ///修改时间
         /// </summary>
         [DisplayName("修改时间")]
-        public virtual DateTime LastModifedAt { get; set; }
+        public DateTimeOffset? LastModifedAt { get; set; }
 
         /// <summary>
         /// 是否删除

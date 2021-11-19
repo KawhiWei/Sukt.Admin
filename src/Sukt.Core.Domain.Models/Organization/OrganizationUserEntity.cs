@@ -44,7 +44,7 @@ namespace Sukt.Core.Domain.Models.Organization
         /// 创建时间
         /// </summary>
         [DisplayName("创建时间")]
-        public DateTime CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
         /// <summary>
         /// 最后修改人
         /// </summary>
@@ -54,7 +54,7 @@ namespace Sukt.Core.Domain.Models.Organization
         /// 最后修改时间
         /// </summary>
         [DisplayName("最后修改时间")]
-        public DateTime LastModifedAt { get; set; }
+        public DateTimeOffset? LastModifedAt { get; set; }
         /// <summary>
         /// 是否删除
         /// </summary>
