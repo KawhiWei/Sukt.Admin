@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.API
 {
-    public class IdentityModule : IdentityModuleBase<UserStore, RoleStore, UserEntity, UserRoleEntity, RoleEntity, Guid, Guid>
+    public class IdentityModule : IdentityModuleBase<UserStore, RoleStore, User, UserRoleEntity, RoleEntity, Guid, Guid>
     {
 
         protected override void AddAuthentication(IServiceCollection services)

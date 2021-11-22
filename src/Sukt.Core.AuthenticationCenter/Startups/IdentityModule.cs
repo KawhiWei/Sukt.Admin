@@ -13,11 +13,11 @@ namespace Sukt.Core.AuthenticationCenter.Startups
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
-            context.Services.AddScoped<IUserStore<UserEntity>, UserStore>();
+            context.Services.AddScoped<IUserStore<User>, UserStore>();
 
             context.Services.AddScoped<IRoleStore<RoleEntity>, RoleStore>();
             Action<IdentityOptions> identityOption = IdentityOption();
-            var identityBuilder = context.Services.AddIdentity<UserEntity, RoleEntity>(identityOption).AddClaimsPrincipalFactory<SuktClaimsPrincipalFactory>();
+            var identityBuilder = context.Services.AddIdentity<User, RoleEntity>(identityOption).AddClaimsPrincipalFactory<SuktClaimsPrincipalFactory>();
             context.Services.AddSingleton<IdentityErrorDescriber>(new IdentityErrorDescriberZhHans());
             UseIdentityBuilder(identityBuilder);
             AddAuthentication(context.Services);

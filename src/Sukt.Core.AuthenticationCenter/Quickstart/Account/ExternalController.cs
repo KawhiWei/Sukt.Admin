@@ -26,14 +26,14 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly ILogger<ExternalController> _logger;
-        private readonly UserManager<UserEntity> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IEventService _events;
 
         public ExternalController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events,
-             UserManager<UserEntity> userManager,
+             UserManager<User> userManager,
             ILogger<ExternalController> logger)
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection

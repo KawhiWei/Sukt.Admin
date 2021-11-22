@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Sukt.Core.Dtos
 {
     [DisplayName("用户表格Dto")]
-    [AutoMap(typeof(UserEntity))]
+    [AutoMap(typeof(User))]
     public class UserPageOutputDto : OutputDtoBase<Guid>
     {
         /// <summary>

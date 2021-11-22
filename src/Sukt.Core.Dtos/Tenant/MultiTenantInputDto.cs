@@ -1,13 +1,11 @@
-﻿using AutoMapper;
-using Sukt.Core.Domain.Models.MultiTenant;
+﻿using Sukt.Module.Core.Attributes.AutoMapper;
 using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 
-namespace Sukt.Core.Dtos.MultiTenant
+namespace Sukt.Core.Dtos.Tenant
 {
-    [AutoMap(typeof(MultiTenantEntity))]
-    public class MultiTenantOutPutPageDto : OutputDtoBase<Guid>
+    public class MultiTenantInputDto
     {
         /// <summary>
         /// 公司名称

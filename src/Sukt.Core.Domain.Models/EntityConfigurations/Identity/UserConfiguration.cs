@@ -5,9 +5,9 @@ using System;
 using Sukt.EntityFrameworkCore.MappingConfiguration;
 namespace Sukt.Core.Domain.Models
 {
-    public class UserConfiguration : EntityMappingConfiguration<UserEntity, Guid>
+    public class UserConfiguration : AggregateRootMappingConfiguration<User, Guid>
     {
-        public override void Map(EntityTypeBuilder<UserEntity> b)
+        public override void Map(EntityTypeBuilder<User> b)
         {
             b.HasKey(x => x.Id);
             b.Property(o => o.UserName).HasMaxLength(50).IsRequired();

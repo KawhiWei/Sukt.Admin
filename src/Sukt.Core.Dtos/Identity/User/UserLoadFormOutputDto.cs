@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IDN.Services.BasicsService.Dtos.Identity.User
 {
     [DisplayName("用户编辑查看加载模型")]
-    [AutoMap(typeof(UserEntity))]
+    [AutoMap(typeof(Sukt.Core.Domain.Models.User))]
     public class UserLoadFormOutputDto
     {
         /// <summary>

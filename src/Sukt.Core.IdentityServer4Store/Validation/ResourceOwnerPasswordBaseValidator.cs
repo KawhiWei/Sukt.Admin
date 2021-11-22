@@ -10,11 +10,11 @@ namespace Sukt.Core.IdentityServer4Store.Validation
 {
     public class ResourceOwnerPasswordBaseValidator : IResourceOwnerPasswordValidator
     {
-        private readonly UserManager<UserEntity> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ISystemClock _clock;
-        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public ResourceOwnerPasswordBaseValidator(UserManager<UserEntity> userManager, ISystemClock clock, SignInManager<UserEntity> signInManager)
+        public ResourceOwnerPasswordBaseValidator(UserManager<User> userManager, ISystemClock clock, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _clock = clock;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Sukt.Module.Core;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
 using System;
@@ -37,7 +38,7 @@ namespace Sukt.Core.Identity
         where TRoleKey : IEquatable<TRoleKey>
 
     {
-        private readonly IEFCoreRepository<TUser, TUserKey> _userRepository;
+        private readonly IAggregateRootRepository<TUser, TUserKey> _userRepository;
         private readonly IEFCoreRepository<TUserLogin, Guid> _userLoginRepository;
         private readonly IEFCoreRepository<TUserClaim, Guid> _userClaimRepository;
         private readonly IEFCoreRepository<TUserToken, Guid> _userTokenRepository;
@@ -47,7 +48,7 @@ namespace Sukt.Core.Identity
         private bool _disposed;
 
         protected UserStoreBase(
-            IEFCoreRepository<TUser, TUserKey> userRepository,
+            IAggregateRootRepository<TUser, TUserKey> userRepository,
             IEFCoreRepository<TUserLogin, Guid> userLoginRepository,
             IEFCoreRepository<TUserClaim, Guid> userClaimRepository,
             IEFCoreRepository<TUserToken, Guid> userTokenRepository,

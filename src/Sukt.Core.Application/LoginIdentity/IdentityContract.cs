@@ -13,11 +13,11 @@ namespace Sukt.Core.Application.LoginIdentity
 {
     public class IdentityContract : IIdentityContract
     {
-        private readonly SignInManager<UserEntity> _signInManager = null;
-        private readonly UserManager<UserEntity> _userManager = null;
+        private readonly SignInManager<User> _signInManager = null;
+        private readonly UserManager<User> _userManager = null;
         private readonly IJwtBearerService _jwtBearerService = null;
 
-        public IdentityContract(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, IJwtBearerService jwtBearerService)
+        public IdentityContract(SignInManager<User> signInManager, UserManager<User> userManager, IJwtBearerService jwtBearerService)
         {
             _signInManager = signInManager;
             _userManager = userManager;

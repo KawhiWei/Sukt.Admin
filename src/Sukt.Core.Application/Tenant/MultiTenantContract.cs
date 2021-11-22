@@ -1,5 +1,4 @@
-﻿using Sukt.Core.Domain.Models.MultiTenant;
-using Sukt.Core.Dtos.MultiTenant;
+﻿using Sukt.Core.Domain.Models.Tenant;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Enums;
 using Sukt.Module.Core.Extensions;
@@ -9,14 +8,16 @@ using System.Threading.Tasks;
 using Sukt.Module.Core.Extensions.OrderExtensions;
 using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.ResultMessageConst;
+using Sukt.Module.Core;
+using Sukt.Core.Dtos.Tenant;
 
-namespace Sukt.Core.Application.MultiTenant
+namespace Sukt.Core.Application.Tenant
 {
     public class MultiTenantContract : IMultiTenantContract
     {
-        private readonly IEFCoreRepository<MultiTenantEntity, Guid> _multiTenantRepository;
+        private readonly IAggregateRootRepository<MultiTenant, Guid> _multiTenantRepository;
 
-        public MultiTenantContract(IEFCoreRepository<MultiTenantEntity, Guid> multiTenantRepository)
+        public MultiTenantContract(IAggregateRootRepository<MultiTenant, Guid> multiTenantRepository)
         {
             _multiTenantRepository = multiTenantRepository;
         }
@@ -24,21 +25,21 @@ namespace Sukt.Core.Application.MultiTenant
         public async Task<OperationResponse> CreatAsync(MultiTenantInputDto input)
         {
             input.NotNull(nameof(input));
-            MultiTenantEntity entity = new(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
+            MultiTenant entity = new(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
             return await _multiTenantRepository.InsertAsync(entity);
         }
 
         public async Task<IPageResult<MultiTenantOutPutPageDto>> GetPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
-            OrderCondition<MultiTenantEntity>[] orderConditions = new OrderCondition<MultiTenantEntity>[] { new OrderCondition<MultiTenantEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
+            OrderCondition<MultiTenant>[] orderConditions = new OrderCondition<MultiTenant>[] { new OrderCondition<MultiTenant>(o => o.CreatedAt, SortDirectionEnum.Descending) };
             request.OrderConditions = orderConditions;
-            return await _multiTenantRepository.NoTrackEntities.ToPageAsync<MultiTenantEntity, MultiTenantOutPutPageDto>(request);
+            return await _multiTenantRepository.NoTrackEntities.ToPageAsync<MultiTenant, MultiTenantOutPutPageDto>(request);
         }
 
         public async Task<OperationResponse> LoadFormAsync(Guid id)
         {
-            MultiTenantEntity entity = await _multiTenantRepository.GetByIdAsync(id);
+            MultiTenant entity = await _multiTenantRepository.GetByIdAsync(id);
             return new OperationResponse(ResultMessage.AllocationSucces, entity.MapTo<MultiTenantOutPutPageDto>(), OperationEnumType.Success);
 
         }
@@ -46,7 +47,7 @@ namespace Sukt.Core.Application.MultiTenant
         public async Task<OperationResponse> UpdateAsync(Guid id, MultiTenantInputDto input)
         {
             input.NotNull(nameof(input));
-            MultiTenantEntity entity = await _multiTenantRepository.GetByIdAsync(id);
+            MultiTenant entity = await _multiTenantRepository.GetByIdAsync(id);
             entity.Update(input.CompanyName, input.LinkMan, input.PhoneNumber, input.IsEnable, input.Email);
             return await _multiTenantRepository.UpdateAsync(entity);
         }

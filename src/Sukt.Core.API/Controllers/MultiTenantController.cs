@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sukt.Core.Application.MultiTenant;
 using Sukt.Core.Shared;
-using Sukt.Core.Dtos.MultiTenant;
+using Sukt.Core.Dtos.Tenant;
 using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.Entity;
@@ -10,6 +9,7 @@ using Sukt.Module.Core.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Sukt.Core.Application.Tenant;
 
 namespace Sukt.Core.API.Controllers
 {

@@ -37,14 +37,14 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
-        private readonly UserManager<UserEntity> _userManager;
-        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         public AccountController(
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
-            UserManager<UserEntity> userManager,
-            SignInManager<UserEntity> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             IEventService events
             /*TestUserStore users = null*/)
         {

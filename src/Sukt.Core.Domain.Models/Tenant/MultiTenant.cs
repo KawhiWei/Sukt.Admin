@@ -1,22 +1,26 @@
-﻿using Sukt.Module.Core.Entity;
+﻿using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
-namespace Sukt.Core.Domain.Models.MultiTenant
+namespace Sukt.Core.Domain.Models.Tenant
 {
     /// <summary>
     /// 租户管理
     /// </summary>
     [DisplayName("租户管理")]
-    public class MultiTenantEntity : EntityBase<Guid>, IFullAuditedEntity<Guid>
+    public class MultiTenant : AggregateRootBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public MultiTenantEntity(string companyName, string linkMan, string phoneNumber, bool isEnable, string email)
+        public MultiTenant(string companyName, string linkMan, string phoneNumber, bool isEnable, string email)
         {
             CompanyName = companyName;
             LinkMan = linkMan;
             PhoneNumber = phoneNumber;
             IsEnable = isEnable;
             Email = email;
+            TenantConntionStrings = new List<MultiTenantConnectionString>();
         }
         public void Update(string companyName, string linkMan, string phoneNumber, bool isEnable, string email)
         {
@@ -25,6 +29,36 @@ namespace Sukt.Core.Domain.Models.MultiTenant
             PhoneNumber = phoneNumber;
             IsEnable = isEnable;
             Email = email;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<MultiTenantConnectionString> TenantConntionStrings { get; private set; }
+        /// <summary>
+        /// 添加或修改租户连接字符串
+        /// </summary>
+        /// <param name="connectionStringId"></param>
+        /// <param name="name"></param>
+        /// <param name="connectionString"></param>
+        public void SetConnectionString(Guid connectionStringId, string name,string connectionString)
+        {
+            var tenantConnectionString = TenantConntionStrings.FirstOrDefault(x => x.Id == connectionStringId);
+            if(tenantConnectionString!=null)
+            {
+                tenantConnectionString.Update(name, connectionString);
+            }
+            else
+            {
+                TenantConntionStrings.Add(new MultiTenantConnectionString(name,connectionString));
+            }
+        }
+        public void RemoveConnectionString(Guid connectionStringId)
+        {
+            var tenantConnectionString = TenantConntionStrings.FirstOrDefault(x=>x.Id==connectionStringId);
+            if (tenantConnectionString != null)
+            {
+                tenantConnectionString.Remove();
+            }
         }
 
         /// <summary>

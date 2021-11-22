@@ -13,9 +13,9 @@ namespace Sukt.Core.Domain.Models
     /// 用户信息
     /// </summary>
     [DisplayName("用户信息")]
-    public class UserEntity : UserBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
+    public class User : UserBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
-        public UserEntity(
+        public User(
             DateTime birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties, 
             string department, UserTypeEnum userType,
             string userName, string normalizedUserName, string nickName, string email, string normalizeEmail,

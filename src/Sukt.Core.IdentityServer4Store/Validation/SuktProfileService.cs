@@ -11,8 +11,8 @@ namespace Sukt.Core.IdentityServer4Store.Validation
 {
     public class SuktProfileService : IProfileService
     {
-        private readonly UserManager<UserEntity> _userManager;
-        public SuktProfileService(UserManager<UserEntity> userManager)
+        private readonly UserManager<User> _userManager;
+        public SuktProfileService(UserManager<User> userManager)
         {
             _userManager = userManager;
         }

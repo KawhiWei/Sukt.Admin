@@ -18,10 +18,10 @@ namespace Sukt.Core.Application
 {
     public class UserContract : IUserContract
     {
-        private readonly UserManager<UserEntity> _userManager = null;
+        private readonly UserManager<User> _userManager = null;
         private readonly IUnitOfWork _unitOfWork = null;
 
-        public UserContract(UserManager<UserEntity> userManager, IUnitOfWork unitOfWork)
+        public UserContract(UserManager<User> userManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
@@ -30,7 +30,7 @@ namespace Sukt.Core.Application
         public async Task<OperationResponse> InsertAsync(UserInputDto input)
         {
             input.NotNull(nameof(input));
-            var user = new UserEntity(input.Birthday, input.Education, input.TechnicalLevel, input.IdCard, input.IsEnable, input.Duties,
+            var user = new User(input.Birthday, input.Education, input.TechnicalLevel, input.IdCard, input.IsEnable, input.Duties,
                 input.Department, input.UserType,input.UserName,input.NormalizedUserName,input.NickName,input.Email,input.Email,false,input.PasswordHash,
                 "",null,Guid.NewGuid().ToString(),input.PhoneNumber,false,false,null,false,0,false,input.Sex);
             var passwordHash = input.PasswordHash;
@@ -103,9 +103,9 @@ namespace Sukt.Core.Application
         public async Task<IPageResult<UserPageOutputDto>> GetPageAsync(PageRequest request)
         {
             request.NotNull(nameof(request));
-            OrderCondition<UserEntity>[] orderConditions = new OrderCondition<UserEntity>[] { new OrderCondition<UserEntity>(o => o.CreatedAt, SortDirectionEnum.Descending) };
+            OrderCondition<User>[] orderConditions = new OrderCondition<User>[] { new OrderCondition<User>(o => o.CreatedAt, SortDirectionEnum.Descending) };
             request.OrderConditions = orderConditions;
-            return await _userManager.Users.AsNoTracking().ToPageAsync<UserEntity, UserPageOutputDto>(request);
+            return await _userManager.Users.AsNoTracking().ToPageAsync<User, UserPageOutputDto>(request);
         }
         
     }

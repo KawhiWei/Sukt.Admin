@@ -7,21 +7,21 @@ using System.Linq.Expressions;
 namespace Sukt.Core.Domain.Models.SeedDatas
 {
     [Dependency(ServiceLifetime.Singleton)]
-    public class UserSeedData : SeedDataDefaults<UserEntity, Guid>
+    public class UserSeedData : SeedDataAggregates<User, Guid>
     {
         public UserSeedData(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        protected override Expression<Func<UserEntity, bool>> Expression(UserEntity entity)
+        protected override Expression<Func<User, bool>> Expression(User entity)
         {
             return x => x.UserName == entity.UserName && x.NormalizedUserName == entity.NormalizedUserName && x.NickName == entity.NickName;
         }
 
-        protected override UserEntity[] SetSeedData()
+        protected override User[] SetSeedData()
         {
-            return new UserEntity[] {
-                new UserEntity(DateTime.Now,"博士后","教授","",true,"董事长","总经办",
+            return new User[] {
+                new User(DateTime.Now,"博士后","教授","",true,"董事长","总经办",
                 UserTypeEnum.SuperAdmin,"Admin","ADMIN","管理员","","",false,
                 "AQAAAAEAACcQAAAAEEPWhHPCHU1i6Z0ayoApKGbPlZUb38RUdJg4QjUcccVhUSto0sRZtLOXfwWUJ+P2Xw==","","3OWMGQAK5ZTXMSV6OFSGIWWWNIWJ2SX6",
                 "0286cab6-8a4a-44ed-9a97-86b0506c65c3","",false,false,null,true,0,true,"男")

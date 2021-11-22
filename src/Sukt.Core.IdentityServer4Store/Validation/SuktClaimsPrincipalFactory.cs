@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Sukt.Core.IdentityServer4Store.Validation
 {
-    public class SuktClaimsPrincipalFactory : IUserClaimsPrincipalFactory<UserEntity>
+    public class SuktClaimsPrincipalFactory : IUserClaimsPrincipalFactory<User>
     {
-        private readonly UserManager<UserEntity> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public SuktClaimsPrincipalFactory(UserManager<UserEntity> userManager, RoleManager<RoleEntity> roleManager, IOptions<IdentityOptions> optionsAccessor)
+        public SuktClaimsPrincipalFactory(UserManager<User> userManager, RoleManager<RoleEntity> roleManager, IOptions<IdentityOptions> optionsAccessor)
         {
             _userManager = userManager;
         }
-        public async Task<ClaimsPrincipal> CreateAsync(UserEntity user)
+        public async Task<ClaimsPrincipal> CreateAsync(User user)
         {
             var principal = await _userManager.FindByIdAsync(user.ToString());
             ClaimsIdentity claimsIdentity = new ClaimsIdentity();

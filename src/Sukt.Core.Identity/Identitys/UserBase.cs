@@ -1,4 +1,5 @@
-﻿using Sukt.Module.Core.Entity;
+﻿using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace Sukt.Core.Identity
     ///
     /// </summary>
     /// <typeparam name="TUserKey"></typeparam>
-    public abstract class UserBase<TUserKey> : EntityBase<TUserKey>
+    public abstract class UserBase<TUserKey> : AggregateRootBase<TUserKey>
          where TUserKey : IEquatable<TUserKey>
     {
         protected UserBase(string userName, string normalizedUserName, string nickName, string email, 

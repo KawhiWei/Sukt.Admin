@@ -1,27 +1,27 @@
-﻿using Sukt.Core.Dtos.MultiTenant;
-using Sukt.Module.Core;
+﻿using Sukt.Module.Core;
 using Sukt.Module.Core.Entity;
-using Sukt.Module.Core.OperationResult;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Sukt.Module.Core.Extensions.ResultExtensions;
 
-namespace Sukt.Core.Application.MultiTenant
+namespace Sukt.Core.Application.Tenant
 {
-    public interface IMultiTenantContract : IScopedDependency
+    public interface IMultiTenantConntionStringContract : IScopedDependency
     {
         /// <summary>
         /// 创建租户
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreatAsync(MultiTenantInputDto input);
+        Task<OperationResponse> CreatAsync(MultiTenantConntionStringInputDto input);
         /// <summary>
         /// 修改租户
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(Guid id, MultiTenantInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id, MultiTenantConntionStringInputDto input);
         /// <summary>
         /// 加载租户
         /// </summary>
@@ -40,6 +40,5 @@ namespace Sukt.Core.Application.MultiTenant
         /// <param name="id"></param>
         /// <returns></returns>
         Task<OperationResponse> DeleteAsync(Guid id);
-
     }
 }
