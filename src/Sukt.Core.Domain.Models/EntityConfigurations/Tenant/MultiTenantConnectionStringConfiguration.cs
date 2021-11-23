@@ -17,6 +17,7 @@ namespace Sukt.Core.Domain.Models.EntityConfigurations.Tenant
             b.HasKey(o => o.Id);
             b.Property(o => o.Name).HasMaxLength(50).IsRequired();
             b.Property(o => o.Value).HasMaxLength(400).IsRequired();
+            b.Property<Guid>(o => o.TenantId).HasDefaultValue(Guid.Empty).IsRequired();
             b.ToTable("MultiTenantConnectionStrings");
         }
     }

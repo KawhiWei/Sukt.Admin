@@ -1684,8 +1684,10 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid?>("TenantId")
-                        .HasColumnType("char(36)");
+                    b.Property<Guid>("TenantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -2090,11 +2092,11 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Tenant.MultiTenantConnectionString", b =>
                 {
-                    b.HasOne("Sukt.Core.Domain.Models.Tenant.MultiTenant", "Tenant")
+                    b.HasOne("Sukt.Core.Domain.Models.Tenant.MultiTenant", null)
                         .WithMany("TenantConntionStrings")
-                        .HasForeignKey("TenantId");
-
-                    b.Navigation("Tenant");
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>

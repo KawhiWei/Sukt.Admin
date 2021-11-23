@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
-    public partial class default_v1 : Migration
+    public partial class suktdefault_v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,9 +30,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     NonEditable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     LastAccessed = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -55,9 +57,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     ShowInDiscoveryDocument = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
                     Emphasize = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -125,9 +127,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     DeviceCodeLifetime = table.Column<int>(type: "int", nullable: false, defaultValue: 300),
                     NonEditable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -152,9 +154,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Code = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -185,9 +187,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Expiration = table.Column<DateTime>(type: "datetime", nullable: true),
                     ConsumedTime = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -209,9 +211,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     LinkUrl = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -237,9 +239,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ShowInDiscoveryDocument = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -260,7 +262,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     ParentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Icon = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ParentNumber = table.Column<string>(type: "longtext", nullable: true)
+                    ParentNumber = table.Column<string>(type: "longtext", nullable: true, defaultValue: "")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Component = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -271,17 +273,36 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     ButtonClick = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    MicroName = table.Column<string>(type: "longtext", nullable: true)
+                    MicroName = table.Column<string>(type: "longtext", nullable: true, defaultValue: "")
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Menu", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "MenuFunction",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    MenuId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FunctionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuFunction", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -300,9 +321,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Email = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -329,14 +350,37 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     SecondLeader = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "OrganizationUser",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrganizationNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PositionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    OrganizationId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrganizationUser", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -362,9 +406,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Expiration = table.Column<DateTime>(type: "datetime", nullable: true),
                     ConsumedTime = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -379,9 +423,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -404,9 +448,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ClaimType = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
@@ -417,6 +461,26 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RoleClaim", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "RoleMenu",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    MenuId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -449,9 +513,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AccessTokenExpire = table.Column<int>(type: "int", nullable: false),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -478,9 +542,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -508,9 +572,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserType = table.Column<int>(type: "int", nullable: false),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -555,9 +619,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ClaimType = table.Column<string>(type: "longtext", nullable: false)
@@ -572,14 +636,34 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
+                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "UserToken",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     LoginProvider = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: true)
@@ -604,9 +688,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ApiResourceId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -616,8 +700,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiResourceClaim_ApiResource_ApiResourceId",
                         column: x => x.ApiResourceId,
                         principalTable: "ApiResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -632,9 +715,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ApiResourceId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -644,8 +727,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiResourceProperty_ApiResource_ApiResourceId",
                         column: x => x.ApiResourceId,
                         principalTable: "ApiResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -658,9 +740,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ApiResourceId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -670,8 +752,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiResourceScope_ApiResource_ApiResourceId",
                         column: x => x.ApiResourceId,
                         principalTable: "ApiResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -690,9 +771,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Expiration = table.Column<DateTime>(type: "datetime", nullable: true),
                     ApiResourceId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -702,8 +783,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiResourceSecret_ApiResource_ApiResourceId",
                         column: x => x.ApiResourceId,
                         principalTable: "ApiResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -716,9 +796,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Type = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -728,8 +808,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiScopeClaim_ApiScope_ScopeId",
                         column: x => x.ScopeId,
                         principalTable: "ApiScope",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -744,9 +823,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ScopeId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -756,8 +835,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ApiScopeProperty_ApiScope_ScopeId",
                         column: x => x.ScopeId,
                         principalTable: "ApiScope",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -772,9 +850,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -784,8 +862,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientClaim_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -798,9 +875,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -810,8 +887,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientCorsOrigin_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -824,9 +900,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -836,8 +912,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientGrantType_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -850,9 +925,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -862,8 +937,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientIdPRestriction_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -876,9 +950,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -888,8 +962,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientPostLogoutRedirectUri_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -904,9 +977,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -916,8 +989,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientProperty_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -930,9 +1002,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -942,8 +1014,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientRedirectUri_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -956,9 +1027,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -968,8 +1039,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientScope_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -988,9 +1058,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Created = table.Column<DateTime>(type: "datetime", nullable: false),
                     ClientId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -1000,8 +1070,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_ClientSecret_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1014,9 +1083,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     Type = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -1026,8 +1095,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_IdentityResourceClaim_IdentityResource_IdentityResourceId",
                         column: x => x.IdentityResourceId,
                         principalTable: "IdentityResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1042,9 +1110,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdentityResourceId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -1054,132 +1122,35 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         name: "FK_IdentityResourceProperty_IdentityResource_IdentityResourceId",
                         column: x => x.IdentityResourceId,
                         principalTable: "IdentityResource",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MenuFunction",
+                name: "MultiTenantConnectionStrings",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    MenuItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    FunctionItemsId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "varchar(400)", maxLength: 400, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: false),
                     LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    LastModifedAt = table.Column<DateTimeOffset>(type: "datetime", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, defaultValue: new Guid("00000000-0000-0000-0000-000000000000"), collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MenuFunction", x => x.Id);
+                    table.PrimaryKey("PK_MultiTenantConnectionStrings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MenuFunction_Function_FunctionItemsId",
-                        column: x => x.FunctionItemsId,
-                        principalTable: "Function",
+                        name: "FK_MultiTenantConnectionStrings_MultiTenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "MultiTenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MenuFunction_Menu_MenuItemId",
-                        column: x => x.MenuItemId,
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "RoleMenu",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RoleId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    MenuId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RoleMenu_Menu_MenuId",
-                        column: x => x.MenuId,
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RoleMenu_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "OrganizationUser",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    OrganizationNumber = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    PositionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    OrganizationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrganizationUser", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrganizationUser_Organization_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OrganizationUser_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "UserRole",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    LastModifyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LastModifedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    TenantId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserEntityId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRole", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserRole_User_UserEntityId",
-                        column: x => x.UserEntityId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1269,39 +1240,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 column: "IdentityResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuFunction_FunctionItemsId",
-                table: "MenuFunction",
-                column: "FunctionItemsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MenuFunction_MenuItemId",
-                table: "MenuFunction",
-                column: "MenuItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrganizationUser_OrganizationId",
-                table: "OrganizationUser",
-                column: "OrganizationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrganizationUser_UserId",
-                table: "OrganizationUser",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleMenu_MenuId",
-                table: "RoleMenu",
-                column: "MenuId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RoleMenu_RoleId",
-                table: "RoleMenu",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRole_UserEntityId",
-                table: "UserRole",
-                column: "UserEntityId");
+                name: "IX_MultiTenantConnectionStrings_TenantId",
+                table: "MultiTenantConnectionStrings",
+                column: "TenantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1358,22 +1299,34 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 name: "DeviceFlowCodes");
 
             migrationBuilder.DropTable(
+                name: "Function");
+
+            migrationBuilder.DropTable(
                 name: "IdentityResourceClaim");
 
             migrationBuilder.DropTable(
                 name: "IdentityResourceProperty");
 
             migrationBuilder.DropTable(
+                name: "Menu");
+
+            migrationBuilder.DropTable(
                 name: "MenuFunction");
 
             migrationBuilder.DropTable(
-                name: "MultiTenants");
+                name: "MultiTenantConnectionStrings");
+
+            migrationBuilder.DropTable(
+                name: "Organization");
 
             migrationBuilder.DropTable(
                 name: "OrganizationUser");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrant");
+
+            migrationBuilder.DropTable(
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "RoleClaim");
@@ -1386,6 +1339,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "SuktResourceScopes");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "UserClaim");
@@ -1409,19 +1365,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                 name: "IdentityResource");
 
             migrationBuilder.DropTable(
-                name: "Function");
-
-            migrationBuilder.DropTable(
-                name: "Organization");
-
-            migrationBuilder.DropTable(
-                name: "Menu");
-
-            migrationBuilder.DropTable(
-                name: "Role");
-
-            migrationBuilder.DropTable(
-                name: "User");
+                name: "MultiTenants");
         }
     }
 }

@@ -6,18 +6,20 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.EntityFrameworkCore;
 
+#nullable disable
+
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(SuktContext))]
-    [Migration("20211022061823_default_v1")]
-    partial class default_v1
+    [Migration("20211123043547_suktdefault_v1")]
+    partial class suktdefault_v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.10");
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Authority.RoleMenuEntity", b =>
                 {
@@ -25,7 +27,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -34,16 +36,16 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("MenuId")
+                    b.Property<Guid>("MenuId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("TenantId")
@@ -51,11 +53,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RoleMenu");
+                    b.ToTable("RoleMenu", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>
@@ -67,7 +65,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("AllowedAccessTokenSigningAlgorithms")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -90,7 +88,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("LastAccessed")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -109,7 +107,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApiResource");
+                    b.ToTable("ApiResource", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceClaim", b =>
@@ -121,7 +119,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ApiResourceId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -130,7 +128,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -143,7 +141,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceClaim");
+                    b.ToTable("ApiResourceClaim", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceProperty", b =>
@@ -155,7 +153,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ApiResourceId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -167,7 +165,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -180,7 +178,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceProperty");
+                    b.ToTable("ApiResourceProperty", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceScope", b =>
@@ -192,7 +190,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ApiResourceId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -201,7 +199,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -214,7 +212,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceScope");
+                    b.ToTable("ApiResourceScope", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceSecret", b =>
@@ -229,7 +227,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -244,7 +242,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -260,7 +258,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceSecret");
+                    b.ToTable("ApiResourceSecret", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiScope", b =>
@@ -269,7 +267,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -292,7 +290,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -311,7 +309,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ApiScope");
+                    b.ToTable("ApiScope", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiScopeClaim", b =>
@@ -320,7 +318,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -329,7 +327,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -345,7 +343,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ScopeId");
 
-                    b.ToTable("ApiScopeClaim");
+                    b.ToTable("ApiScopeClaim", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiScopeProperty", b =>
@@ -354,7 +352,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -366,7 +364,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -382,7 +380,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ScopeId");
 
-                    b.ToTable("ApiScopeProperty");
+                    b.ToTable("ApiScopeProperty", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.Client", b =>
@@ -457,7 +455,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<int?>("ConsentLifetime")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -505,7 +503,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("LastAccessed")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -565,7 +563,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Client");
+                    b.ToTable("Client", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientClaim", b =>
@@ -577,7 +575,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -586,7 +584,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -602,7 +600,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientClaim");
+                    b.ToTable("ClientClaim", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientCorsOrigin", b =>
@@ -614,7 +612,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -623,7 +621,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -636,7 +634,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientCorsOrigin");
+                    b.ToTable("ClientCorsOrigin", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientGrantType", b =>
@@ -648,7 +646,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -660,7 +658,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -670,7 +668,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientGrantType");
+                    b.ToTable("ClientGrantType", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientIdPRestriction", b =>
@@ -682,7 +680,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -691,7 +689,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -704,7 +702,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientIdPRestriction");
+                    b.ToTable("ClientIdPRestriction", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientPostLogoutRedirectUri", b =>
@@ -716,7 +714,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -725,7 +723,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -738,7 +736,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientPostLogoutRedirectUri");
+                    b.ToTable("ClientPostLogoutRedirectUri", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientProperty", b =>
@@ -750,7 +748,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -762,7 +760,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -775,7 +773,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientProperty");
+                    b.ToTable("ClientProperty", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientRedirectUri", b =>
@@ -787,7 +785,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -796,7 +794,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -809,7 +807,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientRedirectUri");
+                    b.ToTable("ClientRedirectUri", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientScope", b =>
@@ -821,7 +819,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ClientId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -830,7 +828,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -843,7 +841,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientScope");
+                    b.ToTable("ClientScope", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ClientSecret", b =>
@@ -858,7 +856,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -873,7 +871,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -889,7 +887,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientSecret");
+                    b.ToTable("ClientSecret", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.DeviceFlowCodes", b =>
@@ -904,7 +902,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("ConsumedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -925,7 +923,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -942,7 +940,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceFlowCodes");
+                    b.ToTable("DeviceFlowCodes", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.IdentityResource", b =>
@@ -951,7 +949,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -974,7 +972,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -996,7 +994,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityResource");
+                    b.ToTable("IdentityResource", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.IdentityResourceClaim", b =>
@@ -1005,7 +1003,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1017,7 +1015,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1030,7 +1028,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("IdentityResourceId");
 
-                    b.ToTable("IdentityResourceClaim");
+                    b.ToTable("IdentityResourceClaim", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.IdentityResourceProperty", b =>
@@ -1039,7 +1037,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1054,7 +1052,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1067,7 +1065,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasIndex("IdentityResourceId");
 
-                    b.ToTable("IdentityResourceProperty");
+                    b.ToTable("IdentityResourceProperty", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.PersistedGrant", b =>
@@ -1082,7 +1080,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("ConsumedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1103,7 +1101,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("Key")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1120,7 +1118,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PersistedGrant");
+                    b.ToTable("PersistedGrant", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.FunctionEntity", b =>
@@ -1129,7 +1127,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1148,7 +1146,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1166,7 +1164,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Function");
+                    b.ToTable("Function", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.MenuEntity", b =>
@@ -1190,7 +1188,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1209,14 +1207,16 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(true);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("MicroName")
-                        .HasColumnType("longtext");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1227,7 +1227,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("ParentNumber")
-                        .HasColumnType("longtext");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("longtext")
+                        .HasDefaultValue("");
 
                     b.Property<string>("Path")
                         .HasMaxLength(200)
@@ -1243,7 +1245,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menu");
+                    b.ToTable("Menu", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.MenuFunctionEntity", b =>
@@ -1252,78 +1254,30 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("FunctionItemsId")
+                    b.Property<Guid>("FunctionId")
                         .HasColumnType("char(36)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("MenuItemId")
+                    b.Property<Guid>("MenuId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunctionItemsId");
-
-                    b.HasIndex("MenuItemId");
-
-                    b.ToTable("MenuFunction");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.MultiTenant.MultiTenantEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("CreatedId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("LastModifedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid?>("LastModifyId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("LinkMan")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MultiTenants");
-
-                    b
-                        .HasComment("租户信息表");
+                    b.ToTable("MenuFunction", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationEntity", b =>
@@ -1332,7 +1286,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1350,7 +1304,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1375,7 +1329,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organization");
+                    b.ToTable("Organization", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", b =>
@@ -1384,7 +1338,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1393,17 +1347,17 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("OrganizationId")
+                    b.Property<Guid>("OrganizationId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("OrganizationNumber")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("OrganizationNumber")
+                        .HasColumnType("longtext");
 
                     b.Property<Guid>("PositionId")
                         .HasColumnType("char(36)");
@@ -1411,16 +1365,12 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OrganizationUser");
+                    b.ToTable("OrganizationUser", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.RoleClaimEntity", b =>
@@ -1437,7 +1387,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1448,7 +1398,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1459,7 +1409,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleClaim");
+                    b.ToTable("RoleClaim", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.RoleEntity", b =>
@@ -1471,7 +1421,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1487,7 +1437,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1507,7 +1457,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.SuktApplication", b =>
@@ -1534,7 +1484,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("ClientSecret")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1546,7 +1496,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1569,7 +1519,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SuktApplications");
+                    b.ToTable("SuktApplications", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.SuktResourceScope", b =>
@@ -1581,7 +1531,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<string>("ConcurrencyToken")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1596,7 +1546,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1613,7 +1563,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SuktResourceScopes");
+                    b.ToTable("SuktResourceScopes", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.SystemFoundation.DataDictionary.DataDictionaryEntity", b =>
@@ -1627,7 +1577,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1636,7 +1586,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1664,48 +1614,96 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataDictionary");
+                    b.ToTable("DataDictionary", (string)null);
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserClaimEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Tenant.MultiTenant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("ClaimType")
-                        .IsRequired()
+                    b.Property<string>("CompanyName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("ClaimValue")
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("CreatedId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsEnable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTimeOffset?>("LastModifedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid?>("LastModifyId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("LinkMan")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MultiTenants", (string)null);
+
+                    b.HasComment("租户信息表");
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Tenant.MultiTenantConnectionString", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
                         .HasColumnType("char(36)");
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint(1)")
-                        .HasDefaultValue(false);
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("TenantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("varchar(400)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaim");
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("MultiTenantConnectionStrings", (string)null);
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1723,7 +1721,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1761,7 +1759,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<bool>("IsSystem")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1821,16 +1819,23 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserRoleEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.UserClaimEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<string>("ClaimType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1841,7 +1846,38 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid?>("LastModifyId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserClaim", (string)null);
+                });
+
+            modelBuilder.Entity("Sukt.Core.Domain.Models.UserRoleEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("CreatedId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1853,17 +1889,12 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Property<Guid>("TenantId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserEntityId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserEntityId");
-
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRole", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.UserTokenEntity", b =>
@@ -1872,7 +1903,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid>("CreatedId")
@@ -1883,7 +1914,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("LastModifedAt")
+                    b.Property<DateTimeOffset?>("LastModifedAt")
                         .HasColumnType("datetime");
 
                     b.Property<Guid?>("LastModifyId")
@@ -1905,22 +1936,7 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserToken");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Authority.RoleMenuEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", "Menu")
-                        .WithMany()
-                        .HasForeignKey("MenuId");
-
-                    b.HasOne("Sukt.Core.Domain.Models.RoleEntity", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("Menu");
-
-                    b.Navigation("Role");
+                    b.ToTable("UserToken", (string)null);
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResourceClaim", b =>
@@ -2076,41 +2092,13 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("IdentityResource");
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.MenuFunctionEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Tenant.MultiTenantConnectionString", b =>
                 {
-                    b.HasOne("Sukt.Core.Domain.Models.Menu.FunctionEntity", "FunctionItems")
-                        .WithMany("MenuFunctionItems")
-                        .HasForeignKey("FunctionItemsId");
-
-                    b.HasOne("Sukt.Core.Domain.Models.Menu.MenuEntity", "MenuItem")
-                        .WithMany("MenuFunctionItems")
-                        .HasForeignKey("MenuItemId");
-
-                    b.Navigation("FunctionItems");
-
-                    b.Navigation("MenuItem");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationUserEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.Organization.OrganizationEntity", "Organization")
-                        .WithMany("OrganizationItems")
-                        .HasForeignKey("OrganizationId");
-
-                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", "User")
-                        .WithMany("OrganizationUser")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserRoleEntity", b =>
-                {
-                    b.HasOne("Sukt.Core.Domain.Models.UserEntity", null)
-                        .WithMany("UserRoleItems")
-                        .HasForeignKey("UserEntityId");
+                    b.HasOne("Sukt.Core.Domain.Models.Tenant.MultiTenant", null)
+                        .WithMany("TenantConntionStrings")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sukt.Core.Domain.Models.IdentityServerFour.ApiResource", b =>
@@ -2159,26 +2147,9 @@ namespace Sukt.Core.EntityFrameworkCore.Migrations
                     b.Navigation("UserClaims");
                 });
 
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.FunctionEntity", b =>
+            modelBuilder.Entity("Sukt.Core.Domain.Models.Tenant.MultiTenant", b =>
                 {
-                    b.Navigation("MenuFunctionItems");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Menu.MenuEntity", b =>
-                {
-                    b.Navigation("MenuFunctionItems");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.Organization.OrganizationEntity", b =>
-                {
-                    b.Navigation("OrganizationItems");
-                });
-
-            modelBuilder.Entity("Sukt.Core.Domain.Models.UserEntity", b =>
-                {
-                    b.Navigation("OrganizationUser");
-
-                    b.Navigation("UserRoleItems");
+                    b.Navigation("TenantConntionStrings");
                 });
 #pragma warning restore 612, 618
         }

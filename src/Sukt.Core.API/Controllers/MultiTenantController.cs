@@ -36,7 +36,7 @@ namespace Sukt.Core.API.Controllers
         [AuditLog]
         public async Task<AjaxResult> CreateAsync([FromBody] MultiTenantInputDto input)
         {
-            return (await _multiTenantContract.CreatAsync(input)).ToAjaxResult();
+            return (await _multiTenantContract.CreateAsync(input)).ToAjaxResult();
         }
         /// <summary>
         /// 修改租户
@@ -63,12 +63,12 @@ namespace Sukt.Core.API.Controllers
             return (await _multiTenantContract.LoadFormAsync(id)).ToAjaxResult();
         }
         /// <summary>
-        /// 分页获获取租户
+        /// 分页获取租户
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [Description("分页获获取租户")]
+        [Description("分页获取租户")]
         public async Task<PageList<MultiTenantOutPutPageDto>> GetPageAsync([FromBody] PageRequest request)
         {
             return (await _multiTenantContract.GetPageAsync(request)).PageList();

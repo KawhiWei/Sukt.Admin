@@ -11,6 +11,7 @@ namespace Sukt.Core.Domain.Models.EntityConfigurations.Tenant
         public override void Map(EntityTypeBuilder<MultiTenant> b)
         {
             b.HasKey(o => o.Id);
+            b.HasMany(o => o.TenantConntionStrings).WithOne().HasForeignKey(o => o.TenantId);
             b.ToTable("MultiTenants").HasComment("租户信息表");
         }
     }

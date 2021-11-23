@@ -11,7 +11,6 @@ namespace Sukt.Core.Dtos.Tenant
     /// </summary>
     public class MultiTenantConnectionStringInputDto
     {
-        public Guid TenantId { get; set; }
 
         public string Name { get; set; }
 

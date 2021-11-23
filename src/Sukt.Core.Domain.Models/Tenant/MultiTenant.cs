@@ -49,7 +49,7 @@ namespace Sukt.Core.Domain.Models.Tenant
             }
             else
             {
-                TenantConntionStrings.Add(new MultiTenantConnectionString(name,connectionString));
+                TenantConntionStrings.Add(new MultiTenantConnectionString(this.Id,name,connectionString));
             }
         }
         public void RemoveConnectionString(Guid connectionStringId)
@@ -59,6 +59,10 @@ namespace Sukt.Core.Domain.Models.Tenant
             {
                 tenantConnectionString.Remove();
             }
+        }
+        public MultiTenantConnectionString GetConnectionString(Guid connectionStringId)
+        {
+            return TenantConntionStrings.FirstOrDefault(x => x.Id == connectionStringId);
         }
 
         /// <summary>

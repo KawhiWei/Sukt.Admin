@@ -16,7 +16,7 @@ namespace Sukt.Core.Application.Tenant
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> CreatAsync(MultiTenantInputDto input);
+        Task<OperationResponse> CreateAsync(MultiTenantInputDto input);
         /// <summary>
         /// 修改租户
         /// </summary>
@@ -41,6 +41,41 @@ namespace Sukt.Core.Application.Tenant
         /// <param name="id"></param>
         /// <returns></returns>
         Task<OperationResponse> DeleteAsync(Guid id);
+        /// <summary>
+        /// 添加数据库连接字符串
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<OperationResponse> CreateAsync(Guid tenantId, MultiTenantConnectionStringInputDto input);
+        /// <summary>
+        /// 添加数据库连接字符串
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<OperationResponse> UpdateAsync(Guid tenantId,Guid id, MultiTenantConnectionStringInputDto input);
+        /// <summary>
+        /// 删除连接字符串
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<OperationResponse> DeleteAsync(Guid tenantId, Guid id);
+        /// <summary>
+        /// 加载连接字符串表单
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<OperationResponse> LoadFormAsync(Guid tenantId, Guid id);
+        /// <summary>
+        /// 分页获取租户连接字符串
+        /// </summary>
+        /// <param name="tenantId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<IPageResult<MultiTenantConnectionStringOutPutDto>> GetPageAsync(Guid tenantId,PageRequest request);
 
     }
 }

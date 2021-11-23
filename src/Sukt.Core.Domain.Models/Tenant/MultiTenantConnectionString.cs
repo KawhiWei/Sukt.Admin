@@ -15,11 +15,15 @@ namespace Sukt.Core.Domain.Models.Tenant
     [DisplayName("租户数据库连接字符串")]
     public class MultiTenantConnectionString : EntityBase<Guid>, IFullAuditedEntity<Guid>
     {
-        public MultiTenantConnectionString(string name, string value)
+        public MultiTenantConnectionString()
         {
-            Id = SuktGuid.NewSuktGuid();
+        }
+        public MultiTenantConnectionString(Guid tenantId, string name, string value) : this()
+        {
+            //Id = SuktGuid.NewSuktGuid();
             Name = name;
             Value = value;
+            TenantId = tenantId;
         }
         public void Update(string name, string value)
         {
@@ -28,16 +32,21 @@ namespace Sukt.Core.Domain.Models.Tenant
         }
         public void Remove()
         {
-            this.IsDeleted = true;  
+            this.IsDeleted = true;
         }
-        [DisplayName("租户Id")]
-        public MultiTenant Tenant { get; private set; }
+        //[DisplayName("租户Id")]
+        //public MultiTenant Tenant { get; private set; }
         [DisplayName("服务名称")]
 
         public string Name { get; private set; }
         [DisplayName("连接字符串")]
 
         public string Value { get; private set; }
+        /// <summary>
+        /// 租户Id
+        /// </summary>
+        [DisplayName("租户Id")]
+        public Guid TenantId { get; private set; }
 
         #region 公共字段
         /// <summary>
