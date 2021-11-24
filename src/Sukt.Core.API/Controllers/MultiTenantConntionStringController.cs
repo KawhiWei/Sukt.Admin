@@ -77,7 +77,7 @@ namespace Sukt.Core.API.Controllers
         [AuditLog]
         public async Task<AjaxResult> LoadFormAsync(Guid tenantId, Guid id)
         {
-            return (await _multiTenantContract.DeleteAsync(tenantId, id)).ToAjaxResult();
+            return (await _multiTenantContract.LoadFormAsync(tenantId, id)).ToAjaxResult();
         }
         /// <summary>
         /// 分页获取租户连接字符串

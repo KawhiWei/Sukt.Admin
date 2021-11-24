@@ -66,7 +66,11 @@ namespace Sukt.Core.Application.Tenant
             {
                 return new OperationResponse("未找到该租户", OperationEnumType.Error);
             }
-            entity.SetConnectionString(Guid.Empty, input.Name, input.Value);
+            var result = entity.SetConnectionString(Guid.Empty, input.Name, input.Value);
+            if (!result.Success)
+            {
+                return result;
+            }
             return await _multiTenantRepository.UpdateAsync(entity);
         }
         public async Task<OperationResponse> UpdateAsync(Guid tenantId, Guid id, MultiTenantConnectionStringInputDto input)
@@ -76,7 +80,11 @@ namespace Sukt.Core.Application.Tenant
             {
                 return new OperationResponse("未找到该租户", OperationEnumType.Error);
             }
-            entity.SetConnectionString(id, input.Name, input.Value);
+            var result = entity.SetConnectionString(id, input.Name, input.Value);
+            if (!result.Success)
+            {
+                return result;
+            }
             return await _multiTenantRepository.UpdateAsync(entity);
         }
         public async Task<OperationResponse> DeleteAsync(Guid tenantId, Guid id)
@@ -96,14 +104,14 @@ namespace Sukt.Core.Application.Tenant
             {
                 return new OperationResponse("未找到该租户", OperationEnumType.Error);
             }
-            return new OperationResponse(ResultMessage.DataSuccess, entity.GetConnectionString(id).MapTo<MultiTenantConnectionStringOutPutDto>(), OperationEnumType.Error);
+            return OperationResponse.Ok(ResultMessage.DataSuccess, entity.GetConnectionString(id).MapTo<MultiTenantConnectionStringOutPutDto>());
         }
         public async Task<IPageResult<MultiTenantConnectionStringOutPutDto>> GetPageAsync(Guid tenantId, PageRequest request)
         {
             request.NotNull(nameof(request));
             OrderCondition<MultiTenantConnectionString>[] orderConditions = new OrderCondition<MultiTenantConnectionString>[] { new OrderCondition<MultiTenantConnectionString>(o => o.CreatedAt, SortDirectionEnum.Descending) };
             request.OrderConditions = orderConditions;
-            return await _multiTenantRepository.NoTrackEntities.Where(x=>x.Id==tenantId).Include(x=>x.TenantConntionStrings).SelectMany(x=>x.TenantConntionStrings).ToPageAsync<MultiTenantConnectionString, MultiTenantConnectionStringOutPutDto>(request);
+            return await _multiTenantRepository.NoTrackEntities.Where(x => x.Id == tenantId).Include(x => x.TenantConntionStrings).SelectMany(x => x.TenantConntionStrings).ToPageAsync<MultiTenantConnectionString, MultiTenantConnectionStringOutPutDto>(request);
         }
         #endregion
     }

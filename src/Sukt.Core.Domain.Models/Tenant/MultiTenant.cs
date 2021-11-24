@@ -1,5 +1,7 @@
 ﻿using Sukt.Module.Core;
 using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Exceptions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,8 +42,12 @@ namespace Sukt.Core.Domain.Models.Tenant
         /// <param name="connectionStringId"></param>
         /// <param name="name"></param>
         /// <param name="connectionString"></param>
-        public void SetConnectionString(Guid connectionStringId, string name,string connectionString)
+        public OperationResponse SetConnectionString(Guid connectionStringId, string name,string connectionString)
         {
+            if(TenantConntionStrings.Any(x=>x.Name.Equals(name) && x.Id != connectionStringId))
+            {
+                return  OperationResponse.Error($"服务名称：【{name}】在租户【{this.CompanyName}】下已存在！");
+            }
             var tenantConnectionString = TenantConntionStrings.FirstOrDefault(x => x.Id == connectionStringId);
             if(tenantConnectionString!=null)
             {
@@ -51,6 +57,7 @@ namespace Sukt.Core.Domain.Models.Tenant
             {
                 TenantConntionStrings.Add(new MultiTenantConnectionString(this.Id,name,connectionString));
             }
+            return OperationResponse.Ok();
         }
         public void RemoveConnectionString(Guid connectionStringId)
         {
