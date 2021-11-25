@@ -21,7 +21,7 @@ namespace Sukt.Core.Domain.Models.SeedDatas
         protected override User[] SetSeedData()
         {
             return new User[] {
-                new User(DateTime.Now,"博士后","教授","",true,"董事长","总经办",
+                new User(DateTimeOffset.Now,"博士后","教授","",true,"董事长","总经办",
                 UserTypeEnum.SuperAdmin,"Admin","ADMIN","管理员","","",false,
                 "AQAAAAEAACcQAAAAEEPWhHPCHU1i6Z0ayoApKGbPlZUb38RUdJg4QjUcccVhUSto0sRZtLOXfwWUJ+P2Xw==","","3OWMGQAK5ZTXMSV6OFSGIWWWNIWJ2SX6",
                 "0286cab6-8a4a-44ed-9a97-86b0506c65c3","",false,false,null,true,0,true,"男")

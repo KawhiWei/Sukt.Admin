@@ -16,7 +16,7 @@ namespace Sukt.Core.Domain.Models
     public class User : UserBase<Guid>, IFullAuditedEntity<Guid>, ITenantEntity<Guid>
     {
         public User(
-            DateTime birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties, 
+            DateTimeOffset birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties, 
             string department, UserTypeEnum userType,
             string userName, string normalizedUserName, string nickName, string email, string normalizeEmail,
             bool emailConfirmed, string passwordHash, string headImg, string securityStamp, string concurrencyStamp, 
@@ -38,7 +38,7 @@ namespace Sukt.Core.Domain.Models
             UserType = userType;
         }
 
-        public void SetFunc(DateTime birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties,
+        public void SetFunc(DateTimeOffset birthday, string education, string technicalLevel, string idCard, bool isEnable, string duties,
             string department, UserTypeEnum userType)
         {
             Birthday = birthday;
@@ -55,7 +55,7 @@ namespace Sukt.Core.Domain.Models
         /// 生日
         /// </summary>
         [DisplayName("生日")]
-        public DateTime Birthday { get; private set; }
+        public DateTimeOffset Birthday { get; private set; }
 
         /// <summary>
         /// 学历

@@ -50,7 +50,7 @@ namespace Sukt.Core.Dtos
         /// <summary>
         /// 生日
         /// </summary>
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
 
         /// <summary>
         /// 学历

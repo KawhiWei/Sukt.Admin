@@ -44,7 +44,7 @@ namespace Sukt.Core.Dtos
         /// <summary>
         /// 生日
         /// </summary>
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
         /// <summary>
         /// 学历
         /// </summary>
@@ -73,10 +73,14 @@ namespace Sukt.Core.Dtos
         /// <summary>
         /// 性别
         /// </summary>
-        public string Sex { get; private set; }
+        public string Sex { get; set; }
         /// <summary>
         /// 用户类型
         /// </summary>
-        public UserTypeEnum UserType { get; private set; }
+        public UserTypeEnum UserType { get; set; }
+        /// <summary>
+        /// 是否系统账号
+        /// </summary>
+        public bool IsSystem { get; set; }
     }
 }

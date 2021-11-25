@@ -48,7 +48,7 @@ namespace IDN.Services.BasicsService.Dtos.Identity.User
         /// 生日
         /// </summary>
         [DisplayName("生日")]
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
 
         /// <summary>
         /// 学历
