@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sukt.Core.EntityFrameworkCore;
 
@@ -10,9 +11,10 @@ using Sukt.Core.EntityFrameworkCore;
 namespace Sukt.Core.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(SuktContext))]
-    partial class SuktContextModelSnapshot : ModelSnapshot
+    [Migration("20211207142927_sukt_default_v1")]
+    partial class sukt_default_v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

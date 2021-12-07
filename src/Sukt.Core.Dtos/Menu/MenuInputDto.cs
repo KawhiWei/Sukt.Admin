@@ -83,6 +83,6 @@ namespace Sukt.Core.Dtos.Menu
         /// <summary>
         /// API接口id
         /// </summary>
-        public Guid[]? FunctionIds { get; set; }
+        public Guid[]? FunctionIds { get; set; } = default!;
     }
 }

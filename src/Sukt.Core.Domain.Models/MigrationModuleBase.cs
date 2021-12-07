@@ -21,11 +21,15 @@ namespace Sukt.Core.Domain.Models
                 {
                     var unitOfWork = provider.GetService<IUnitOfWork>();
                     var dbContext = unitOfWork.GetDbContext();
+#if DEBUG
+                dbContext.Database.EnsureCreated();
+#else
                     string[] migrations = dbContext.Database.GetPendingMigrations().ToArray();
                     if (migrations.Length > 0)
                     {
                         dbContext.Database.Migrate();
                     }
+#endif
                 });
             }
             var isAddSeedData = configuration["SuktCore:Migrations:IsAddSeedData"].AsTo<bool>();
