@@ -9,6 +9,7 @@ using Sukt.Module.Core.Extensions;
 using Sukt.Module.Core.OperationResult;
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.API.Controllers
@@ -61,7 +62,12 @@ namespace Sukt.Core.API.Controllers
         [Description("加载表单")]
         public async Task<AjaxResult> LoadFormAsync(Guid id)
         {
-            return (await _function.LoadFromAsync(id)).ToAjaxResult();
+            Console.WriteLine($"控制器执行线程：{Thread.CurrentThread.ManagedThreadId}");
+            _function.TestA();
+            var result = await _function.LoadFromAsync(id).ConfigureAwait(false);
+            Console.WriteLine(result.Message);
+            _function.TestB();
+            return result.ToAjaxResult();
         }
 
         /// <summary>

@@ -25,12 +25,14 @@ namespace Sukt.Core.API.Startups
         private string _url = string.Empty;
         private string _title = string.Empty;
         private string _version = string.Empty;
+        private string _service = string.Empty;
         public override void ConfigureServices(ConfigureServicesContext context)
         {
             IConfiguration configuration = context.Services.GetConfiguration();
             string title = configuration["SuktCore:Swagger:Title"];
             string version = configuration["SuktCore:Swagger:Version"];
             string text = configuration["SuktCore:Swagger:Url"];
+            string service = configuration["SuktCore:Swagger:Service"];
             if (text.IsNullOrEmpty())
             {
                 throw new SuktAppException("Url不能为空 ！！！");
@@ -45,7 +47,11 @@ namespace Sukt.Core.API.Startups
             {
                 throw new SuktAppException("标题不能为空 ！！！");
             }
-
+            if (service.IsNullOrEmpty())
+            {
+                throw new SuktAppException("标题不能为空 ！！！");
+            }
+            _service = service;
             _title = title;
             _url = text;
             _version = version;
@@ -97,7 +103,7 @@ namespace Sukt.Core.API.Startups
             IApplicationBuilder applicationBuilder = context.GetApplicationBuilder();
             applicationBuilder.UseSwagger();
             applicationBuilder.UseSwagger();
-            string template = "doc/AdminService/{documentName}/swagger.json";
+            string template = "doc/"+ _service + "/{documentName}/swagger.json";
             applicationBuilder.UseSwagger(delegate (SwaggerOptions c)
             {
                 c.RouteTemplate = template;

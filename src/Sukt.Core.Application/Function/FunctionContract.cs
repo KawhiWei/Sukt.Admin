@@ -14,6 +14,7 @@ using Sukt.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sukt.Core.Application
@@ -55,7 +56,8 @@ namespace Sukt.Core.Application
         /// <returns></returns>
         public async Task<OperationResponse> LoadFromAsync(Guid id)
         {
-            FunctionEntity entity= await _functionRepository.GetByIdAsync(id);
+            FunctionEntity entity = await _functionRepository.GetByIdAsync(id);
+            Console.WriteLine($"第二步被调用方法线程Id：{Thread.CurrentThread.ManagedThreadId}");
             return new OperationResponse(ResultMessage.DataSuccess, entity.MapTo<FunctionOutputPageDto>(), OperationEnumType.Success);
         }
 
@@ -75,6 +77,15 @@ namespace Sukt.Core.Application
         {
             id.NotEmpty(nameof(id));
             return await _functionRepository.DeleteAsync(id);
+        }
+
+        public void TestA()
+        {
+            Console.WriteLine($"第一步被调用方法线程Id：{Thread.CurrentThread.ManagedThreadId}");
+        }
+        public void TestB()
+        {
+            Console.WriteLine($"第三步被调用方法线程Id：{Thread.CurrentThread.ManagedThreadId}");
         }
     }
 }

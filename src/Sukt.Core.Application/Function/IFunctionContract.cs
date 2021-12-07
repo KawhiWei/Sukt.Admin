@@ -45,6 +45,8 @@ namespace Sukt.Core.Application
         /// <param name="id"></param>
         /// <returns></returns>
         Task<OperationResponse> LoadFromAsync(Guid id);
+        void TestA();
+        void TestB();
 
     }
 }
