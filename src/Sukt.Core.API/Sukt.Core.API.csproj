@@ -43,12 +43,12 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.0" />
-		<PackageReference Include="Sukt.WebSocketServer" Version="1.1.5" />
+		<PackageReference Include="Sukt.WebSocketServer" Version="1.1.6" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
 		<PackageReference Include="Sukt.AspNetCore" Version="1.0.0" />
-		<PackageReference Include="Sukt.Swagger" Version="1.1.5" />
-		<PackageReference Include="Sukt.SeriLog" Version="1.1.5" />
-		<PackageReference Include="Sukt.AspNetCore" Version="1.1.5" />
+		<PackageReference Include="Sukt.Swagger" Version="1.1.6" />
+		<PackageReference Include="Sukt.SeriLog" Version="1.1.6" />
+		<PackageReference Include="Sukt.AspNetCore" Version="1.1.6" />
 	</ItemGroup>
 
 	<ItemGroup>

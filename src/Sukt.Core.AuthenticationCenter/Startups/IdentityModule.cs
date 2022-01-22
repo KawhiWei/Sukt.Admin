@@ -23,7 +23,7 @@ namespace Sukt.Core.AuthenticationCenter.Startups
             AddAuthentication(context.Services);
         }
         protected void AddAuthentication(IServiceCollection services) { }
-        protected Action<IdentityOptions> IdentityOption()
+        protected virtual Action<IdentityOptions> IdentityOption()
         {
             return options =>
             {

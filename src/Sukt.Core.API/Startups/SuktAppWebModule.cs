@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Sukt.Core.Domain.Models;
-using Sukt.Module.Core.Extensions;
-using System;
-using System.Linq;
-using System.Security.Principal;
-using Sukt.Core.EntityFrameworkCore;
-using Sukt.Module.Core.Modules;
 using Sukt.AspNetCore;
-using Sukt.Module.Core.AppOption;
-using Sukt.Module.Core.SuktDependencyAppModule;
-using Sukt.Module.Core.Events;
-using Sukt.Swagger;
 using Sukt.AutoMapper;
-using SuktCore.Aop;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Collections.Generic;
+using Sukt.Core.Domain.Models;
+using Sukt.Core.EntityFrameworkCore;
+using Sukt.Module.Core.AppOption;
+using Sukt.Module.Core.Events;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Modules;
+using Sukt.Module.Core.SuktDependencyAppModule;
+using Sukt.Swagger;
 using Sukt.WebSocketServer;
 using Sukt.WebSocketServer.MvcHandler;
+using SuktCore.Aop;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Principal;
 
 namespace Sukt.Core.API.Startups
 {
@@ -33,7 +33,7 @@ namespace Sukt.Core.API.Startups
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
         typeof(EntityFrameworkCoreModule),
-        //typeof(MongoDBModule),
+        typeof(MongoDBModule),
         //typeof(MultiTenancyModule),
         typeof(MigrationModuleBase),
         typeof(RedisModule)
@@ -67,7 +67,7 @@ namespace Sukt.Core.API.Startups
             var basePath = Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath; //获取项目路径
             context.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(basePath));
             service.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
-            AppOptionSettings option = new ();
+            AppOptionSettings option = new();
             if (configuration != null)
             {
                 configuration.Bind("SuktCore", option);

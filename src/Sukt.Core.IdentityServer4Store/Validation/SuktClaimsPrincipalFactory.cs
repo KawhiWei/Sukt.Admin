@@ -14,7 +14,7 @@ namespace Sukt.Core.IdentityServer4Store.Validation
         {
             _userManager = userManager;
         }
-        public async Task<ClaimsPrincipal> CreateAsync(User user)
+        public virtual async  Task<ClaimsPrincipal> CreateAsync(User user)
         {
             var principal = await _userManager.FindByIdAsync(user.ToString());
             ClaimsIdentity claimsIdentity = new ClaimsIdentity();

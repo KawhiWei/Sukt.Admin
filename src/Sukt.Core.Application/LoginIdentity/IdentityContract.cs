@@ -34,7 +34,6 @@ namespace Sukt.Core.Application.LoginIdentity
             if (!result)
                 return (new OperationResponse(ResultMessage.PassWordNotCheck, OperationEnumType.Error), new Claim[] { });
             var jwtToken = _jwtBearerService.CreateToken(user.Id, user.UserName);
-
             return (new OperationResponse(ResultMessage.LoginSusscess, new
             {
                 AccessToken = jwtToken.AccessToken,
