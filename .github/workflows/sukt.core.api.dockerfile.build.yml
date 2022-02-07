@@ -39,8 +39,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}.${{ github.run_id }}.${{ github.run_number }} #动态变量镜像TAG 使用github运行job和jobid设置tag
-        context: /home/runner/work/Sukt.Core/Sukt.Core
-        file: /home/runner/work/Sukt.Core/Sukt.Core/Dockerfilepublish # 指定Dockerfile
+        context: /home/runner/work/Sukt.Admin/Sukt.Admin
+        file: /home/runner/work/Sukt.Admin/Sukt.Admin/Dockerfilepublish # 指定Dockerfile
         push: true
     - name: Docker Images List # 列出所有镜像
       run: docker images
