@@ -1,4 +1,4 @@
-name: Sukt.Core.API.Dockerfile.Compile.Dev
+name: Sukt.Platform.Admin.Api.Dockerfile.Compile.Dev
 on:
   push:
     branches: [dev/suktauthserver]
@@ -6,8 +6,8 @@ on:
     branches: [dev/suktauthserver]
 
 env:
-   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api #
-   IMAGE_TAG: dockerfilebuild
+   IMAGE_NAME: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api #
+   IMAGE_TAG: develop
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
     # - name: dotnet restore #还原包
     #   run: dotnet restore src/Sukt.Core.API
     # - name: dotnet publish #发布项目
