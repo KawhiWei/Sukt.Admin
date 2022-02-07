@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sukt.Identity.Dto" Version="1.2.5" />
+    <PackageReference Include="Sukt.PermissionManagement.Dto" Version="1.2.5" />
+  </ItemGroup>
+
+</Project>

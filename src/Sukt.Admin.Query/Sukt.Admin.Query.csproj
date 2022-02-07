@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sukt.Identity.Query" Version="1.2.5" />
+    <PackageReference Include="Sukt.PermissionManagement.Query" Version="1.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sukt.Admin.Domain\Sukt.Admin.Domain.csproj" />
+    <ProjectReference Include="..\Sukt.Admin.Dto\Sukt.Admin.Dto.csproj" />
+    <ProjectReference Include="..\Sukt.Admin.EntityFrameworkCore\Sukt.Admin.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>
