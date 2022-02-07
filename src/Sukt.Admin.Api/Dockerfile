@@ -1,13 +1,11 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS base
 WORKDIR /app
 EXPOSE 80
-ENV TZ=Asia/Shanghai
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
-RUN ls
 COPY ["src/Sukt.Admin.Api/Sukt.Admin.Api.csproj", "src/Sukt.Admin.Api/"]
 COPY ["src/Sukt.Admin.Application/Sukt.Admin.Application.csproj", "src/Sukt.Admin.Application/"]
 COPY ["src/Sukt.Admin.Domain/Sukt.Admin.Domain.csproj", "src/Sukt.Admin.Domain/"]
@@ -15,7 +13,6 @@ COPY ["src/Sukt.Admin.Dto/Sukt.Admin.Dto.csproj", "src/Sukt.Admin.Dto/"]
 COPY ["src/Sukt.Admin.Query/Sukt.Admin.Query.csproj", "src/Sukt.Admin.Query/"]
 COPY ["src/Sukt.Admin.EntityFrameworkCore/Sukt.Admin.EntityFrameworkCore.csproj", "src/Sukt.Admin.EntityFrameworkCore/"]
 RUN dotnet restore "src/Sukt.Admin.Api/Sukt.Admin.Api.csproj"
-RUN ls
 COPY . .
 WORKDIR "/src/src/Sukt.Admin.Api"
 RUN dotnet build "Sukt.Admin.Api.csproj" -c Release -o /app/build
@@ -25,6 +22,5 @@ RUN dotnet publish "Sukt.Admin.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-ENV TZ=Asia/Shanghai
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Sukt.Admin.Api.dll"]
