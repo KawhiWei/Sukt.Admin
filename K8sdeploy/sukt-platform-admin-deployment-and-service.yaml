@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sukt-core-admin
-  name: sukt-core-admin
-  namespace: sukt-core
+    app: sukt-platform-admin
+  name: sukt-platform-admin
+  namespace: sukt-platform
 spec:
   replicas: 9
   selector:
     matchLabels:
-      app: sukt-core-admin
+      app: sukt-platform-admin
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -18,10 +18,10 @@ spec:
   template:
     metadata:
       labels:
-        app: sukt-core-admin
+        app: sukt-platform-admin
     spec:
       containers:
-      - name: sukt-core-admin
+      - name: sukt-platform-admin
         image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1804768430.59
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -65,12 +65,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: sukt-core-admin
-  name: sukt-core-admin
-  namespace: sukt-core
+    app: sukt-platform-admin
+  name: sukt-platform-admin
+  namespace: sukt-platform
 spec:
   selector:
-    app: sukt-core-admin
+    app: sukt-platform-admin
   ports:
   - port: 80
     targetPort: 80
