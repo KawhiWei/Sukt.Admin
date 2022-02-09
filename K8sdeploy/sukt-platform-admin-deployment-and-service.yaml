@@ -6,7 +6,7 @@ metadata:
   name: sukt-platform-admin
   namespace: sukt-platform
 spec:
-  replicas: 9
+  replicas: 3
   selector:
     matchLabels:
       app: sukt-platform-admin
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1804768430.59
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1806860937.61
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
@@ -47,31 +47,38 @@ spec:
         ports:
         - containerPort: 80
           protocol: TCP
-        volumeMounts:
-            - mountPath: /app/appsettings.json
-              name: appsettings
-              readOnly: true
-              subPath: appsettings.json
       restartPolicy: Always
       imagePullSecrets:
         - name: aliyun-iamge-secret
-      volumes:
-        - configMap:
-            defaultMode: 420
-            name:  sukt-core-admin-appsettings
-          name: appsettings
 ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: sukt-platform-admin
+#   name: sukt-platform-admin
+#   namespace: sukt-platform
+# spec:
+#   selector:
+#     app: sukt-platform-admin
+#   ports:
+#   - port: 80
+#     targetPort: 80
+#   type: ClusterIP
+
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: sukt-platform-admin
-  name: sukt-platform-admin
+    app: sukt-platform-admin-nodetype
+  name: sukt-platform-admin-nodetype
   namespace: sukt-platform
 spec:
+  type: NodePort
   selector:
     app: sukt-platform-admin
   ports:
   - port: 80
     targetPort: 80
-  type: ClusterIP
+    nodePort: 30210
+
