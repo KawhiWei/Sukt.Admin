@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sukt.Identity.Domain.Shared" Version="1.2.6" />
-    <PackageReference Include="Sukt.PermissionManagement.Domain.Shared" Version="1.2.6" />
+    <PackageReference Include="Sukt.Identity.Domain.Shared" Version="1.2.7" />
+    <PackageReference Include="Sukt.PermissionManagement.Domain.Shared" Version="1.2.7" />
   </ItemGroup>
 
 </Project>
