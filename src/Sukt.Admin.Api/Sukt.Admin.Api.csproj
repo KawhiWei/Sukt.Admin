@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
-    <PackageReference Include="Sukt.Identity.Api" Version="1.2.7" />
-    <PackageReference Include="Sukt.PermissionManagement.Api" Version="1.2.7" />
+    <PackageReference Include="Sukt.Identity.Api" Version="1.2.8" />
+    <PackageReference Include="Sukt.PermissionManagement.Api" Version="1.2.8" />
   </ItemGroup>
 
   <ItemGroup>
