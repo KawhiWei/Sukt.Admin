@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sukt.Identity.EntityFrameworkCore" Version="1.2.8" />
-    <PackageReference Include="Sukt.PermissionManagement.EntityFrameworkCore" Version="1.2.8" />
+    <PackageReference Include="Sukt.Identity.EntityFrameworkCore" Version="1.2.9" />
+    <PackageReference Include="Sukt.PermissionManagement.EntityFrameworkCore" Version="1.2.9" />
   </ItemGroup>
 
   <ItemGroup>
