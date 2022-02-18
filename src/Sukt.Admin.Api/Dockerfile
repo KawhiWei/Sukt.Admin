@@ -23,5 +23,5 @@ RUN dotnet publish "Sukt.Admin.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ASPNETCORE_HOSTINGSTARTUPASSEMBLIES SkyAPM.Agent.AspNetCore 
+ENV ASPNETCORE_HOSTINGSTARTUPASSEMBLIES=SkyAPM.Agent.AspNetCore 
 ENTRYPOINT ["dotnet", "Sukt.Admin.Api.dll"]
