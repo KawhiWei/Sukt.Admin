@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1806860937.61
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1864820198.69
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
@@ -47,9 +47,27 @@ spec:
         ports:
         - containerPort: 80
           protocol: TCP
+        volumeMounts:
+            - mountPath: /app/appsettings.json # 这个对应的是容器内的地址
+              name: appsettings
+              readOnly: true
+              subPath: appsettings.json # #这个位置对应的是comfigmap中的名字，不是 /usr/local/apisix-dashboard/conf/conf.yaml的
+            - mountPath: /app/skyapm.json # 这个对应的是容器内的地址
+              name: skyapm
+              readOnly: true
+              subPath: skyapm.json # #这个位置对应的是comfigmap中的名字，不是 /usr/local/apisix-dashboard/conf/conf.yaml的
       restartPolicy: Always
       imagePullSecrets:
         - name: aliyun-iamge-secret
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name:  sukt-admin-appsettings
+          name: appsettings
+        - configMap:
+            defaultMode: 420
+            name:  skyapm
+          name: skyapm
 ---
 # apiVersion: v1
 # kind: Service
