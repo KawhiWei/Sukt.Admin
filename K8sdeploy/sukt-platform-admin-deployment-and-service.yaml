@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1864820198.69
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1865646617.73
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
@@ -44,6 +44,9 @@ spec:
           limits:
             memory: "2Gi"
             cpu: "1000m"
+        env:
+           - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+              value: SkyAPM.Agent.AspNetCore
         ports:
         - containerPort: 80
           protocol: TCP
