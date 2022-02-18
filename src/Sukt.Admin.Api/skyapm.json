@@ -19,11 +19,11 @@
       "QueueSize": 30000,
       "BatchSize": 3000,
       "gRPC": {
-        "Servers": "192.168.31.181:30102", //"skywalking-oap-grpc.nativet.cn:38000", //
+        "Servers": "192.168.31.181:30102",
         "Timeout": 10000,
         "ConnectTimeout": 10000,
-        "ReportTimeout": 600000,
-        "Authentication": ""
+        "ReportTimeout": 600000 //,
+        //"Authentication": ""
       }
     }
   }
