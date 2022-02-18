@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="1.3.0" />
     <PackageReference Include="Sukt.Identity.Api" Version="1.2.9" />
     <PackageReference Include="Sukt.PermissionManagement.Api" Version="1.2.9" />
   </ItemGroup>
