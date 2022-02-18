@@ -23,5 +23,5 @@ RUN dotnet publish "Sukt.Admin.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#ENV ASPNETCORE_HOSTINGSTARTUPASSEMBLIES="SkyAPM.Agent.AspNetCore"
+#ENV ASPNETCORE_HOSTINGSTARTUPASSEMBLIES="SkyAPM.Agent.AspNetCore" 在启动容器的时候需要通过映射的方式传入进来，卸载dockerfile中无效
 ENTRYPOINT ["dotnet", "Sukt.Admin.Api.dll"]

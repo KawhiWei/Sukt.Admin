@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1865646617.73
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1865680183.74
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
@@ -44,9 +44,6 @@ spec:
           limits:
             memory: "2Gi"
             cpu: "1000m"
-        env:
-           - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
-              value: SkyAPM.Agent.AspNetCore
         ports:
         - containerPort: 80
           protocol: TCP
@@ -59,6 +56,9 @@ spec:
               name: skyapm
               readOnly: true
               subPath: skyapm.json # #这个位置对应的是comfigmap中的名字，不是 /usr/local/apisix-dashboard/conf/conf.yaml的
+        env:
+          - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES # 需要通过映射的方式传入，不能通过Dockerfile的方式默认
+            value: SkyAPM.Agent.AspNetCore
       restartPolicy: Always
       imagePullSecrets:
         - name: aliyun-iamge-secret
