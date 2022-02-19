@@ -19,7 +19,7 @@ builder.Host.UseSerilog((webHost, logconfiguration) =>
 
     logconfiguration.ReadFrom.Configuration(webHost.Configuration.GetSection("Serilog")).Enrich.FromLogContext().WriteTo.Console(logEventLevel);
 
-    logconfiguration.WriteTo.Map(le => MapData(le), (key, log) => log.Async(o => o.File(Path.Combine("logs", @$"{key.time:yyyy-MM-dd}\{key.level.ToString().ToLower()}.txt"), logEventLevel)));
+    logconfiguration.WriteTo.Map(le => MapData(le), (key, log) => log.Async(o => o.File(Path.Combine("logs", @$"{key.time:yyyyMMdd}\{key.level.ToString().ToLower()}.log"), logEventLevel)));
 
     (DateTime time, LogEventLevel level) MapData(LogEvent logEvent)
     {
