@@ -44,27 +44,9 @@ jobs:
         push: true
     - name: Docker Images List # 列出所有镜像
       run: docker images
-        
-
-    # 第二种方式推送镜像，动态版本号
-    # - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
-    #   run: docker build /home/runner/work/Sukt.Core/Sukt.Core/app -t $IMAGE_NAME
-    # - name: Docker Image list
-    #   run: docker images
-    # - name: Login Docker registry  # 登录到镜像仓库
-    #   run: sudo docker login --username=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}  --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}  registry.cn-hangzhou.aliyuncs.com
-    # - name: Push Docker Image To registry  # 推送镜像到镜像仓库
-    #   run: |
-    #     sudo docker login --username=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME }}  --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }}  registry.cn-hangzhou.aliyuncs.com
-    #     VERSION=$($RANDOM|md5sum|cut -c 5-15) 
-    #     echo VERSION=$VERSION
-    #     docker build /home/runner/work/Sukt.Core/Sukt.Core/app -t $IMAGE_NAME:$VERSION
-    #     docker push $IMAGE_NAME:$VERSION
-
-      
-    
-      # run: |
-      #   docker version
-      #   # 登录到阿里云镜像仓库
-      #   sudo docker login --username=${{secrets.ALIYUN_DOCKER_IMAGESTORE_USERNAME}} --password=${{ secrets.ALIYUN_DOCKER_IMAGESTORE_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
-      #   docker build  --tag  registry.cn-hangzhou.aliyuncs.com/suktcore/sukt-core-admin-api:v1.6 -f Dockerfile ..
+    - uses: actions-hub/kubectl@master
+      name: deploy to k8s
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      with:
+        args: kubectl deploy K8sdeploy/sukt-platform-admin-deployment-and-service.yaml
