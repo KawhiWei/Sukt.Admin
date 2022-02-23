@@ -45,7 +45,7 @@ jobs:
     - name: replace image tag
       uses: datamonsters/replace-action@v2
       with:
-        fils: '/home/runner/work/Sukt.Admin/Sukt.Admin/K8sdeploy/sukt-platform-admin-deployment-and-service.yaml'
+        files: 'K8sdeploy/sukt-platform-admin-deployment-and-service.yaml'
         replacements: '$IMAGE_TAG=${{env.IMAGE_TAG}}.${{ github.run_number }}'
     - uses: actions-hub/kubectl@master
       name: deploy to k8s
