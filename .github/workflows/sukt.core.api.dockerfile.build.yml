@@ -49,4 +49,4 @@ jobs:
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
       with:
-        args: kubectl deploy /home/runner/work/Sukt.Admin/Sukt.Admin/K8sdeploy/sukt-platform-admin-deployment-and-service.yaml
+        args: kubectl apply /home/runner/work/Sukt.Admin/Sukt.Admin/K8sdeploy/sukt-platform-admin-deployment-and-service.yaml
