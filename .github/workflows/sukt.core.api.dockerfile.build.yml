@@ -43,7 +43,7 @@ jobs:
         file: /home/runner/work/Sukt.Admin/Sukt.Admin/Dockerfilepublish # 指定Dockerfile
         push: true
     - name: Docker Images List # 列出所有镜像
-      run: docker Images && tree .
+      run:  tree . # 之前那个是我拿不到版本号我才写的 这么就行了
     - uses: actions-hub/kubectl@master
       name: deploy to k8s
       env:
