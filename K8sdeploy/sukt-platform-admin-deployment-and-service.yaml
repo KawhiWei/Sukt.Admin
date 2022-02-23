@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.${{ github.run_number }}   #不知道这么写行不行
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:${IMAGE_TAG}   #不知道这么写行不行
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
