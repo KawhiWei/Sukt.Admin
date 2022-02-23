@@ -43,7 +43,7 @@ jobs:
         file: /home/runner/work/Sukt.Admin/Sukt.Admin/Dockerfilepublish # 指定Dockerfile
         push: true
     - name: replace image tag
-      uses: datamonsters/replace-action
+      uses: datamonsters/replace-action@v2
       with:
         fils: 'K8sdeploy/sukt-platform-admin-deployment-and-service.yaml'
         replacements: '$IMAGE_TAG=${{env.IMAGE_TAG}}.${{ github.run_number }}'
