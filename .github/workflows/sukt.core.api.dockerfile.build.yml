@@ -42,10 +42,14 @@ jobs:
         context: /home/runner/work/Sukt.Admin/Sukt.Admin
         file: /home/runner/work/Sukt.Admin/Sukt.Admin/Dockerfilepublish # 指定Dockerfile
         push: true
+    - name: replace image tag
+      uses: datamonsters/replace-action
+      with:
+        fils: 'K8sdeploy/sukt-platform-admin-deployment-and-service.yaml'
+        replacements: '$IMAGE_TAG=${{env.IMAGE_TAG}}.${{ github.run_number }}'
     - uses: actions-hub/kubectl@master
       name: deploy to k8s
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        IMAGE_TAG: ${{env.IMAGE_TAG}}.${{ github.run_number }}
       with:
         args: apply -f K8sdeploy/sukt-platform-admin-deployment-and-service.yaml
