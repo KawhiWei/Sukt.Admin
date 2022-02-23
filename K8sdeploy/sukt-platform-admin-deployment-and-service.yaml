@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: sukt-platform-admin
-        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.1865680183.74   # 这个版本有办法获取到吗？  ${{ github.run_number }} 我是用的这个大的tag
+        image: registry.cn-hangzhou.aliyuncs.com/sukt-platform/sukt-admin-api:develop.87   # 这个版本有办法获取到吗？  ${{ github.run_number }} 我是用的这个大的tag   就差这个了
         imagePullPolicy: IfNotPresent
         livenessProbe:
             httpGet:
